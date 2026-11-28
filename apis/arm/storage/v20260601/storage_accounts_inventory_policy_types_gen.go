@@ -757,20 +757,20 @@ type BlobInventoryPolicySchema struct {
 var _ genruntime.ARMTransformer = &BlobInventoryPolicySchema{}
 
 // ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (schema *BlobInventoryPolicySchema) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if schema == nil {
+func (policySchema *BlobInventoryPolicySchema) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
+	if policySchema == nil {
 		return nil, nil
 	}
 	result := &arm.BlobInventoryPolicySchema{}
 
 	// Set property "Enabled":
-	if schema.Enabled != nil {
-		enabled := *schema.Enabled
+	if policySchema.Enabled != nil {
+		enabled := *policySchema.Enabled
 		result.Enabled = &enabled
 	}
 
 	// Set property "Rules":
-	for _, item := range schema.Rules {
+	for _, item := range policySchema.Rules {
 		item_ARM, err := item.ConvertToARM(resolved)
 		if err != nil {
 			return nil, err
@@ -779,9 +779,9 @@ func (schema *BlobInventoryPolicySchema) ConvertToARM(resolved genruntime.Conver
 	}
 
 	// Set property "Type":
-	if schema.Type != nil {
+	if policySchema.Type != nil {
 		var temp string
-		temp = string(*schema.Type)
+		temp = string(*policySchema.Type)
 		typeVar := arm.InventoryRuleType(temp)
 		result.Type = &typeVar
 	}
@@ -789,12 +789,12 @@ func (schema *BlobInventoryPolicySchema) ConvertToARM(resolved genruntime.Conver
 }
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (schema *BlobInventoryPolicySchema) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (policySchema *BlobInventoryPolicySchema) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.BlobInventoryPolicySchema{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (schema *BlobInventoryPolicySchema) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (policySchema *BlobInventoryPolicySchema) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.BlobInventoryPolicySchema)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.BlobInventoryPolicySchema, got %T", armInput)
@@ -803,7 +803,7 @@ func (schema *BlobInventoryPolicySchema) PopulateFromARM(owner genruntime.Arbitr
 	// Set property "Enabled":
 	if typedInput.Enabled != nil {
 		enabled := *typedInput.Enabled
-		schema.Enabled = &enabled
+		policySchema.Enabled = &enabled
 	}
 
 	// Set property "Rules":
@@ -813,7 +813,7 @@ func (schema *BlobInventoryPolicySchema) PopulateFromARM(owner genruntime.Arbitr
 		if err != nil {
 			return err
 		}
-		schema.Rules = append(schema.Rules, item1)
+		policySchema.Rules = append(policySchema.Rules, item1)
 	}
 
 	// Set property "Type":
@@ -821,7 +821,7 @@ func (schema *BlobInventoryPolicySchema) PopulateFromARM(owner genruntime.Arbitr
 		var temp string
 		temp = string(*typedInput.Type)
 		typeVar := InventoryRuleType(temp)
-		schema.Type = &typeVar
+		policySchema.Type = &typeVar
 	}
 
 	// No error
@@ -829,14 +829,14 @@ func (schema *BlobInventoryPolicySchema) PopulateFromARM(owner genruntime.Arbitr
 }
 
 // AssignProperties_From_BlobInventoryPolicySchema populates our BlobInventoryPolicySchema from the provided source BlobInventoryPolicySchema
-func (schema *BlobInventoryPolicySchema) AssignProperties_From_BlobInventoryPolicySchema(source *storage.BlobInventoryPolicySchema) error {
+func (policySchema *BlobInventoryPolicySchema) AssignProperties_From_BlobInventoryPolicySchema(source *storage.BlobInventoryPolicySchema) error {
 
 	// Enabled
 	if source.Enabled != nil {
 		enabled := *source.Enabled
-		schema.Enabled = &enabled
+		policySchema.Enabled = &enabled
 	} else {
-		schema.Enabled = nil
+		policySchema.Enabled = nil
 	}
 
 	// Rules
@@ -850,18 +850,18 @@ func (schema *BlobInventoryPolicySchema) AssignProperties_From_BlobInventoryPoli
 			}
 			ruleList[ruleIndex] = rule
 		}
-		schema.Rules = ruleList
+		policySchema.Rules = ruleList
 	} else {
-		schema.Rules = nil
+		policySchema.Rules = nil
 	}
 
 	// Type
 	if source.Type != nil {
 		typeVar := *source.Type
 		typeTemp := genruntime.ToEnum(typeVar, inventoryRuleType_Values)
-		schema.Type = &typeTemp
+		policySchema.Type = &typeTemp
 	} else {
-		schema.Type = nil
+		policySchema.Type = nil
 	}
 
 	// No error
@@ -869,22 +869,22 @@ func (schema *BlobInventoryPolicySchema) AssignProperties_From_BlobInventoryPoli
 }
 
 // AssignProperties_To_BlobInventoryPolicySchema populates the provided destination BlobInventoryPolicySchema from our BlobInventoryPolicySchema
-func (schema *BlobInventoryPolicySchema) AssignProperties_To_BlobInventoryPolicySchema(destination *storage.BlobInventoryPolicySchema) error {
+func (policySchema *BlobInventoryPolicySchema) AssignProperties_To_BlobInventoryPolicySchema(destination *storage.BlobInventoryPolicySchema) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Enabled
-	if schema.Enabled != nil {
-		enabled := *schema.Enabled
+	if policySchema.Enabled != nil {
+		enabled := *policySchema.Enabled
 		destination.Enabled = &enabled
 	} else {
 		destination.Enabled = nil
 	}
 
 	// Rules
-	if schema.Rules != nil {
-		ruleList := make([]storage.BlobInventoryPolicyRule, len(schema.Rules))
-		for ruleIndex, ruleItem := range schema.Rules {
+	if policySchema.Rules != nil {
+		ruleList := make([]storage.BlobInventoryPolicyRule, len(policySchema.Rules))
+		for ruleIndex, ruleItem := range policySchema.Rules {
 			var rule storage.BlobInventoryPolicyRule
 			err := ruleItem.AssignProperties_To_BlobInventoryPolicyRule(&rule)
 			if err != nil {
@@ -898,8 +898,8 @@ func (schema *BlobInventoryPolicySchema) AssignProperties_To_BlobInventoryPolicy
 	}
 
 	// Type
-	if schema.Type != nil {
-		typeVar := string(*schema.Type)
+	if policySchema.Type != nil {
+		typeVar := string(*policySchema.Type)
 		destination.Type = &typeVar
 	} else {
 		destination.Type = nil
@@ -917,14 +917,14 @@ func (schema *BlobInventoryPolicySchema) AssignProperties_To_BlobInventoryPolicy
 }
 
 // Initialize_From_BlobInventoryPolicySchema_STATUS populates our BlobInventoryPolicySchema from the provided source BlobInventoryPolicySchema_STATUS
-func (schema *BlobInventoryPolicySchema) Initialize_From_BlobInventoryPolicySchema_STATUS(source *BlobInventoryPolicySchema_STATUS) error {
+func (policySchema *BlobInventoryPolicySchema) Initialize_From_BlobInventoryPolicySchema_STATUS(source *BlobInventoryPolicySchema_STATUS) error {
 
 	// Enabled
 	if source.Enabled != nil {
 		enabled := *source.Enabled
-		schema.Enabled = &enabled
+		policySchema.Enabled = &enabled
 	} else {
-		schema.Enabled = nil
+		policySchema.Enabled = nil
 	}
 
 	// Rules
@@ -938,17 +938,17 @@ func (schema *BlobInventoryPolicySchema) Initialize_From_BlobInventoryPolicySche
 			}
 			ruleList[ruleIndex] = rule
 		}
-		schema.Rules = ruleList
+		policySchema.Rules = ruleList
 	} else {
-		schema.Rules = nil
+		policySchema.Rules = nil
 	}
 
 	// Type
 	if source.Type != nil {
 		typeVar := genruntime.ToEnum(string(*source.Type), inventoryRuleType_Values)
-		schema.Type = &typeVar
+		policySchema.Type = &typeVar
 	} else {
-		schema.Type = nil
+		policySchema.Type = nil
 	}
 
 	// No error
@@ -974,12 +974,12 @@ type BlobInventoryPolicySchema_STATUS struct {
 var _ genruntime.FromARMConverter = &BlobInventoryPolicySchema_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (schema *BlobInventoryPolicySchema_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (policySchema *BlobInventoryPolicySchema_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.BlobInventoryPolicySchema_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (schema *BlobInventoryPolicySchema_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (policySchema *BlobInventoryPolicySchema_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.BlobInventoryPolicySchema_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.BlobInventoryPolicySchema_STATUS, got %T", armInput)
@@ -988,13 +988,13 @@ func (schema *BlobInventoryPolicySchema_STATUS) PopulateFromARM(owner genruntime
 	// Set property "Destination":
 	if typedInput.Destination != nil {
 		destination := *typedInput.Destination
-		schema.Destination = &destination
+		policySchema.Destination = &destination
 	}
 
 	// Set property "Enabled":
 	if typedInput.Enabled != nil {
 		enabled := *typedInput.Enabled
-		schema.Enabled = &enabled
+		policySchema.Enabled = &enabled
 	}
 
 	// Set property "Rules":
@@ -1004,7 +1004,7 @@ func (schema *BlobInventoryPolicySchema_STATUS) PopulateFromARM(owner genruntime
 		if err != nil {
 			return err
 		}
-		schema.Rules = append(schema.Rules, item1)
+		policySchema.Rules = append(policySchema.Rules, item1)
 	}
 
 	// Set property "Type":
@@ -1012,7 +1012,7 @@ func (schema *BlobInventoryPolicySchema_STATUS) PopulateFromARM(owner genruntime
 		var temp string
 		temp = string(*typedInput.Type)
 		typeVar := InventoryRuleType_STATUS(temp)
-		schema.Type = &typeVar
+		policySchema.Type = &typeVar
 	}
 
 	// No error
@@ -1020,17 +1020,17 @@ func (schema *BlobInventoryPolicySchema_STATUS) PopulateFromARM(owner genruntime
 }
 
 // AssignProperties_From_BlobInventoryPolicySchema_STATUS populates our BlobInventoryPolicySchema_STATUS from the provided source BlobInventoryPolicySchema_STATUS
-func (schema *BlobInventoryPolicySchema_STATUS) AssignProperties_From_BlobInventoryPolicySchema_STATUS(source *storage.BlobInventoryPolicySchema_STATUS) error {
+func (policySchema *BlobInventoryPolicySchema_STATUS) AssignProperties_From_BlobInventoryPolicySchema_STATUS(source *storage.BlobInventoryPolicySchema_STATUS) error {
 
 	// Destination
-	schema.Destination = genruntime.ClonePointerToString(source.Destination)
+	policySchema.Destination = genruntime.ClonePointerToString(source.Destination)
 
 	// Enabled
 	if source.Enabled != nil {
 		enabled := *source.Enabled
-		schema.Enabled = &enabled
+		policySchema.Enabled = &enabled
 	} else {
-		schema.Enabled = nil
+		policySchema.Enabled = nil
 	}
 
 	// Rules
@@ -1044,18 +1044,18 @@ func (schema *BlobInventoryPolicySchema_STATUS) AssignProperties_From_BlobInvent
 			}
 			ruleList[ruleIndex] = rule
 		}
-		schema.Rules = ruleList
+		policySchema.Rules = ruleList
 	} else {
-		schema.Rules = nil
+		policySchema.Rules = nil
 	}
 
 	// Type
 	if source.Type != nil {
 		typeVar := *source.Type
 		typeTemp := genruntime.ToEnum(typeVar, inventoryRuleType_STATUS_Values)
-		schema.Type = &typeTemp
+		policySchema.Type = &typeTemp
 	} else {
-		schema.Type = nil
+		policySchema.Type = nil
 	}
 
 	// No error
@@ -1063,25 +1063,25 @@ func (schema *BlobInventoryPolicySchema_STATUS) AssignProperties_From_BlobInvent
 }
 
 // AssignProperties_To_BlobInventoryPolicySchema_STATUS populates the provided destination BlobInventoryPolicySchema_STATUS from our BlobInventoryPolicySchema_STATUS
-func (schema *BlobInventoryPolicySchema_STATUS) AssignProperties_To_BlobInventoryPolicySchema_STATUS(destination *storage.BlobInventoryPolicySchema_STATUS) error {
+func (policySchema *BlobInventoryPolicySchema_STATUS) AssignProperties_To_BlobInventoryPolicySchema_STATUS(destination *storage.BlobInventoryPolicySchema_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Destination
-	destination.Destination = genruntime.ClonePointerToString(schema.Destination)
+	destination.Destination = genruntime.ClonePointerToString(policySchema.Destination)
 
 	// Enabled
-	if schema.Enabled != nil {
-		enabled := *schema.Enabled
+	if policySchema.Enabled != nil {
+		enabled := *policySchema.Enabled
 		destination.Enabled = &enabled
 	} else {
 		destination.Enabled = nil
 	}
 
 	// Rules
-	if schema.Rules != nil {
-		ruleList := make([]storage.BlobInventoryPolicyRule_STATUS, len(schema.Rules))
-		for ruleIndex, ruleItem := range schema.Rules {
+	if policySchema.Rules != nil {
+		ruleList := make([]storage.BlobInventoryPolicyRule_STATUS, len(policySchema.Rules))
+		for ruleIndex, ruleItem := range policySchema.Rules {
 			var rule storage.BlobInventoryPolicyRule_STATUS
 			err := ruleItem.AssignProperties_To_BlobInventoryPolicyRule_STATUS(&rule)
 			if err != nil {
@@ -1095,8 +1095,8 @@ func (schema *BlobInventoryPolicySchema_STATUS) AssignProperties_To_BlobInventor
 	}
 
 	// Type
-	if schema.Type != nil {
-		typeVar := string(*schema.Type)
+	if policySchema.Type != nil {
+		typeVar := string(*policySchema.Type)
 		destination.Type = &typeVar
 	} else {
 		destination.Type = nil

@@ -421,6 +421,57 @@ WorkspacesStorageInsightConfig: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+WorkspacesSummaryLog: Resource
+├── Owner: operationalinsights/v20250701.Workspace
+├── Spec: Object (9 properties)
+│   ├── AzureName: string
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── RuleDefinition: *Object (7 properties)
+│   │   ├── BinDelay: *int
+│   │   ├── BinSize: *int
+│   │   ├── BinStartTime: *string
+│   │   ├── DestinationTable: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Query: *string
+│   │   └── TimeSelector: *string
+│   └── RuleType: *string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── IsActive: *bool
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── RuleDefinition: *Object (7 properties)
+    │   ├── BinDelay: *int
+    │   ├── BinSize: *int
+    │   ├── BinStartTime: *string
+    │   ├── DestinationTable: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Query: *string
+    │   └── TimeSelector: *string
+    ├── RuleType: *string
+    ├── StatusCode: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
 WorkspacesTable: Resource
 ├── Owner: operationalinsights/v20250701.Workspace
 ├── Spec: Object (11 properties)

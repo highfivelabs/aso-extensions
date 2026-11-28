@@ -11,7 +11,15 @@ AccountsDefenderForAISettingExtension: Object (0 properties)
 
 AccountsEncryptionScopeExtension: Object (0 properties)
 
+AccountsManagedNetworkExtension: Object (0 properties)
+
+AccountsManagedNetworksOutboundRuleExtension: Object (0 properties)
+
 AccountsPrivateEndpointConnectionExtension: Object (0 properties)
+
+AccountsProjectsApplicationExtension: Object (0 properties)
+
+AccountsProjectsApplicationsAgentDeploymentExtension: Object (0 properties)
 
 AccountsProjectsCapabilityHostExtension: Object (0 properties)
 
@@ -23,7 +31,15 @@ AccountsRaiBlocklistsRaiBlocklistItemExtension: Object (0 properties)
 
 AccountsRaiPolicyExtension: Object (0 properties)
 
+AccountsRaiToolLabelExtension: Object (0 properties)
+
+AccountsRaiTopicExtension: Object (0 properties)
+
 CommitmentPlanExtension: Object (0 properties)
 
 CommitmentPlansAccountAssociationExtension: Object (0 properties)
+
+RaiExternalSafetyProviderExtension: Object (0 properties)
+
+RaiPolicyExtension: Object (0 properties)
 

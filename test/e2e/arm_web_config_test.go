@@ -123,11 +123,9 @@ func TestSiteConfigSections(t *testing.T) {
 	}
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(ftp), ftp); err != nil {
-		t.Fatal(err)
-	}
-	ftp.Spec.Allow = ptr(true)
-	if err := k8s.Update(ctx, ftp); err != nil {
+	if err := change(t, ftp, func(ftp *webv1.SitesBasicPublishingCredentialsPolicyFtp) {
+		ftp.Spec.Allow = ptr(true)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, siteID+"/basicPublishingCredentialsPolicies/ftp", func(r map[string]any) error {

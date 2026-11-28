@@ -150,11 +150,9 @@ func TestExpressRouteCircuit(t *testing.T) {
 	}
 
 	// The circuit changed: PUT again with its peering and authorization.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(er), er); err != nil {
-		t.Fatal(err)
-	}
-	er.Spec.Tags = map[string]string{"team": "network"}
-	if err := k8s.Update(ctx, er); err != nil {
+	if err := change(t, er, func(er *network.ExpressRouteCircuit) {
+		er.Spec.Tags = map[string]string{"team": "network"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, erID, func(r map[string]any) error {
@@ -223,11 +221,9 @@ func TestExpressRouteCircuit(t *testing.T) {
 		return nil
 	})
 	// The second peering changed: PUT again with its Global Reach connection.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(peering2), peering2); err != nil {
-		t.Fatal(err)
-	}
-	peering2.Spec.PeerASN = ptr(65020)
-	if err := k8s.Update(ctx, peering2); err != nil {
+	if err := change(t, peering2, func(peering2 *network.ExpressRouteCircuitsPeering) {
+		peering2.Spec.PeerASN = ptr(65020)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, peering2ID, func(r map[string]any) error {

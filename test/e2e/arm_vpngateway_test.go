@@ -183,11 +183,9 @@ func TestVPNGateway(t *testing.T) {
 	})
 
 	// The gateway changed: PUT again with its connection and NAT rule.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(gw), gw); err != nil {
-		t.Fatal(err)
-	}
-	gw.Spec.Tags = map[string]string{"team": "network"}
-	if err := k8s.Update(ctx, gw); err != nil {
+	if err := change(t, gw, func(gw *network.VpnGateway) {
+		gw.Spec.Tags = map[string]string{"team": "network"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, gwID, func(r map[string]any) error {

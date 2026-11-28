@@ -19,6 +19,10 @@ typeFilters:
     group: authorization
     version: v20201001
     because: Privileged Identity Management (role eligibility and assignment schedule requests, role management policy assignments); the version ASO PR #5638 generates its RoleEligibilityScheduleRequest from
+  - action: include
+    group: authorization
+    version: v20211201preview
+    because: access reviews of Azure role assignments (schedule definitions, history definitions, default settings); 2021-12-01-preview is the newest version with them, and there is no stable one
   - action: prune
     group: authorization
     because: every other version is left alone
@@ -140,3 +144,37 @@ groupModelConfiguration:
     # object, so the generated kind sent an object and dropped an empty one
     # (the conformance test caught it); it needs the spec fixed or a
     # hand-written type.
+  # Access reviews of Azure role assignments, at a subscription or any scope
+  # under it (/{scope}/providers/...): extension resources with an arbitrary
+  # owner (patch 0006). A schedule or history definition's name must be a
+  # GUID, as a PIM request's: the hand-written Claimers in
+  # generator/_extensions/authorization/customizations default it
+  # (docs/plan.md, "Names that must be GUIDs").
+  2021-12-01-preview:
+    AccessReviewScheduleDefinition:
+      $exportAs: AccessReviewScheduleDefinition
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+      $operatorSpecProperties:
+        - name: NamingConvention
+          type: string
+          description: The uuid generation technique to use for any definition without an explicit AzureName. One of 'stable' or 'random'. <br> +kubebuilder:validation:Enum={"random","stable"}
+    AccessReviewHistoryDefinition:
+      $exportAs: AccessReviewHistoryDefinition
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+      $operatorSpecProperties:
+        - name: NamingConvention
+          type: string
+          description: The uuid generation technique to use for any definition without an explicit AzureName. One of 'stable' or 'random'. <br> +kubebuilder:validation:Enum={"random","stable"}
+    AccessReviewScheduleSetting:
+      $exportAs: AccessReviewScheduleSetting
+      $supportedFrom: v0.1.0
+    # A schedule definition's settings (recurrence, notifications, default
+    # decision) are the same type as the default settings resource's body,
+    # so the embedded-resource remover emptied them: kept here.
+    AccessReviewScheduleSettings:
+      $resourceEmbeddedInParent: AccessReviewScheduleDefinition
+    AccessReviewScope:
+      ExcludeResourceId:
+        $referenceType: simple # the resource ID(s) to leave out of the review, a filter over the scope, not a resource the review needs

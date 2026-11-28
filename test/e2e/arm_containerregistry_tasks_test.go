@@ -114,8 +114,9 @@ func TestRegistryTasksAndConnectedRegistry(t *testing.T) {
 	if status, _ := json.Marshal(task.Status); strings.Contains(string(status), "gh-pat-1") || strings.Contains(string(status), "hub-pass-1") {
 		t.Fatalf("a secret is in the status: %s", status)
 	}
-	task.Spec.Timeout = ptr(1200)
-	if err := k8s.Update(ctx, task); err != nil {
+	if err := change(t, task, func(task *acrtasks.RegistriesTask) {
+		task.Spec.Timeout = ptr(1200)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, taskID, func(r map[string]any) error {

@@ -1,116 +1,123 @@
-| Type Definitions in package "insights"            | v20160301 | v20180601preview | v20200301preview | v20201120 | v20210308 | v20210901 | v20230301preview |
-|---------------------------------------------------|-----------|------------------|------------------|-----------|-----------|-----------|------------------|
-| APIVersion                                        | v20160301 | v20180601preview | v20200301preview | v20201120 | v20210308 | v20210901 | v20230301preview |
-| AccessMode                                        |           |                  |                  |           |           | v20210901 |                  |
-| AccessModeSettings                                |           |                  |                  |           |           | v20210901 |                  |
-| AccessModeSettingsExclusion                       |           |                  |                  |           |           | v20210901 |                  |
-| AccessModeSettingsExclusion_STATUS                |           |                  |                  |           |           | v20210901 |                  |
-| AccessModeSettings_STATUS                         |           |                  |                  |           |           | v20210901 |                  |
-| AccessMode_STATUS                                 |           |                  |                  |           |           | v20210901 |                  |
-| AzureAppPushReceiver                              |           |                  |                  |           |           |           | v20230301preview |
-| AzureAppPushReceiver_STATUS                       |           |                  |                  |           |           |           | v20230301preview |
-| AzureMonitorPrivateLinkScopeProperties            |           |                  |                  |           |           | v20210901 |                  |
-| AzureMonitorPrivateLinkScopeProperties_STATUS     |           |                  |                  |           |           | v20210901 |                  |
-| ComponentsLinkedStorageAccount                    |           |                  | v20200301preview |           |           |           |                  |
-| ComponentsLinkedStorageAccount_STATUS             |           |                  | v20200301preview |           |           |           |                  |
-| ComponentsLinkedStorageAccount_Spec               |           |                  | v20200301preview |           |           |           |                  |
-| Components_LinkedStorageAccount_Name_Spec         |           |                  | v20200301preview |           |           |           |                  |
-| DataSource                                        |           | v20180601preview |                  |           |           |           |                  |
-| DataSourceConfiguration                           |           | v20180601preview |                  |           |           |           |                  |
-| DataSourceConfiguration_STATUS                    |           | v20180601preview |                  |           |           |           |                  |
-| DataSource_Kind                                   |           | v20180601preview |                  |           |           |           |                  |
-| DataSource_Kind_STATUS                            |           | v20180601preview |                  |           |           |           |                  |
-| DataSource_STATUS                                 |           | v20180601preview |                  |           |           |           |                  |
-| EmailReceiver                                     |           |                  |                  |           |           |           | v20230301preview |
-| EmailReceiver_STATUS                              |           |                  |                  |           |           |           | v20230301preview |
-| EtwEventConfiguration                             |           | v20180601preview |                  |           |           |           |                  |
-| EtwEventConfiguration_STATUS                      |           | v20180601preview |                  |           |           |           |                  |
-| EtwProviderConfiguration                          |           | v20180601preview |                  |           |           |           |                  |
-| EtwProviderConfiguration_STATUS                   |           | v20180601preview |                  |           |           |           |                  |
-| EventLogConfiguration                             |           | v20180601preview |                  |           |           |           |                  |
-| EventLogConfiguration_STATUS                      |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSetting                            |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSetting_STATUS                     |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSetting_Spec                       |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettings                           |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettingsAssociation                |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettingsAssociationResource_STATUS |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettingsAssociationSpec            |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettingsAssociation_STATUS         |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettingsAssociation_Spec           |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettings_OsType                    |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettings_OsType_STATUS             |           | v20180601preview |                  |           |           |           |                  |
-| GuestDiagnosticSettings_STATUS                    |           | v20180601preview |                  |           |           |           |                  |
-| LinkedStorageAccountsProperties                   |           |                  | v20200301preview |           |           |           |                  |
-| LinkedStorageAccountsProperties_STATUS            |           |                  | v20200301preview |           |           |           |                  |
-| LogProfile                                        | v20160301 |                  |                  |           |           |           |                  |
-| LogProfileProperties                              | v20160301 |                  |                  |           |           |           |                  |
-| LogProfileProperties_STATUS                       | v20160301 |                  |                  |           |           |           |                  |
-| LogProfile_STATUS                                 | v20160301 |                  |                  |           |           |           |                  |
-| LogProfile_Spec                                   | v20160301 |                  |                  |           |           |           |                  |
-| MicrosoftCommonRetentionPolicy                    | v20160301 |                  |                  |           |           |           |                  |
-| MicrosoftCommonRetentionPolicy_STATUS             | v20160301 |                  |                  |           |           |           |                  |
-| MyWorkbook                                        |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbookManagedIdentity                         |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbookManagedIdentity_STATUS                  |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbookManagedIdentity_Type                    |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbookManagedIdentity_Type_STATUS             |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbookProperties                              |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbookProperties_STATUS                       |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbookUserAssignedIdentities_STATUS           |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbook_Kind_STATUS                            |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbook_Kind_Spec                              |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbook_STATUS                                 |           |                  |                  |           | v20210308 |           |                  |
-| MyWorkbook_Spec                                   |           |                  |                  |           | v20210308 |           |                  |
-| PerformanceCounterConfiguration                   |           | v20180601preview |                  |           |           |           |                  |
-| PerformanceCounterConfiguration_STATUS            |           | v20180601preview |                  |           |           |           |                  |
-| PrivateEndpointConnectionProperties               |           |                  |                  |           |           | v20210901 |                  |
-| PrivateEndpointConnectionProperties_STATUS        |           |                  |                  |           |           | v20210901 |                  |
-| PrivateEndpointConnectionProvisioningState        |           |                  |                  |           |           | v20210901 |                  |
-| PrivateEndpointConnectionProvisioningState_STATUS |           |                  |                  |           |           | v20210901 |                  |
-| PrivateEndpointConnection_STATUS                  |           |                  |                  |           |           | v20210901 |                  |
-| PrivateEndpointServiceConnectionStatus            |           |                  |                  |           |           | v20210901 |                  |
-| PrivateEndpointServiceConnectionStatus_STATUS     |           |                  |                  |           |           | v20210901 |                  |
-| PrivateEndpoint_STATUS                            |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScope                                  |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScope_STATUS                           |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScope_Spec                             |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScopesPrivateEndpointConnection        |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScopesPrivateEndpointConnection_STATUS |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScopesPrivateEndpointConnection_Spec   |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScopesScopedResource                   |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScopesScopedResource_STATUS            |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkScopesScopedResource_Spec              |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkServiceConnectionState                 |           |                  |                  |           |           | v20210901 |                  |
-| PrivateLinkServiceConnectionState_STATUS          |           |                  |                  |           |           | v20210901 |                  |
-| ReceiverStatus_STATUS                             |           |                  |                  |           |           |           | v20230301preview |
-| ScopedResourceProperties                          |           |                  |                  |           |           | v20210901 |                  |
-| ScopedResourceProperties_ProvisioningState_STATUS |           |                  |                  |           |           | v20210901 |                  |
-| ScopedResourceProperties_STATUS                   |           |                  |                  |           |           | v20210901 |                  |
-| SinkConfiguration                                 |           | v20180601preview |                  |           |           |           |                  |
-| SinkConfiguration_Kind                            |           | v20180601preview |                  |           |           |           |                  |
-| SinkConfiguration_Kind_STATUS                     |           | v20180601preview |                  |           |           |           |                  |
-| SinkConfiguration_STATUS                          |           | v20180601preview |                  |           |           |           |                  |
-| SmsReceiver                                       |           |                  |                  |           |           |           | v20230301preview |
-| SmsReceiver_STATUS                                |           |                  |                  |           |           |           | v20230301preview |
-| SystemData_CreatedByType_STATUS                   | v20160301 |                  | v20200301preview | v20201120 | v20210308 | v20210901 |                  |
-| SystemData_LastModifiedByType_STATUS              | v20160301 |                  | v20200301preview | v20201120 | v20210308 | v20210901 |                  |
-| SystemData_STATUS                                 | v20160301 |                  | v20200301preview | v20201120 | v20210308 | v20210901 |                  |
-| TenantActionGroup                                 |           |                  |                  |           |           |           | v20230301preview |
-| TenantActionGroupResource_STATUS                  |           |                  |                  |           |           |           | v20230301preview |
-| TenantActionGroupSpec                             |           |                  |                  |           |           |           | v20230301preview |
-| TenantActionGroup_STATUS                          |           |                  |                  |           |           |           | v20230301preview |
-| TenantActionGroup_Spec                            |           |                  |                  |           |           |           | v20230301preview |
-| VoiceReceiver                                     |           |                  |                  |           |           |           | v20230301preview |
-| VoiceReceiver_STATUS                              |           |                  |                  |           |           |           | v20230301preview |
-| WebhookReceiver                                   |           |                  |                  |           |           |           | v20230301preview |
-| WebhookReceiver_STATUS                            |           |                  |                  |           |           |           | v20230301preview |
-| WorkbookTemplate                                  |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplateGallery                           |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplateGallery_STATUS                    |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplateLocalizedGallery                  |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplateLocalizedGallery_STATUS           |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplateProperties                        |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplateProperties_STATUS                 |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplate_STATUS                           |           |                  |                  | v20201120 |           |           |                  |
-| WorkbookTemplate_Spec                             |           |                  |                  | v20201120 |           |           |                  |
+| Type Definitions in package "insights"                                                       | v20160301 | v20180501preview | v20180601preview | v20200301preview | v20201120 | v20210308 | v20210901 | v20230301preview |
+|----------------------------------------------------------------------------------------------|-----------|------------------|------------------|------------------|-----------|-----------|-----------|------------------|
+| APIVersion                                                                                   | v20160301 | v20180501preview | v20180601preview | v20200301preview | v20201120 | v20210308 | v20210901 | v20230301preview |
+| AccessMode                                                                                   |           |                  |                  |                  |           |           | v20210901 |                  |
+| AccessModeSettings                                                                           |           |                  |                  |                  |           |           | v20210901 |                  |
+| AccessModeSettingsExclusion                                                                  |           |                  |                  |                  |           |           | v20210901 |                  |
+| AccessModeSettingsExclusion_STATUS                                                           |           |                  |                  |                  |           |           | v20210901 |                  |
+| AccessModeSettings_STATUS                                                                    |           |                  |                  |                  |           |           | v20210901 |                  |
+| AccessMode_STATUS                                                                            |           |                  |                  |                  |           |           | v20210901 |                  |
+| ApplicationInsightsComponentProactiveDetectionConfigurationProperties                        |           | v20180501preview |                  |                  |           |           |           |                  |
+| ApplicationInsightsComponentProactiveDetectionConfigurationProperties_RuleDefinitions        |           | v20180501preview |                  |                  |           |           |           |                  |
+| ApplicationInsightsComponentProactiveDetectionConfigurationProperties_RuleDefinitions_STATUS |           | v20180501preview |                  |                  |           |           |           |                  |
+| ApplicationInsightsComponentProactiveDetectionConfigurationProperties_STATUS                 |           | v20180501preview |                  |                  |           |           |           |                  |
+| AzureAppPushReceiver                                                                         |           |                  |                  |                  |           |           |           | v20230301preview |
+| AzureAppPushReceiver_STATUS                                                                  |           |                  |                  |                  |           |           |           | v20230301preview |
+| AzureMonitorPrivateLinkScopeProperties                                                       |           |                  |                  |                  |           |           | v20210901 |                  |
+| AzureMonitorPrivateLinkScopeProperties_STATUS                                                |           |                  |                  |                  |           |           | v20210901 |                  |
+| ComponentsLinkedStorageAccount                                                               |           |                  |                  | v20200301preview |           |           |           |                  |
+| ComponentsLinkedStorageAccount_STATUS                                                        |           |                  |                  | v20200301preview |           |           |           |                  |
+| ComponentsLinkedStorageAccount_Spec                                                          |           |                  |                  | v20200301preview |           |           |           |                  |
+| ComponentsProactiveDetectionConfig                                                           |           | v20180501preview |                  |                  |           |           |           |                  |
+| ComponentsProactiveDetectionConfig_STATUS                                                    |           | v20180501preview |                  |                  |           |           |           |                  |
+| ComponentsProactiveDetectionConfig_Spec                                                      |           | v20180501preview |                  |                  |           |           |           |                  |
+| Components_LinkedStorageAccount_Name_Spec                                                    |           |                  |                  | v20200301preview |           |           |           |                  |
+| DataSource                                                                                   |           |                  | v20180601preview |                  |           |           |           |                  |
+| DataSourceConfiguration                                                                      |           |                  | v20180601preview |                  |           |           |           |                  |
+| DataSourceConfiguration_STATUS                                                               |           |                  | v20180601preview |                  |           |           |           |                  |
+| DataSource_Kind                                                                              |           |                  | v20180601preview |                  |           |           |           |                  |
+| DataSource_Kind_STATUS                                                                       |           |                  | v20180601preview |                  |           |           |           |                  |
+| DataSource_STATUS                                                                            |           |                  | v20180601preview |                  |           |           |           |                  |
+| EmailReceiver                                                                                |           |                  |                  |                  |           |           |           | v20230301preview |
+| EmailReceiver_STATUS                                                                         |           |                  |                  |                  |           |           |           | v20230301preview |
+| EtwEventConfiguration                                                                        |           |                  | v20180601preview |                  |           |           |           |                  |
+| EtwEventConfiguration_STATUS                                                                 |           |                  | v20180601preview |                  |           |           |           |                  |
+| EtwProviderConfiguration                                                                     |           |                  | v20180601preview |                  |           |           |           |                  |
+| EtwProviderConfiguration_STATUS                                                              |           |                  | v20180601preview |                  |           |           |           |                  |
+| EventLogConfiguration                                                                        |           |                  | v20180601preview |                  |           |           |           |                  |
+| EventLogConfiguration_STATUS                                                                 |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSetting                                                                       |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSetting_STATUS                                                                |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSetting_Spec                                                                  |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettings                                                                      |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettingsAssociation                                                           |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettingsAssociationResource_STATUS                                            |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettingsAssociationSpec                                                       |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettingsAssociation_STATUS                                                    |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettingsAssociation_Spec                                                      |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettings_OsType                                                               |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettings_OsType_STATUS                                                        |           |                  | v20180601preview |                  |           |           |           |                  |
+| GuestDiagnosticSettings_STATUS                                                               |           |                  | v20180601preview |                  |           |           |           |                  |
+| LinkedStorageAccountsProperties                                                              |           |                  |                  | v20200301preview |           |           |           |                  |
+| LinkedStorageAccountsProperties_STATUS                                                       |           |                  |                  | v20200301preview |           |           |           |                  |
+| LogProfile                                                                                   | v20160301 |                  |                  |                  |           |           |           |                  |
+| LogProfileProperties                                                                         | v20160301 |                  |                  |                  |           |           |           |                  |
+| LogProfileProperties_STATUS                                                                  | v20160301 |                  |                  |                  |           |           |           |                  |
+| LogProfile_STATUS                                                                            | v20160301 |                  |                  |                  |           |           |           |                  |
+| LogProfile_Spec                                                                              | v20160301 |                  |                  |                  |           |           |           |                  |
+| MicrosoftCommonRetentionPolicy                                                               | v20160301 |                  |                  |                  |           |           |           |                  |
+| MicrosoftCommonRetentionPolicy_STATUS                                                        | v20160301 |                  |                  |                  |           |           |           |                  |
+| MyWorkbook                                                                                   |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbookManagedIdentity                                                                    |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbookManagedIdentity_STATUS                                                             |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbookManagedIdentity_Type                                                               |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbookManagedIdentity_Type_STATUS                                                        |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbookProperties                                                                         |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbookProperties_STATUS                                                                  |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbookUserAssignedIdentities_STATUS                                                      |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbook_Kind_STATUS                                                                       |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbook_Kind_Spec                                                                         |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbook_STATUS                                                                            |           |                  |                  |                  |           | v20210308 |           |                  |
+| MyWorkbook_Spec                                                                              |           |                  |                  |                  |           | v20210308 |           |                  |
+| PerformanceCounterConfiguration                                                              |           |                  | v20180601preview |                  |           |           |           |                  |
+| PerformanceCounterConfiguration_STATUS                                                       |           |                  | v20180601preview |                  |           |           |           |                  |
+| PrivateEndpointConnectionProperties                                                          |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateEndpointConnectionProperties_STATUS                                                   |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateEndpointConnectionProvisioningState                                                   |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateEndpointConnectionProvisioningState_STATUS                                            |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateEndpointConnection_STATUS                                                             |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateEndpointServiceConnectionStatus                                                       |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateEndpointServiceConnectionStatus_STATUS                                                |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateEndpoint_STATUS                                                                       |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScope                                                                             |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScope_STATUS                                                                      |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScope_Spec                                                                        |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScopesPrivateEndpointConnection                                                   |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScopesPrivateEndpointConnection_STATUS                                            |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScopesPrivateEndpointConnection_Spec                                              |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScopesScopedResource                                                              |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScopesScopedResource_STATUS                                                       |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkScopesScopedResource_Spec                                                         |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkServiceConnectionState                                                            |           |                  |                  |                  |           |           | v20210901 |                  |
+| PrivateLinkServiceConnectionState_STATUS                                                     |           |                  |                  |                  |           |           | v20210901 |                  |
+| ReceiverStatus_STATUS                                                                        |           |                  |                  |                  |           |           |           | v20230301preview |
+| ScopedResourceProperties                                                                     |           |                  |                  |                  |           |           | v20210901 |                  |
+| ScopedResourceProperties_ProvisioningState_STATUS                                            |           |                  |                  |                  |           |           | v20210901 |                  |
+| ScopedResourceProperties_STATUS                                                              |           |                  |                  |                  |           |           | v20210901 |                  |
+| SinkConfiguration                                                                            |           |                  | v20180601preview |                  |           |           |           |                  |
+| SinkConfiguration_Kind                                                                       |           |                  | v20180601preview |                  |           |           |           |                  |
+| SinkConfiguration_Kind_STATUS                                                                |           |                  | v20180601preview |                  |           |           |           |                  |
+| SinkConfiguration_STATUS                                                                     |           |                  | v20180601preview |                  |           |           |           |                  |
+| SmsReceiver                                                                                  |           |                  |                  |                  |           |           |           | v20230301preview |
+| SmsReceiver_STATUS                                                                           |           |                  |                  |                  |           |           |           | v20230301preview |
+| SystemData_CreatedByType_STATUS                                                              | v20160301 |                  |                  | v20200301preview | v20201120 | v20210308 | v20210901 |                  |
+| SystemData_LastModifiedByType_STATUS                                                         | v20160301 |                  |                  | v20200301preview | v20201120 | v20210308 | v20210901 |                  |
+| SystemData_STATUS                                                                            | v20160301 |                  |                  | v20200301preview | v20201120 | v20210308 | v20210901 |                  |
+| TenantActionGroup                                                                            |           |                  |                  |                  |           |           |           | v20230301preview |
+| TenantActionGroupResource_STATUS                                                             |           |                  |                  |                  |           |           |           | v20230301preview |
+| TenantActionGroupSpec                                                                        |           |                  |                  |                  |           |           |           | v20230301preview |
+| TenantActionGroup_STATUS                                                                     |           |                  |                  |                  |           |           |           | v20230301preview |
+| TenantActionGroup_Spec                                                                       |           |                  |                  |                  |           |           |           | v20230301preview |
+| VoiceReceiver                                                                                |           |                  |                  |                  |           |           |           | v20230301preview |
+| VoiceReceiver_STATUS                                                                         |           |                  |                  |                  |           |           |           | v20230301preview |
+| WebhookReceiver                                                                              |           |                  |                  |                  |           |           |           | v20230301preview |
+| WebhookReceiver_STATUS                                                                       |           |                  |                  |                  |           |           |           | v20230301preview |
+| WorkbookTemplate                                                                             |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplateGallery                                                                      |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplateGallery_STATUS                                                               |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplateLocalizedGallery                                                             |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplateLocalizedGallery_STATUS                                                      |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplateProperties                                                                   |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplateProperties_STATUS                                                            |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplate_STATUS                                                                      |           |                  |                  |                  | v20201120 |           |           |                  |
+| WorkbookTemplate_Spec                                                                        |           |                  |                  |                  | v20201120 |           |           |                  |

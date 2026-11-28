@@ -38,26 +38,45 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
+	asoapim "github.com/Azure/azure-service-operator/v2/api/apimanagement/v20240501/storage"
 	asoapp "github.com/Azure/azure-service-operator/v2/api/app/v20250101/storage"
+	asoappconfig "github.com/Azure/azure-service-operator/v2/api/appconfiguration/v20240601/storage"
+	asobatch "github.com/Azure/azure-service-operator/v2/api/batch/v20240701/storage"
 	asocache "github.com/Azure/azure-service-operator/v2/api/cache/v20241101/storage"
+	asoredisenterprise "github.com/Azure/azure-service-operator/v2/api/cache/v20250401/storage"
 	asocognitive "github.com/Azure/azure-service-operator/v2/api/cognitiveservices/v20250601/storage"
 	asocompute "github.com/Azure/azure-service-operator/v2/api/compute/v20220301/storage"
 	asodisk "github.com/Azure/azure-service-operator/v2/api/compute/v20240302/storage"
 	asoregistry "github.com/Azure/azure-service-operator/v2/api/containerregistry/v20251101/storage"
 	asofleet "github.com/Azure/azure-service-operator/v2/api/containerservice/v1api20250301/storage"
 	asoaks "github.com/Azure/azure-service-operator/v2/api/containerservice/v20260501/storage"
+	asodatafactory "github.com/Azure/azure-service-operator/v2/api/datafactory/v20180601/storage"
+	asodataprotection "github.com/Azure/azure-service-operator/v2/api/dataprotection/v20231101/storage"
+	asomysql "github.com/Azure/azure-service-operator/v2/api/dbformysql/v20241230/storage"
 	asopostgresql "github.com/Azure/azure-service-operator/v2/api/dbforpostgresql/v20250801/storage"
+	asodevices "github.com/Azure/azure-service-operator/v2/api/devices/v20210702/storage"
+	asomongo "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240701/storage"
 	asocosmos "github.com/Azure/azure-service-operator/v2/api/documentdb/v1api20240815/storage"
+	asoeventgrid "github.com/Azure/azure-service-operator/v2/api/eventgrid/v20250215/storage"
+	asoeventhub "github.com/Azure/azure-service-operator/v2/api/eventhub/v20240101/storage"
 	asoinsights "github.com/Azure/azure-service-operator/v2/api/insights/v1api20200202/storage"
 	asokeyvault "github.com/Azure/azure-service-operator/v2/api/keyvault/v1api20230701/storage"
+	asokusto "github.com/Azure/azure-service-operator/v2/api/kusto/v1api20240413/storage"
+	asoml "github.com/Azure/azure-service-operator/v2/api/machinelearningservices/v1api20240401/storage"
 	asodns "github.com/Azure/azure-service-operator/v2/api/network/v1api20180501/storage"
 	asodnsresolver "github.com/Azure/azure-service-operator/v2/api/network/v1api20220701/storage"
+	asoasg "github.com/Azure/azure-service-operator/v2/api/network/v1api20240101/storage"
 	asoprivatedns "github.com/Azure/azure-service-operator/v2/api/network/v1api20240601/storage"
+	asowatcher "github.com/Azure/azure-service-operator/v2/api/network/v1api20241001/storage"
 	asonetwork "github.com/Azure/azure-service-operator/v2/api/network/v20250301/storage"
+	asonotificationhubs "github.com/Azure/azure-service-operator/v2/api/notificationhubs/v1api20230901/storage"
 	asoworkspace "github.com/Azure/azure-service-operator/v2/api/operationalinsights/v20250701/storage"
 	asoresources "github.com/Azure/azure-service-operator/v2/api/resources/v1api20200601/storage"
+	asoservicebus "github.com/Azure/azure-service-operator/v2/api/servicebus/v20240101/storage"
+	asosignalr "github.com/Azure/azure-service-operator/v2/api/signalrservice/v1api20240301/storage"
 	asosql "github.com/Azure/azure-service-operator/v2/api/sql/v20250101/storage"
 	asostorage "github.com/Azure/azure-service-operator/v2/api/storage/v20260601/storage"
+	asosynapse "github.com/Azure/azure-service-operator/v2/api/synapse/v20210601/storage"
 	asoweb "github.com/Azure/azure-service-operator/v2/api/web/v20260715/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/conditions"
@@ -111,7 +130,26 @@ func CreateScheme() *runtime.Scheme {
 	_ = asonetwork.AddToScheme(scheme)
 	_ = asodnsresolver.AddToScheme(scheme)
 	_ = asocache.AddToScheme(scheme)
+	_ = asoredisenterprise.AddToScheme(scheme)
+	_ = asoappconfig.AddToScheme(scheme)
+	_ = asomongo.AddToScheme(scheme)
 	_ = asodisk.AddToScheme(scheme)
+	_ = asoasg.AddToScheme(scheme)
+	_ = asowatcher.AddToScheme(scheme)
+	_ = asoservicebus.AddToScheme(scheme)
+	_ = asoeventhub.AddToScheme(scheme)
+	_ = asoeventgrid.AddToScheme(scheme)
+	_ = asoapim.AddToScheme(scheme)
+	_ = asomysql.AddToScheme(scheme)
+	_ = asosignalr.AddToScheme(scheme)
+	_ = asokusto.AddToScheme(scheme)
+	_ = asodataprotection.AddToScheme(scheme)
+	_ = asobatch.AddToScheme(scheme)
+	_ = asodevices.AddToScheme(scheme)
+	_ = asonotificationhubs.AddToScheme(scheme)
+	_ = asodatafactory.AddToScheme(scheme)
+	_ = asosynapse.AddToScheme(scheme)
+	_ = asoml.AddToScheme(scheme)
 	return scheme
 }
 
@@ -149,6 +187,7 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asonetwork.BastionHost{}, Name: "aso_network_bastionhost"},
 		{Obj: &asonetwork.DdosProtectionPlan{}, Name: "aso_network_ddosprotectionplan"},
 		{Obj: &asonetwork.FirewallPolicy{}, Name: "aso_network_firewallpolicy"},
+		{Obj: &asonetwork.FirewallPoliciesRuleCollectionGroup{}, Name: "aso_network_firewallpoliciesrulecollectiongroup"},
 		{Obj: &asonetwork.LoadBalancer{}, Name: "aso_network_loadbalancer"},
 		{Obj: &asonetwork.NatGateway{}, Name: "aso_network_natgateway"},
 		{Obj: &asonetwork.NetworkInterface{}, Name: "aso_network_networkinterface"},
@@ -161,8 +200,36 @@ func OwnerTypes() []*registration.StorageType {
 		{Obj: &asodnsresolver.DnsForwardingRuleset{}, Name: "aso_network_dnsforwardingruleset"},
 		{Obj: &asoweb.ServerFarm{}, Name: "aso_web_serverfarm"},
 		{Obj: &asosql.ServersElasticPool{}, Name: "aso_sql_serverselasticpool"},
+		{Obj: &asosql.ManagedInstance{}, Name: "aso_sql_managedinstance"},
+		{Obj: &asosql.ManagedInstancesDatabase{}, Name: "aso_sql_managedinstancesdatabase"},
 		{Obj: &asodisk.Disk{}, Name: "aso_compute_disk"},
+		{Obj: &asodisk.DiskAccess{}, Name: "aso_compute_diskaccess"},
 		{Obj: &asocache.Redis{}, Name: "aso_cache_redis"},
+		{Obj: &asoredisenterprise.RedisEnterprise{}, Name: "aso_cache_redisenterprise"},
+		{Obj: &asoappconfig.ConfigurationStore{}, Name: "aso_appconfiguration_configurationstore"},
+		{Obj: &asomongo.MongoCluster{}, Name: "aso_documentdb_mongocluster"},
+		{Obj: &asoasg.ApplicationSecurityGroup{}, Name: "aso_network_applicationsecuritygroup"},
+		{Obj: &asowatcher.NetworkWatcher{}, Name: "aso_network_networkwatcher"},
+		{Obj: &asoservicebus.Namespace{}, Name: "aso_servicebus_namespace"},
+		{Obj: &asoeventhub.Namespace{}, Name: "aso_eventhub_namespace"},
+		{Obj: &asoeventgrid.Namespace{}, Name: "aso_eventgrid_namespace"},
+		{Obj: &asoeventgrid.NamespaceTopic{}, Name: "aso_eventgrid_namespacetopic"},
+		{Obj: &asoapim.Service{}, Name: "aso_apimanagement_service"},
+		{Obj: &asoapim.Api{}, Name: "aso_apimanagement_api"},
+		{Obj: &asoapim.Product{}, Name: "aso_apimanagement_product"},
+		{Obj: &asomysql.FlexibleServer{}, Name: "aso_dbformysql_flexibleserver"},
+		{Obj: &asosignalr.SignalR{}, Name: "aso_signalrservice_signalr"},
+		{Obj: &asosignalr.Replica{}, Name: "aso_signalrservice_replica"},
+		{Obj: &asokusto.Cluster{}, Name: "aso_kusto_cluster"},
+		{Obj: &asokusto.Database{}, Name: "aso_kusto_database"},
+		{Obj: &asodataprotection.BackupVault{}, Name: "aso_dataprotection_backupvault"},
+		{Obj: &asobatch.BatchAccount{}, Name: "aso_batch_batchaccount"},
+		{Obj: &asodevices.IotHub{}, Name: "aso_devices_iothub"},
+		{Obj: &asonotificationhubs.Namespace{}, Name: "aso_notificationhubs_namespace"},
+		{Obj: &asodatafactory.Factory{}, Name: "aso_datafactory_factory"},
+		{Obj: &asosynapse.Workspace{}, Name: "aso_synapse_workspace"},
+		{Obj: &asoml.Workspace{}, Name: "aso_machinelearningservices_workspace"},
+		{Obj: &asoml.Registry{}, Name: "aso_machinelearningservices_registry"},
 	}
 }
 

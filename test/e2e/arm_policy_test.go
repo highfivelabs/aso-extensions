@@ -241,11 +241,9 @@ func TestAzurePolicy(t *testing.T) {
 	})
 
 	// A change is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(atResourceGroup), atResourceGroup); err != nil {
-		t.Fatal(err)
-	}
-	atResourceGroup.Spec.EnforcementMode = ptr(policy.PolicyAssignmentProperties_EnforcementMode_Default)
-	if err := k8s.Update(ctx, atResourceGroup); err != nil {
+	if err := change(t, atResourceGroup, func(atResourceGroup *policy.PolicyAssignment) {
+		atResourceGroup.Spec.EnforcementMode = ptr(policy.PolicyAssignmentProperties_EnforcementMode_Default)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	wantAssignment(atResourceGroupID, allowedLocationsID, func(p map[string]any) error {

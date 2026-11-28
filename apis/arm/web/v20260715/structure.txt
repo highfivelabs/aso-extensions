@@ -4,6 +4,42 @@ github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715
 APIVersion: Enum (1 value)
 └── "2026-07-15"
 
+AiGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (5 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "[a-zA-Z0-9_.()-]{0,79}$"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (1 property)
+    │   └── AiGatewayId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 Certificate: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (14 properties)
@@ -81,6 +117,348 @@ Certificate: Resource
     ├── Type: *string
     └── Valid: *bool
 
+HostingEnvironment: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (17 properties)
+│   ├── AzureName: string
+│   ├── ClusterSettings: Object (2 properties)[]
+│   │   ├── Name: *string
+│   │   └── Value: *string
+│   ├── DedicatedHostCount: *int
+│   ├── DnsSuffix: *string
+│   ├── FrontEndScaleFactor: *int
+│   ├── InternalLoadBalancingMode: *Enum (4 values)
+│   │   ├── "None"
+│   │   ├── "Publishing"
+│   │   ├── "Web"
+│   │   └── "Web, Publishing"
+│   ├── IpsslAddressCount: *int
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── MultiSize: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Tags: map[string]string
+│   ├── UpgradePreference: *Enum (4 values)
+│   │   ├── "Early"
+│   │   ├── "Late"
+│   │   ├── "Manual"
+│   │   └── "None"
+│   ├── UserWhitelistedIpRanges: string[]
+│   ├── VirtualNetwork: *Object (2 properties)
+│   │   ├── Reference: *genruntime.ResourceReference
+│   │   └── Subnet: *string
+│   └── ZoneRedundant: *bool
+└── Status: Object (28 properties)
+    ├── ClusterSettings: Object (2 properties)[]
+    │   ├── Name: *string
+    │   └── Value: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CustomDnsSuffixConfiguration: *Object (1 property)
+    │   └── Id: *string
+    ├── DedicatedHostCount: *int
+    ├── DnsSuffix: *string
+    ├── FrontEndScaleFactor: *int
+    ├── HasLinuxWorkers: *bool
+    ├── Id: *string
+    ├── InternalLoadBalancingMode: *Enum (4 values)
+    │   ├── "None"
+    │   ├── "Publishing"
+    │   ├── "Web"
+    │   └── "Web, Publishing"
+    ├── IpsslAddressCount: *int
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MaximumNumberOfMachines: *int
+    ├── MultiRoleCount: *int
+    ├── MultiSize: *string
+    ├── Name: *string
+    ├── NetworkingConfiguration: *Object (1 property)
+    │   └── Id: *string
+    ├── ProvisioningState: *Enum (5 values)
+    │   ├── "Canceled"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "InProgress"
+    │   └── "Succeeded"
+    ├── Status: *Enum (4 values)
+    │   ├── "Deleting"
+    │   ├── "Preparing"
+    │   ├── "Ready"
+    │   └── "Scaling"
+    ├── Suspended: *bool
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UpgradeAvailability: *Enum (2 values)
+    │   ├── "None"
+    │   └── "Ready"
+    ├── UpgradePreference: *Enum (4 values)
+    │   ├── "Early"
+    │   ├── "Late"
+    │   ├── "Manual"
+    │   └── "None"
+    ├── UserWhitelistedIpRanges: string[]
+    ├── VirtualNetwork: *Object (4 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── Subnet: *string
+    │   └── Type: *string
+    └── ZoneRedundant: *bool
+
+HostingEnvironmentsConfigurationCustomDnsSuffix: Resource
+├── Owner: HostingEnvironment
+├── Spec: Object (6 properties)
+│   ├── CertificateUrl: *string
+│   ├── DnsSuffix: *string
+│   ├── KeyVaultReferenceIdentity: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (11 properties)
+    ├── CertificateUrl: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DnsSuffix: *string
+    ├── Id: *string
+    ├── KeyVaultReferenceIdentity: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── ProvisioningDetails: *string
+    ├── ProvisioningState: *Enum (4 values)
+    │   ├── "Degraded"
+    │   ├── "Failed"
+    │   ├── "InProgress"
+    │   └── "Succeeded"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+HostingEnvironmentsConfigurationNetworking: Resource
+├── Owner: HostingEnvironment
+├── Spec: Object (7 properties)
+│   ├── AllowNewPrivateEndpointConnections: *bool
+│   ├── FtpEnabled: *bool
+│   ├── InboundIpAddressOverride: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── RemoteDebugEnabled: *bool
+└── Status: Object (14 properties)
+    ├── AllowNewPrivateEndpointConnections: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── ExternalInboundIpAddresses: string[]
+    ├── FtpEnabled: *bool
+    ├── Id: *string
+    ├── InboundIpAddressOverride: *string
+    ├── InternalInboundIpAddresses: string[]
+    ├── Kind: *string
+    ├── LinuxOutboundIpAddresses: string[]
+    ├── Name: *string
+    ├── RemoteDebugEnabled: *bool
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── WindowsOutboundIpAddresses: string[]
+
+HostingEnvironmentsPrivateEndpointConnection: Resource
+├── Owner: HostingEnvironment
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PrivateLinkServiceConnectionState: *Object (3 properties)
+│       ├── ActionsRequired: *string
+│       ├── Description: *string
+│       └── Status: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (1 property)
+    │   └── Id: *string
+    ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   └── Status: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+KubeEnvironment: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (14 properties)
+│   ├── AksResourceReference: *genruntime.ResourceReference
+│   ├── AppLogsConfiguration: *Object (2 properties)
+│   │   ├── Destination: *string
+│   │   └── LogAnalyticsConfiguration: *Object (2 properties)
+│   │       ├── CustomerId: *string
+│   │       └── SharedKey: *genruntime.SecretReference
+│   ├── ArcConfiguration: *Object (7 properties)
+│   │   ├── ArtifactStorageAccessMode: *string
+│   │   ├── ArtifactStorageClassName: *string
+│   │   ├── ArtifactStorageMountPath: *string
+│   │   ├── ArtifactStorageNodeName: *string
+│   │   ├── ArtifactsStorageType: *Enum (2 values)
+│   │   │   ├── "LocalNode"
+│   │   │   └── "NetworkFileSystem"
+│   │   ├── FrontEndServiceConfiguration: *Object (1 property)
+│   │   │   └── Kind: *Enum (2 values)
+│   │   │       ├── "LoadBalancer"
+│   │   │       └── "NodePort"
+│   │   └── KubeConfig: *genruntime.SecretReference
+│   ├── AzureName: string
+│   ├── ContainerAppsConfiguration: *Object (6 properties)
+│   │   ├── AppSubnetResourceReference: *genruntime.ResourceReference
+│   │   ├── ControlPlaneSubnetResourceReference: *genruntime.ResourceReference
+│   │   ├── DaprAIInstrumentationKey: *string
+│   │   ├── DockerBridgeCidr: *string
+│   │   ├── PlatformReservedCidr: *string
+│   │   └── PlatformReservedDnsIP: *string
+│   ├── EnvironmentType: *string
+│   ├── ExtendedLocation: *Object (1 property)
+│   │   └── Name: *string
+│   ├── InternalLoadBalancerEnabled: *bool
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── StaticIp: *string
+│   └── Tags: map[string]string
+└── Status: Object (19 properties)
+    ├── AksResourceID: *string
+    ├── AppLogsConfiguration: *Object (2 properties)
+    │   ├── Destination: *string
+    │   └── LogAnalyticsConfiguration: *Object (1 property)
+    │       └── CustomerId: *string
+    ├── ArcConfiguration: *Object (6 properties)
+    │   ├── ArtifactStorageAccessMode: *string
+    │   ├── ArtifactStorageClassName: *string
+    │   ├── ArtifactStorageMountPath: *string
+    │   ├── ArtifactStorageNodeName: *string
+    │   ├── ArtifactsStorageType: *Enum (2 values)
+    │   │   ├── "LocalNode"
+    │   │   └── "NetworkFileSystem"
+    │   └── FrontEndServiceConfiguration: *Object (1 property)
+    │       └── Kind: *Enum (2 values)
+    │           ├── "LoadBalancer"
+    │           └── "NodePort"
+    ├── Conditions: conditions.Condition[]
+    ├── ContainerAppsConfiguration: *Object (6 properties)
+    │   ├── AppSubnetResourceId: *string
+    │   ├── ControlPlaneSubnetResourceId: *string
+    │   ├── DaprAIInstrumentationKey: *string
+    │   ├── DockerBridgeCidr: *string
+    │   ├── PlatformReservedCidr: *string
+    │   └── PlatformReservedDnsIP: *string
+    ├── DefaultDomain: *string
+    ├── DeploymentErrors: *string
+    ├── EnvironmentType: *string
+    ├── ExtendedLocation: *Object (2 properties)
+    │   ├── Name: *string
+    │   └── Type: *string
+    ├── Id: *string
+    ├── InternalLoadBalancerEnabled: *bool
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (10 values)
+    │   ├── "Canceled"
+    │   ├── "Failed"
+    │   ├── "InfrastructureSetupComplete"
+    │   ├── "InfrastructureSetupInProgress"
+    │   ├── "InitializationInProgress"
+    │   ├── "ScheduledForDelete"
+    │   ├── "Succeeded"
+    │   ├── "UpgradeFailed"
+    │   ├── "UpgradeRequested"
+    │   └── "Waiting"
+    ├── StaticIp: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 SitesBasicPublishingCredentialsPolicyFtp: Resource
 ├── Owner: Site
 ├── Spec: Object (4 properties)
@@ -144,6 +522,84 @@ SitesBasicPublishingCredentialsPolicyScm: Resource
     │       ├── "ManagedIdentity"
     │       └── "User"
     └── Type: *string
+
+SitesCertificate: Resource
+├── Owner: Site
+├── Spec: Object (14 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[A-z][A-z0-9]*$"
+│   ├── CanonicalName: *string
+│   ├── DomainValidationMethod: *string
+│   ├── HostNames: string[]
+│   ├── KeyVaultReference: *genruntime.ResourceReference
+│   ├── KeyVaultSecretName: *string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PfxBlob: *genruntime.SecretReference
+│   ├── ServerFarmReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (28 properties)
+    ├── CanonicalName: *string
+    ├── CerBlob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DomainValidationMethod: *string
+    ├── ExpirationDate: *string
+    ├── FriendlyName: *string
+    ├── HostNames: string[]
+    ├── HostingEnvironmentProfile: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   └── Type: *string
+    ├── Id: *string
+    ├── IssueDate: *string
+    ├── Issuer: *string
+    ├── KeyVaultId: *string
+    ├── KeyVaultSecretName: *string
+    ├── KeyVaultSecretStatus: *Enum (11 values)
+    │   ├── "AzureServiceUnauthorizedToAccessKeyVault"
+    │   ├── "CertificateOrderFailed"
+    │   ├── "ExternalPrivateKey"
+    │   ├── "Initialized"
+    │   ├── "KeyVaultDoesNotExist"
+    │   ├── "KeyVaultSecretDoesNotExist"
+    │   ├── "OperationNotPermittedOnKeyVault"
+    │   ├── "Succeeded"
+    │   ├── "Unknown"
+    │   ├── "UnknownError"
+    │   └── "WaitingOnCertificateOrder"
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Password: *string
+    ├── PublicKeyHash: *string
+    ├── SelfLink: *string
+    ├── ServerFarmId: *string
+    ├── SiteName: *string
+    ├── SubjectName: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Thumbprint: *string
+    ├── Type: *string
+    └── Valid: *bool
 
 SitesConfigAuthSettingsV2: Resource
 ├── Owner: Site
@@ -584,6 +1040,96 @@ SitesConfigSlotConfigNames: Resource
     │       └── "User"
     └── Type: *string
 
+SitesDomainOwnershipIdentifier: Resource
+├── Owner: Site
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Id: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertiesId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesFunction: Resource
+├── Owner: Site
+├── Spec: Object (17 properties)
+│   ├── AzureName: string
+│   ├── Config: *v1.JSON
+│   ├── Config_Href: *string
+│   ├── Files: map[string]string
+│   ├── Function_App_Id: *string
+│   ├── Href: *string
+│   ├── Invoke_Url_Template: *string
+│   ├── IsDisabled: *bool
+│   ├── Kind: *string
+│   ├── Language: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Script_Href: *string
+│   ├── Script_Root_Path_Href: *string
+│   ├── Secrets_File_Href: *string
+│   ├── Test_Data: *string
+│   └── Test_Data_Href: *string
+└── Status: Object (19 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Config: *v1.JSON
+    ├── Config_Href: *string
+    ├── Files: map[string]string
+    ├── Function_App_Id: *string
+    ├── Href: *string
+    ├── Id: *string
+    ├── Invoke_Url_Template: *string
+    ├── IsDisabled: *bool
+    ├── Kind: *string
+    ├── Language: *string
+    ├── Name: *string
+    ├── Script_Href: *string
+    ├── Script_Root_Path_Href: *string
+    ├── Secrets_File_Href: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Test_Data: *string
+    ├── Test_Data_Href: *string
+    └── Type: *string
+
 SitesHostNameBinding: Resource
 ├── Owner: Site
 ├── Spec: Object (12 properties)
@@ -649,6 +1195,301 @@ SitesHostNameBinding: Resource
     ├── Thumbprint: *string
     ├── Type: *string
     └── VirtualIP: *string
+
+SitesHybridConnection: Resource
+├── Owner: Site
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── BiztalkUri: *string
+│   ├── EntityConnectionString: *genruntime.SecretReference
+│   ├── EntityName: *string
+│   ├── Hostname: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Port: *int
+│   ├── ResourceConnectionString: *genruntime.SecretReference
+│   └── ResourceType: *string
+└── Status: Object (11 properties)
+    ├── BiztalkUri: *string
+    ├── Conditions: conditions.Condition[]
+    ├── EntityName: *string
+    ├── Hostname: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Port: *int
+    ├── ResourceType: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesPremieraddon: Resource
+├── Owner: Site
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── MarketplaceOffer: *string
+│   ├── MarketplacePublisher: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Product: *string
+│   ├── Sku: *string
+│   ├── Tags: map[string]string
+│   └── Vendor: *string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MarketplaceOffer: *string
+    ├── MarketplacePublisher: *string
+    ├── Name: *string
+    ├── Product: *string
+    ├── Sku: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── Vendor: *string
+
+SitesPrivateAccess: Resource
+├── Owner: Site
+├── Spec: Object (5 properties)
+│   ├── Enabled: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── VirtualNetworks: Object (4 properties)[]
+│       ├── Key: *int
+│       ├── Name: *string
+│       ├── ResourceReference: *genruntime.ResourceReference
+│       └── Subnets: Object (2 properties)[]
+│           ├── Key: *int
+│           └── Name: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Enabled: *bool
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── VirtualNetworks: Object (4 properties)[]
+        ├── Key: *int
+        ├── Name: *string
+        ├── ResourceId: *string
+        └── Subnets: Object (2 properties)[]
+            ├── Key: *int
+            └── Name: *string
+
+SitesPrivateEndpointConnection: Resource
+├── Owner: Site
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PrivateLinkServiceConnectionState: *Object (3 properties)
+│       ├── ActionsRequired: *string
+│       ├── Description: *string
+│       └── Status: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (1 property)
+    │   └── Id: *string
+    ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   └── Status: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesPublicCertificate: Resource
+├── Owner: Site
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Blob: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PublicCertificateLocation: *Enum (3 values)
+│       ├── "CurrentUserMy"
+│       ├── "LocalMachineMy"
+│       └── "Unknown"
+└── Status: Object (9 properties)
+    ├── Blob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PublicCertificateLocation: *Enum (3 values)
+    │   ├── "CurrentUserMy"
+    │   ├── "LocalMachineMy"
+    │   └── "Unknown"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Thumbprint: *string
+    └── Type: *string
+
+SitesSitecontainer: Resource
+├── Owner: Site
+├── Spec: Object (15 properties)
+│   ├── AuthType: *Enum (4 values)
+│   │   ├── "Anonymous"
+│   │   ├── "SystemIdentity"
+│   │   ├── "UserAssigned"
+│   │   └── "UserCredentials"
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "(^[a-zA-Z0-9]$)|(^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$)"
+│   ├── EnvironmentVariables: Object (2 properties)[]
+│   │   ├── Name: *string
+│   │   └── Value: *string
+│   ├── Image: *string
+│   ├── InheritAppSettingsAndConnectionStrings: *bool
+│   ├── IsMain: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PasswordSecret: *genruntime.SecretReference
+│   ├── StartUpCommand: *string
+│   ├── TargetPort: *string
+│   ├── UserManagedIdentityClientId: *string
+│   ├── UserName: *string
+│   └── VolumeMounts: Object (4 properties)[]
+│       ├── ContainerMountPath: *string
+│       ├── Data: *string
+│       ├── ReadOnly: *bool
+│       └── VolumeSubPath: *string
+└── Status: Object (18 properties)
+    ├── AuthType: *Enum (4 values)
+    │   ├── "Anonymous"
+    │   ├── "SystemIdentity"
+    │   ├── "UserAssigned"
+    │   └── "UserCredentials"
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedTime: *string
+    ├── EnvironmentVariables: Object (2 properties)[]
+    │   ├── Name: *string
+    │   └── Value: *string
+    ├── Id: *string
+    ├── Image: *string
+    ├── InheritAppSettingsAndConnectionStrings: *bool
+    ├── IsMain: *bool
+    ├── Kind: *string
+    ├── LastModifiedTime: *string
+    ├── Name: *string
+    ├── StartUpCommand: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TargetPort: *string
+    ├── Type: *string
+    ├── UserManagedIdentityClientId: *string
+    ├── UserName: *string
+    └── VolumeMounts: Object (4 properties)[]
+        ├── ContainerMountPath: *string
+        ├── Data: *string
+        ├── ReadOnly: *bool
+        └── VolumeSubPath: *string
 
 SitesSlot: Resource
 ├── Owner: Site
@@ -1571,6 +2412,641 @@ SitesSlot: Resource
     ├── VirtualNetworkSubnetId: *string
     └── WorkloadProfileName: *string
 
+SitesSlotsBasicPublishingCredentialsPolicyFtp: Resource
+├── Owner: SitesSlot
+├── Spec: Object (4 properties)
+│   ├── Allow: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (7 properties)
+    ├── Allow: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsBasicPublishingCredentialsPolicyScm: Resource
+├── Owner: SitesSlot
+├── Spec: Object (4 properties)
+│   ├── Allow: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (7 properties)
+    ├── Allow: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsCertificate: Resource
+├── Owner: SitesSlot
+├── Spec: Object (14 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[A-z][A-z0-9]*$"
+│   ├── CanonicalName: *string
+│   ├── DomainValidationMethod: *string
+│   ├── HostNames: string[]
+│   ├── KeyVaultReference: *genruntime.ResourceReference
+│   ├── KeyVaultSecretName: *string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PfxBlob: *genruntime.SecretReference
+│   ├── ServerFarmReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (28 properties)
+    ├── CanonicalName: *string
+    ├── CerBlob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DomainValidationMethod: *string
+    ├── ExpirationDate: *string
+    ├── FriendlyName: *string
+    ├── HostNames: string[]
+    ├── HostingEnvironmentProfile: *Object (3 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   └── Type: *string
+    ├── Id: *string
+    ├── IssueDate: *string
+    ├── Issuer: *string
+    ├── KeyVaultId: *string
+    ├── KeyVaultSecretName: *string
+    ├── KeyVaultSecretStatus: *Enum (11 values)
+    │   ├── "AzureServiceUnauthorizedToAccessKeyVault"
+    │   ├── "CertificateOrderFailed"
+    │   ├── "ExternalPrivateKey"
+    │   ├── "Initialized"
+    │   ├── "KeyVaultDoesNotExist"
+    │   ├── "KeyVaultSecretDoesNotExist"
+    │   ├── "OperationNotPermittedOnKeyVault"
+    │   ├── "Succeeded"
+    │   ├── "Unknown"
+    │   ├── "UnknownError"
+    │   └── "WaitingOnCertificateOrder"
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Password: *string
+    ├── PublicKeyHash: *string
+    ├── SelfLink: *string
+    ├── ServerFarmId: *string
+    ├── SiteName: *string
+    ├── SubjectName: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Thumbprint: *string
+    ├── Type: *string
+    └── Valid: *bool
+
+SitesSlotsConfigAuthSettingsV2: Resource
+├── Owner: SitesSlot
+├── Spec: Object (8 properties)
+│   ├── GlobalValidation: *Object (4 properties)
+│   │   ├── ExcludedPaths: string[]
+│   │   ├── RedirectToProvider: *string
+│   │   ├── RequireAuthentication: *bool
+│   │   └── UnauthenticatedClientAction: *Enum (4 values)
+│   │       ├── "AllowAnonymous"
+│   │       ├── "RedirectToLoginPage"
+│   │       ├── "Return401"
+│   │       └── "Return403"
+│   ├── HttpSettings: *Object (3 properties)
+│   │   ├── ForwardProxy: *Object (3 properties)
+│   │   │   ├── Convention: *Enum (3 values)
+│   │   │   │   ├── "Custom"
+│   │   │   │   ├── "NoProxy"
+│   │   │   │   └── "Standard"
+│   │   │   ├── CustomHostHeaderName: *string
+│   │   │   └── CustomProtoHeaderName: *string
+│   │   ├── RequireHttps: *bool
+│   │   └── Routes: *Object (1 property)
+│   │       └── ApiPrefix: *string
+│   ├── IdentityProviders: *Object (9 properties)
+│   │   ├── Apple: *Object (3 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (1 property)
+│   │   │   │   └── Scopes: string[]
+│   │   │   └── Registration: *Object (2 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       └── ClientSecretSettingName: *string
+│   │   ├── AzureActiveDirectory: *Object (5 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── IsAutoProvisioned: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── DisableWWWAuthenticate: *bool
+│   │   │   │   └── LoginParameters: string[]
+│   │   │   ├── Registration: *Object (6 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   ├── ClientSecretCertificateIssuer: *string
+│   │   │   │   ├── ClientSecretCertificateSubjectAlternativeName: *string
+│   │   │   │   ├── ClientSecretCertificateThumbprint: *string
+│   │   │   │   ├── ClientSecretSettingName: *string
+│   │   │   │   └── OpenIdIssuer: *string
+│   │   │   └── Validation: *Object (3 properties)
+│   │   │       ├── AllowedAudiences: string[]
+│   │   │       ├── DefaultAuthorizationPolicy: *Object (2 properties)
+│   │   │       │   ├── AllowedApplications: string[]
+│   │   │       │   └── AllowedPrincipals: *Object (2 properties)
+│   │   │       │       ├── Groups: string[]
+│   │   │       │       └── Identities: string[]
+│   │   │       └── JwtClaimChecks: *Object (2 properties)
+│   │   │           ├── AllowedClientApplications: string[]
+│   │   │           └── AllowedGroups: string[]
+│   │   ├── AzureStaticWebApps: *Object (2 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   └── Registration: *Object (1 property)
+│   │   │       └── ClientId: *string
+│   │   ├── CustomOpenIdConnectProviders: map[string]Object (3 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── NameClaimType: *string
+│   │   │   │   └── Scopes: string[]
+│   │   │   └── Registration: *Object (3 properties)
+│   │   │       ├── ClientCredential: *Object (2 properties)
+│   │   │       │   ├── ClientSecretSettingName: *string
+│   │   │       │   └── Method: *Enum (1 value)
+│   │   │       │       └── "ClientSecretPost"
+│   │   │       ├── ClientId: *string
+│   │   │       └── OpenIdConnectConfiguration: *Object (5 properties)
+│   │   │           ├── AuthorizationEndpoint: *string
+│   │   │           ├── CertificationUri: *string
+│   │   │           ├── Issuer: *string
+│   │   │           ├── TokenEndpoint: *string
+│   │   │           └── WellKnownOpenIdConfiguration: *string
+│   │   ├── Facebook: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── GraphApiVersion: *string
+│   │   │   ├── Login: *Object (1 property)
+│   │   │   │   └── Scopes: string[]
+│   │   │   └── Registration: *Object (2 properties)
+│   │   │       ├── AppId: *string
+│   │   │       └── AppSecretSettingName: *string
+│   │   ├── GitHub: *Object (3 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (1 property)
+│   │   │   │   └── Scopes: string[]
+│   │   │   └── Registration: *Object (2 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       └── ClientSecretSettingName: *string
+│   │   ├── Google: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (1 property)
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── Registration: *Object (2 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   └── ClientSecretSettingName: *string
+│   │   │   └── Validation: *Object (1 property)
+│   │   │       └── AllowedAudiences: string[]
+│   │   ├── LegacyMicrosoftAccount: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (1 property)
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── Registration: *Object (2 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   └── ClientSecretSettingName: *string
+│   │   │   └── Validation: *Object (1 property)
+│   │   │       └── AllowedAudiences: string[]
+│   │   └── Twitter: *Object (2 properties)
+│   │       ├── Enabled: *bool
+│   │       └── Registration: *Object (2 properties)
+│   │           ├── ConsumerKey: *string
+│   │           └── ConsumerSecretSettingName: *string
+│   ├── Kind: *string
+│   ├── Login: *Object (6 properties)
+│   │   ├── AllowedExternalRedirectUrls: string[]
+│   │   ├── CookieExpiration: *Object (2 properties)
+│   │   │   ├── Convention: *Enum (2 values)
+│   │   │   │   ├── "FixedTime"
+│   │   │   │   └── "IdentityProviderDerived"
+│   │   │   └── TimeToExpiration: *string
+│   │   ├── Nonce: *Object (2 properties)
+│   │   │   ├── NonceExpirationInterval: *string
+│   │   │   └── ValidateNonce: *bool
+│   │   ├── PreserveUrlFragmentsForLogins: *bool
+│   │   ├── Routes: *Object (1 property)
+│   │   │   └── LogoutEndpoint: *string
+│   │   └── TokenStore: *Object (4 properties)
+│   │       ├── AzureBlobStorage: *Object (1 property)
+│   │       │   └── SasUrlSettingName: *string
+│   │       ├── Enabled: *bool
+│   │       ├── FileSystem: *Object (1 property)
+│   │       │   └── Directory: *string
+│   │       └── TokenRefreshExtensionHours: *float64
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Platform: *Object (3 properties)
+│       ├── ConfigFilePath: *string
+│       ├── Enabled: *bool
+│       └── RuntimeVersion: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GlobalValidation: *Object (4 properties)
+    │   ├── ExcludedPaths: string[]
+    │   ├── RedirectToProvider: *string
+    │   ├── RequireAuthentication: *bool
+    │   └── UnauthenticatedClientAction: *Enum (4 values)
+    │       ├── "AllowAnonymous"
+    │       ├── "RedirectToLoginPage"
+    │       ├── "Return401"
+    │       └── "Return403"
+    ├── HttpSettings: *Object (3 properties)
+    │   ├── ForwardProxy: *Object (3 properties)
+    │   │   ├── Convention: *Enum (3 values)
+    │   │   │   ├── "Custom"
+    │   │   │   ├── "NoProxy"
+    │   │   │   └── "Standard"
+    │   │   ├── CustomHostHeaderName: *string
+    │   │   └── CustomProtoHeaderName: *string
+    │   ├── RequireHttps: *bool
+    │   └── Routes: *Object (1 property)
+    │       └── ApiPrefix: *string
+    ├── Id: *string
+    ├── IdentityProviders: *Object (9 properties)
+    │   ├── Apple: *Object (3 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (1 property)
+    │   │   │   └── Scopes: string[]
+    │   │   └── Registration: *Object (2 properties)
+    │   │       ├── ClientId: *string
+    │   │       └── ClientSecretSettingName: *string
+    │   ├── AzureActiveDirectory: *Object (5 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── IsAutoProvisioned: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── DisableWWWAuthenticate: *bool
+    │   │   │   └── LoginParameters: string[]
+    │   │   ├── Registration: *Object (6 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   ├── ClientSecretCertificateIssuer: *string
+    │   │   │   ├── ClientSecretCertificateSubjectAlternativeName: *string
+    │   │   │   ├── ClientSecretCertificateThumbprint: *string
+    │   │   │   ├── ClientSecretSettingName: *string
+    │   │   │   └── OpenIdIssuer: *string
+    │   │   └── Validation: *Object (3 properties)
+    │   │       ├── AllowedAudiences: string[]
+    │   │       ├── DefaultAuthorizationPolicy: *Object (2 properties)
+    │   │       │   ├── AllowedApplications: string[]
+    │   │       │   └── AllowedPrincipals: *Object (2 properties)
+    │   │       │       ├── Groups: string[]
+    │   │       │       └── Identities: string[]
+    │   │       └── JwtClaimChecks: *Object (2 properties)
+    │   │           ├── AllowedClientApplications: string[]
+    │   │           └── AllowedGroups: string[]
+    │   ├── AzureStaticWebApps: *Object (2 properties)
+    │   │   ├── Enabled: *bool
+    │   │   └── Registration: *Object (1 property)
+    │   │       └── ClientId: *string
+    │   ├── CustomOpenIdConnectProviders: map[string]Object (3 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── NameClaimType: *string
+    │   │   │   └── Scopes: string[]
+    │   │   └── Registration: *Object (3 properties)
+    │   │       ├── ClientCredential: *Object (2 properties)
+    │   │       │   ├── ClientSecretSettingName: *string
+    │   │       │   └── Method: *Enum (1 value)
+    │   │       │       └── "ClientSecretPost"
+    │   │       ├── ClientId: *string
+    │   │       └── OpenIdConnectConfiguration: *Object (5 properties)
+    │   │           ├── AuthorizationEndpoint: *string
+    │   │           ├── CertificationUri: *string
+    │   │           ├── Issuer: *string
+    │   │           ├── TokenEndpoint: *string
+    │   │           └── WellKnownOpenIdConfiguration: *string
+    │   ├── Facebook: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── GraphApiVersion: *string
+    │   │   ├── Login: *Object (1 property)
+    │   │   │   └── Scopes: string[]
+    │   │   └── Registration: *Object (2 properties)
+    │   │       ├── AppId: *string
+    │   │       └── AppSecretSettingName: *string
+    │   ├── GitHub: *Object (3 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (1 property)
+    │   │   │   └── Scopes: string[]
+    │   │   └── Registration: *Object (2 properties)
+    │   │       ├── ClientId: *string
+    │   │       └── ClientSecretSettingName: *string
+    │   ├── Google: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (1 property)
+    │   │   │   └── Scopes: string[]
+    │   │   ├── Registration: *Object (2 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   └── ClientSecretSettingName: *string
+    │   │   └── Validation: *Object (1 property)
+    │   │       └── AllowedAudiences: string[]
+    │   ├── LegacyMicrosoftAccount: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (1 property)
+    │   │   │   └── Scopes: string[]
+    │   │   ├── Registration: *Object (2 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   └── ClientSecretSettingName: *string
+    │   │   └── Validation: *Object (1 property)
+    │   │       └── AllowedAudiences: string[]
+    │   └── Twitter: *Object (2 properties)
+    │       ├── Enabled: *bool
+    │       └── Registration: *Object (2 properties)
+    │           ├── ConsumerKey: *string
+    │           └── ConsumerSecretSettingName: *string
+    ├── Kind: *string
+    ├── Login: *Object (6 properties)
+    │   ├── AllowedExternalRedirectUrls: string[]
+    │   ├── CookieExpiration: *Object (2 properties)
+    │   │   ├── Convention: *Enum (2 values)
+    │   │   │   ├── "FixedTime"
+    │   │   │   └── "IdentityProviderDerived"
+    │   │   └── TimeToExpiration: *string
+    │   ├── Nonce: *Object (2 properties)
+    │   │   ├── NonceExpirationInterval: *string
+    │   │   └── ValidateNonce: *bool
+    │   ├── PreserveUrlFragmentsForLogins: *bool
+    │   ├── Routes: *Object (1 property)
+    │   │   └── LogoutEndpoint: *string
+    │   └── TokenStore: *Object (4 properties)
+    │       ├── AzureBlobStorage: *Object (1 property)
+    │       │   └── SasUrlSettingName: *string
+    │       ├── Enabled: *bool
+    │       ├── FileSystem: *Object (1 property)
+    │       │   └── Directory: *string
+    │       └── TokenRefreshExtensionHours: *float64
+    ├── Name: *string
+    ├── Platform: *Object (3 properties)
+    │   ├── ConfigFilePath: *string
+    │   ├── Enabled: *bool
+    │   └── RuntimeVersion: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsConfigLogs: Resource
+├── Owner: SitesSlot
+├── Spec: Object (7 properties)
+│   ├── ApplicationLogs: *Object (3 properties)
+│   │   ├── AzureBlobStorage: *Object (3 properties)
+│   │   │   ├── Level: *Enum (5 values)
+│   │   │   │   ├── "Error"
+│   │   │   │   ├── "Information"
+│   │   │   │   ├── "Off"
+│   │   │   │   ├── "Verbose"
+│   │   │   │   └── "Warning"
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   ├── AzureTableStorage: *Object (2 properties)
+│   │   │   ├── Level: *Enum (5 values)
+│   │   │   │   ├── "Error"
+│   │   │   │   ├── "Information"
+│   │   │   │   ├── "Off"
+│   │   │   │   ├── "Verbose"
+│   │   │   │   └── "Warning"
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   └── FileSystem: *Object (1 property)
+│   │       └── Level: *Enum (5 values)
+│   │           ├── "Error"
+│   │           ├── "Information"
+│   │           ├── "Off"
+│   │           ├── "Verbose"
+│   │           └── "Warning"
+│   ├── DetailedErrorMessages: *Object (1 property)
+│   │   └── Enabled: *bool
+│   ├── FailedRequestsTracing: *Object (1 property)
+│   │   └── Enabled: *bool
+│   ├── HttpLogs: *Object (2 properties)
+│   │   ├── AzureBlobStorage: *Object (3 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   └── FileSystem: *Object (3 properties)
+│   │       ├── Enabled: *bool
+│   │       ├── RetentionInDays: *int
+│   │       └── RetentionInMb: Validated<*int> (2 rules)
+│   │           ├── Rule 0: Maximum: 100
+│   │           └── Rule 1: Minimum: 25
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (10 properties)
+    ├── ApplicationLogs: *Object (3 properties)
+    │   ├── AzureBlobStorage: *Object (2 properties)
+    │   │   ├── Level: *Enum (5 values)
+    │   │   │   ├── "Error"
+    │   │   │   ├── "Information"
+    │   │   │   ├── "Off"
+    │   │   │   ├── "Verbose"
+    │   │   │   └── "Warning"
+    │   │   └── RetentionInDays: *int
+    │   ├── AzureTableStorage: *Object (1 property)
+    │   │   └── Level: *Enum (5 values)
+    │   │       ├── "Error"
+    │   │       ├── "Information"
+    │   │       ├── "Off"
+    │   │       ├── "Verbose"
+    │   │       └── "Warning"
+    │   └── FileSystem: *Object (1 property)
+    │       └── Level: *Enum (5 values)
+    │           ├── "Error"
+    │           ├── "Information"
+    │           ├── "Off"
+    │           ├── "Verbose"
+    │           └── "Warning"
+    ├── Conditions: conditions.Condition[]
+    ├── DetailedErrorMessages: *Object (1 property)
+    │   └── Enabled: *bool
+    ├── FailedRequestsTracing: *Object (1 property)
+    │   └── Enabled: *bool
+    ├── HttpLogs: *Object (2 properties)
+    │   ├── AzureBlobStorage: *Object (2 properties)
+    │   │   ├── Enabled: *bool
+    │   │   └── RetentionInDays: *int
+    │   └── FileSystem: *Object (3 properties)
+    │       ├── Enabled: *bool
+    │       ├── RetentionInDays: *int
+    │       └── RetentionInMb: *int
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsDomainOwnershipIdentifier: Resource
+├── Owner: SitesSlot
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Id: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertiesId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsFunction: Resource
+├── Owner: SitesSlot
+├── Spec: Object (17 properties)
+│   ├── AzureName: string
+│   ├── Config: *v1.JSON
+│   ├── Config_Href: *string
+│   ├── Files: map[string]string
+│   ├── Function_App_Id: *string
+│   ├── Href: *string
+│   ├── Invoke_Url_Template: *string
+│   ├── IsDisabled: *bool
+│   ├── Kind: *string
+│   ├── Language: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Script_Href: *string
+│   ├── Script_Root_Path_Href: *string
+│   ├── Secrets_File_Href: *string
+│   ├── Test_Data: *string
+│   └── Test_Data_Href: *string
+└── Status: Object (19 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Config: *v1.JSON
+    ├── Config_Href: *string
+    ├── Files: map[string]string
+    ├── Function_App_Id: *string
+    ├── Href: *string
+    ├── Id: *string
+    ├── Invoke_Url_Template: *string
+    ├── IsDisabled: *bool
+    ├── Kind: *string
+    ├── Language: *string
+    ├── Name: *string
+    ├── Script_Href: *string
+    ├── Script_Root_Path_Href: *string
+    ├── Secrets_File_Href: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Test_Data: *string
+    ├── Test_Data_Href: *string
+    └── Type: *string
+
 SitesSlotsHostNameBinding: Resource
 ├── Owner: SitesSlot
 ├── Spec: Object (12 properties)
@@ -1636,4 +3112,1007 @@ SitesSlotsHostNameBinding: Resource
     ├── Thumbprint: *string
     ├── Type: *string
     └── VirtualIP: *string
+
+SitesSlotsHybridConnection: Resource
+├── Owner: SitesSlot
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── BiztalkUri: *string
+│   ├── EntityConnectionString: *genruntime.SecretReference
+│   ├── EntityName: *string
+│   ├── Hostname: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Port: *int
+│   ├── ResourceConnectionString: *genruntime.SecretReference
+│   └── ResourceType: *string
+└── Status: Object (11 properties)
+    ├── BiztalkUri: *string
+    ├── Conditions: conditions.Condition[]
+    ├── EntityName: *string
+    ├── Hostname: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Port: *int
+    ├── ResourceType: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsPremieraddon: Resource
+├── Owner: SitesSlot
+├── Spec: Object (11 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── MarketplaceOffer: *string
+│   ├── MarketplacePublisher: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Product: *string
+│   ├── Sku: *string
+│   ├── Tags: map[string]string
+│   └── Vendor: *string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MarketplaceOffer: *string
+    ├── MarketplacePublisher: *string
+    ├── Name: *string
+    ├── Product: *string
+    ├── Sku: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── Vendor: *string
+
+SitesSlotsPrivateAccess: Resource
+├── Owner: SitesSlot
+├── Spec: Object (5 properties)
+│   ├── Enabled: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── VirtualNetworks: Object (4 properties)[]
+│       ├── Key: *int
+│       ├── Name: *string
+│       ├── ResourceReference: *genruntime.ResourceReference
+│       └── Subnets: Object (2 properties)[]
+│           ├── Key: *int
+│           └── Name: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Enabled: *bool
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── VirtualNetworks: Object (4 properties)[]
+        ├── Key: *int
+        ├── Name: *string
+        ├── ResourceId: *string
+        └── Subnets: Object (2 properties)[]
+            ├── Key: *int
+            └── Name: *string
+
+SitesSlotsPrivateEndpointConnection: Resource
+├── Owner: SitesSlot
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PrivateLinkServiceConnectionState: *Object (3 properties)
+│       ├── ActionsRequired: *string
+│       ├── Description: *string
+│       └── Status: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (1 property)
+    │   └── Id: *string
+    ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   └── Status: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsPublicCertificate: Resource
+├── Owner: SitesSlot
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Blob: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PublicCertificateLocation: *Enum (3 values)
+│       ├── "CurrentUserMy"
+│       ├── "LocalMachineMy"
+│       └── "Unknown"
+└── Status: Object (9 properties)
+    ├── Blob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PublicCertificateLocation: *Enum (3 values)
+    │   ├── "CurrentUserMy"
+    │   ├── "LocalMachineMy"
+    │   └── "Unknown"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Thumbprint: *string
+    └── Type: *string
+
+SitesSlotsSitecontainer: Resource
+├── Owner: SitesSlot
+├── Spec: Object (15 properties)
+│   ├── AuthType: *Enum (4 values)
+│   │   ├── "Anonymous"
+│   │   ├── "SystemIdentity"
+│   │   ├── "UserAssigned"
+│   │   └── "UserCredentials"
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "(^[a-zA-Z0-9]$)|(^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$)"
+│   ├── EnvironmentVariables: Object (2 properties)[]
+│   │   ├── Name: *string
+│   │   └── Value: *string
+│   ├── Image: *string
+│   ├── InheritAppSettingsAndConnectionStrings: *bool
+│   ├── IsMain: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PasswordSecret: *genruntime.SecretReference
+│   ├── StartUpCommand: *string
+│   ├── TargetPort: *string
+│   ├── UserManagedIdentityClientId: *string
+│   ├── UserName: *string
+│   └── VolumeMounts: Object (4 properties)[]
+│       ├── ContainerMountPath: *string
+│       ├── Data: *string
+│       ├── ReadOnly: *bool
+│       └── VolumeSubPath: *string
+└── Status: Object (18 properties)
+    ├── AuthType: *Enum (4 values)
+    │   ├── "Anonymous"
+    │   ├── "SystemIdentity"
+    │   ├── "UserAssigned"
+    │   └── "UserCredentials"
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedTime: *string
+    ├── EnvironmentVariables: Object (2 properties)[]
+    │   ├── Name: *string
+    │   └── Value: *string
+    ├── Id: *string
+    ├── Image: *string
+    ├── InheritAppSettingsAndConnectionStrings: *bool
+    ├── IsMain: *bool
+    ├── Kind: *string
+    ├── LastModifiedTime: *string
+    ├── Name: *string
+    ├── StartUpCommand: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── TargetPort: *string
+    ├── Type: *string
+    ├── UserManagedIdentityClientId: *string
+    ├── UserName: *string
+    └── VolumeMounts: Object (4 properties)[]
+        ├── ContainerMountPath: *string
+        ├── Data: *string
+        ├── ReadOnly: *bool
+        └── VolumeSubPath: *string
+
+SitesSlotsSourcecontrol: Resource
+├── Owner: SitesSlot
+├── Spec: Object (10 properties)
+│   ├── Branch: *string
+│   ├── DeploymentRollbackEnabled: *bool
+│   ├── GitHubActionConfiguration: *Object (4 properties)
+│   │   ├── CodeConfiguration: *Object (2 properties)
+│   │   │   ├── RuntimeStack: *string
+│   │   │   └── RuntimeVersion: *string
+│   │   ├── ContainerConfiguration: *Object (4 properties)
+│   │   │   ├── ImageName: *string
+│   │   │   ├── Password: *genruntime.SecretReference
+│   │   │   ├── ServerUrl: *string
+│   │   │   └── Username: *string
+│   │   ├── GenerateWorkflowFile: *bool
+│   │   └── IsLinux: *bool
+│   ├── IsGitHubAction: *bool
+│   ├── IsManualIntegration: *bool
+│   ├── IsMercurial: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── RepoUrl: *string
+└── Status: Object (13 properties)
+    ├── Branch: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DeploymentRollbackEnabled: *bool
+    ├── GitHubActionConfiguration: *Object (4 properties)
+    │   ├── CodeConfiguration: *Object (2 properties)
+    │   │   ├── RuntimeStack: *string
+    │   │   └── RuntimeVersion: *string
+    │   ├── ContainerConfiguration: *Object (3 properties)
+    │   │   ├── ImageName: *string
+    │   │   ├── ServerUrl: *string
+    │   │   └── Username: *string
+    │   ├── GenerateWorkflowFile: *bool
+    │   └── IsLinux: *bool
+    ├── Id: *string
+    ├── IsGitHubAction: *bool
+    ├── IsManualIntegration: *bool
+    ├── IsMercurial: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── RepoUrl: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SitesSlotsVirtualNetworkConnection: Resource
+├── Owner: SitesSlot
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── CertBlob: *string
+│   ├── DnsServers: *string
+│   ├── IsSwift: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── VnetResourceReference: *genruntime.ResourceReference
+└── Status: Object (13 properties)
+    ├── CertBlob: *string
+    ├── CertThumbprint: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DnsServers: *string
+    ├── Id: *string
+    ├── IsSwift: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── ResyncRequired: *bool
+    ├── Routes: Object (1 property)[]
+    │   └── Id: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── VnetResourceId: *string
+
+SitesSlotsVirtualNetworkConnectionsGateway: Resource
+├── Owner: SitesSlotsVirtualNetworkConnection
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── VnetName: *string
+│   └── VpnPackageUri: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    ├── VnetName: *string
+    └── VpnPackageUri: *string
+
+SitesVirtualNetworkConnection: Resource
+├── Owner: Site
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── CertBlob: *string
+│   ├── DnsServers: *string
+│   ├── IsSwift: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── VnetResourceReference: *genruntime.ResourceReference
+└── Status: Object (13 properties)
+    ├── CertBlob: *string
+    ├── CertThumbprint: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DnsServers: *string
+    ├── Id: *string
+    ├── IsSwift: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── ResyncRequired: *bool
+    ├── Routes: Object (1 property)[]
+    │   └── Id: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── VnetResourceId: *string
+
+SitesVirtualNetworkConnectionsGateway: Resource
+├── Owner: SitesVirtualNetworkConnection
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── VnetName: *string
+│   └── VpnPackageUri: *string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    ├── VnetName: *string
+    └── VpnPackageUri: *string
+
+StaticSite: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (18 properties)
+│   ├── AllowConfigFileUpdates: *bool
+│   ├── AzureName: string
+│   ├── Branch: *string
+│   ├── BuildProperties: *Object (8 properties)
+│   │   ├── ApiBuildCommand: *string
+│   │   ├── ApiLocation: *string
+│   │   ├── AppArtifactLocation: *string
+│   │   ├── AppBuildCommand: *string
+│   │   ├── AppLocation: *string
+│   │   ├── GithubActionSecretNameOverride: *string
+│   │   ├── OutputLocation: *string
+│   │   └── SkipGithubActionWorkflowGeneration: *bool
+│   ├── EnterpriseGradeCdnStatus: *Enum (4 values)
+│   │   ├── "Disabled"
+│   │   ├── "Disabling"
+│   │   ├── "Enabled"
+│   │   └── "Enabling"
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned, UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Provider: *string
+│   ├── PublicNetworkAccess: *string
+│   ├── RepositoryToken: *genruntime.SecretReference
+│   ├── RepositoryUrl: *string
+│   ├── Sku: *Object (8 properties)
+│   │   ├── Capabilities: Object (3 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   ├── Reason: *string
+│   │   │   └── Value: *string
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Locations: string[]
+│   │   ├── Name: *string
+│   │   ├── Size: *string
+│   │   ├── SkuCapacity: *Object (5 properties)
+│   │   │   ├── Default: *int
+│   │   │   ├── ElasticMaximum: *int
+│   │   │   ├── Maximum: *int
+│   │   │   ├── Minimum: *int
+│   │   │   └── ScaleType: *string
+│   │   └── Tier: *string
+│   ├── StagingEnvironmentPolicy: *Enum (2 values)
+│   │   ├── "Disabled"
+│   │   └── "Enabled"
+│   ├── Tags: map[string]string
+│   └── TemplateProperties: *Object (5 properties)
+│       ├── Description: *string
+│       ├── IsPrivate: *bool
+│       ├── Owner: *string
+│       ├── RepositoryName: *string
+│       └── TemplateRepositoryUrl: *string
+└── Status: Object (27 properties)
+    ├── AllowConfigFileUpdates: *bool
+    ├── Branch: *string
+    ├── BuildProperties: *Object (8 properties)
+    │   ├── ApiBuildCommand: *string
+    │   ├── ApiLocation: *string
+    │   ├── AppArtifactLocation: *string
+    │   ├── AppBuildCommand: *string
+    │   ├── AppLocation: *string
+    │   ├── GithubActionSecretNameOverride: *string
+    │   ├── OutputLocation: *string
+    │   └── SkipGithubActionWorkflowGeneration: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── ContentDistributionEndpoint: *string
+    ├── CustomDomains: string[]
+    ├── DatabaseConnections: Object (5 properties)[]
+    │   ├── ConfigurationFiles: Object (3 properties)[]
+    │   │   ├── Contents: *string
+    │   │   ├── FileName: *string
+    │   │   └── Type: *string
+    │   ├── ConnectionIdentity: *string
+    │   ├── Name: *string
+    │   ├── Region: *string
+    │   └── ResourceId: *string
+    ├── DefaultHostname: *string
+    ├── EnterpriseGradeCdnStatus: *Enum (4 values)
+    │   ├── "Disabled"
+    │   ├── "Disabling"
+    │   ├── "Enabled"
+    │   └── "Enabling"
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned, UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── KeyVaultReferenceIdentity: *string
+    ├── Kind: *string
+    ├── LinkedBackends: Object (4 properties)[]
+    │   ├── BackendResourceId: *string
+    │   ├── CreatedOn: *string
+    │   ├── ProvisioningState: *string
+    │   └── Region: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PrivateEndpointConnections: Object (12 properties)[]
+    │   ├── Error: *Object (8 properties)
+    │   │   ├── Code: *string
+    │   │   ├── Details: Object (6 properties)[]
+    │   │   │   ├── Code: *string
+    │   │   │   ├── ExtendedCode: *string
+    │   │   │   ├── Message: *string
+    │   │   │   ├── MessageTemplate: *string
+    │   │   │   ├── Parameters: string[]
+    │   │   │   └── Target: *string
+    │   │   ├── ExtendedCode: *string
+    │   │   ├── InnerErrors: Object (6 properties)[]
+    │   │   │   ├── Code: *string
+    │   │   │   ├── ExtendedCode: *string
+    │   │   │   ├── Message: *string
+    │   │   │   ├── MessageTemplate: *string
+    │   │   │   ├── Parameters: string[]
+    │   │   │   └── Target: *string
+    │   │   ├── Message: *string
+    │   │   ├── MessageTemplate: *string
+    │   │   ├── Parameters: string[]
+    │   │   └── Target: *string
+    │   ├── Id: *string
+    │   ├── Identity: *Object (4 properties)
+    │   │   ├── PrincipalId: *string
+    │   │   ├── TenantId: *string
+    │   │   ├── Type: *Enum (4 values)
+    │   │   │   ├── "None"
+    │   │   │   ├── "SystemAssigned"
+    │   │   │   ├── "SystemAssigned, UserAssigned"
+    │   │   │   └── "UserAssigned"
+    │   │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │   │       ├── ClientId: *string
+    │   │       └── PrincipalId: *string
+    │   ├── Location: *string
+    │   ├── Name: *string
+    │   ├── Plan: *Object (5 properties)
+    │   │   ├── Name: *string
+    │   │   ├── Product: *string
+    │   │   ├── PromotionCode: *string
+    │   │   ├── Publisher: *string
+    │   │   └── Version: *string
+    │   ├── Properties: *Object (8 properties)
+    │   │   ├── Id: *string
+    │   │   ├── IpAddresses: string[]
+    │   │   ├── Kind: *string
+    │   │   ├── Name: *string
+    │   │   ├── PrivateEndpoint: *Object (1 property)
+    │   │   │   └── Id: *string
+    │   │   ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   │   │   ├── ActionsRequired: *string
+    │   │   │   ├── Description: *string
+    │   │   │   └── Status: *string
+    │   │   ├── ProvisioningState: *string
+    │   │   └── Type: *string
+    │   ├── Sku: *Object (8 properties)
+    │   │   ├── Capabilities: Object (3 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── Reason: *string
+    │   │   │   └── Value: *string
+    │   │   ├── Capacity: *int
+    │   │   ├── Family: *string
+    │   │   ├── Locations: string[]
+    │   │   ├── Name: *string
+    │   │   ├── Size: *string
+    │   │   ├── SkuCapacity: *Object (5 properties)
+    │   │   │   ├── Default: *int
+    │   │   │   ├── ElasticMaximum: *int
+    │   │   │   ├── Maximum: *int
+    │   │   │   ├── Minimum: *int
+    │   │   │   └── ScaleType: *string
+    │   │   └── Tier: *string
+    │   ├── Status: *string
+    │   ├── Tags: map[string]string
+    │   ├── Type: *string
+    │   └── Zones: string[]
+    ├── Provider: *string
+    ├── PublicNetworkAccess: *string
+    ├── RepositoryUrl: *string
+    ├── Sku: *Object (8 properties)
+    │   ├── Capabilities: Object (3 properties)[]
+    │   │   ├── Name: *string
+    │   │   ├── Reason: *string
+    │   │   └── Value: *string
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Locations: string[]
+    │   ├── Name: *string
+    │   ├── Size: *string
+    │   ├── SkuCapacity: *Object (5 properties)
+    │   │   ├── Default: *int
+    │   │   ├── ElasticMaximum: *int
+    │   │   ├── Maximum: *int
+    │   │   ├── Minimum: *int
+    │   │   └── ScaleType: *string
+    │   └── Tier: *string
+    ├── StagingEnvironmentPolicy: *Enum (2 values)
+    │   ├── "Disabled"
+    │   └── "Enabled"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    ├── TemplateProperties: *Object (5 properties)
+    │   ├── Description: *string
+    │   ├── IsPrivate: *bool
+    │   ├── Owner: *string
+    │   ├── RepositoryName: *string
+    │   └── TemplateRepositoryUrl: *string
+    ├── Type: *string
+    └── UserProvidedFunctionApps: Object (7 properties)[]
+        ├── CreatedOn: *string
+        ├── FunctionAppRegion: *string
+        ├── FunctionAppResourceId: *string
+        ├── Id: *string
+        ├── Kind: *string
+        ├── Name: *string
+        └── Type: *string
+
+StaticSitesBasicAuth: Resource
+├── Owner: StaticSite
+├── Spec: Object (7 properties)
+│   ├── ApplicableEnvironmentsMode: *string
+│   ├── Environments: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   └── SecretUrl: *string
+└── Status: Object (10 properties)
+    ├── ApplicableEnvironmentsMode: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Environments: string[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SecretState: *string
+    ├── SecretUrl: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+StaticSitesCustomDomain: Resource
+├── Owner: StaticSite
+├── Spec: Object (5 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── ValidationMethod: *string
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedOn: *string
+    ├── DomainName: *string
+    ├── ErrorMessage: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Status: *Enum (7 values)
+    │   ├── "Adding"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Ready"
+    │   ├── "RetrievingValidationToken"
+    │   ├── "Unhealthy"
+    │   └── "Validating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Type: *string
+    └── ValidationToken: *string
+
+StaticSitesDatabaseConnection: Resource
+├── Owner: StaticSite
+├── Spec: Object (8 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[a-zA-Z0-9]+$"
+│   ├── ConnectionIdentity: *string
+│   ├── ConnectionString: *genruntime.SecretReference
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Region: *string
+│   └── ResourceReference: *genruntime.ResourceReference
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConfigurationFiles: Object (3 properties)[]
+    │   ├── Contents: *string
+    │   ├── FileName: *string
+    │   └── Type: *string
+    ├── ConnectionIdentity: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Region: *string
+    ├── ResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+StaticSitesLinkedBackend: Resource
+├── Owner: StaticSite
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── BackendResourceReference: *genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Region: *string
+└── Status: Object (10 properties)
+    ├── BackendResourceId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedOn: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── ProvisioningState: *string
+    ├── Region: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+StaticSitesPrivateEndpointConnection: Resource
+├── Owner: StaticSite
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PrivateLinkServiceConnectionState: *Object (3 properties)
+│       ├── ActionsRequired: *string
+│       ├── Description: *string
+│       └── Status: *string
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (1 property)
+    │   └── Id: *string
+    ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   └── Status: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+StaticSitesUserProvidedFunctionApp: Resource
+├── Owner: StaticSite
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── FunctionAppRegion: *string
+│   ├── FunctionAppResourceReference: *genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   └── Owner: *genruntime.KnownResourceReference
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedOn: *string
+    ├── FunctionAppRegion: *string
+    ├── FunctionAppResourceId: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
 

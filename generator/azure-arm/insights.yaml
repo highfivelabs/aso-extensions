@@ -35,8 +35,22 @@ typeFilters:
     group: insights
     version: v20230301preview
     because: the only version of tenantActionGroups
+  - action: include
+    group: insights
+    version: v20180501preview
+    because: >-
+      Application Insights smart detection rules (componentProactiveDetection_API.json;
+      docs/plan.md f57): the newest version, and the only one the generator sees as a
+      resource (the stable 2015-05-01 is now a TypeSpec openapi.json whose body is
+      not marked x-ms-azure-resource and has no id or type)
 
 groupModelConfiguration:
+  # Smart detection rules of ASO's Component (2018-05-01-preview; docs/plan.md
+  # f57): one per rule name Azure defines (slowpageloadtime, ...); no DELETE.
+  2018-05-01-preview:
+    Components_ProactiveDetectionConfig:
+      $exportAs: ComponentsProactiveDetectionConfig
+      $supportedFrom: v0.1.0
   2016-03-01:
     LogProfile:
       $exportAs: LogProfile

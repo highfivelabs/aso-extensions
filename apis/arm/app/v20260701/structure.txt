@@ -4,6 +4,249 @@ github.com/highfivelabs/aso-extensions/apis/arm/app/v20260701
 APIVersion: Enum (1 value)
 └── "2026-07-01"
 
+Agent: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (7 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[A-Za-z]([-A-Za-z0-9]{0,30}[A-Za-z0-9])$"
+│   ├── Identity: *Object (2 properties)
+│   │   ├── Type: *Enum (4 values)
+│   │   │   ├── "None"
+│   │   │   ├── "SystemAssigned"
+│   │   │   ├── "SystemAssigned,UserAssigned"
+│   │   │   └── "UserAssigned"
+│   │   └── UserAssignedIdentities: Object (1 property)[]
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (9 properties)
+│   │   ├── ActionConfiguration: *Object (3 properties)
+│   │   │   ├── AccessLevel: *Enum (2 values)
+│   │   │   │   ├── "High"
+│   │   │   │   └── "Low"
+│   │   │   ├── IdentityReference: *genruntime.ResourceReference
+│   │   │   └── Mode: *Enum (3 values)
+│   │   │       ├── "Autonomous"
+│   │   │       ├── "ReadOnly"
+│   │   │       └── "Review"
+│   │   ├── AgentIdentity: *Object (1 property)
+│   │   │   └── InitialSponsorGroupId: *string
+│   │   ├── DefaultModel: *Object (2 properties)
+│   │   │   ├── Name: *string
+│   │   │   └── Provider: *string
+│   │   ├── IncidentManagementConfiguration: *Object (5 properties)
+│   │   │   ├── ConnectionKey: *genruntime.SecretReference
+│   │   │   ├── ConnectionName: *string
+│   │   │   ├── ConnectionUrl: *string
+│   │   │   ├── OboUser: *string
+│   │   │   └── Type: *string
+│   │   ├── KnowledgeGraphConfiguration: *Object (2 properties)
+│   │   │   ├── IdentityReference: *genruntime.ResourceReference
+│   │   │   └── ManagedResourcesReferences: genruntime.ResourceReference[]
+│   │   ├── LogConfiguration: *Object (1 property)
+│   │   │   └── ApplicationInsightsConfiguration: *Object (2 properties)
+│   │   │       ├── AppId: *string
+│   │   │       └── ConnectionString: *genruntime.SecretReference
+│   │   ├── SandboxConfiguration: *Object (2 properties)
+│   │   │   ├── Egress: *Object (6 properties)
+│   │   │   │   ├── AllowHttpMcpServerNetworkAccess: *bool
+│   │   │   │   ├── AllowedCodeRepositories: string[]
+│   │   │   │   ├── AllowedHosts: Validated<Validated<string> (2 rules)[]> (1 rule)
+│   │   │   │   │   ├── Rule 0: MaxLength: 253
+│   │   │   │   │   ├── Rule 1: MinLength: 1
+│   │   │   │   │   └── Rule 0: MaxItems: 100
+│   │   │   │   ├── AllowedRegistries: string[]
+│   │   │   │   ├── HttpProxy: *Object (3 properties)
+│   │   │   │   │   ├── HttpUrl: Validated<*string> (1 rule)
+│   │   │   │   │   │   └── Rule 0: Pattern: "^[a-zA-Z][a-zA-Z0-9+-.]*:[^\\s]*$"
+│   │   │   │   │   ├── HttpsUrl: Validated<*string> (1 rule)
+│   │   │   │   │   │   └── Rule 0: Pattern: "^[a-zA-Z][a-zA-Z0-9+-.]*:[^\\s]*$"
+│   │   │   │   │   └── NoProxy: Validated<string> (1 rule)[]
+│   │   │   │   │       └── Rule 0: MinLength: 1
+│   │   │   │   └── Mode: *Enum (3 values)
+│   │   │   │       ├── "AzureVNet"
+│   │   │   │       ├── "Limited"
+│   │   │   │       └── "Unrestricted"
+│   │   │   └── Packages: Validated<Object (3 properties)[]> (1 rule)
+│   │   │       ├── Name: Validated<*string> (3 rules)
+│   │   │       │   ├── Rule 0: MaxLength: 214
+│   │   │       │   ├── Rule 1: MinLength: 1
+│   │   │       │   └── Rule 2: Pattern: "^@?[A-Za-z0-9][A-Za-z0-9._-]*(/[A-Za-z0-9][A-Za-z0-9._-]*)?$"
+│   │   │       ├── PackageManager: *Enum (3 values)
+│   │   │       │   ├── "npm"
+│   │   │       │   ├── "nuget"
+│   │   │       │   └── "pip"
+│   │   │       ├── Version: Validated<*string> (3 rules)
+│   │   │       │   ├── Rule 0: MaxLength: 64
+│   │   │       │   ├── Rule 1: MinLength: 1
+│   │   │       │   └── Rule 2: Pattern: "^[A-Za-z0-9._+\\-~^<>=,*\\[\\]()]+$"
+│   │   │       └── Rule 0: MaxItems: 200
+│   │   ├── UpgradeChannel: *Enum (2 values)
+│   │   │   ├── "Preview"
+│   │   │   └── "Stable"
+│   │   └── VnetConfiguration: *Object (1 property)
+│   │       └── SubnetResourceReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (4 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   ├── Type: *Enum (4 values)
+    │   │   ├── "None"
+    │   │   ├── "SystemAssigned"
+    │   │   ├── "SystemAssigned,UserAssigned"
+    │   │   └── "UserAssigned"
+    │   └── UserAssignedIdentities: map[string]Object (2 properties)
+    │       ├── ClientId: *string
+    │       └── PrincipalId: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (14 properties)
+    │   ├── ActionConfiguration: *Object (3 properties)
+    │   │   ├── AccessLevel: *Enum (2 values)
+    │   │   │   ├── "High"
+    │   │   │   └── "Low"
+    │   │   ├── Identity: *string
+    │   │   └── Mode: *Enum (3 values)
+    │   │       ├── "Autonomous"
+    │   │       ├── "ReadOnly"
+    │   │       └── "Review"
+    │   ├── AgentEndpoint: *string
+    │   ├── AgentIdentity: *Object (3 properties)
+    │   │   ├── ClientId: *string
+    │   │   ├── Enabled: *bool
+    │   │   └── InitialSponsorGroupId: *string
+    │   ├── DefaultModel: *Object (2 properties)
+    │   │   ├── Name: *string
+    │   │   └── Provider: *string
+    │   ├── IncidentManagementConfiguration: *Object (4 properties)
+    │   │   ├── ConnectionName: *string
+    │   │   ├── ConnectionUrl: *string
+    │   │   ├── OboUser: *string
+    │   │   └── Type: *string
+    │   ├── KnowledgeGraphConfiguration: *Object (2 properties)
+    │   │   ├── Identity: *string
+    │   │   └── ManagedResources: string[]
+    │   ├── LogConfiguration: *Object (1 property)
+    │   │   └── ApplicationInsightsConfiguration: *Object (1 property)
+    │   │       └── AppId: *string
+    │   ├── OutboundIpAddresses: string[]
+    │   ├── PowerState: *Enum (2 values)
+    │   │   ├── "Running"
+    │   │   └── "Stopped"
+    │   ├── ProvisioningState: *Enum (5 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "InProgress"
+    │   │   └── "Succeeded"
+    │   ├── RunningState: *string
+    │   ├── SandboxConfiguration: *Object (2 properties)
+    │   │   ├── Egress: *Object (6 properties)
+    │   │   │   ├── AllowHttpMcpServerNetworkAccess: *bool
+    │   │   │   ├── AllowedCodeRepositories: string[]
+    │   │   │   ├── AllowedHosts: Validated<string> (2 rules)[]
+    │   │   │   │   ├── Rule 0: MaxLength: 253
+    │   │   │   │   └── Rule 1: MinLength: 1
+    │   │   │   ├── AllowedRegistries: string[]
+    │   │   │   ├── HttpProxy: *Object (3 properties)
+    │   │   │   │   ├── HttpUrl: *string
+    │   │   │   │   ├── HttpsUrl: *string
+    │   │   │   │   └── NoProxy: string[]
+    │   │   │   └── Mode: *Enum (3 values)
+    │   │   │       ├── "AzureVNet"
+    │   │   │       ├── "Limited"
+    │   │   │       └── "Unrestricted"
+    │   │   └── Packages: Object (3 properties)[]
+    │   │       ├── Name: Validated<*string> (3 rules)
+    │   │       │   ├── Rule 0: MaxLength: 214
+    │   │       │   ├── Rule 1: MinLength: 1
+    │   │       │   └── Rule 2: Pattern: "^@?[A-Za-z0-9][A-Za-z0-9._-]*(/[A-Za-z0-9][A-Za-z0-9._-]*)?$"
+    │   │       ├── PackageManager: *Enum (3 values)
+    │   │       │   ├── "npm"
+    │   │       │   ├── "nuget"
+    │   │       │   └── "pip"
+    │   │       └── Version: Validated<*string> (3 rules)
+    │   │           ├── Rule 0: MaxLength: 64
+    │   │           ├── Rule 1: MinLength: 1
+    │   │           └── Rule 2: Pattern: "^[A-Za-z0-9._+\\-~^<>=,*\\[\\]()]+$"
+    │   ├── UpgradeChannel: *Enum (2 values)
+    │   │   ├── "Preview"
+    │   │   └── "Stable"
+    │   └── VnetConfiguration: *Object (1 property)
+    │       └── SubnetResourceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+AgentsConnector: Resource
+├── Owner: Agent
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[A-Za-z]([-A-Za-z0-9]{0,30}[A-Za-z0-9])$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (5 properties)
+│       ├── DataConnectorType: *string
+│       ├── DataSource: *genruntime.SecretReference
+│       ├── Endpoint: Validated<*string> (1 rule)
+│       │   └── Rule 0: Pattern: "^[a-zA-Z][a-zA-Z0-9+-.]*:[^\\s]*$"
+│       ├── ExtendedProperties: map[string]v1.JSON
+│       └── IdentityReference: *genruntime.ResourceReference
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (6 properties)
+    │   ├── DataConnectorType: *string
+    │   ├── DeploymentError: *string
+    │   ├── Endpoint: *string
+    │   ├── ExtendedProperties: map[string]v1.JSON
+    │   ├── Identity: *string
+    │   └── ProvisioningState: *Enum (5 values)
+    │       ├── "Canceled"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "InProgress"
+    │       └── "Succeeded"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 ContainerApp: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (15 properties)
@@ -517,6 +760,62 @@ ContainerApp: Resource
     ├── Type: *string
     └── WorkloadProfileName: *string
 
+ContainerAppsPrivateEndpointConnection: Resource
+├── Owner: ContainerApp
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PrivateLinkServiceConnectionState: *Object (3 properties)
+│       ├── ActionsRequired: *string
+│       ├── Description: *string
+│       └── Status: *Enum (4 values)
+│           ├── "Approved"
+│           ├── "Disconnected"
+│           ├── "Pending"
+│           └── "Rejected"
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GroupIds: string[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (1 property)
+    │   └── Id: *string
+    ├── PrivateLinkServiceConnectionState: *Object (3 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   └── Status: *Enum (4 values)
+    │       ├── "Approved"
+    │       ├── "Disconnected"
+    │       ├── "Pending"
+    │       └── "Rejected"
+    ├── ProvisioningState: *Enum (7 values)
+    │   ├── "Canceled"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Pending"
+    │   ├── "Succeeded"
+    │   ├── "Updating"
+    │   └── "Waiting"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 ManagedEnvironmentsDotNetComponent: Resource
 ├── Owner: ManagedEnvironment
 ├── Spec: Object (6 properties)
@@ -552,6 +851,91 @@ ManagedEnvironmentsDotNetComponent: Resource
     ├── ServiceBinds: Object (2 properties)[]
     │   ├── Name: *string
     │   └── ServiceId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+SandboxGroup: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (6 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (1 property)
+│   │   └── EnvironmentReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (3 properties)
+    │   ├── DefaultDomain: *string
+    │   ├── EnvironmentId: *string
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Canceled"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "InProgress"
+    │       ├── "Succeeded"
+    │       └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+SandboxGroupsVnetConnection: Resource
+├── Owner: SandboxGroup
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (1 property)
+│       └── SubnetReference: *genruntime.ResourceReference
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Canceled"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "InProgress"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── SubnetId: *string
     ├── SystemData: *Object (6 properties)
     │   ├── CreatedAt: *string
     │   ├── CreatedBy: *string

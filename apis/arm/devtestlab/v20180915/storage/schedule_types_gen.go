@@ -171,12 +171,6 @@ type ScheduleList struct {
 	Items           []Schedule `json:"items"`
 }
 
-// Storage version of v20180915.APIVersion
-// +kubebuilder:validation:Enum={"2018-09-15"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2018-09-15")
-
 // Storage version of v20180915.Schedule_Spec
 type Schedule_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
@@ -269,90 +263,12 @@ func (schedule *Schedule_STATUS) ConvertStatusTo(destination genruntime.Converti
 	return destination.ConvertStatusFrom(schedule)
 }
 
-// Storage version of v20180915.DayDetails
-// Properties of a daily schedule.
-type DayDetails struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Time        *string                `json:"time,omitempty"`
-}
-
-// Storage version of v20180915.DayDetails_STATUS
-// Properties of a daily schedule.
-type DayDetails_STATUS struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Time        *string                `json:"time,omitempty"`
-}
-
-// Storage version of v20180915.HourDetails
-// Properties of an hourly schedule.
-type HourDetails struct {
-	Minute      *int                   `json:"minute,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20180915.HourDetails_STATUS
-// Properties of an hourly schedule.
-type HourDetails_STATUS struct {
-	Minute      *int                   `json:"minute,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20180915.NotificationSettings
-// Notification settings for a schedule.
-type NotificationSettings struct {
-	EmailRecipient     *string                `json:"emailRecipient,omitempty"`
-	NotificationLocale *string                `json:"notificationLocale,omitempty"`
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Status             *string                `json:"status,omitempty"`
-	TimeInMinutes      *int                   `json:"timeInMinutes,omitempty"`
-	WebhookUrl         *string                `json:"webhookUrl,omitempty"`
-}
-
-// Storage version of v20180915.NotificationSettings_STATUS
-// Notification settings for a schedule.
-type NotificationSettings_STATUS struct {
-	EmailRecipient     *string                `json:"emailRecipient,omitempty"`
-	NotificationLocale *string                `json:"notificationLocale,omitempty"`
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Status             *string                `json:"status,omitempty"`
-	TimeInMinutes      *int                   `json:"timeInMinutes,omitempty"`
-	WebhookUrl         *string                `json:"webhookUrl,omitempty"`
-}
-
 // Storage version of v20180915.ScheduleOperatorSpec
 // Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
 type ScheduleOperatorSpec struct {
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
 	PropertyBag          genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
-}
-
-// Storage version of v20180915.SystemData_STATUS
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	CreatedAt          *string                `json:"createdAt,omitempty"`
-	CreatedBy          *string                `json:"createdBy,omitempty"`
-	CreatedByType      *string                `json:"createdByType,omitempty"`
-	LastModifiedAt     *string                `json:"lastModifiedAt,omitempty"`
-	LastModifiedBy     *string                `json:"lastModifiedBy,omitempty"`
-	LastModifiedByType *string                `json:"lastModifiedByType,omitempty"`
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20180915.WeekDetails
-// Properties of a weekly schedule.
-type WeekDetails struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Time        *string                `json:"time,omitempty"`
-	Weekdays    []string               `json:"weekdays,omitempty"`
-}
-
-// Storage version of v20180915.WeekDetails_STATUS
-// Properties of a weekly schedule.
-type WeekDetails_STATUS struct {
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Time        *string                `json:"time,omitempty"`
-	Weekdays    []string               `json:"weekdays,omitempty"`
 }
 
 func init() {

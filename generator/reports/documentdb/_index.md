@@ -14,14 +14,27 @@ no_list: true
 | DatabaseAccountsCassandraKeyspacesTable                   | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsCassandraKeyspacesTablesThroughputSetting | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsCassandraKeyspacesThroughputSetting       | 2024-08-15  | v20240815   | v0.1.0         | -      |
+| DatabaseAccountsCassandraRoleAssignment                   | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| DatabaseAccountsCassandraRoleDefinition                   | 2026-03-15  | v20260315   | v0.1.0         | -      |
 | DatabaseAccountsGremlinDatabase                           | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsGremlinDatabasesGraph                     | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsGremlinDatabasesGraphsThroughputSetting   | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsGremlinDatabasesThroughputSetting         | 2024-08-15  | v20240815   | v0.1.0         | -      |
+| DatabaseAccountsGremlinRoleAssignment                     | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| DatabaseAccountsGremlinRoleDefinition                     | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| DatabaseAccountsMongoMIRoleAssignment                     | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| DatabaseAccountsMongoMIRoleDefinition                     | 2026-03-15  | v20260315   | v0.1.0         | -      |
 | DatabaseAccountsPrivateEndpointConnection                 | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsService                                   | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsSqlDatabasesClientEncryptionKey           | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsSqlRoleDefinition                         | 2024-08-15  | v20240815   | v0.1.0         | -      |
 | DatabaseAccountsTable                                     | 2024-08-15  | v20240815   | v0.1.0         | -      |
+| DatabaseAccountsTableRoleAssignment                       | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| DatabaseAccountsTableRoleDefinition                       | 2026-03-15  | v20260315   | v0.1.0         | -      |
 | DatabaseAccountsTablesThroughputSetting                   | 2024-08-15  | v20240815   | v0.1.0         | -      |
+| Fleet                                                     | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| FleetsFleetspace                                          | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| FleetsFleetspacesFleetspaceAccount                        | 2026-03-15  | v20260315   | v0.1.0         | -      |
+| MongoClustersPrivateEndpointConnection                    | 2024-07-01  | v20240701   | v0.1.0         | -      |
+| MongoClustersUser                                         | 2026-06-01  | v20260601   | v0.1.0         | -      |
 

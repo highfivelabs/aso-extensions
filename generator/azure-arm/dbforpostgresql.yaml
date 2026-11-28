@@ -1,0 +1,52 @@
+# PostgreSQL flexible server children ASO does not export
+# (Microsoft.DBforPostgreSQL, 2025-08-01, the version of ASO's own v20250801
+# FlexibleServer): a server's private endpoint connections (docs/plan.md
+# f38). And Azure Cosmos DB for PostgreSQL (Citus) clusters and their
+# children (2022-11-08, specification/postgresqlhsc; docs/plan.md f46), which
+# ASO does not have at all. Owned by ASO's FlexibleServer. The group is the one our hand-written
+# PostgreSQL User has (apis/dbforpostgresql/v1); the generated kinds are
+# other versions of it.
+typeFilters:
+  - action: include
+    group: dbforpostgresql
+    version: v20250801
+    because: the version of ASO's FlexibleServer (v20250801)
+  - action: include
+    group: dbforpostgresql
+    version: v20221108
+    because: Azure Cosmos DB for PostgreSQL clusters (specification/postgresqlhsc, the newest stable version; docs/plan.md f46)
+  - action: prune
+    group: dbforpostgresql
+    because: every other version is left alone
+groupModelConfiguration:
+  2025-08-01:
+    FlexibleServers_PrivateEndpointConnection:
+      $exportAs: FlexibleServersPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+  2022-11-08:
+    ServerGroupsv2:
+      $exportAs: ServerGroupsv2
+      $supportedFrom: v0.1.0
+    ServerGroupsv2_CoordinatorConfiguration:
+      $exportAs: ServerGroupsv2CoordinatorConfiguration
+      $supportedFrom: v0.1.0
+    ServerGroupsv2_NodeConfiguration:
+      $exportAs: ServerGroupsv2NodeConfiguration
+      $supportedFrom: v0.1.0
+    ServerGroupsv2_FirewallRule:
+      $exportAs: ServerGroupsv2FirewallRule
+      $supportedFrom: v0.1.0
+    ServerGroupsv2_Role:
+      $exportAs: ServerGroupsv2Role
+      $supportedFrom: v0.1.0
+    ServerGroupsv2_PrivateEndpointConnection:
+      $exportAs: ServerGroupsv2PrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    ClusterProperties:
+      AdministratorLoginPassword:
+        $importSecretMode: required
+      SourceResourceId:
+        $referenceType: arm # the source cluster of a restore or read replica (another ServerGroupsv2 or an ARM ID)
+    RoleProperties:
+      Password:
+        $importSecretMode: required

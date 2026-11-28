@@ -12,8 +12,9 @@ import (
 	"time"
 )
 
-// Budgets (Microsoft.Consumption, API 2026-06-01) and cost exports
-// (Microsoft.CostManagement, API 2026-06-01), as far as the fake models them.
+// Budgets (Microsoft.Consumption, API 2026-06-01), cost exports and
+// settings (Microsoft.CostManagement, API 2026-06-01), as far as the fake
+// models them.
 // Every rule is one the spec's descriptions state:
 //
 //   - both are kept at a Cost Management scope: a subscription, a resource
@@ -32,6 +33,9 @@ import (
 //     Custom timeframe needs a timePeriod, and a period (the data's or the
 //     schedule's recurrence) ends after it starts; a managed identity needs
 //     a location (400 each);
+//   - a Cost Management setting is named after its type, of which there is
+//     one, taginheritance (the path's enum), and its kind says the same
+//     (400 each);
 //   - an export's sasToken is never returned: what is kept, and read back,
 //     has it obfuscated, as Azure's has; a system-assigned identity is given
 //     a principal and tenant ID.
@@ -47,6 +51,7 @@ import (
 var (
 	budgetType   = regexp.MustCompile(`(?i)/providers/microsoft\.consumption/budgets/[^/]+$`)
 	exportType   = regexp.MustCompile(`(?i)/providers/microsoft\.costmanagement/exports/[^/]+$`)
+	costSetting  = regexp.MustCompile(`(?i)/providers/microsoft\.costmanagement/settings/([^/]+)$`)
 	billingScope = regexp.MustCompile(`(?i)^/providers/microsoft\.billing/billingaccounts/[^/]+(/.*)?$`)
 )
 
@@ -57,6 +62,9 @@ const obfuscated = "********"
 // otherwise obfuscates an export's SAS token and fills its identity in body;
 // code is "" when it is allowed or id is neither.
 func (a *ARM) checkCost(id string, body map[string]any) (status int, code, message string) {
+	if m := costSetting.FindStringSubmatch(id); m != nil {
+		return checkCostSetting(m[1], body)
+	}
 	budget := budgetType.MatchString(id)
 	if !budget && !exportType.MatchString(id) {
 		return 0, "", ""
@@ -197,4 +205,16 @@ func date(v any) (time.Time, bool) {
 
 func formatGUID(b []byte) string {
 	return fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:16])
+}
+
+// checkCostSetting refuses a Cost Management setting that is not tag
+// inheritance, by name or by kind.
+func checkCostSetting(name string, body map[string]any) (status int, code, message string) {
+	if !strings.EqualFold(name, "taginheritance") {
+		return http.StatusBadRequest, "InvalidSettingType", "A Cost Management setting is named after its type, taginheritance, not " + name + "."
+	}
+	if kind, _ := body["kind"].(string); !strings.EqualFold(kind, "taginheritance") {
+		return http.StatusBadRequest, "InvalidSettingKind", "A tag inheritance setting's kind is taginheritance, not " + kind + "."
+	}
+	return 0, "", ""
 }

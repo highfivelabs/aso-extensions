@@ -1,0 +1,43 @@
+# Azure Data Explorer cluster children ASO does not export (Microsoft.Kusto,
+# kusto.json 2025-02-14, the newest stable version; ASO's own Cluster and
+# Database are 2024-04-13; docs/plan.md f69, tier 3 row t9 of
+# docs/coverage/foundation.md): a cluster's attached database configurations
+# (follower databases from another cluster), managed private endpoints,
+# private endpoint connections and sandbox custom images, and a database's
+# scripts (KQL run on the database). Owned by ASO's Cluster and Database.
+typeFilters:
+  - action: include
+    group: kusto
+    version: v20250214
+    because: the newest stable version (ASO's Cluster and Database are v20240413)
+  - action: prune
+    group: kusto
+    because: every other version is left alone
+groupModelConfiguration:
+  2025-02-14:
+    Clusters_AttachedDatabaseConfiguration:
+      $exportAs: ClustersAttachedDatabaseConfiguration
+      $supportedFrom: v0.1.0
+    Clusters_ManagedPrivateEndpoint:
+      $exportAs: ClustersManagedPrivateEndpoint
+      $supportedFrom: v0.1.0
+    Clusters_PrivateEndpointConnection:
+      $exportAs: ClustersPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Clusters_SandboxCustomImage:
+      $exportAs: ClustersSandboxCustomImage
+      $supportedFrom: v0.1.0
+    Clusters_Databases_Script:
+      $exportAs: ClustersDatabasesScript
+      $supportedFrom: v0.1.0
+    AttachedDatabaseConfigurationProperties:
+      ClusterResourceId:
+        $referenceType: arm # the leader cluster (ASO's Cluster, or an ARM ID)
+    ManagedPrivateEndpointProperties:
+      PrivateLinkResourceId:
+        $referenceType: arm # the resource the cluster reaches privately (a storage account, an event hub namespace)
+    ScriptProperties:
+      ManagedIdentityResourceId:
+        $referenceType: arm # the identity a script's URL is read with
+      ScriptUrlSasToken:
+        $importSecretMode: required # the SAS token of the script's URL

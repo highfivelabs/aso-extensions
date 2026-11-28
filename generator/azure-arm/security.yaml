@@ -41,12 +41,32 @@ typeFilters:
     because: settings (data export and alert sync), the newest stable version
   - action: include
     group: security
+    version: v20220101preview
+    because: governance rules (preview only)
+  - action: include
+    group: security
     version: v20190101
     because: advanced threat protection settings, the newest stable version
   - action: include
     group: security
+    version: v20190101preview
+    because: alerts suppression rules (preview only)
+  - action: include
+    group: security
     version: v20170801preview
     because: auto-provisioning and workspace settings (preview only)
+  - action: include
+    group: security
+    version: v20260401preview
+    because: SQL vulnerability assessment settings and baseline rules, the newest version (preview only)
+  - action: include
+    group: security
+    version: v20260101
+    because: Defender for Cloud private links and their endpoint connections, the newest stable version
+  - action: include
+    group: security
+    version: v20250504
+    because: custom assessments and their metadata, the newest stable version
   - action: prune
     group: security
     because: every other version is left alone (other versions define the same resources again)
@@ -366,3 +386,80 @@ groupModelConfiguration:
     WorkspaceSetting:
       $exportAs: WorkspaceSetting
       $supportedFrom: v0.1.0
+  # Alerts suppression rules: dismiss Defender for Cloud alerts of a type
+  # matching a scope, kept directly under a subscription (patch 0009).
+  2019-01-01-preview:
+    AlertsSuppressionRule:
+      $exportAs: AlertsSuppressionRule
+      $supportedFrom: v0.1.0
+  # Governance rules: owners and due dates assigned to recommendations, at a
+  # subscription, management group or security connector (/{scope}/, an
+  # extension resource). A rule's name must be a GUID: the hand-written
+  # Claimer in generator/_extensions/security/customizations defaults it
+  # (docs/plan.md, "Names that must be GUIDs").
+  2022-01-01-preview:
+    GovernanceRule:
+      $exportAs: GovernanceRule
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+      $operatorSpecProperties:
+        - name: NamingConvention
+          type: string
+          description: The uuid generation technique to use for any rule without an explicit AzureName. One of 'stable' or 'random'. <br> +kubebuilder:validation:Enum={"random","stable"}
+  # Custom assessments: a subscription's assessment metadata (a custom
+  # recommendation's definition, directly under a subscription, patch 0009)
+  # and assessments of resources against it (/{resourceId}/). A metadata's
+  # name is its key, a GUID: the hand-written Claimer in
+  # generator/_extensions/security/customizations defaults it; an
+  # assessment is named after the metadata it reports on.
+  2025-05-04:
+    AssessmentMetadatum:
+      $exportAs: AssessmentMetadata
+      $supportedFrom: v0.1.0
+      $defaultAzureName: false
+      $operatorSpecProperties:
+        - name: NamingConvention
+          type: string
+          description: The uuid generation technique to use for any metadata without an explicit AzureName. One of 'stable' or 'random'. <br> +kubebuilder:validation:Enum={"random","stable"}
+    Assessment:
+      $exportAs: Assessment
+      $supportedFrom: v0.1.0
+    SecurityAssessmentPropertiesBaseRiskPathsItemNodesItem:
+      Id:
+        $referenceType: simple # an attack path node's identifier, not an ARM ID (reviewed)
+    OnPremiseResourceDetails:
+      WorkspaceId:
+        $referenceType: arm # the Log Analytics workspace an on-premises machine reports to (autolabel wrote simple) (reviewed)
+    SecurityAssessmentPropertiesBaseRiskPathsItemEdgeItem:
+      Id:
+        $referenceType: simple # an attack path edge's identifier, not an ARM ID (reviewed)
+    OnPremiseSqlResourceDetails:
+      WorkspaceId:
+        $referenceType: arm # the Log Analytics workspace an on-premises SQL machine reports to (autolabel wrote simple) (reviewed)
+    SecurityAssessmentPropertiesBaseRiskPathsItem:
+      Id:
+        $referenceType: simple # an attack path's identifier, not an ARM ID (reviewed)
+  # Defender for Cloud private links (private access to Defender services
+  # from a virtual network) and their private endpoint connections.
+  2026-01-01:
+    PrivateLink:
+      $exportAs: PrivateLink
+      $supportedFrom: v0.1.0
+    PrivateLinks_PrivateEndpointConnection:
+      $exportAs: PrivateLinksPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+  # Defender for SQL vulnerability assessment (express configuration) on a
+  # SQL server or database (/{resourceId}/): its settings (the fixed name
+  # default) and baseline rules, children of the settings (patch 0012).
+  2026-04-01-preview:
+    SqlVulnerabilityAssessment:
+      $exportAs: SqlVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    SqlVulnerabilityAssessments_BaselineRule:
+      $exportAs: SqlVulnerabilityAssessmentsBaselineRule
+      $supportedFrom: v0.1.0
+  # Not generated: Defender for IoT's IoT security solutions and device
+  # security groups. Their newest stable version, 2019-08-01, defines the
+  # IoT security solution in two files (iotSecuritySolutions.json and
+  # security-IoTSecurity.json), and the generator stops loading it
+  # ("duplicate resource types generated with name IotSecuritySolution").

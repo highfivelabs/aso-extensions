@@ -268,19 +268,15 @@ func TestBudgetsAndCostExports(t *testing.T) {
 	})
 
 	// Changes are PUT again: a budget's amount, an export's schedule paused.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(subBudget), subBudget); err != nil {
-		t.Fatal(err)
-	}
-	subBudget.Spec.Amount = ptr(6500.0)
-	if err := k8s.Update(ctx, subBudget); err != nil {
+	if err := change(t, subBudget, func(subBudget *consumption.Budget) {
+		subBudget.Spec.Amount = ptr(6500.0)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	wantSubBudget(6500)
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(daily), daily); err != nil {
-		t.Fatal(err)
-	}
-	daily.Spec.Schedule.Status = ptr(costmanagement.StatusType_Inactive)
-	if err := k8s.Update(ctx, daily); err != nil {
+	if err := change(t, daily, func(daily *costmanagement.Export) {
+		daily.Spec.Schedule.Status = ptr(costmanagement.StatusType_Inactive)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	wantDaily("Inactive")

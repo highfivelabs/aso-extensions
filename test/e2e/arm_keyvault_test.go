@@ -101,11 +101,9 @@ func TestKeyVaultManagedHSM(t *testing.T) {
 	// object is Ready again with the key as it was. A key's properties are
 	// set when it is made; another key (another name) is the way to change
 	// them.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(key), key); err != nil {
-		t.Fatal(err)
-	}
-	key.Spec.Properties.KeySize = ptr(4096)
-	if err := k8s.Update(ctx, key); err != nil {
+	if err := change(t, key, func(key *kv.ManagedHSMsKey) {
+		key.Spec.Properties.KeySize = ptr(4096)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "the changed key Ready with Azure's key", func() error {
@@ -131,12 +129,10 @@ func TestKeyVaultManagedHSM(t *testing.T) {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "the refused delete on the Ready condition", notReadyWith(key, "does not support deletion"))
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(key), key); err != nil {
-		t.Fatal(err)
-	}
-	key.Annotations = map[string]string{"serviceoperator.azure.com/reconcile-policy": "detach-on-delete"}
-	key.Spec.Tags = map[string]string{"detached": "true"} // a spec change reconciles at once
-	if err := k8s.Update(ctx, key); err != nil {
+	if err := change(t, key, func(key *kv.ManagedHSMsKey) {
+		key.Annotations = map[string]string{"serviceoperator.azure.com/reconcile-policy": "detach-on-delete"}
+		key.Spec.Tags = map[string]string{"detached": "true"} // a spec change reconciles at once
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "the key object gone", gone(key))
@@ -171,11 +167,9 @@ func TestKeyVaultManagedHSM(t *testing.T) {
 	})
 
 	// The HSM changed: public access off.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(hsm), hsm); err != nil {
-		t.Fatal(err)
-	}
-	hsm.Spec.Properties.PublicNetworkAccess = ptr(kv.ManagedHsmProperties_PublicNetworkAccess_Disabled)
-	if err := k8s.Update(ctx, hsm); err != nil {
+	if err := change(t, hsm, func(hsm *kv.ManagedHSM) {
+		hsm.Spec.Properties.PublicNetworkAccess = ptr(kv.ManagedHsmProperties_PublicNetworkAccess_Disabled)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, hsmID, func(r map[string]any) error {
@@ -280,11 +274,9 @@ func TestKeyVaultVaultPrivateEndpointConnection(t *testing.T) {
 		t.Fatalf("owner references: %+v", refs)
 	}
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(conn), conn); err != nil {
-		t.Fatal(err)
-	}
-	conn.Spec.PrivateLinkServiceConnectionState.Status = ptr(kv.PrivateEndpointServiceConnectionStatus_Rejected)
-	if err := k8s.Update(ctx, conn); err != nil {
+	if err := change(t, conn, func(conn *kv.VaultsPrivateEndpointConnection) {
+		conn.Spec.PrivateLinkServiceConnectionState.Status = ptr(kv.PrivateEndpointServiceConnectionStatus_Rejected)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, connID, func(r map[string]any) error {

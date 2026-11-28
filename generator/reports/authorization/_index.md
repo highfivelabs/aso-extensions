@@ -10,6 +10,9 @@ no_list: true
 
 | Resource                       | ARM Version        | CRD Version      | Supported From | Sample |
 |--------------------------------|--------------------|------------------|----------------|--------|
+| AccessReviewHistoryDefinition  | 2021-12-01-preview | v20211201preview | v0.1.0         | -      |
+| AccessReviewScheduleDefinition | 2021-12-01-preview | v20211201preview | v0.1.0         | -      |
+| AccessReviewScheduleSetting    | 2021-12-01-preview | v20211201preview | v0.1.0         | -      |
 | ManagementLock                 | 2020-05-01         | v20200501        | v0.1.0         | -      |
 | PolicyAssignment               | 2026-07-01         | v20260701        | v0.1.0         | -      |
 | PolicyDefinition               | 2026-07-01         | v20260701        | v0.1.0         | -      |

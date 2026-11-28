@@ -1,0 +1,504 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: authorizationservers.apimanagement.azure.hfl.dev
+spec:
+  group: apimanagement.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - apimanagement
+    kind: AuthorizationServer
+    listKind: AuthorizationServerList
+    plural: authorizationservers
+    singular: authorizationserver
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20240501
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /apimanagement/resource-manager/Microsoft.ApiManagement/ApiManagement/stable/2024-05-01/apimauthorizationservers.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers/{authsid}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              authorizationEndpoint:
+                description: 'AuthorizationEndpoint: OAuth authorization endpoint.
+                  See http://tools.ietf.org/html/rfc6749#section-3.2.'
+                type: string
+              authorizationMethods:
+                description: 'AuthorizationMethods: HTTP verbs supported by the authorization
+                  endpoint. GET must be always present. POST is optional.'
+                items:
+                  enum:
+                  - DELETE
+                  - GET
+                  - HEAD
+                  - OPTIONS
+                  - PATCH
+                  - POST
+                  - PUT
+                  - TRACE
+                  type: string
+                type: array
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                maxLength: 80
+                minLength: 1
+                pattern: ^[^*#&+:<>?]+$
+                type: string
+              bearerTokenSendingMethods:
+                description: 'BearerTokenSendingMethods: Specifies the mechanism by
+                  which access token is passed to the API.'
+                items:
+                  enum:
+                  - authorizationHeader
+                  - query
+                  type: string
+                type: array
+              clientAuthenticationMethod:
+                description: |-
+                  ClientAuthenticationMethod: Method of authentication supported by the token endpoint of this authorization server.
+                  Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within
+                  the request body in the application/x-www-form-urlencoded format.
+                items:
+                  enum:
+                  - Basic
+                  - Body
+                  type: string
+                type: array
+              clientId:
+                description: 'ClientId: Client or app id registered with this authorization
+                  server.'
+                type: string
+              clientRegistrationEndpoint:
+                description: |-
+                  ClientRegistrationEndpoint: Optional reference to a page where client or app registration for this authorization server
+                  is performed. Contains absolute URL to entity being referenced.
+                type: string
+              clientSecret:
+                description: |-
+                  ClientSecret: Client or app secret registered with this authorization server. This property will not be filled on 'GET'
+                  operations! Use '/listSecrets' POST request to get the value.
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              defaultScope:
+                description: |-
+                  DefaultScope: Access token scope that is going to be requested by default. Can be overridden at the API level. Should be
+                  provided in the form of a string containing space-delimited values.
+                type: string
+              description:
+                description: 'Description: Description of the authorization server.
+                  Can contain HTML formatting tags.'
+                type: string
+              displayName:
+                description: 'DisplayName: User-friendly authorization server name.'
+                maxLength: 50
+                minLength: 1
+                type: string
+              grantTypes:
+                description: 'GrantTypes: Form of an authorization grant, which the
+                  client uses to request the access token.'
+                items:
+                  enum:
+                  - authorizationCode
+                  - clientCredentials
+                  - implicit
+                  - resourceOwnerPassword
+                  type: string
+                type: array
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a apimanagement.azure.com/Service resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              resourceOwnerPassword:
+                description: |-
+                  ResourceOwnerPassword: Can be optionally specified when resource owner password grant type is supported by this
+                  authorization server. Default resource owner password.
+                properties:
+                  key:
+                    description: Key is the key in the Kubernetes secret being referenced
+                    type: string
+                  name:
+                    description: |-
+                      Name is the name of the Kubernetes secret being referenced.
+                      The secret must be in the same namespace as the resource
+                    type: string
+                required:
+                - key
+                - name
+                type: object
+              resourceOwnerUsername:
+                description: |-
+                  ResourceOwnerUsername: Can be optionally specified when resource owner password grant type is supported by this
+                  authorization server. Default resource owner username.
+                type: string
+              supportState:
+                description: |-
+                  SupportState: If true, authorization server will include state parameter from the authorization request to its response.
+                  Client may use state parameter to raise protocol security.
+                type: boolean
+              tokenBodyParameters:
+                description: |-
+                  TokenBodyParameters: Additional parameters required by the token endpoint of this authorization server represented as an
+                  array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}.
+                items:
+                  description: OAuth acquire token request body parameter (www-url-form-encoded).
+                  properties:
+                    name:
+                      description: 'Name: body parameter name.'
+                      type: string
+                    value:
+                      description: 'Value: body parameter value.'
+                      type: string
+                  required:
+                  - name
+                  - value
+                  type: object
+                type: array
+              tokenEndpoint:
+                description: 'TokenEndpoint: OAuth token endpoint. Contains absolute
+                  URI to entity being referenced.'
+                type: string
+              useInApiDocumentation:
+                description: |-
+                  UseInApiDocumentation: If true, the authorization server will be used in the API documentation in the developer portal.
+                  False by default if no value is provided.
+                type: boolean
+              useInTestConsole:
+                description: |-
+                  UseInTestConsole: If true, the authorization server may be used in the developer portal test console. True by default if
+                  no value is provided.
+                type: boolean
+            required:
+            - authorizationEndpoint
+            - clientId
+            - clientRegistrationEndpoint
+            - displayName
+            - grantTypes
+            - owner
+            type: object
+          status:
+            properties:
+              authorizationEndpoint:
+                description: 'AuthorizationEndpoint: OAuth authorization endpoint.
+                  See http://tools.ietf.org/html/rfc6749#section-3.2.'
+                type: string
+              authorizationMethods:
+                description: 'AuthorizationMethods: HTTP verbs supported by the authorization
+                  endpoint. GET must be always present. POST is optional.'
+                items:
+                  type: string
+                type: array
+              bearerTokenSendingMethods:
+                description: 'BearerTokenSendingMethods: Specifies the mechanism by
+                  which access token is passed to the API.'
+                items:
+                  type: string
+                type: array
+              clientAuthenticationMethod:
+                description: |-
+                  ClientAuthenticationMethod: Method of authentication supported by the token endpoint of this authorization server.
+                  Possible values are Basic and/or Body. When Body is specified, client credentials and other parameters are passed within
+                  the request body in the application/x-www-form-urlencoded format.
+                items:
+                  type: string
+                type: array
+              clientId:
+                description: 'ClientId: Client or app id registered with this authorization
+                  server.'
+                type: string
+              clientRegistrationEndpoint:
+                description: |-
+                  ClientRegistrationEndpoint: Optional reference to a page where client or app registration for this authorization server
+                  is performed. Contains absolute URL to entity being referenced.
+                type: string
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              defaultScope:
+                description: |-
+                  DefaultScope: Access token scope that is going to be requested by default. Can be overridden at the API level. Should be
+                  provided in the form of a string containing space-delimited values.
+                type: string
+              description:
+                description: 'Description: Description of the authorization server.
+                  Can contain HTML formatting tags.'
+                type: string
+              displayName:
+                description: 'DisplayName: User-friendly authorization server name.'
+                type: string
+              grantTypes:
+                description: 'GrantTypes: Form of an authorization grant, which the
+                  client uses to request the access token.'
+                items:
+                  type: string
+                type: array
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. Ex -
+                  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              resourceOwnerUsername:
+                description: |-
+                  ResourceOwnerUsername: Can be optionally specified when resource owner password grant type is supported by this
+                  authorization server. Default resource owner username.
+                type: string
+              supportState:
+                description: |-
+                  SupportState: If true, authorization server will include state parameter from the authorization request to its response.
+                  Client may use state parameter to raise protocol security.
+                type: boolean
+              tokenBodyParameters:
+                description: |-
+                  TokenBodyParameters: Additional parameters required by the token endpoint of this authorization server represented as an
+                  array of JSON objects with name and value string properties, i.e. {"name" : "name value", "value": "a value"}.
+                items:
+                  description: OAuth acquire token request body parameter (www-url-form-encoded).
+                  properties:
+                    name:
+                      description: 'Name: body parameter name.'
+                      type: string
+                    value:
+                      description: 'Value: body parameter value.'
+                      type: string
+                  type: object
+                type: array
+              tokenEndpoint:
+                description: 'TokenEndpoint: OAuth token endpoint. Contains absolute
+                  URI to entity being referenced.'
+                type: string
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+              useInApiDocumentation:
+                description: |-
+                  UseInApiDocumentation: If true, the authorization server will be used in the API documentation in the developer portal.
+                  False by default if no value is provided.
+                type: boolean
+              useInTestConsole:
+                description: |-
+                  UseInTestConsole: If true, the authorization server may be used in the developer portal test console. True by default if
+                  no value is provided.
+                type: boolean
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,217 @@
+# Synapse kinds ASO does not export (Microsoft.Synapse, 2021-06-01, the
+# newest stable version and ASO's own; docs/plan.md f80, tier 3 row t11 of
+# docs/coverage/foundation.md): a workspace's children (IP firewall rules,
+# the Entra admins and Entra-only authentication, customer-managed keys and
+# the encryption protector, private endpoint connections, the managed
+# identity's SQL control setting, the dedicated SQL minimal TLS setting, the
+# workspace's SQL auditing, extended auditing, security alert policy and
+# vulnerability assessment, and integration runtimes, managed or
+# self-hosted) and private link hubs (in a resource group). Owned by ASO's
+# Workspace. Then (f81) dedicated SQL pools and their children: geo-backup
+# policy, maintenance window, transparent data encryption, auditing,
+# extended auditing, security alert policy, vulnerability assessment, data
+# masking policy and rules, workload groups and classifiers.
+#
+# The Entra admin's config map imports and the storage keys' secret modes
+# are copied from ASO's sql.yaml (its ServerExternalAdministrator,
+# SecurityAlertsPolicyProperties and ServerVulnerabilityAssessmentProperties
+# entries; UPSTREAM.md): Synapse's workspace SQL settings are Azure SQL's.
+#
+# Not exported: the Data Explorer pools (kustoPools, 2021-06-01-preview
+# only), sqlDatabases (2020-04-01-preview only), and a pool's sensitivity
+# labels and vulnerability assessment rule baselines (their paths run
+# through schemas/tables/columns and rules, which are no resources, so no
+# kind can own them).
+typeFilters:
+  - action: include
+    group: synapse
+    version: v20210601
+    because: the newest stable version, ASO's own (v20210601)
+  - action: prune
+    group: synapse
+    because: every other version is left alone (ASO has the workspace and its Spark pools)
+typeTransformers:
+  - group: synapse
+    version: v20210601
+    name: ServerBlobAuditingPolicyProperties_STATUS;ExtendedServerBlobAuditingPolicyProperties_STATUS;ServerSecurityAlertPolicyProperties_STATUS
+    property: StorageAccountAccessKey
+    remove: true
+    because: a storage account key comes from a Secret (below); the spec does not mark it secret, and a status must not hold it
+  - group: synapse
+    version: v20210601
+    name: ServerVulnerabilityAssessmentProperties_STATUS
+    property: StorageAccountAccessKey;StorageContainerSasKey
+    remove: true
+    because: as the auditing key
+  - group: synapse
+    version: v20210601
+    name: SecureString_STATUS
+    property: Value
+    remove: true
+    because: >-
+      an integration runtime's secure strings (the SSIS catalog's admin
+      password, a custom setup script's SAS token, a linked runtime's key)
+      come from Secrets (below); a status must not hold them
+  - group: synapse
+    version: v20210601
+    name: PrivateLinkHubProperties
+    property: ProvisioningState
+    remove: true
+    because: set by Azure; the spec does not mark it readOnly
+  - group: synapse
+    version: v20210601
+    name: SqlPoolBlobAuditingPolicyProperties_STATUS;ExtendedSqlPoolBlobAuditingPolicyProperties_STATUS;SecurityAlertPolicyProperties_STATUS
+    property: StorageAccountAccessKey
+    remove: true
+    because: as the workspace's auditing key
+  - group: synapse
+    version: v20210601
+    name: SqlPoolVulnerabilityAssessmentProperties_STATUS
+    property: StorageAccountAccessKey;StorageContainerSasKey
+    remove: true
+    because: as the workspace's auditing key
+  - group: synapse
+    version: v20210601
+    name: SqlPoolResourceProperties
+    property: ProvisioningState
+    remove: true
+    because: set by Azure; the spec does not mark it readOnly
+groupModelConfiguration:
+  2021-06-01:
+    PrivateLinkHub:
+      $exportAs: PrivateLinkHub
+      $supportedFrom: v0.1.0
+    Workspaces_FirewallRule:
+      $exportAs: WorkspacesFirewallRule
+      $supportedFrom: v0.1.0
+    Workspaces_Administrators_ActiveDirectory:
+      $exportAs: WorkspacesAdministrator
+      $supportedFrom: v0.1.0
+    Workspaces_SqlAdministrators_ActiveDirectory:
+      $exportAs: WorkspacesSqlAdministrator
+      $supportedFrom: v0.1.0
+    Workspaces_AzureADOnlyAuthentication:
+      $exportAs: WorkspacesAzureADOnlyAuthentication
+      $supportedFrom: v0.1.0
+    Workspaces_Key:
+      $exportAs: WorkspacesKey
+      $supportedFrom: v0.1.0
+    Workspaces_EncryptionProtector:
+      $exportAs: WorkspacesEncryptionProtector
+      $supportedFrom: v0.1.0
+    Workspaces_PrivateEndpointConnection:
+      $exportAs: WorkspacesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Workspaces_ManagedIdentitySqlControlSetting:
+      $exportAs: WorkspacesManagedIdentitySqlControlSetting
+      $supportedFrom: v0.1.0
+    Workspaces_DedicatedSQLminimalTlsSetting:
+      $exportAs: WorkspacesDedicatedSQLMinimalTlsSetting
+      $supportedFrom: v0.1.0
+    Workspaces_AuditingSetting:
+      $exportAs: WorkspacesAuditingSetting
+      $supportedFrom: v0.1.0
+    Workspaces_ExtendedAuditingSetting:
+      $exportAs: WorkspacesExtendedAuditingSetting
+      $supportedFrom: v0.1.0
+    Workspaces_SecurityAlertPolicy:
+      $exportAs: WorkspacesSecurityAlertPolicy
+      $supportedFrom: v0.1.0
+    Workspaces_VulnerabilityAssessment:
+      $exportAs: WorkspacesVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    Workspaces_IntegrationRuntime:
+      $exportAs: WorkspacesIntegrationRuntime
+      $supportedFrom: v0.1.0
+    ManagedIntegrationRuntimeManagedVirtualNetworkReference:
+      Id:
+        $referenceType: simple # the managed virtual network's own identifier (a GUID Synapse gives it), not an ARM ID
+    LinkedIntegrationRuntimeRbacAuthorization:
+      ResourceId:
+        $referenceType: arm # the shared self-hosted integration runtime (another workspace's or factory's), an ARM ID
+    IntegrationRuntimeVNetProperties:
+      PublicIPs:
+        $referenceType: arm # the public IP addresses an Azure-SSIS runtime uses (ASO's PublicIPAddress, or ARM IDs)
+    AadAdminProperties:
+      Login:
+        $importConfigMapMode: optional
+      Sid:
+        $importConfigMapMode: optional
+      TenantId:
+        $importConfigMapMode: optional
+    ServerBlobAuditingPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    ExtendedServerBlobAuditingPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    ServerSecurityAlertPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    ServerVulnerabilityAssessmentProperties:
+      StorageContainerPath:
+        $importConfigMapMode: optional
+      StorageAccountAccessKey:
+        $importSecretMode: required
+      StorageContainerSasKey:
+        $importSecretMode: required
+    SecureString:
+      Value:
+        $importSecretMode: required
+    Workspaces_SqlPool:
+      $exportAs: WorkspacesSqlPool
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_GeoBackupPolicy:
+      $exportAs: WorkspacesSqlPoolsGeoBackupPolicy
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_Maintenancewindow:
+      $exportAs: WorkspacesSqlPoolsMaintenanceWindow
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_TransparentDataEncryption:
+      $exportAs: WorkspacesSqlPoolsTransparentDataEncryption
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_AuditingSetting:
+      $exportAs: WorkspacesSqlPoolsAuditingSetting
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_ExtendedAuditingSetting:
+      $exportAs: WorkspacesSqlPoolsExtendedAuditingSetting
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_SecurityAlertPolicy:
+      $exportAs: WorkspacesSqlPoolsSecurityAlertPolicy
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_VulnerabilityAssessment:
+      $exportAs: WorkspacesSqlPoolsVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_DataMaskingPolicy:
+      $exportAs: WorkspacesSqlPoolsDataMaskingPolicy
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_DataMaskingPolicies_Rule:
+      $exportAs: WorkspacesSqlPoolsDataMaskingPolicyRule
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_WorkloadGroup:
+      $exportAs: WorkspacesSqlPoolsWorkloadGroup
+      $supportedFrom: v0.1.0
+    Workspaces_SqlPools_WorkloadGroups_WorkloadClassifier:
+      $exportAs: WorkspacesSqlPoolsWorkloadGroupClassifier
+      $supportedFrom: v0.1.0
+    SqlPoolBlobAuditingPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    ExtendedSqlPoolBlobAuditingPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    SecurityAlertPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    SqlPoolVulnerabilityAssessmentProperties:
+      StorageContainerPath:
+        $importConfigMapMode: optional
+      StorageAccountAccessKey:
+        $importSecretMode: required
+      StorageContainerSasKey:
+        $importSecretMode: required
+    SqlPoolResourceProperties:
+      SourceDatabaseId:
+        $referenceType: arm # the pool restored or copied from (as ASO's sql.yaml labels a database's)
+      RecoverableDatabaseId:
+        $referenceType: arm # the geo-backup a pool is recovered from

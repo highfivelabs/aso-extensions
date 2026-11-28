@@ -50,6 +50,11 @@ patches:
   - {file: patches/azure-service-operator/0014-generator-fixed-names.patch, pin: azure-service-operator, upstream_candidate: "no"}
   - {file: patches/azure-service-operator/0015-generator-unused-arm-input.patch, pin: azure-service-operator, upstream_candidate: "yes"}
   - {file: patches/azure-service-operator/0016-cel-write-once-and-owner-rules.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
+  - {file: patches/azure-service-operator/0017-generator-path-level-parameters.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0018-generator-flatten-external-type.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0019-generator-spec-initialization-cycles.patch, pin: azure-service-operator, upstream_candidate: "yes"}
+  - {file: patches/azure-service-operator/0020-generator-split-oneof-resources.patch, pin: azure-service-operator, upstream_candidate: "no"}
+  - {file: patches/azure-service-operator/0021-generator-named-target-from-any.patch, pin: azure-service-operator, upstream_candidate: "maybe"}
 
 # "What is copied, from where": here (our paths) and from (ASO's paths at
 # the pin, from the repository root, so under v2/; a directory ends in /).
@@ -78,10 +83,12 @@ copied:
     from: {pin: azure-service-operator, paths: [v2/internal/reconcilers/entra/entra_client_cache.go, v2/internal/reconcilers/entra/entra_client.go]}
   - here: [generator/azure-arm/authorization.yaml]
     from: {pr: Azure/azure-service-operator#5638, paths: [v2/azure-arm/authorization.yaml]}
-  - here: [generator/_extensions/authorization/customizations/role_eligibility_schedule_request_extensions.go, generator/_extensions/authorization/customizations/role_assignment_schedule_request_extensions.go]
+  - here: [generator/_extensions/authorization/customizations/role_eligibility_schedule_request_extensions.go, generator/_extensions/authorization/customizations/role_assignment_schedule_request_extensions.go, generator/_extensions/authorization/customizations/access_review_extensions.go, generator/_extensions/security/customizations/governance_rule_extensions.go, generator/_extensions/security/customizations/assessment_metadata_extensions.go]
     from: {pr: Azure/azure-service-operator#5638, paths: [v2/api/authorization/customizations/role_eligibility_schedule_request_extensions.go, v2/api/authorization/v20201001/webhook/role_eligibility_schedule_request_defaults.go]}
   - here: [generator/_extensions/network/customizations/express_route_children.go]
     from: {pin: azure-service-operator, paths: [v2/api/network/customizations/route_table_extensions.go, v2/api/network/customizations/virtual_network_extensions.go]}
+  - here: [generator/_extensions/documentdb/customizations/role_based_access_extensions.go]
+    from: {pin: azure-service-operator, paths: [v2/api/documentdb/v1api20240815/webhook/sql_role_assignment_defaults.go]}
   - here: [apis/sql/v1/user_types.go]
     from: {pin: azure-service-operator, paths: [v2/api/sql/v1/user_types.go]}
   - here: [apis/sql/v1/groupversion_info.go]
@@ -92,5 +99,21 @@ copied:
     from: {pr: Azure/azure-service-operator#5104, paths: [v2/internal/reconcilers/azuresql/aad_user.go]}
   - here: [generator/azure-arm/security.yaml]
     from: {pr: Azure/azure-service-operator#5783, paths: [v2/azure-arm/security.yaml]}
+  - here: [generator/azure-arm/eventgrid.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/eventgrid.yaml]}
+  - here: [generator/azure-arm/containerinstance.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/containerinstance.yaml]}
+  - here: [generator/azure-arm/signalrservice.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/signalrservice.yaml]}
+  - here: [generator/azure-arm/apimanagement.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/apimanagement.yaml]}
+  - here: [generator/azure-arm/batch.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/batch.yaml, v2/azure-arm/compute.yaml]}
+  - here: [generator/azure-arm/devices.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/devices.yaml]}
+  - here: [generator/azure-arm/datafactory.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/datafactory.yaml]}
+  - here: [generator/azure-arm/synapse.yaml]
+    from: {pin: azure-service-operator, paths: [v2/azure-arm/sql.yaml]}
   - here: [pkg/util/azuresql/azuresql.go, pkg/util/azuresql/role.go]
     from: {pin: azure-service-operator, paths: [v2/internal/util/azuresql/]}

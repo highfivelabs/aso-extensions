@@ -1,0 +1,71 @@
+# Batch kinds ASO does not export (Microsoft.Batch, 2025-06-01, the newest
+# stable version; ASO's own BatchAccount is 2024-07-01; docs/plan.md f73,
+# tier 3 row t14 of docs/coverage/foundation.md): a Batch account's
+# applications and pools. Owned by ASO's BatchAccount.
+#
+# Not exported: an application's versions (applications/versions, the
+# application packages: a PUT only makes a slot whose status is a writable
+# SAS URL to upload the package to, and activating it is a POST, which a
+# generated kind cannot send); the account's certificates (retired
+# 2024-02-29); the account's private endpoint connections (no PUT in the
+# 2025-06-01 spec: an update is a PATCH).
+typeFilters:
+  - action: include
+    group: batch
+    version: v20250601
+    because: the newest stable version (ASO's BatchAccount is v20240701)
+  - action: prune
+    group: batch
+    because: every other version is left alone (ASO has the account)
+# Copied from ASO's v2/azure-arm/compute.yaml (at the pin), where it is done
+# for a virtual machine's extensions: a pool's VM extension's protected
+# settings, an object the spec marks secret, are a Secret's keys and values,
+# and are left out of the status.
+typeTransformers:
+  - group: batch
+    version: v20250601
+    name: VMExtension
+    property: ProtectedSettings
+    target:
+      map:
+        key:
+          name: string
+        value:
+          name: string
+    because: ProtectedSettings is an object marked secret; a map of strings can come from a Secret (ASO's compute.yaml)
+  - group: batch
+    version: v20250601
+    name: VMExtension_STATUS
+    property: ProtectedSettings
+    remove: true
+    because: protected settings are not shown in the status (ASO's compute.yaml)
+groupModelConfiguration:
+  2025-06-01:
+    BatchAccounts_Application:
+      $exportAs: BatchAccountsApplication
+      $supportedFrom: v0.1.0
+    BatchAccounts_Pool:
+      $exportAs: BatchAccountsPool
+      $supportedFrom: v0.1.0
+    VMExtension:
+      ProtectedSettings:
+        $importSecretMode: required # as ASO's compute.yaml has it for VM extensions
+    # Copied from ASO's v2/azure-arm/batch.yaml (2024-07-01, at the pin).
+    ComputeNodeIdentityReference:
+      ResourceId:
+        $referenceType: arm # a user-assigned identity of the pool
+    ImageReference:
+      Id:
+        $referenceType: arm # an Azure Compute Gallery image or image version
+    ApplicationPackageReference:
+      Id:
+        $referenceType: arm # an application of the pool's account (our BatchAccountsApplication), or one of its versions
+    PublicIPAddressConfiguration:
+      IpAddressIds:
+        $referenceType: arm # the public IP addresses the pool's nodes use
+    ServiceArtifactReference:
+      Id:
+        $referenceType: arm # a gallery service artifact
+    NetworkConfiguration:
+      SubnetId:
+        $referenceType: arm # the subnet the pool's nodes join

@@ -1,0 +1,70 @@
+diff --git a/v2/tools/generator/internal/codegen/pipeline/inject_spec_initialization_functions.go b/v2/tools/generator/internal/codegen/pipeline/inject_spec_initialization_functions.go
+index 4c324ad..46993cb 100644
+--- a/v2/tools/generator/internal/codegen/pipeline/inject_spec_initialization_functions.go
++++ b/v2/tools/generator/internal/codegen/pipeline/inject_spec_initialization_functions.go
+@@ -7,6 +7,7 @@ package pipeline
+ 
+ import (
+ 	"context"
++	"os"
+ 
+ 	"github.com/rotisserie/eris"
+ 	kerrors "k8s.io/apimachinery/pkg/util/errors"
+@@ -217,6 +218,15 @@ func (s *specInitializationScanner) visitInternalTypeName(
+ 	// If we have no specToStatus, we need to add one.
+ 	existing, ok := s.specToStatus[specName]
+ 	if ok {
++		// Modified by High Five Labs: with ASO_GENERATOR_SPEC_INIT_CYCLES
++		// set, a pair seen before is not visited again, as the comment above
++		// says; upstream visits it again, and a type that holds itself
++		// (Data Factory's activities, which hold activities) recursed until
++		// the stack overflowed.
++		if os.Getenv("ASO_GENERATOR_SPEC_INIT_CYCLES") != "" && existing.Contains(statusName) {
++			return specName, nil
++		}
++
+ 		existing.Add(statusName)
+ 	} else {
+ 		existing = astmodel.NewInternalTypeNameSet(statusName)
+diff --git a/v2/tools/generator/internal/codegen/pipeline/spec_initialization_cycles_test.go b/v2/tools/generator/internal/codegen/pipeline/spec_initialization_cycles_test.go
+new file mode 100644
+index 0000000..8a801b0
+--- /dev/null
++++ b/v2/tools/generator/internal/codegen/pipeline/spec_initialization_cycles_test.go
+@@ -0,0 +1,36 @@
++/*
++ * Copyright (c) Microsoft Corporation.
++ * Licensed under the MIT license.
++ */
++
++// Modified by High Five Labs: a new test of the spec initialization scanner
++// on a type that holds itself.
++
++package pipeline
++
++import (
++	"testing"
++
++	. "github.com/onsi/gomega"
++
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/astmodel"
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/config"
++)
++
++func TestSpecInitializationScanner_RecursiveType_VisitsOnce(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_SPEC_INIT_CYCLES", "1")
++	g := NewGomegaWithT(t)
++
++	spec := astmodel.MakeInternalTypeName(placeholderPackage, "Activity")
++	status := astmodel.MakeInternalTypeName(placeholderPackage, "Activity_STATUS")
++	defs := make(astmodel.TypeDefinitionSet)
++	defs.Add(astmodel.MakeTypeDefinition(spec, astmodel.NewObjectType().WithProperties(
++		astmodel.NewPropertyDefinition("Activities", "activities", astmodel.NewArrayType(spec)))))
++	defs.Add(astmodel.MakeTypeDefinition(status, astmodel.NewObjectType().WithProperties(
++		astmodel.NewPropertyDefinition("Activities", "activities", astmodel.NewArrayType(status)))))
++
++	scanner := newSpecInitializationScanner(defs, nil, config.NewConfiguration())
++	_, err := scanner.visitor.Visit(spec, status)
++	g.Expect(err).ToNot(HaveOccurred())
++	g.Expect(scanner.specToStatus[spec].Contains(status)).To(BeTrue())
++}

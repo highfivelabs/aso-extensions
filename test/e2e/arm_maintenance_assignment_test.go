@@ -103,11 +103,9 @@ func TestMaintenanceConfigurationAssignment(t *testing.T) {
 	})
 
 	// The filter changed: PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(dynamic), dynamic); err != nil {
-		t.Fatal(err)
-	}
-	dynamic.Spec.Filter.OsTypes = []string{"Linux", "Windows"}
-	if err := k8s.Update(ctx, dynamic); err != nil {
+	if err := change(t, dynamic, func(dynamic *maintenance.ConfigurationAssignment) {
+		dynamic.Spec.Filter.OsTypes = []string{"Linux", "Windows"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, dynamicID, func(r map[string]any) error {

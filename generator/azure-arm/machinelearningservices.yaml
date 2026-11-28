@@ -1,0 +1,258 @@
+# Machine Learning kinds ASO does not export (Microsoft.MachineLearningServices,
+# 2026-09-01, the newest stable version; docs/plan.md f82, tier 3 row t12 of
+# docs/coverage/foundation.md): a workspace's and a registry's assets (code,
+# component, data, environment and model containers and their versions), a
+# workspace's datastores, outbound rules and private endpoint connections.
+# Owned by ASO's Workspace and Registry.
+#
+# A datastore's credentials carry their secrets in an object the spec marks
+# secret (an account key, a SAS token, a service principal's secret, a
+# certificate's private key): the object is not a secret here
+# ($importSecretMode: never), each secret string in it is (a Secret
+# reference), and the credentials' secrets are removed from the status.
+typeFilters:
+  - action: include
+    group: machinelearningservices
+    version: v20260901
+    because: the newest stable version
+  - action: prune
+    group: machinelearningservices
+    because: every other version is left alone (ASO has the workspace, registry, computes and connections)
+typeTransformers:
+  - group: machinelearningservices
+    version: v20260901
+    name: AccountKeyDatastoreCredentials_STATUS;CertificateDatastoreCredentials_STATUS;SasDatastoreCredentials_STATUS;ServicePrincipalDatastoreCredentials_STATUS
+    property: Secrets
+    remove: true
+    because: a datastore's secrets come from Secrets (below); Azure does not return them, and a status must not hold them
+  - group: machinelearningservices
+    version: v20260901
+    name: BatchEndpointProperties_STATUS;OnlineEndpointProperties_STATUS
+    property: Keys
+    remove: true
+    because: an endpoint's auth keys come from Secrets (below); Azure does not return them, and a status must not hold them
+groupModelConfiguration:
+  2026-09-01:
+    Workspaces_Code:
+      $exportAs: WorkspacesCode
+      $supportedFrom: v0.1.0
+    Workspaces_Codes_Version:
+      $exportAs: WorkspacesCodesVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Component:
+      $exportAs: WorkspacesComponent
+      $supportedFrom: v0.1.0
+    Workspaces_Components_Version:
+      $exportAs: WorkspacesComponentsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Datum:
+      $exportAs: WorkspacesData
+      $supportedFrom: v0.1.0
+    Workspaces_Data_Version:
+      $exportAs: WorkspacesDataVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Environment:
+      $exportAs: WorkspacesEnvironment
+      $supportedFrom: v0.1.0
+    Workspaces_Environments_Version:
+      $exportAs: WorkspacesEnvironmentsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Model:
+      $exportAs: WorkspacesModel
+      $supportedFrom: v0.1.0
+    Workspaces_Models_Version:
+      $exportAs: WorkspacesModelsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Datastore:
+      $exportAs: WorkspacesDatastore
+      $supportedFrom: v0.1.0
+    Workspaces_OutboundRule:
+      $exportAs: WorkspacesOutboundRule
+      $supportedFrom: v0.1.0
+    Workspaces_PrivateEndpointConnection:
+      $exportAs: WorkspacesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Registries_Code:
+      $exportAs: RegistriesCode
+      $supportedFrom: v0.1.0
+    Registries_Codes_Version:
+      $exportAs: RegistriesCodesVersion
+      $supportedFrom: v0.1.0
+    Registries_Component:
+      $exportAs: RegistriesComponent
+      $supportedFrom: v0.1.0
+    Registries_Components_Version:
+      $exportAs: RegistriesComponentsVersion
+      $supportedFrom: v0.1.0
+    Registries_Datum:
+      $exportAs: RegistriesData
+      $supportedFrom: v0.1.0
+    Registries_Data_Version:
+      $exportAs: RegistriesDataVersion
+      $supportedFrom: v0.1.0
+    Registries_Environment:
+      $exportAs: RegistriesEnvironment
+      $supportedFrom: v0.1.0
+    Registries_Environments_Version:
+      $exportAs: RegistriesEnvironmentsVersion
+      $supportedFrom: v0.1.0
+    Registries_Model:
+      $exportAs: RegistriesModel
+      $supportedFrom: v0.1.0
+    Registries_Models_Version:
+      $exportAs: RegistriesModelsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_OnlineEndpoint:
+      $exportAs: WorkspacesOnlineEndpoint
+      $supportedFrom: v0.1.0
+    Workspaces_OnlineEndpoints_Deployment:
+      $exportAs: WorkspacesOnlineEndpointsDeployment
+      $supportedFrom: v0.1.0
+    Workspaces_BatchEndpoint:
+      $exportAs: WorkspacesBatchEndpoint
+      $supportedFrom: v0.1.0
+    Workspaces_BatchEndpoints_Deployment:
+      $exportAs: WorkspacesBatchEndpointsDeployment
+      $supportedFrom: v0.1.0
+    Workspaces_ServerlessEndpoint:
+      $exportAs: WorkspacesServerlessEndpoint
+      $supportedFrom: v0.1.0
+    Workspaces_CapabilityHost:
+      $exportAs: WorkspacesCapabilityHost
+      $supportedFrom: v0.1.0
+    Workspaces_Featureset:
+      $exportAs: WorkspacesFeatureset
+      $supportedFrom: v0.1.0
+    Workspaces_Featuresets_Version:
+      $exportAs: WorkspacesFeaturesetsVersion
+      $supportedFrom: v0.1.0
+    Workspaces_FeaturestoreEntity:
+      $exportAs: WorkspacesFeaturestoreEntity
+      $supportedFrom: v0.1.0
+    Workspaces_FeaturestoreEntities_Version:
+      $exportAs: WorkspacesFeaturestoreEntitiesVersion
+      $supportedFrom: v0.1.0
+    Workspaces_Job:
+      $exportAs: WorkspacesJob
+      $supportedFrom: v0.1.0
+    Workspaces_Schedule:
+      $exportAs: WorkspacesSchedule
+      $supportedFrom: v0.1.0
+      # The jobs a schedule makes and the monitors it runs: without their
+      # descriptions (ASO's option for a CRD over the size limit), its CRD is
+      # 195 KB of JSON, and the jobs' (whose types it shares) 151 KB; with
+      # them 526 KB and 415 KB, over the 256 KiB a client-side apply keeps
+      # (docs/plan.md f85). Types shared with other kinds lose theirs too.
+      $stripDocumentation: true
+    AccountKeyDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    CertificateDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    SasDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    ServicePrincipalDatastoreCredentials:
+      Secrets:
+        $importSecretMode: never
+    AccountKeyDatastoreSecrets:
+      Key:
+        $importSecretMode: required
+    CertificateDatastoreSecrets:
+      Certificate:
+        $importSecretMode: required
+    SasDatastoreSecrets:
+      SasToken:
+        $importSecretMode: required
+    ServicePrincipalDatastoreSecrets:
+      ClientSecret:
+        $importSecretMode: required
+    DatasetReference:
+      Id:
+        $referenceType: arm # a model version's dataset, "the fully qualified ARM id" (a data version: our WorkspacesDataVersion, or an ARM ID)
+    # Asset IDs: the spec says "ARM resource ID", but Machine Learning also
+    # takes asset URIs here (azureml://registries/{r}/environments/{e}/versions/{v},
+    # a curated environment), which no ARM ID reference allows: plain strings.
+    BatchDeploymentProperties:
+      EnvironmentId:
+        $referenceType: simple # an environment version's ARM ID or asset URI
+    KubernetesOnlineDeployment:
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    ManagedOnlineDeployment:
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    CodeConfiguration:
+      CodeId:
+        $referenceType: simple # a code version's ARM ID or asset URI
+    Collection:
+      DataId:
+        $referenceType: simple # a data asset's ARM ID or asset URI
+    IdAssetReference:
+      AssetId:
+        $referenceType: simple # a model or other asset's ARM ID or asset URI
+    OutputPathAssetReference:
+      JobId:
+        $referenceType: simple # a job's ID (jobs are not kinds here)
+    DataPathAssetReference:
+      DatastoreId:
+        $referenceType: arm # a datastore (our WorkspacesDatastore, or an ARM ID)
+    OnlineEndpointProperties:
+      Compute:
+        $referenceType: arm # an attached Kubernetes compute (ASO's WorkspacesCompute, or an ARM ID)
+      Keys:
+        $importSecretMode: never # as BatchEndpointProperties
+    BatchEndpointProperties:
+      Keys:
+        $importSecretMode: never # an object of two keys, each a Secret (EndpointAuthKeys)
+    EndpointAuthKeys:
+      PrimaryKey:
+        $importSecretMode: required
+      SecondaryKey:
+        $importSecretMode: required
+    # Jobs (docs/plan.md f85): a job's component, code and environment take
+    # an ARM ID or an asset URI (azureml://...), as the deployments' do
+    # (above): plain strings. Its compute, its source job and a managed
+    # identity are ARM resources: references.
+    AutoMLJob:
+      ComponentId:
+        $referenceType: simple # a component version's ARM ID or asset URI
+      ComputeId:
+        $referenceType: arm # a compute (ASO's WorkspacesCompute, or an ARM ID)
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    CommandJob:
+      CodeId:
+        $referenceType: simple # as CodeConfiguration
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    PipelineJob:
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+      SourceJobId:
+        $referenceType: arm # the job this one was cloned from (our WorkspacesJob, or an ARM ID)
+    SparkJob:
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+    SweepJob:
+      ComponentId:
+        $referenceType: simple # as AutoMLJob
+      ComputeId:
+        $referenceType: arm # as AutoMLJob
+    TrialComponent:
+      CodeId:
+        $referenceType: simple # as CodeConfiguration
+      EnvironmentId:
+        $referenceType: simple # as BatchDeploymentProperties
+    ManagedIdentity:
+      ResourceId:
+        $referenceType: arm # a user-assigned identity (ASO's UserAssignedIdentity, or an ARM ID)

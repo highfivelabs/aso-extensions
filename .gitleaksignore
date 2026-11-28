@@ -1,0 +1,27 @@
+# gitleaks findings in pushed history that are made-up test values, not
+# credentials (gitleaks reads a fingerprint as commit:file:rule:line). The
+# values were replaced with placeholders gitleaks does not flag; history
+# keeps the old ones, so their fingerprints stay here.
+
+# pkg/fakecloud/arm/assessments_test.go:24: a made-up GUID for an assessment
+# metadata key in the fake Resource Manager's test.
+1ba6ca527b09a59a302c40a8fc7fc9db3e352b25:pkg/fakecloud/arm/assessments_test.go:generic-api-key:24
+# test/e2e/arm_conformance_fixtures_test.go:342: the same made-up GUID, the
+# assessment metadata key of a conformance fixture.
+1ba6ca527b09a59a302c40a8fc7fc9db3e352b25:test/e2e/arm_conformance_fixtures_test.go:generic-api-key:342
+# pkg/fakecloud/arm/sqlmanagedinstance_test.go:26: a made-up Key Vault key
+# name (vault_key_version) in a path to the fake Resource Manager.
+a7073b640ee881eaf388f4cd60c720f66cf6a106:pkg/fakecloud/arm/sqlmanagedinstance_test.go:generic-api-key:26
+# test/e2e/arm_logic_connections_test.go:43 and :162: a made-up storage
+# access key, put in a test Secret on envtest and checked on the fake.
+f66d0ac08369dbe85a3d749ab93b24c24df9a72e:test/e2e/arm_logic_connections_test.go:generic-api-key:43
+f66d0ac08369dbe85a3d749ab93b24c24df9a72e:test/e2e/arm_logic_connections_test.go:generic-api-key:162
+# test/e2e/arm_synapse_test.go:51: a made-up storage key (base64 of a plain
+# word pair), put in a test Secret on envtest and checked on the fake.
+935803a30402c180ad94866f0056ca3f5133006c:test/e2e/arm_synapse_test.go:generic-api-key:51
+# apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:18856 and
+# :19448: generated Go identifiers (the local variables of a copy
+# activity's Cosmos DB SQL API source and sink, assigned from another),
+# not secrets; the rule reads an identifier ending in Api as a key.
+561e5910d6bdf8d31697de4071ff65e8fa196428:apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:generic-api-key:18856
+561e5910d6bdf8d31697de4071ff65e8fa196428:apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:generic-api-key:19448

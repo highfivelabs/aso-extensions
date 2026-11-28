@@ -27,12 +27,36 @@ The following resources have newer versions available in the Azure REST API spec
 |------|----------------|------------------|------------------|------------------------|--------------------|
 | 💡    | PolicyVariable | -                | -                | **2026-01-01-preview** | 2024-12-01-preview |
 
+## cognitiveservices
+
+|      | Resource                              | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|------|---------------------------------------|------------------|------------------|-------------------|-------------------|
+| 💡    | AccountsCapabilityHost                | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsCommitmentPlan                | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsConnection                    | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsDefenderForAISetting          | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsEncryptionScope               | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsPrivateEndpointConnection     | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsProjectsCapabilityHost        | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsProjectsConnection            | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsRaiBlocklist                  | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsRaiBlocklistsRaiBlocklistItem | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | AccountsRaiPolicy                     | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | CommitmentPlan                        | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+| 💡    | CommitmentPlansAccountAssociation     | **2026-09-01**   | 2025-06-01       | -                 | -                 |
+
 ## compute
 
-|      | Resource                  | Available Stable | Supported Stable | Available Preview | Supported Preview |
-|------|---------------------------|------------------|------------------|-------------------|-------------------|
-|      | VirtualMachine            | 2026-04-01       | 2025-04-01       | -                 | -                 |
-| 💡    | VirtualMachinesRunCommand | **2026-04-01**   | 2022-03-01       | -                 | -                 |
+|      | Resource                            | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|------|-------------------------------------|------------------|------------------|-------------------|-------------------|
+|      | HostGroup                           | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | HostGroupsHost                      | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | ProximityPlacementGroup             | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | RestorePointCollection              | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | RestorePointCollectionsRestorePoint | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | SshPublicKey                        | 2026-04-01       | 2025-04-01       | -                 | -                 |
+|      | VirtualMachine                      | 2026-04-01       | 2025-04-01       | -                 | -                 |
+| 💡    | VirtualMachinesRunCommand           | **2026-04-01**   | 2022-03-01       | -                 | -                 |
 
 ## containerservice
 
@@ -41,6 +65,26 @@ The following resources have newer versions available in the Azure REST API spec
 |  | ManagedClustersManagedNamespace          | 2026-06-01       | 2026-05-01       | -                 | -                 |
 |  | ManagedClustersPrivateEndpointConnection | 2026-06-01       | 2026-05-01       | -                 | -                 |
 |  | Snapshot                                 | 2026-06-01       | 2026-05-01       | -                 | -                 |
+
+## documentdb
+
+|      | Resource                                                  | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|------|-----------------------------------------------------------|------------------|------------------|-------------------|-------------------|
+| 💡    | DatabaseAccountsCassandraKeyspace                         | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsCassandraKeyspacesTable                   | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsCassandraKeyspacesTablesThroughputSetting | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsCassandraKeyspacesThroughputSetting       | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsGremlinDatabase                           | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsGremlinDatabasesGraph                     | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsGremlinDatabasesGraphsThroughputSetting   | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsGremlinDatabasesThroughputSetting         | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsPrivateEndpointConnection                 | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsService                                   | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsSqlDatabasesClientEncryptionKey           | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsSqlRoleDefinition                         | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsTable                                     | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | DatabaseAccountsTablesThroughputSetting                   | **2026-03-15**   | 2024-08-15       | -                 | -                 |
+| 💡    | MongoClustersPrivateEndpointConnection                    | **2026-06-01**   | 2024-07-01       | -                 | -                 |
 
 ## network
 
@@ -57,7 +101,26 @@ The following resources have newer versions available in the Azure REST API spec
 
 |  | Resource                        | Available Stable | Supported Stable | Available Preview | Supported Preview |
 |--|---------------------------------|------------------|------------------|-------------------|-------------------|
+|  | VaultsBackupConfig              | 2026-10-01       | 2026-07-01       | -                 | -                 |
+|  | VaultsBackupEncryptionConfig    | 2026-10-01       | 2026-07-01       | -                 | -                 |
 |  | VaultsBackupPolicy              | 2026-10-01       | 2026-07-01       | -                 | -                 |
 |  | VaultsBackupResourceGuardProxy  | 2026-10-01       | 2026-07-01       | -                 | -                 |
+|  | VaultsBackupStorageConfig       | 2026-10-01       | 2026-07-01       | -                 | -                 |
 |  | VaultsPrivateEndpointConnection | 2026-10-01       | 2026-07-01       | -                 | -                 |
+
+## storage
+
+|  | Resource                                 | Available Stable | Supported Stable | Available Preview | Supported Preview |
+|--|------------------------------------------|------------------|------------------|-------------------|-------------------|
+|  | ContextCache                             | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | ContextCachesContextCacheContainer       | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsAdvancedPlatformMetric    | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsConnector                 | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsDataShare                 | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsEncryptionScope           | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsInventoryPolicy           | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsLocalUser                 | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsObjectReplicationPolicy   | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsPrivateEndpointConnection | 2026-09-01       | 2026-06-01       | -                 | -                 |
+|  | StorageAccountsStorageTaskAssignment     | 2026-09-01       | 2026-06-01       | -                 | -                 |
 

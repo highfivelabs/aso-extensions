@@ -1,0 +1,697 @@
+kind,arm_type,tested_here,upjet_terraform,upjet_tested,refs_reference,refs_owner,refs_string,refs_kept,refs_other,upjet_hand_examples,upjet_examples_on_fake,upjet_id_check
+alertsmanagement.azure.hfl.dev/ActionRule,Microsoft.AlertsManagement/actionRules,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ApiOperation,Microsoft.ApiManagement/service/apis/operations,conformance,azurerm_api_management_api_operation,true,0,3,0,0,0,2,1,agrees
+apimanagement.azure.hfl.dev/ApiOperationPolicy,Microsoft.ApiManagement/service/apis/operations/policies,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ApiOperationTag,Microsoft.ApiManagement/service/apis/operations/tags,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ApiRelease,Microsoft.ApiManagement/service/apis/releases,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ApiResolver,Microsoft.ApiManagement/service/apis/resolvers,conformance,azurerm_api_management_api,true,0,0,0,0,2,2,0,differs
+apimanagement.azure.hfl.dev/ApiResolverPolicy,Microsoft.ApiManagement/service/apis/resolvers/policies,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ApiSchema,Microsoft.ApiManagement/service/apis/schemas,conformance,azurerm_api_management_api_schema,true,0,3,0,0,0,1,1,agrees
+apimanagement.azure.hfl.dev/ApiTag,Microsoft.ApiManagement/service/apis/tags,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ApiTagDescription,Microsoft.ApiManagement/service/apis/tagDescriptions,conformance,azurerm_api_management_api_tag_description,false,0,0,0,0,0,0,0,n/a (provider)
+apimanagement.azure.hfl.dev/ApiWiki,Microsoft.ApiManagement/service/apis/wikis,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/AuthorizationServer,Microsoft.ApiManagement/service/authorizationServers,conformance,azurerm_api_management_authorization_server,true,0,2,0,0,0,1,1,agrees
+apimanagement.azure.hfl.dev/Cache,Microsoft.ApiManagement/service/caches,conformance,azurerm_api_management_redis_cache,true,0,2,0,0,0,1,1,n/a (no provider path)
+apimanagement.azure.hfl.dev/Documentation,Microsoft.ApiManagement/service/documentations,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/Gateway,Microsoft.ApiManagement/gateways,conformance,azurerm_api_management_gateway;azurerm_api_management_gateway_api,true,0,1,0,0,2,3,0,n/a (provider)
+apimanagement.azure.hfl.dev/GatewayConfigConnection,Microsoft.ApiManagement/gateways/configConnections,kind test (TestAPIManagementLinksAndGateways),,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/GlobalSchema,Microsoft.ApiManagement/service/schemas,conformance,azurerm_api_management_global_schema,true,0,2,0,0,0,1,0,agrees
+apimanagement.azure.hfl.dev/IdentityProvider,Microsoft.ApiManagement/service/identityProviders,conformance,azurerm_api_management_identity_provider_aad;azurerm_api_management_identity_provider_aadb2c,true;false,0,2,0,0,0,1,1,n/a (provider)
+apimanagement.azure.hfl.dev/OpenIdConnectProvider,Microsoft.ApiManagement/service/openidConnectProviders,conformance,azurerm_api_management_openid_connect_provider,true,0,2,0,0,0,1,1,agrees
+apimanagement.azure.hfl.dev/PolicyRestriction,Microsoft.ApiManagement/service/policyRestrictions,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/PrivateEndpointConnection,Microsoft.ApiManagement/service/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ProductApiLink,Microsoft.ApiManagement/service/products/apiLinks,conformance,azurerm_api_management_api_tag,true,1,0,0,0,0,1,0,n/a (no provider path)
+apimanagement.azure.hfl.dev/ProductGroupLink,Microsoft.ApiManagement/service/products/groupLinks,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ProductTag,Microsoft.ApiManagement/service/products/tags,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/ProductWiki,Microsoft.ApiManagement/service/products/wikis,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/Tag,Microsoft.ApiManagement/service/tags,conformance,azurerm_api_management_api_operation_tag;azurerm_api_management_tag,true,0,1,0,0,1,2,1,n/a (no provider path)
+apimanagement.azure.hfl.dev/TagApiLink,Microsoft.ApiManagement/service/tags/apiLinks,conformance,azurerm_api_management_api_tag,true,1,0,0,0,0,1,0,n/a (no provider path)
+apimanagement.azure.hfl.dev/TagOperationLink,Microsoft.ApiManagement/service/tags/operationLinks,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/TagProductLink,Microsoft.ApiManagement/service/tags/productLinks,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/Workspace,Microsoft.ApiManagement/service/workspaces,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceApi,Microsoft.ApiManagement/service/workspaces/apis,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceApiDiagnostic,Microsoft.ApiManagement/service/workspaces/apis/diagnostics,conformance,azurerm_api_management_api_diagnostic;azurerm_api_management_diagnostic,true,0,0,0,0,7,4,0,differs
+apimanagement.azure.hfl.dev/WorkspaceApiOperation,Microsoft.ApiManagement/service/workspaces/apis/operations,conformance,azurerm_api_management_api_operation,true,0,0,0,0,3,2,0,differs
+apimanagement.azure.hfl.dev/WorkspaceApiOperationPolicy,Microsoft.ApiManagement/service/workspaces/apis/operations/policies,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceApiPolicy,Microsoft.ApiManagement/service/workspaces/apis/policies,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceApiRelease,Microsoft.ApiManagement/service/workspaces/apis/releases,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceApiSchema,Microsoft.ApiManagement/service/workspaces/apis/schemas,conformance,azurerm_api_management_api_schema,true,0,0,0,0,3,1,0,differs
+apimanagement.azure.hfl.dev/WorkspaceApiVersionSet,Microsoft.ApiManagement/service/workspaces/apiVersionSets,conformance,azurerm_api_management_api_version_set,true,0,0,0,0,2,1,0,differs
+apimanagement.azure.hfl.dev/WorkspaceBackend,Microsoft.ApiManagement/service/workspaces/backends,conformance,azurerm_api_management_backend,true,0,0,0,0,2,2,0,differs
+apimanagement.azure.hfl.dev/WorkspaceCertificate,Microsoft.ApiManagement/service/workspaces/certificates,conformance,azurerm_api_management_certificate,true,0,0,0,0,3,1,0,differs
+apimanagement.azure.hfl.dev/WorkspaceDiagnostic,Microsoft.ApiManagement/service/workspaces/diagnostics,conformance,azurerm_api_management_api_diagnostic;azurerm_api_management_diagnostic,true,0,0,0,0,7,4,0,differs
+apimanagement.azure.hfl.dev/WorkspaceGroup,Microsoft.ApiManagement/service/workspaces/groups,conformance,azurerm_api_management_group,true,0,0,0,0,2,1,0,differs
+apimanagement.azure.hfl.dev/WorkspaceGroupUser,Microsoft.ApiManagement/service/workspaces/groups/users,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceLogger,Microsoft.ApiManagement/service/workspaces/loggers,conformance,azurerm_api_management_logger,true,0,0,0,0,3,2,0,differs
+apimanagement.azure.hfl.dev/WorkspaceNamedValue,Microsoft.ApiManagement/service/workspaces/namedValues,conformance,azurerm_api_management_named_value,true,0,0,0,0,2,2,0,differs
+apimanagement.azure.hfl.dev/WorkspacePolicy,Microsoft.ApiManagement/service/workspaces/policies,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspacePolicyFragment,Microsoft.ApiManagement/service/workspaces/policyFragments,conformance,azurerm_api_management_policy_fragment,true,0,1,0,0,0,1,1,n/a (no provider path)
+apimanagement.azure.hfl.dev/WorkspaceProduct,Microsoft.ApiManagement/service/workspaces/products,conformance,azurerm_api_management_product,true,0,0,0,0,2,1,0,differs
+apimanagement.azure.hfl.dev/WorkspaceProductApiLink,Microsoft.ApiManagement/service/workspaces/products/apiLinks,conformance,azurerm_api_management_api_tag,true,1,0,0,0,0,1,0,n/a (no provider path)
+apimanagement.azure.hfl.dev/WorkspaceProductGroupLink,Microsoft.ApiManagement/service/workspaces/products/groupLinks,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceProductPolicy,Microsoft.ApiManagement/service/workspaces/products/policies,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceSchema,Microsoft.ApiManagement/service/workspaces/schemas,conformance,azurerm_api_management_global_schema,true,0,0,0,0,2,1,0,differs
+apimanagement.azure.hfl.dev/WorkspaceSubscription,Microsoft.ApiManagement/service/workspaces/subscriptions,conformance,azurerm_api_management_subscription,true,1,2,0,2,0,1,1,n/a (custom)
+apimanagement.azure.hfl.dev/WorkspaceTag,Microsoft.ApiManagement/service/workspaces/tags,conformance,azurerm_api_management_api_operation_tag;azurerm_api_management_tag,true,0,1,0,0,1,2,1,n/a (no provider path)
+apimanagement.azure.hfl.dev/WorkspaceTagApiLink,Microsoft.ApiManagement/service/workspaces/tags/apiLinks,conformance,azurerm_api_management_api_tag,true,1,0,0,0,0,1,0,n/a (no provider path)
+apimanagement.azure.hfl.dev/WorkspaceTagOperationLink,Microsoft.ApiManagement/service/workspaces/tags/operationLinks,conformance,,no Upjet resource,,,,,,,,
+apimanagement.azure.hfl.dev/WorkspaceTagProductLink,Microsoft.ApiManagement/service/workspaces/tags/productLinks,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/Agent,Microsoft.App/agents,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/AgentsConnector,Microsoft.App/agents/connectors,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ConnectedEnvironment,Microsoft.App/connectedEnvironments,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ConnectedEnvironmentsCertificate,Microsoft.App/connectedEnvironments/certificates,conformance,azurerm_container_app_environment_certificate,true,1,1,0,0,1,1,0,n/a (no provider path)
+app.azure.hfl.dev/ConnectedEnvironmentsDaprComponent,Microsoft.App/connectedEnvironments/daprComponents,conformance,azurerm_container_app_environment_dapr_component,true,0,1,0,0,0,1,1,n/a (no provider path)
+app.azure.hfl.dev/ConnectedEnvironmentsStorage,Microsoft.App/connectedEnvironments/storages,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ContainerApp,Microsoft.App/containerApps,conformance,azurerm_container_app,true,1,1,0,0,0,4,1,agrees
+app.azure.hfl.dev/ContainerAppsPrivateEndpointConnection,Microsoft.App/containerApps/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ContainerAppsSourceControl,Microsoft.App/containerApps/sourcecontrols,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironment,Microsoft.App/managedEnvironments,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironmentsCertificate,Microsoft.App/managedEnvironments/certificates,conformance,azurerm_container_app_environment_certificate,true,1,1,0,0,1,1,0,n/a (no provider path)
+app.azure.hfl.dev/ManagedEnvironmentsDaprComponent,Microsoft.App/managedEnvironments/daprComponents,conformance,azurerm_container_app_environment_dapr_component,true,0,1,0,0,0,1,1,n/a (no provider path)
+app.azure.hfl.dev/ManagedEnvironmentsDaprSubscription,Microsoft.App/managedEnvironments/daprSubscriptions,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironmentsDotNetComponent,Microsoft.App/managedEnvironments/dotNetComponents,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironmentsHttpRouteConfig,Microsoft.App/managedEnvironments/httpRouteConfigs,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironmentsJavaComponent,Microsoft.App/managedEnvironments/javaComponents,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironmentsMaintenanceConfiguration,Microsoft.App/managedEnvironments/maintenanceConfigurations,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate,Microsoft.App/managedEnvironments/managedCertificates,conformance,azurerm_container_app_environment_certificate,true,0,1,0,0,2,1,0,n/a (no provider path)
+app.azure.hfl.dev/ManagedEnvironmentsPrivateEndpointConnection,Microsoft.App/managedEnvironments/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/ManagedEnvironmentsStorage,Microsoft.App/managedEnvironments/storages,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/SandboxGroup,Microsoft.App/sandboxGroups,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/SandboxGroupsVnetConnection,Microsoft.App/sandboxGroups/vnetConnections,conformance,,no Upjet resource,,,,,,,,
+app.azure.hfl.dev/SessionPool,Microsoft.App/sessionPools,conformance,,no Upjet resource,,,,,,,,
+appconfiguration.azure.hfl.dev/ConfigurationStoresPrivateEndpointConnection,Microsoft.AppConfiguration/configurationStores/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/AccessReviewHistoryDefinition,Microsoft.Authorization/accessReviewHistoryDefinitions,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/AccessReviewScheduleDefinition,Microsoft.Authorization/accessReviewScheduleDefinitions,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/AccessReviewScheduleSetting,Microsoft.Authorization/accessReviewScheduleSettings,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/ManagementLock,Microsoft.Authorization/locks,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/PolicyAssignment,Microsoft.Authorization/policyAssignments,kind test (TestAzurePolicy),azurerm_management_group_policy_assignment;azurerm_resource_group_policy_assignment;azurerm_resource_policy_assignment;azurerm_subscription_policy_assignment,true,4,2,0,0,0,7,0,agrees (case)
+authorization.azure.hfl.dev/PolicyDefinition,Microsoft.Authorization/policyDefinitions,kind test (TestAzurePolicy),azurerm_policy_definition,true,0,1,0,0,0,1,0,n/a (custom)
+authorization.azure.hfl.dev/PolicyDefinitionsVersion,Microsoft.Authorization/policyDefinitions/versions,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/PolicyExemption,Microsoft.Authorization/policyExemptions,kind test (TestAzurePolicy),azurerm_resource_policy_exemption;azurerm_subscription_policy_exemption,true,2,0,0,0,1,2,0,agrees
+authorization.azure.hfl.dev/PolicySetDefinition,Microsoft.Authorization/policySetDefinitions,kind test (TestAzurePolicy),azurerm_management_group_policy_set_definition;azurerm_policy_set_definition,false;true,0,1,0,0,0,1,0,n/a (custom)
+authorization.azure.hfl.dev/PolicySetDefinitionsVersion,Microsoft.Authorization/policySetDefinitions/versions,conformance,azurerm_policy_set_definition,true,0,1,0,0,0,1,1,n/a (custom)
+authorization.azure.hfl.dev/PolicyVariable,Microsoft.Authorization/variables,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/PrivateLinkAssociation,Microsoft.Authorization/privateLinkAssociations,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/ResourceManagementPrivateLink,Microsoft.Authorization/resourceManagementPrivateLinks,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/RoleAssignmentScheduleRequest,Microsoft.Authorization/roleAssignmentScheduleRequests,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/RoleEligibilityScheduleRequest,Microsoft.Authorization/roleEligibilityScheduleRequests,conformance,,no Upjet resource,,,,,,,,
+authorization.azure.hfl.dev/RoleManagementPolicyAssignment,Microsoft.Authorization/roleManagementPolicyAssignments,kind test (TestPrivilegedIdentityManagement),azurerm_role_management_policy,true,1,1,0,0,0,1,0,n/a (provider)
+automation.azure.hfl.dev/AutomationAccount,Microsoft.Automation/automationAccounts,conformance,azurerm_automation_account,true,0,1,0,0,0,2,1,agrees
+automation.azure.hfl.dev/AutomationAccountsCertificate,Microsoft.Automation/automationAccounts/certificates,conformance,azurerm_automation_certificate,false,0,0,0,0,0,0,0,agrees
+automation.azure.hfl.dev/AutomationAccountsConfiguration,Microsoft.Automation/automationAccounts/configurations,conformance,,no Upjet resource,,,,,,,,
+automation.azure.hfl.dev/AutomationAccountsConnection,Microsoft.Automation/automationAccounts/connections,conformance,azurerm_automation_connection,true,0,2,0,0,0,1,0,agrees
+automation.azure.hfl.dev/AutomationAccountsConnectionType,Microsoft.Automation/automationAccounts/connectionTypes,conformance,azurerm_automation_connection_type,true,0,2,0,0,0,1,0,n/a (provider)
+automation.azure.hfl.dev/AutomationAccountsCredential,Microsoft.Automation/automationAccounts/credentials,conformance,azurerm_automation_credential,true,0,2,0,0,0,1,1,agrees
+automation.azure.hfl.dev/AutomationAccountsHybridRunbookWorker,Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups/hybridRunbookWorkers,conformance,azurerm_automation_hybrid_runbook_worker,false,0,0,0,0,0,0,0,n/a (provider)
+automation.azure.hfl.dev/AutomationAccountsHybridRunbookWorkerGroup,Microsoft.Automation/automationAccounts/hybridRunbookWorkerGroups,conformance,azurerm_automation_hybrid_runbook_worker_group,true,0,2,0,0,0,1,0,n/a (provider)
+automation.azure.hfl.dev/AutomationAccountsJobSchedule,Microsoft.Automation/automationAccounts/jobSchedules,conformance,,no Upjet resource,,,,,,,,
+automation.azure.hfl.dev/AutomationAccountsModule,Microsoft.Automation/automationAccounts/modules,conformance,,no Upjet resource,,,,,,,,
+automation.azure.hfl.dev/AutomationAccountsPrivateEndpointConnection,Microsoft.Automation/automationAccounts/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+automation.azure.hfl.dev/AutomationAccountsRunbook,Microsoft.Automation/automationAccounts/runbooks,conformance,azurerm_automation_runbook,true,0,2,0,0,0,2,1,n/a (provider)
+automation.azure.hfl.dev/AutomationAccountsRuntimeEnvironment,Microsoft.Automation/automationAccounts/runtimeEnvironments,conformance,,no Upjet resource,,,,,,,,
+automation.azure.hfl.dev/AutomationAccountsRuntimeEnvironmentsPackage,Microsoft.Automation/automationAccounts/runtimeEnvironments/packages,conformance,,no Upjet resource,,,,,,,,
+automation.azure.hfl.dev/AutomationAccountsSchedule,Microsoft.Automation/automationAccounts/schedules,conformance,azurerm_automation_schedule,true,0,2,0,0,0,2,1,agrees
+automation.azure.hfl.dev/AutomationAccountsSoftwareUpdateConfiguration,Microsoft.Automation/automationAccounts/softwareUpdateConfigurations,conformance,,no Upjet resource,,,,,,,,
+automation.azure.hfl.dev/AutomationAccountsSourceControl,Microsoft.Automation/automationAccounts/sourceControls,conformance,azurerm_automation_source_control,false,0,0,0,0,0,0,0,n/a (no provider path)
+automation.azure.hfl.dev/AutomationAccountsVariable,Microsoft.Automation/automationAccounts/variables,conformance,azurerm_automation_variable_bool;azurerm_automation_variable_datetime;azurerm_automation_variable_int;azurerm_automation_variable_string,true,0,8,0,0,0,4,2,agrees
+automation.azure.hfl.dev/AutomationAccountsWatcher,Microsoft.Automation/automationAccounts/watchers,conformance,azurerm_automation_watcher,false,0,0,0,0,0,0,0,n/a (no provider path)
+automation.azure.hfl.dev/AutomationAccountsWebhook,Microsoft.Automation/automationAccounts/webhooks,conformance,azurerm_automation_webhook,true,0,2,0,0,1,1,1,n/a (provider)
+batch.azure.hfl.dev/BatchAccountsApplication,Microsoft.Batch/batchAccounts/applications,conformance,azurerm_batch_application,false,0,0,0,0,0,0,0,agrees
+batch.azure.hfl.dev/BatchAccountsPool,Microsoft.Batch/batchAccounts/pools,conformance,azurerm_batch_pool,false,0,0,0,0,0,0,0,agrees
+cache.azure.hfl.dev/RedisEnterprisePrivateEndpointConnection,Microsoft.Cache/redisEnterprise/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+cache.azure.hfl.dev/RedisPrivateEndpointConnection,Microsoft.Cache/redis/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+cdn.azure.hfl.dev/CdnWebApplicationFirewallPolicy,Microsoft.Cdn/cdnWebApplicationFirewallPolicies,conformance,azurerm_cdn_frontdoor_firewall_policy,true,0,0,0,0,2,1,0,differs
+cognitiveservices.azure.hfl.dev/AccountsCapabilityHost,Microsoft.CognitiveServices/accounts/capabilityHosts,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsCommitmentPlan,Microsoft.CognitiveServices/accounts/commitmentPlans,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsConnection,Microsoft.CognitiveServices/accounts/connections,conformance,azurerm_cognitive_account_connection_account_key;azurerm_cognitive_account_connection_account_managed_identity;azurerm_cognitive_account_connection_api_key;azurerm_cognitive_account_connection_custom_keys;azurerm_cognitive_account_connection_entra_id,true,0,8,0,0,2,5,0,n/a (no provider path)
+cognitiveservices.azure.hfl.dev/AccountsDefenderForAISetting,Microsoft.CognitiveServices/accounts/defenderForAISettings,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsEncryptionScope,Microsoft.CognitiveServices/accounts/encryptionScopes,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsManagedNetwork,Microsoft.CognitiveServices/accounts/managedNetworks,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsManagedNetworksOutboundRule,Microsoft.CognitiveServices/accounts/managedNetworks/outboundRules,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsPrivateEndpointConnection,Microsoft.CognitiveServices/accounts/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsProjectsApplication,Microsoft.CognitiveServices/accounts/projects/applications,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsProjectsApplicationsAgentDeployment,Microsoft.CognitiveServices/accounts/projects/applications/agentDeployments,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsProjectsCapabilityHost,Microsoft.CognitiveServices/accounts/projects/capabilityHosts,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsProjectsConnection,Microsoft.CognitiveServices/accounts/projects/connections,conformance,azurerm_cognitive_account_connection_account_key;azurerm_cognitive_account_connection_account_managed_identity;azurerm_cognitive_account_connection_api_key;azurerm_cognitive_account_connection_custom_keys;azurerm_cognitive_account_connection_entra_id,true,0,8,0,0,2,5,0,n/a (no provider path)
+cognitiveservices.azure.hfl.dev/AccountsRaiBlocklist,Microsoft.CognitiveServices/accounts/raiBlocklists,conformance,azurerm_cognitive_account_rai_blocklist,true,0,1,0,0,0,1,0,n/a (no provider path)
+cognitiveservices.azure.hfl.dev/AccountsRaiBlocklistsRaiBlocklistItem,Microsoft.CognitiveServices/accounts/raiBlocklists/raiBlocklistItems,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsRaiPolicy,Microsoft.CognitiveServices/accounts/raiPolicies,conformance,azurerm_cognitive_account_rai_policy,true,0,1,0,0,0,1,0,n/a (no provider path)
+cognitiveservices.azure.hfl.dev/AccountsRaiToolLabel,Microsoft.CognitiveServices/accounts/raiToolLabels,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/AccountsRaiTopic,Microsoft.CognitiveServices/accounts/raitopics,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/CommitmentPlan,Microsoft.CognitiveServices/commitmentPlans,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/CommitmentPlansAccountAssociation,Microsoft.CognitiveServices/commitmentPlans/accountAssociations,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/RaiExternalSafetyProvider,Microsoft.CognitiveServices/raiExternalSafetyProviders,conformance,,no Upjet resource,,,,,,,,
+cognitiveservices.azure.hfl.dev/RaiPolicy,Microsoft.CognitiveServices/raiPolicy,conformance,azurerm_cognitive_account_rai_policy,true,0,0,0,0,1,1,0,n/a (no provider path)
+compute.azure.hfl.dev/DiskAccessesPrivateEndpointConnection,Microsoft.Compute/diskAccesses/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/GalleriesApplication,Microsoft.Compute/galleries/applications,conformance,azurerm_gallery_application,true,0,1,0,0,0,1,1,n/a (no provider path)
+compute.azure.hfl.dev/GalleriesApplicationsVersion,Microsoft.Compute/galleries/applications/versions,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/GalleriesImage,Microsoft.Compute/galleries/images,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/GalleriesImagesVersion,Microsoft.Compute/galleries/images/versions,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/GalleriesInVMAccessControlProfile,Microsoft.Compute/galleries/inVMAccessControlProfiles,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/GalleriesInVMAccessControlProfilesVersion,Microsoft.Compute/galleries/inVMAccessControlProfiles/versions,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/GalleriesScript,Microsoft.Compute/galleries/scripts,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/GalleriesScriptsVersion,Microsoft.Compute/galleries/scripts/versions,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/Gallery,Microsoft.Compute/galleries,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/HostGroup,Microsoft.Compute/hostGroups,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/HostGroupsHost,Microsoft.Compute/hostGroups/hosts,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/ProximityPlacementGroup,Microsoft.Compute/proximityPlacementGroups,conformance,azurerm_proximity_placement_group,true,0,1,0,0,0,1,0,agrees
+compute.azure.hfl.dev/RestorePointCollection,Microsoft.Compute/restorePointCollections,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/RestorePointCollectionsRestorePoint,Microsoft.Compute/restorePointCollections/restorePoints,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/SshPublicKey,Microsoft.Compute/sshPublicKeys,conformance,azurerm_ssh_public_key,true,0,1,0,0,0,1,1,agrees
+compute.azure.hfl.dev/VirtualMachine,Microsoft.Compute/virtualMachines,conformance,,no Upjet resource,,,,,,,,
+compute.azure.hfl.dev/VirtualMachinesDiagnosticRunCommand,Microsoft.Compute/virtualMachines/diagnosticRunCommands,conformance,azurerm_virtual_machine_run_command,true,0,1,0,0,3,2,0,n/a (no provider path)
+compute.azure.hfl.dev/VirtualMachinesRunCommand,Microsoft.Compute/virtualMachines/runCommands,conformance,azurerm_virtual_machine_run_command,true,0,1,0,0,3,2,1,n/a (no provider path)
+consumption.azure.hfl.dev/Budget,Microsoft.Consumption/budgets,conformance,azurerm_consumption_budget_management_group;azurerm_consumption_budget_resource_group;azurerm_consumption_budget_subscription,true,2,4,0,0,1,6,6,agrees
+containerinstance.azure.hfl.dev/ContainerGroupProfile,Microsoft.ContainerInstance/containerGroupProfiles,conformance,,no Upjet resource,,,,,,,,
+containerinstance.azure.hfl.dev/NGroup,Microsoft.ContainerInstance/ngroups,conformance,,no Upjet resource,,,,,,,,
+containerinstance.azure.hfl.dev/SandboxGroup,Microsoft.ContainerInstance/sandboxGroups,conformance,,no Upjet resource,,,,,,,,
+containerregistry.azure.hfl.dev/RegistriesConnectedRegistry,Microsoft.ContainerRegistry/registries/connectedRegistries,conformance,azurerm_container_connected_registry,true,1,1,0,0,0,1,0,n/a (no provider path)
+containerregistry.azure.hfl.dev/RegistriesCredentialSet,Microsoft.ContainerRegistry/registries/credentialSets,conformance,azurerm_container_registry_credential_set,true,0,1,0,0,2,1,1,n/a (no provider path)
+containerregistry.azure.hfl.dev/RegistriesPrivateEndpointConnection,Microsoft.ContainerRegistry/registries/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+containerregistry.azure.hfl.dev/RegistriesScopeMap,Microsoft.ContainerRegistry/registries/scopeMaps,conformance,azurerm_container_registry_scope_map,true,0,2,0,0,0,1,1,agrees
+containerregistry.azure.hfl.dev/RegistriesTask,Microsoft.ContainerRegistry/registries/tasks,conformance,,no Upjet resource,,,,,,,,
+containerregistry.azure.hfl.dev/RegistriesToken,Microsoft.ContainerRegistry/registries/tokens,conformance,azurerm_container_registry_token,true,1,2,0,0,0,1,0,agrees
+containerregistry.azure.hfl.dev/RegistriesWebhook,Microsoft.ContainerRegistry/registries/webhooks,conformance,azurerm_container_registry_webhook,true,0,2,0,0,0,1,1,agrees (case)
+containerservice.azure.hfl.dev/DeploymentSafeguard,Microsoft.ContainerService/deploymentSafeguards,conformance,,no Upjet resource,,,,,,,,
+containerservice.azure.hfl.dev/FleetsManagedNamespace,Microsoft.ContainerService/fleets/managedNamespaces,conformance,,no Upjet resource,,,,,,,,
+containerservice.azure.hfl.dev/ManagedClustersManagedNamespace,Microsoft.ContainerService/managedClusters/managedNamespaces,conformance,,no Upjet resource,,,,,,,,
+containerservice.azure.hfl.dev/ManagedClustersPrivateEndpointConnection,Microsoft.ContainerService/managedClusters/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+containerservice.azure.hfl.dev/Snapshot,Microsoft.ContainerService/snapshots,conformance,azurerm_snapshot,true,0,0,0,0,2,2,0,differs
+costmanagement.azure.hfl.dev/Budget,Microsoft.CostManagement/budgets,conformance,azurerm_consumption_budget_management_group,true,0,2,0,0,0,2,2,n/a (provider)
+costmanagement.azure.hfl.dev/Export,Microsoft.CostManagement/exports,conformance,,no Upjet resource,,,,,,,,
+costmanagement.azure.hfl.dev/ScheduledAction,Microsoft.CostManagement/scheduledActions,conformance,,no Upjet resource,,,,,,,,
+costmanagement.azure.hfl.dev/Setting,Microsoft.CostManagement/settings,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesAdfcdc,Microsoft.DataFactory/factories/adfcdcs,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesCredential,Microsoft.DataFactory/factories/credentials,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesDataflow,Microsoft.DataFactory/factories/dataflows,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesDatasetAvro,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetAzureDatabricksDeltaLakeDataset,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlDWTable,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlTable,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetBinary,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetCosmosDbSqlApiCollection,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetDelimitedText,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetExcel,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetHttpFile,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetJson,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetOrc,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetParquet,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetRestResource,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesDatasetXml,Microsoft.DataFactory/factories/datasets,conformance,azurerm_data_factory_custom_dataset,true,0,1,0,0,1,2,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesGlobalParameter,Microsoft.DataFactory/factories/globalParameters,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesIntegrationRuntime,Microsoft.DataFactory/factories/integrationRuntimes,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobFS,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobStorage,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureDatabricks,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureKeyVault,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSqlDW,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSqlDatabase,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSynapseArtifacts,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceCosmosDb,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceHttpServer,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesLinkedServiceRestService,Microsoft.DataFactory/factories/linkedservices,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork,Microsoft.DataFactory/factories/managedVirtualNetworks,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint,Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints,conformance,azurerm_data_factory_managed_private_endpoint,true,1,1,0,0,0,1,0,n/a (provider)
+datafactory.azure.hfl.dev/FactoriesPipeline,Microsoft.DataFactory/factories/pipelines,conformance,azurerm_data_factory_pipeline,true,0,1,0,0,0,1,0,n/a (no provider path)
+datafactory.azure.hfl.dev/FactoriesPrivateEndpointConnection,Microsoft.DataFactory/factories/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+datafactory.azure.hfl.dev/FactoriesTrigger,Microsoft.DataFactory/factories/triggers,conformance,azurerm_data_factory_trigger_blob_event;azurerm_data_factory_trigger_custom_event;azurerm_data_factory_trigger_schedule,true,2,3,0,0,3,4,0,n/a (no provider path)
+dataprotection.azure.hfl.dev/BackupVaultsBackupResourceGuardProxy,Microsoft.DataProtection/backupVaults/backupResourceGuardProxies,conformance,,no Upjet resource,,,,,,,,
+dataprotection.azure.hfl.dev/ResourceGuard,Microsoft.DataProtection/resourceGuards,conformance,azurerm_data_protection_resource_guard,true,0,1,0,0,0,1,0,agrees
+dbformysql.azure.hfl.dev/FlexibleServersAdvancedThreatProtectionSetting,Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings,conformance,,no Upjet resource,,,,,,,,
+dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+dbforpostgresql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection,Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+dbforpostgresql.azure.hfl.dev/ServerGroupsv2,Microsoft.DBforPostgreSQL/serverGroupsv2,conformance,,no Upjet resource,,,,,,,,
+dbforpostgresql.azure.hfl.dev/ServerGroupsv2CoordinatorConfiguration,Microsoft.DBforPostgreSQL/serverGroupsv2/coordinatorConfigurations,conformance,,no Upjet resource,,,,,,,,
+dbforpostgresql.azure.hfl.dev/ServerGroupsv2FirewallRule,Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules,conformance,azurerm_mssql_firewall_rule;azurerm_postgresql_flexible_server_firewall_rule,true,0,0,0,0,2,1,1,n/a (no provider path)
+dbforpostgresql.azure.hfl.dev/ServerGroupsv2NodeConfiguration,Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations,conformance,,no Upjet resource,,,,,,,,
+dbforpostgresql.azure.hfl.dev/ServerGroupsv2PrivateEndpointConnection,Microsoft.DBforPostgreSQL/serverGroupsv2/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+dbforpostgresql.azure.hfl.dev/ServerGroupsv2Role,Microsoft.DBforPostgreSQL/serverGroupsv2/roles,conformance,,no Upjet resource,,,,,,,,
+devices.azure.hfl.dev/IotHubsCertificate,Microsoft.Devices/IotHubs/certificates,conformance,,no Upjet resource,,,,,,,,
+devices.azure.hfl.dev/IotHubsPrivateEndpointConnection,Microsoft.Devices/iotHubs/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+devices.azure.hfl.dev/ProvisioningService,Microsoft.Devices/provisioningServices,conformance,,no Upjet resource,,,,,,,,
+devices.azure.hfl.dev/ProvisioningServicesCertificate,Microsoft.Devices/provisioningServices/certificates,conformance,,no Upjet resource,,,,,,,,
+devices.azure.hfl.dev/ProvisioningServicesPrivateEndpointConnection,Microsoft.Devices/provisioningServices/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/Lab,Microsoft.DevTestLab/labs,conformance,azurerm_dev_test_lab,true,0,1,0,0,0,1,0,agrees
+devtestlab.azure.hfl.dev/LabsArtifactSource,Microsoft.DevTestLab/labs/artifactsources,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsCost,Microsoft.DevTestLab/labs/costs,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsCustomImage,Microsoft.DevTestLab/labs/customimages,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsFormula,Microsoft.DevTestLab/labs/formulas,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsNotificationChannel,Microsoft.DevTestLab/labs/notificationchannels,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsSchedule,Microsoft.DevTestLab/labs/schedules,conformance,azurerm_dev_test_schedule,true,0,2,0,0,0,2,0,agrees
+devtestlab.azure.hfl.dev/LabsServiceRunner,Microsoft.DevTestLab/labs/servicerunners,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsUser,Microsoft.DevTestLab/labs/users,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsUsersDisk,Microsoft.DevTestLab/labs/users/disks,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsUsersEnvironment,Microsoft.DevTestLab/labs/users/environments,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsUsersSecret,Microsoft.DevTestLab/labs/users/secrets,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsUsersServiceFabric,Microsoft.DevTestLab/labs/users/servicefabrics,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsUsersServicefabricsSchedule,Microsoft.DevTestLab/labs/users/servicefabrics/schedules,conformance,azurerm_dev_test_schedule,true,0,0,0,0,2,2,0,differs
+devtestlab.azure.hfl.dev/LabsVirtualMachine,Microsoft.DevTestLab/labs/virtualmachines,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsVirtualNetwork,Microsoft.DevTestLab/labs/virtualnetworks,conformance,,no Upjet resource,,,,,,,,
+devtestlab.azure.hfl.dev/LabsVirtualmachinesSchedule,Microsoft.DevTestLab/labs/virtualmachines/schedules,conformance,azurerm_dev_test_schedule,true,0,0,0,0,2,2,0,differs
+devtestlab.azure.hfl.dev/Schedule,Microsoft.DevTestLab/schedules,conformance,azurerm_dev_test_schedule,true,0,0,0,0,2,2,0,differs
+documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspace,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTable,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTablesThroughputSetting,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesThroughputSetting,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsCassandraRoleAssignment,Microsoft.DocumentDB/databaseAccounts/cassandraRoleAssignments,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsCassandraRoleDefinition,Microsoft.DocumentDB/databaseAccounts/cassandraRoleDefinitions,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabase,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraph,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraphsThroughputSetting,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesThroughputSetting,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsGremlinRoleAssignment,Microsoft.DocumentDB/databaseAccounts/gremlinRoleAssignments,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsGremlinRoleDefinition,Microsoft.DocumentDB/databaseAccounts/gremlinRoleDefinitions,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsMongoMIRoleAssignment,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleAssignments,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsMongoMIRoleDefinition,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleDefinitions,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsPrivateEndpointConnection,Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsService,Microsoft.DocumentDB/databaseAccounts/services,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsSqlDatabasesClientEncryptionKey,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsSqlRoleDefinition,Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsTable,Microsoft.DocumentDB/databaseAccounts/tables,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsTableRoleAssignment,Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsTableRoleDefinition,Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/DatabaseAccountsTablesThroughputSetting,Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/Fleet,Microsoft.DocumentDB/fleets,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/FleetsFleetspace,Microsoft.DocumentDB/fleets/fleetspaces,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/FleetsFleetspacesFleetspaceAccount,Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/MongoClustersPrivateEndpointConnection,Microsoft.DocumentDB/mongoClusters/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+documentdb.azure.hfl.dev/MongoClustersUser,Microsoft.DocumentDB/mongoClusters/users,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/NamespacesCaCertificate,Microsoft.EventGrid/namespaces/caCertificates,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/NamespacesClient,Microsoft.EventGrid/namespaces/clients,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/NamespacesClientGroup,Microsoft.EventGrid/namespaces/clientGroups,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/NamespacesPermissionBinding,Microsoft.EventGrid/namespaces/permissionBindings,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/NamespacesTopicSpace,Microsoft.EventGrid/namespaces/topicSpaces,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/NamespacesTopicsEventSubscription,Microsoft.EventGrid/namespaces/topics/eventSubscriptions,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/PartnerConfiguration,Microsoft.EventGrid/partnerConfigurations,conformance,azurerm_eventgrid_partner_configuration,true,0,1,0,0,0,1,0,n/a (no provider path)
+eventgrid.azure.hfl.dev/PartnerNamespace,Microsoft.EventGrid/partnerNamespaces,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/PartnerNamespacesChannel,Microsoft.EventGrid/partnerNamespaces/channels,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/PartnerRegistration,Microsoft.EventGrid/partnerRegistrations,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/PartnerTopic,Microsoft.EventGrid/partnerTopics,conformance,,no Upjet resource,,,,,,,,
+eventgrid.azure.hfl.dev/PartnerTopicsEventSubscription,Microsoft.EventGrid/partnerTopics/eventSubscriptions,conformance,azurerm_eventgrid_event_subscription;azurerm_eventgrid_system_topic_event_subscription,true,0,1,0,0,6,3,0,differs
+eventgrid.azure.hfl.dev/SystemTopic,Microsoft.EventGrid/systemTopics,conformance,azurerm_eventgrid_system_topic,true,2,1,0,0,0,2,1,agrees
+eventgrid.azure.hfl.dev/SystemTopicsEventSubscription,Microsoft.EventGrid/systemTopics/eventSubscriptions,conformance,azurerm_eventgrid_event_subscription;azurerm_eventgrid_system_topic_event_subscription,true,2,3,0,0,2,3,0,agrees
+eventhub.azure.hfl.dev/Cluster,Microsoft.EventHub/clusters,conformance,azurerm_eventhub_cluster,true,0,1,0,0,0,1,0,agrees
+eventhub.azure.hfl.dev/NamespacesApplicationGroup,Microsoft.EventHub/namespaces/applicationGroups,conformance,,no Upjet resource,,,,,,,,
+eventhub.azure.hfl.dev/NamespacesDisasterRecoveryConfig,Microsoft.EventHub/namespaces/disasterRecoveryConfigs,conformance,azurerm_eventhub_namespace_disaster_recovery_config,true,1,2,0,0,0,1,0,agrees
+eventhub.azure.hfl.dev/NamespacesNetworkRuleSet,Microsoft.EventHub/namespaces/networkRuleSets,conformance,,no Upjet resource,,,,,,,,
+eventhub.azure.hfl.dev/NamespacesPrivateEndpointConnection,Microsoft.EventHub/namespaces/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+eventhub.azure.hfl.dev/NamespacesSchemaGroup,Microsoft.EventHub/namespaces/schemagroups,conformance,,no Upjet resource,,,,,,,,
+hardwaresecuritymodules.azure.hfl.dev/CloudHsmCluster,Microsoft.HardwareSecurityModules/cloudHsmClusters,conformance,,no Upjet resource,,,,,,,,
+hardwaresecuritymodules.azure.hfl.dev/CloudHsmClustersPrivateEndpointConnection,Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+hardwaresecuritymodules.azure.hfl.dev/DedicatedHsm,Microsoft.HardwareSecurityModules/dedicatedHSMs,conformance,azurerm_dedicated_hardware_security_module,false,0,0,0,0,0,0,0,agrees
+insights.azure.hfl.dev/ComponentsLinkedStorageAccount,Microsoft.Insights/components/linkedStorageAccounts,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/ComponentsProactiveDetectionConfig,Microsoft.Insights/components/ProactiveDetectionConfigs,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/GuestDiagnosticSetting,microsoft.insights/guestDiagnosticSettings,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/GuestDiagnosticSettingsAssociation,microsoft.insights/guestDiagnosticSettingsAssociation,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/LogProfile,Microsoft.Insights/logprofiles,kind test (TestLogProfileAndWorkbookTemplate),,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/MyWorkbook,Microsoft.Insights/myWorkbooks,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/PrivateLinkScope,Microsoft.Insights/privateLinkScopes,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection,Microsoft.Insights/privateLinkScopes/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/PrivateLinkScopesScopedResource,Microsoft.Insights/privateLinkScopes/scopedResources,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/TenantActionGroup,Microsoft.Insights/tenantActionGroups,conformance,,no Upjet resource,,,,,,,,
+insights.azure.hfl.dev/WorkbookTemplate,Microsoft.Insights/workbooktemplates,conformance,,no Upjet resource,,,,,,,,
+keyvault.azure.hfl.dev/ManagedHSM,Microsoft.KeyVault/managedHSMs,conformance,azurerm_key_vault_managed_hardware_security_module,true,0,1,0,0,0,1,1,agrees
+keyvault.azure.hfl.dev/ManagedHSMsKey,Microsoft.KeyVault/managedHSMs/keys,conformance,azurerm_key_vault_key,true,0,0,0,0,1,2,0,n/a (custom)
+keyvault.azure.hfl.dev/ManagedHSMsPrivateEndpointConnection,Microsoft.KeyVault/managedHSMs/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+keyvault.azure.hfl.dev/VaultsPrivateEndpointConnection,Microsoft.KeyVault/vaults/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+kubernetesconfiguration.azure.hfl.dev/PrivateLinkScope,Microsoft.KubernetesConfiguration/privateLinkScopes,conformance,,no Upjet resource,,,,,,,,
+kubernetesconfiguration.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection,Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+kubernetesconfiguration.azure.hfl.dev/SourceControlConfiguration,Microsoft.KubernetesConfiguration/sourceControlConfigurations,conformance,,no Upjet resource,,,,,,,,
+kusto.azure.hfl.dev/ClustersAttachedDatabaseConfiguration,Microsoft.Kusto/clusters/attachedDatabaseConfigurations,conformance,azurerm_kusto_attached_database_configuration,true,0,4,0,0,1,2,0,n/a (provider)
+kusto.azure.hfl.dev/ClustersDatabasesScript,Microsoft.Kusto/clusters/databases/scripts,conformance,azurerm_kusto_script,false,0,0,0,0,0,0,0,agrees (case)
+kusto.azure.hfl.dev/ClustersManagedPrivateEndpoint,Microsoft.Kusto/clusters/managedPrivateEndpoints,conformance,azurerm_kusto_cluster_managed_private_endpoint,true,1,2,0,0,1,1,1,agrees
+kusto.azure.hfl.dev/ClustersPrivateEndpointConnection,Microsoft.Kusto/clusters/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+kusto.azure.hfl.dev/ClustersSandboxCustomImage,Microsoft.Kusto/clusters/sandboxCustomImages,conformance,,no Upjet resource,,,,,,,,
+logic.azure.hfl.dev/IntegrationAccount,Microsoft.Logic/integrationAccounts,conformance,azurerm_logic_app_integration_account,true,0,1,0,0,0,1,1,n/a (provider)
+logic.azure.hfl.dev/IntegrationAccountsAgreement,Microsoft.Logic/integrationAccounts/agreements,kind test (TestLogicWorkflowAndIntegrationAccount),,no Upjet resource,,,,,,,,
+logic.azure.hfl.dev/IntegrationAccountsAssembly,Microsoft.Logic/integrationAccounts/assemblies,conformance,azurerm_logic_app_integration_account_assembly,false,0,0,0,0,0,0,0,agrees
+logic.azure.hfl.dev/IntegrationAccountsBatchConfiguration,Microsoft.Logic/integrationAccounts/batchConfigurations,conformance,azurerm_logic_app_integration_account_batch_configuration,true,0,2,0,0,0,2,0,n/a (provider)
+logic.azure.hfl.dev/IntegrationAccountsCertificate,Microsoft.Logic/integrationAccounts/certificates,conformance,,no Upjet resource,,,,,,,,
+logic.azure.hfl.dev/IntegrationAccountsMap,Microsoft.Logic/integrationAccounts/maps,conformance,azurerm_logic_app_integration_account_map,false,0,0,0,0,0,0,0,agrees
+logic.azure.hfl.dev/IntegrationAccountsPartner,Microsoft.Logic/integrationAccounts/partners,conformance,azurerm_logic_app_integration_account_partner,true,0,2,0,0,0,1,0,agrees
+logic.azure.hfl.dev/IntegrationAccountsSchema,Microsoft.Logic/integrationAccounts/schemas,conformance,azurerm_logic_app_integration_account_schema,true,0,2,0,0,0,1,1,agrees
+logic.azure.hfl.dev/IntegrationAccountsSession,Microsoft.Logic/integrationAccounts/sessions,conformance,azurerm_logic_app_integration_account_session,true,0,2,0,0,0,1,0,agrees
+logic.azure.hfl.dev/Workflow,Microsoft.Logic/workflows,conformance,azurerm_logic_app_workflow,true,0,1,0,0,0,2,0,agrees
+machinelearningservices.azure.hfl.dev/RegistriesCode,Microsoft.MachineLearningServices/registries/codes,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesCodesVersion,Microsoft.MachineLearningServices/registries/codes/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesComponent,Microsoft.MachineLearningServices/registries/components,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesComponentsVersion,Microsoft.MachineLearningServices/registries/components/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesData,Microsoft.MachineLearningServices/registries/data,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesDataVersion,Microsoft.MachineLearningServices/registries/data/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesEnvironment,Microsoft.MachineLearningServices/registries/environments,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesEnvironmentsVersion,Microsoft.MachineLearningServices/registries/environments/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesModel,Microsoft.MachineLearningServices/registries/models,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/RegistriesModelsVersion,Microsoft.MachineLearningServices/registries/models/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpoint,Microsoft.MachineLearningServices/workspaces/batchEndpoints,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpointsDeployment,Microsoft.MachineLearningServices/workspaces/batchEndpoints/deployments,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesCapabilityHost,Microsoft.MachineLearningServices/workspaces/capabilityHosts,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesCode,Microsoft.MachineLearningServices/workspaces/codes,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesCodesVersion,Microsoft.MachineLearningServices/workspaces/codes/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesComponent,Microsoft.MachineLearningServices/workspaces/components,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesComponentsVersion,Microsoft.MachineLearningServices/workspaces/components/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesData,Microsoft.MachineLearningServices/workspaces/data,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesDataVersion,Microsoft.MachineLearningServices/workspaces/data/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesDatastore,Microsoft.MachineLearningServices/workspaces/datastores,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesEnvironment,Microsoft.MachineLearningServices/workspaces/environments,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesEnvironmentsVersion,Microsoft.MachineLearningServices/workspaces/environments/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesFeatureset,Microsoft.MachineLearningServices/workspaces/featuresets,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesFeaturesetsVersion,Microsoft.MachineLearningServices/workspaces/featuresets/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntitiesVersion,Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntity,Microsoft.MachineLearningServices/workspaces/featurestoreEntities,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesJob,Microsoft.MachineLearningServices/workspaces/jobs,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesModel,Microsoft.MachineLearningServices/workspaces/models,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesModelsVersion,Microsoft.MachineLearningServices/workspaces/models/versions,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpoint,Microsoft.MachineLearningServices/workspaces/onlineEndpoints,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpointsDeployment,Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesOutboundRule,Microsoft.MachineLearningServices/workspaces/outboundRules,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection,Microsoft.MachineLearningServices/workspaces/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesSchedule,Microsoft.MachineLearningServices/workspaces/schedules,conformance,,no Upjet resource,,,,,,,,
+machinelearningservices.azure.hfl.dev/WorkspacesServerlessEndpoint,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,conformance,,no Upjet resource,,,,,,,,
+maintenance.azure.hfl.dev/ConfigurationAssignment,Microsoft.Maintenance/configurationAssignments,conformance,azurerm_maintenance_assignment_dedicated_host;azurerm_maintenance_assignment_virtual_machine;azurerm_maintenance_assignment_virtual_machine_scale_set,true;false,2,2,0,0,0,2,0,n/a (no provider path)
+maintenance.azure.hfl.dev/MaintenanceConfiguration,Microsoft.Maintenance/maintenanceConfigurations,conformance,azurerm_maintenance_configuration,true,0,1,0,0,0,2,0,agrees
+managedidentity.azure.hfl.dev/UserAssignedIdentity,Microsoft.ManagedIdentity/userAssignedIdentities,conformance,azurerm_user_assigned_identity,true,0,1,0,0,0,1,0,n/a (provider)
+management.azure.hfl.dev/ManagementGroup,Microsoft.Management/managementGroups,conformance,azurerm_management_group;azurerm_management_group_policy_exemption;azurerm_management_group_policy_set_definition,true;false,1,0,0,0,2,4,3,differs
+management.azure.hfl.dev/ManagementGroupsSetting,Microsoft.Management/managementGroups/settings,conformance,,no Upjet resource,,,,,,,,
+management.azure.hfl.dev/ManagementGroupsSubscription,Microsoft.Management/managementGroups/subscriptions,conformance,azurerm_management_group_subscription_association,true,0,2,0,0,0,1,0,n/a (custom)
+management.azure.hfl.dev/ServiceGroup,Microsoft.Management/serviceGroups,conformance,,no Upjet resource,,,,,,,,
+monitor.azure.hfl.dev/PipelineGroup,Microsoft.Monitor/pipelineGroups,kind test (TestMonitorPipelineGroup),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ApplicationGateway,Microsoft.Network/applicationGateways,conformance,azurerm_application_gateway,true,4,1,0,0,0,2,1,agrees
+network.azure.hfl.dev/ApplicationSecurityGroupsAddressPrefixSet,Microsoft.Network/applicationSecurityGroups/addressPrefixSets,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/DdosCustomPolicy,Microsoft.Network/ddosCustomPolicies,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/DnsResolverDomainList,Microsoft.Network/dnsResolverDomainLists,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/DnsResolverPoliciesDnsSecurityRule,Microsoft.Network/dnsResolverPolicies/dnsSecurityRules,kind test (TestDNSSecurityPolicy),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/DnsResolverPoliciesVirtualNetworkLink,Microsoft.Network/dnsResolverPolicies/virtualNetworkLinks,conformance,azurerm_private_dns_resolver,true,0,0,0,0,2,1,0,differs
+network.azure.hfl.dev/DnsResolverPolicy,Microsoft.Network/dnsResolverPolicies,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/DnsZonesSOARecord,Microsoft.Network/dnsZones/SOA,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ExpressRouteCircuit,Microsoft.Network/expressRouteCircuits,kind test (TestExpressRouteCircuit),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ExpressRouteCircuitsAuthorization,Microsoft.Network/expressRouteCircuits/authorizations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ExpressRouteCircuitsPeering,Microsoft.Network/expressRouteCircuits/peerings,kind test (TestExpressRouteCircuit),azurerm_express_route_circuit_peering,true,0,2,0,0,0,2,0,agrees
+network.azure.hfl.dev/ExpressRouteCircuitsPeeringsConnection,Microsoft.Network/expressRouteCircuits/peerings/connections,kind test (TestExpressRouteCircuit),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ExpressRouteGateway,Microsoft.Network/expressRouteGateways,kind test (TestExpressRouteGateway),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ExpressRouteGatewaysExpressRouteConnection,Microsoft.Network/expressRouteGateways/expressRouteConnections,kind test (TestExpressRouteGateway),azurerm_express_route_connection,true,1,1,0,0,0,2,0,n/a (no provider path)
+network.azure.hfl.dev/ExpressRouteLag,Microsoft.Network/expressRouteLags,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ExpressRouteLagsAuthorization,Microsoft.Network/expressRouteLags/authorizations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ExpressRoutePort,Microsoft.Network/ExpressRoutePorts,kind test (TestExpressRouteCircuit),azurerm_express_route_port,true,0,1,0,0,0,2,0,agrees (case)
+network.azure.hfl.dev/ExpressRoutePortsAuthorization,Microsoft.Network/expressRoutePorts/authorizations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/FirewallPoliciesFirewallPolicyDraft,Microsoft.Network/firewallPolicies/firewallPolicyDrafts,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/FirewallPoliciesKubeSelectorGroup,Microsoft.Network/firewallPolicies/kubeSelectorGroups,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/FirewallPoliciesRuleCollectionGroupDraft,Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts,conformance,azurerm_firewall_network_rule_collection;azurerm_firewall_policy_rule_collection_group,true,0,1,0,0,2,2,1,n/a (no provider path)
+network.azure.hfl.dev/FirewallPoliciesSignatureOverride,Microsoft.Network/firewallPolicies/signatureOverrides,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/IpGroup,Microsoft.Network/ipGroups,conformance,azurerm_ip_group,true,0,1,0,0,0,1,0,agrees
+network.azure.hfl.dev/LocalNetworkGateway,Microsoft.Network/localNetworkGateways,conformance,azurerm_local_network_gateway;azurerm_virtual_network_gateway;azurerm_virtual_network_gateway_connection,true,0,1,0,0,7,6,0,differs
+network.azure.hfl.dev/NetworkInterfacesTapConfiguration,Microsoft.Network/networkInterfaces/tapConfigurations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManager,Microsoft.Network/networkManagers,conformance,azurerm_network_manager,true,0,1,0,0,0,2,1,agrees
+network.azure.hfl.dev/NetworkManagerConnection,Microsoft.Network/networkManagerConnections,conformance,azurerm_network_manager_management_group_connection;azurerm_network_manager_subscription_connection,true,2,1,0,0,0,2,2,agrees
+network.azure.hfl.dev/NetworkManagersCommit,Microsoft.Network/networkManagers/commits,kind test (TestNetworkManagerRouting),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersConnectivityConfiguration,Microsoft.Network/networkManagers/connectivityConfigurations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersIpamPool,Microsoft.Network/networkManagers/ipamPools,conformance,azurerm_network_manager_ipam_pool;azurerm_subnet,true,0,1,0,0,3,3,0,differs
+network.azure.hfl.dev/NetworkManagersIpamPoolsStaticCidr,Microsoft.Network/networkManagers/ipamPools/staticCidrs,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersNetworkGroup,Microsoft.Network/networkManagers/networkGroups,conformance,azurerm_network_manager_network_group,true,0,1,0,0,0,1,0,n/a (no provider path)
+network.azure.hfl.dev/NetworkManagersNetworkGroupsStaticMember,Microsoft.Network/networkManagers/networkGroups/staticMembers,conformance,azurerm_network_manager_static_member,true,1,1,0,0,0,1,0,n/a (no provider path)
+network.azure.hfl.dev/NetworkManagersReachabilityAnalysisIntent,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisIntents,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersReachabilityAnalysisRun,Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersRoutingConfiguration,Microsoft.Network/networkManagers/routingConfigurations,conformance,azurerm_network_manager_routing_configuration,true,0,1,0,0,0,1,1,n/a (no provider path)
+network.azure.hfl.dev/NetworkManagersRoutingRule,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections/rules,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersRoutingRuleCollection,Microsoft.Network/networkManagers/routingConfigurations/ruleCollections,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersScopeConnection,Microsoft.Network/networkManagers/scopeConnections,conformance,azurerm_network_manager_scope_connection,false,0,0,0,0,0,0,0,n/a (no provider path)
+network.azure.hfl.dev/NetworkManagersSecurityAdminConfiguration,Microsoft.Network/networkManagers/securityAdminConfigurations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersSecurityAdminRule,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections/rules,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersSecurityAdminRuleCollection,Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersSecurityUserConfiguration,Microsoft.Network/networkManagers/securityUserConfigurations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersSecurityUserRule,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersSecurityUserRuleCollection,Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkManagersVerifierWorkspace,Microsoft.Network/networkManagers/verifierWorkspaces,conformance,azurerm_network_manager_verifier_workspace,true,0,1,0,0,0,1,0,n/a (no provider path)
+network.azure.hfl.dev/NetworkSecurityPerimeter,Microsoft.Network/networkSecurityPerimeters,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkSecurityPerimetersLink,Microsoft.Network/networkSecurityPerimeters/links,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkSecurityPerimetersLoggingConfiguration,Microsoft.Network/networkSecurityPerimeters/loggingConfigurations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkSecurityPerimetersProfile,Microsoft.Network/networkSecurityPerimeters/profiles,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkSecurityPerimetersProfilesAccessRule,Microsoft.Network/networkSecurityPerimeters/profiles/accessRules,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkSecurityPerimetersResourceAssociation,Microsoft.Network/networkSecurityPerimeters/resourceAssociations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkVirtualAppliance,Microsoft.Network/networkVirtualAppliances,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkVirtualAppliancesConnection,Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkVirtualAppliancesInboundSecurityRule,Microsoft.Network/networkVirtualAppliances/inboundSecurityRules,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkVirtualAppliancesVirtualApplianceSite,Microsoft.Network/networkVirtualAppliances/virtualApplianceSites,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/NetworkWatchersConnectionMonitor,Microsoft.Network/networkWatchers/connectionMonitors,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/P2sVpnGateway,Microsoft.Network/p2svpnGateways,kind test (TestVPNGateway),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/PrivateDnsZonesSOARecord,Microsoft.Network/privateDnsZones/SOA,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/RouteFilter,Microsoft.Network/routeFilters,conformance,azurerm_route_filter,true,0,1,0,0,0,2,0,agrees
+network.azure.hfl.dev/RouteFiltersRouteFilterRule,Microsoft.Network/routeFilters/routeFilterRules,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/SecurityPartnerProvider,Microsoft.Network/securityPartnerProviders,conformance,azurerm_virtual_hub_security_partner_provider,true,1,1,0,0,0,1,1,agrees
+network.azure.hfl.dev/ServiceEndpointPoliciesServiceEndpointPolicyDefinition,Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions,kind test (TestNetworkFilters),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/ServiceEndpointPolicy,Microsoft.Network/serviceEndpointPolicies,conformance,azurerm_subnet_service_endpoint_storage_policy,true,0,2,0,0,0,1,0,agrees
+network.azure.hfl.dev/VirtualHub,Microsoft.Network/virtualHubs,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualHubsBgpConnection,Microsoft.Network/virtualHubs/bgpConnections,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualHubsConnectionPolicy,Microsoft.Network/virtualHubs/connectionPolicies,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualHubsHubRouteTable,Microsoft.Network/virtualHubs/hubRouteTables,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualHubsHubVirtualNetworkConnection,Microsoft.Network/virtualHubs/hubVirtualNetworkConnections,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualHubsIpConfiguration,Microsoft.Network/virtualHubs/ipConfigurations,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualHubsRouteMap,Microsoft.Network/virtualHubs/routeMaps,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualHubsRouteTable,Microsoft.Network/virtualHubs/routeTables,conformance,azurerm_subnet_network_security_group_association;azurerm_subnet_route_table_association,true,0,0,0,0,4,2,0,n/a (provider)
+network.azure.hfl.dev/VirtualHubsRoutingIntent,Microsoft.Network/virtualHubs/routingIntent,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualNetworkGatewayConnection,Microsoft.Network/connections,kind test (TestVPNConnection),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualNetworkTap,Microsoft.Network/virtualNetworkTaps,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualRouter,Microsoft.Network/virtualRouters,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualRoutersPeering,Microsoft.Network/virtualRouters/peerings,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VirtualWan,Microsoft.Network/virtualWans,conformance,azurerm_express_route_gateway;azurerm_point_to_site_vpn_gateway;azurerm_route_map;azurerm_route_server;azurerm_route_server_bgp_connection;azurerm_virtual_hub;azurerm_virtual_hub_connection;azurerm_virtual_hub_ip;azurerm_virtual_hub_route_table;azurerm_virtual_hub_route_table_route;azurerm_virtual_hub_routing_intent;azurerm_virtual_wan;azurerm_vpn_gateway;azurerm_vpn_gateway_connection;azurerm_vpn_gateway_nat_rule;azurerm_vpn_server_configuration;azurerm_vpn_server_configuration_policy_group;azurerm_vpn_site,true;false;true,0,1,0,0,32,22,0,differs
+network.azure.hfl.dev/VpnGateway,Microsoft.Network/vpnGateways,kind test (TestVPNGateway),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VpnGatewaysNatRule,Microsoft.Network/vpnGateways/natRules,conformance,,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VpnGatewaysVpnConnection,Microsoft.Network/vpnGateways/vpnConnections,kind test (TestVPNGateway),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VpnServerConfiguration,Microsoft.Network/vpnServerConfigurations,kind test (TestVPNGateway),,no Upjet resource,,,,,,,,
+network.azure.hfl.dev/VpnSite,Microsoft.Network/vpnSites,conformance,,no Upjet resource,,,,,,,,
+notificationhubs.azure.hfl.dev/NamespacesPrivateEndpointConnection,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+operationalinsights.azure.hfl.dev/Cluster,Microsoft.OperationalInsights/clusters,conformance,azurerm_log_analytics_cluster,false,0,0,0,0,0,0,0,agrees
+operationalinsights.azure.hfl.dev/QueryPack,Microsoft.OperationalInsights/queryPacks,conformance,azurerm_log_analytics_query_pack,true,0,1,0,0,0,1,0,agrees
+operationalinsights.azure.hfl.dev/QueryPacksQuery,Microsoft.OperationalInsights/queryPacks/queries,conformance,azurerm_log_analytics_query_pack_query,true,0,1,0,0,0,1,1,n/a (provider)
+operationalinsights.azure.hfl.dev/WorkspacesDataExport,Microsoft.OperationalInsights/workspaces/dataExports,conformance,azurerm_log_analytics_data_export_rule,true,1,2,0,0,0,1,1,n/a (no provider path)
+operationalinsights.azure.hfl.dev/WorkspacesDataSource,Microsoft.OperationalInsights/workspaces/dataSources,conformance,azurerm_log_analytics_datasource_windows_event;azurerm_log_analytics_datasource_windows_performance_counter,true,0,4,0,0,0,2,0,agrees
+operationalinsights.azure.hfl.dev/WorkspacesLinkedService,Microsoft.OperationalInsights/workspaces/linkedServices,conformance,azurerm_log_analytics_linked_service,true,1,2,0,0,0,1,0,n/a (no provider path)
+operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount,Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,conformance,azurerm_log_analytics_linked_storage_account,true,1,2,0,0,0,1,0,n/a (provider)
+operationalinsights.azure.hfl.dev/WorkspacesSavedSearch,Microsoft.OperationalInsights/workspaces/savedSearches,conformance,azurerm_log_analytics_saved_search,true,0,1,0,0,0,1,1,n/a (no provider path)
+operationalinsights.azure.hfl.dev/WorkspacesStorageInsightConfig,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,conformance,,no Upjet resource,,,,,,,,
+operationalinsights.azure.hfl.dev/WorkspacesSummaryLog,Microsoft.OperationalInsights/workspaces/summaryLogs,conformance,,no Upjet resource,,,,,,,,
+operationalinsights.azure.hfl.dev/WorkspacesTable,Microsoft.OperationalInsights/workspaces/tables,conformance,,no Upjet resource,,,,,,,,
+operationsmanagement.azure.hfl.dev/ManagementAssociation,Microsoft.OperationsManagement/ManagementAssociations,conformance,,no Upjet resource,,,,,,,,
+operationsmanagement.azure.hfl.dev/ManagementConfiguration,Microsoft.OperationsManagement/ManagementConfigurations,conformance,,no Upjet resource,,,,,,,,
+operationsmanagement.azure.hfl.dev/Solution,Microsoft.OperationsManagement/solutions,kind test (TestOperationsManagementSolution),azurerm_log_analytics_solution,true,1,1,0,0,1,2,0,n/a (provider)
+policyinsights.azure.hfl.dev/PolicyAttestation,Microsoft.PolicyInsights/attestations,kind test (TestPolicyRemediationAndAttestation),,no Upjet resource,,,,,,,,
+policyinsights.azure.hfl.dev/PolicyRemediation,Microsoft.PolicyInsights/remediations,kind test (TestPolicyRemediationAndAttestation),azurerm_management_group_policy_remediation;azurerm_resource_group_policy_remediation;azurerm_resource_policy_remediation;azurerm_subscription_policy_remediation,false;true,3,0,0,0,0,2,0,agrees
+purview.azure.hfl.dev/Account,Microsoft.Purview/accounts,conformance,azurerm_purview_account,true,0,2,0,0,0,2,1,agrees
+purview.azure.hfl.dev/AccountsKafkaConfiguration,Microsoft.Purview/accounts/kafkaConfigurations,conformance,,no Upjet resource,,,,,,,,
+purview.azure.hfl.dev/AccountsPrivateEndpointConnection,Microsoft.Purview/accounts/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/Vault,Microsoft.RecoveryServices/vaults,conformance,azurerm_backup_protected_vm;azurerm_recovery_services_vault,true,0,2,0,0,2,3,0,agrees
+recoveryservices.azure.hfl.dev/VaultsBackupConfig,Microsoft.RecoveryServices/vaults/backupconfig,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsBackupEncryptionConfig,Microsoft.RecoveryServices/vaults/backupEncryptionConfigs,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsBackupPolicy,Microsoft.RecoveryServices/vaults/backupPolicies,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy,Microsoft.RecoveryServices/vaults/backupResourceGuardProxies,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsBackupStorageConfig,Microsoft.RecoveryServices/vaults/backupstorageconfig,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection,Microsoft.RecoveryServices/vaults/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsProtectedItem,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,kind test,azurerm_backup_protected_file_share;azurerm_backup_protected_vm,true,2,5,0,0,1,2,0,n/a (provider)
+recoveryservices.azure.hfl.dev/VaultsReplicationAlertSetting,Microsoft.RecoveryServices/vaults/replicationAlertSettings,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsReplicationFabric,Microsoft.RecoveryServices/vaults/replicationFabrics,conformance,azurerm_site_recovery_fabric;azurerm_site_recovery_network_mapping;azurerm_site_recovery_replication_recovery_plan,true;false,0,4,0,0,2,2,0,n/a (no provider path)
+recoveryservices.azure.hfl.dev/VaultsReplicationMigrationItem,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsReplicationPolicy,Microsoft.RecoveryServices/vaults/replicationPolicies,conformance,azurerm_site_recovery_replication_policy,true,0,2,0,0,0,1,0,agrees
+recoveryservices.azure.hfl.dev/VaultsReplicationProtectedItem,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsReplicationProtectionCluster,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainer,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers,conformance,azurerm_site_recovery_protection_container,true,0,3,0,0,0,1,0,agrees
+recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainerMapping,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionContainerMappings,conformance,azurerm_site_recovery_protection_container_mapping,true,1,5,0,0,0,2,0,agrees
+recoveryservices.azure.hfl.dev/VaultsReplicationProtectionIntent,Microsoft.RecoveryServices/vaults/replicationProtectionIntents,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryPlan,Microsoft.RecoveryServices/vaults/replicationRecoveryPlans,conformance,azurerm_site_recovery_replication_recovery_plan,false,0,0,0,0,0,0,0,n/a (no provider path)
+recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryServicesProvider,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationRecoveryServicesProviders,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsReplicationVaultSetting,Microsoft.RecoveryServices/vaults/replicationVaultSettings,conformance,,no Upjet resource,,,,,,,,
+recoveryservices.azure.hfl.dev/VaultsReplicationvCenter,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationvCenters,conformance,,no Upjet resource,,,,,,,,
+resources.azure.hfl.dev/DeploymentScript,Microsoft.Resources/deploymentScripts,conformance,azurerm_resource_deployment_script_azure_cli;azurerm_resource_deployment_script_azure_power_shell,true,2,2,0,0,0,4,0,n/a (provider)
+resources.azure.hfl.dev/DeploymentStack,Microsoft.Resources/deploymentStacks,conformance,,no Upjet resource,,,,,,,,
+resources.azure.hfl.dev/TagSet,Microsoft.Resources/tags,conformance,,no Upjet resource,,,,,,,,
+resources.azure.hfl.dev/TemplateSpec,Microsoft.Resources/templateSpecs,conformance,,no Upjet resource,,,,,,,,
+resources.azure.hfl.dev/TemplateSpecsVersion,Microsoft.Resources/templateSpecs/versions,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/AdvancedThreatProtectionSetting,Microsoft.Security/advancedThreatProtectionSettings,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/AlertsSuppressionRule,Microsoft.Security/alertsSuppressionRules,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/Assessment,Microsoft.Security/assessments,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/AssessmentMetadata,Microsoft.Security/assessmentMetadata,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/AutoProvisioningSetting,Microsoft.Security/autoProvisioningSettings,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/Automation,Microsoft.Security/automations,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/CustomRecommendation,Microsoft.Security/customRecommendations,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/DefenderForStorageSetting,Microsoft.Security/defenderForStorageSettings,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/GovernanceRule,Microsoft.Security/governanceRules,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/Pricing,Microsoft.Security/pricings,conformance,azurerm_security_center_subscription_pricing,true,0,0,0,0,0,1,0,n/a (provider)
+security.azure.hfl.dev/PrivateLink,Microsoft.Security/privateLinks,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/PrivateLinksPrivateEndpointConnection,Microsoft.Security/privateLinks/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/SecurityConnector,Microsoft.Security/securityConnectors,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsOrg,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsProject,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsRepo,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/SecurityConnectorsDevOpsConfiguration,Microsoft.Security/securityConnectors/devops,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/SecurityContact,Microsoft.Security/securityContacts,conformance,azurerm_security_center_contact,true,0,0,0,0,0,1,1,agrees
+security.azure.hfl.dev/SecurityStandard,Microsoft.Security/securityStandards,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/ServerVulnerabilityAssessmentsSetting,Microsoft.Security/serverVulnerabilityAssessmentsSettings,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/Setting,Microsoft.Security/settings,conformance,azurerm_security_center_setting,true,0,0,0,0,0,1,0,n/a (provider)
+security.azure.hfl.dev/SqlVulnerabilityAssessment,Microsoft.Security/sqlVulnerabilityAssessments,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/SqlVulnerabilityAssessmentsBaselineRule,Microsoft.Security/sqlVulnerabilityAssessments/baselineRules,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/StandardAssignment,Microsoft.Security/standardAssignments,conformance,,no Upjet resource,,,,,,,,
+security.azure.hfl.dev/WorkspaceSetting,Microsoft.Security/workspaceSettings,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/AlertRule,Microsoft.SecurityInsights/alertRules,conformance,azurerm_sentinel_alert_rule_fusion;azurerm_sentinel_alert_rule_machine_learning_behavior_analytics;azurerm_sentinel_alert_rule_ms_security_incident;azurerm_sentinel_alert_rule_nrt;azurerm_sentinel_alert_rule_scheduled,true;false,0,3,0,0,0,3,0,agrees
+securityinsights.azure.hfl.dev/AlertRulesAction,Microsoft.SecurityInsights/alertRules/actions,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/AutomationRule,Microsoft.SecurityInsights/automationRules,conformance,azurerm_sentinel_automation_rule,true,0,0,0,0,1,1,1,n/a (provider)
+securityinsights.azure.hfl.dev/ContentMetadata,Microsoft.SecurityInsights/metadata,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/ContentPackage,Microsoft.SecurityInsights/contentPackages,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/ContentTemplate,Microsoft.SecurityInsights/contentTemplates,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/DataConnector,Microsoft.SecurityInsights/dataConnectors,conformance,azurerm_sentinel_data_connector_aws_cloud_trail;azurerm_sentinel_data_connector_aws_s3;azurerm_sentinel_data_connector_azure_active_directory;azurerm_sentinel_data_connector_azure_advanced_threat_protection;azurerm_sentinel_data_connector_azure_security_center;azurerm_sentinel_data_connector_dynamics_365;azurerm_sentinel_data_connector_iot;azurerm_sentinel_data_connector_microsoft_cloud_app_security;azurerm_sentinel_data_connector_microsoft_threat_protection;azurerm_sentinel_data_connector_office_365;azurerm_sentinel_data_connector_office_365_project;azurerm_sentinel_data_connector_office_atp;azurerm_sentinel_data_connector_office_irm;azurerm_sentinel_data_connector_office_power_bi;azurerm_sentinel_data_connector_threat_intelligence;azurerm_sentinel_data_connector_threat_intelligence_taxii,false;true;false,0,0,0,0,1,1,0,agrees
+securityinsights.azure.hfl.dev/DataConnectorDefinition,Microsoft.SecurityInsights/dataConnectorDefinitions,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/OnboardingState,Microsoft.SecurityInsights/onboardingStates,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/SecurityMLAnalyticsSetting,Microsoft.SecurityInsights/securityMLAnalyticsSettings,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/Setting,Microsoft.SecurityInsights/settings,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/SourceControl,Microsoft.SecurityInsights/sourcecontrols,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/Watchlist,Microsoft.SecurityInsights/watchlists,conformance,azurerm_sentinel_watchlist;azurerm_sentinel_watchlist_item,true;false,0,0,0,0,1,1,1,n/a (no provider path)
+securityinsights.azure.hfl.dev/WatchlistsWatchlistItem,Microsoft.SecurityInsights/watchlists/watchlistItems,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/WorkspaceManagerAssignment,Microsoft.SecurityInsights/workspaceManagerAssignments,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/WorkspaceManagerConfiguration,Microsoft.SecurityInsights/workspaceManagerConfigurations,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/WorkspaceManagerGroup,Microsoft.SecurityInsights/workspaceManagerGroups,conformance,,no Upjet resource,,,,,,,,
+securityinsights.azure.hfl.dev/WorkspaceManagerMember,Microsoft.SecurityInsights/workspaceManagerMembers,conformance,,no Upjet resource,,,,,,,,
+servicebus.azure.hfl.dev/NamespacesDisasterRecoveryConfig,Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs,conformance,azurerm_servicebus_namespace_disaster_recovery_config,true,0,3,0,0,0,1,0,n/a (no provider path)
+servicebus.azure.hfl.dev/NamespacesNetworkRuleSet,Microsoft.ServiceBus/namespaces/networkRuleSets,conformance,,no Upjet resource,,,,,,,,
+servicebus.azure.hfl.dev/NamespacesPrivateEndpointConnection,Microsoft.ServiceBus/namespaces/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/SignalRPrivateEndpointConnection,Microsoft.SignalRService/signalR/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/SignalRReplicasSharedPrivateLinkResource,Microsoft.SignalRService/signalR/replicas/sharedPrivateLinkResources,conformance,azurerm_web_pubsub_shared_private_link_resource,false,0,0,0,0,0,0,0,n/a (no provider path)
+signalrservice.azure.hfl.dev/SignalRSharedPrivateLinkResource,Microsoft.SignalRService/signalR/sharedPrivateLinkResources,conformance,azurerm_web_pubsub_shared_private_link_resource,false,0,0,0,0,0,0,0,n/a (no provider path)
+signalrservice.azure.hfl.dev/WebPubSub,Microsoft.SignalRService/webPubSub,conformance,,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/WebPubSubCustomCertificate,Microsoft.SignalRService/webPubSub/customCertificates,conformance,,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/WebPubSubCustomDomain,Microsoft.SignalRService/webPubSub/customDomains,conformance,,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/WebPubSubHub,Microsoft.SignalRService/webPubSub/hubs,conformance,,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/WebPubSubPrivateEndpointConnection,Microsoft.SignalRService/webPubSub/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/WebPubSubReplica,Microsoft.SignalRService/webPubSub/replicas,kind test (TestWebPubSubAndSignalRKinds),,no Upjet resource,,,,,,,,
+signalrservice.azure.hfl.dev/WebPubSubReplicasSharedPrivateLinkResource,Microsoft.SignalRService/webPubSub/replicas/sharedPrivateLinkResources,conformance,azurerm_web_pubsub_shared_private_link_resource,false,0,0,0,0,0,0,0,n/a (no provider path)
+signalrservice.azure.hfl.dev/WebPubSubSharedPrivateLinkResource,Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources,conformance,azurerm_web_pubsub_shared_private_link_resource,false,0,0,0,0,0,0,0,n/a (no provider path)
+sql.azure.hfl.dev/InstancePool,Microsoft.Sql/instancePools,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesAdministrator,Microsoft.Sql/managedInstances/administrators,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesAdvancedThreatProtectionSetting,Microsoft.Sql/managedInstances/advancedThreatProtectionSettings,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesAzureADOnlyAuthentication,Microsoft.Sql/managedInstances/azureADOnlyAuthentications,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesDatabasesAdvancedThreatProtectionSetting,Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesDatabasesBackupLongTermRetentionPolicy,Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesDatabasesBackupShortTermRetentionPolicy,Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesDatabasesLedgerDigestUpload,Microsoft.Sql/managedInstances/databases/ledgerDigestUploads,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesDatabasesSecurityAlertPolicy,Microsoft.Sql/managedInstances/databases/securityAlertPolicies,conformance,azurerm_mssql_managed_instance_security_alert_policy,false,0,0,0,0,0,0,0,differs
+sql.azure.hfl.dev/ManagedInstancesDatabasesVulnerabilityAssessment,Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments,conformance,azurerm_mssql_managed_instance_vulnerability_assessment;azurerm_mssql_server_vulnerability_assessment,true,0,1,0,0,1,4,2,n/a (provider)
+sql.azure.hfl.dev/ManagedInstancesDistributedAvailabilityGroup,Microsoft.Sql/managedInstances/distributedAvailabilityGroups,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesDnsAlias,Microsoft.Sql/managedInstances/dnsAliases,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesDtc,Microsoft.Sql/managedInstances/dtc,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesEncryptionProtector,Microsoft.Sql/managedInstances/encryptionProtector,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesKey,Microsoft.Sql/managedInstances/keys,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesPrivateEndpointConnection,Microsoft.Sql/managedInstances/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesSecurityAlertPolicy,Microsoft.Sql/managedInstances/securityAlertPolicies,conformance,azurerm_mssql_managed_instance_security_alert_policy,false,0,0,0,0,0,0,0,agrees
+sql.azure.hfl.dev/ManagedInstancesServerConfigurationOption,Microsoft.Sql/managedInstances/serverConfigurationOptions,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesServerTrustCertificate,Microsoft.Sql/managedInstances/serverTrustCertificates,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesSqlAgent,Microsoft.Sql/managedInstances/sqlAgent,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesStartStopSchedule,Microsoft.Sql/managedInstances/startStopSchedules,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ManagedInstancesVulnerabilityAssessment,Microsoft.Sql/managedInstances/vulnerabilityAssessments,conformance,azurerm_mssql_managed_instance_vulnerability_assessment;azurerm_mssql_server_vulnerability_assessment,true,0,1,0,0,1,4,2,n/a (provider)
+sql.azure.hfl.dev/ServersDatabasesDataMaskingPolicy,Microsoft.Sql/servers/databases/dataMaskingPolicies,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersDatabasesGeoBackupPolicy,Microsoft.Sql/servers/databases/geoBackupPolicies,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersDatabasesLedgerDigestUpload,Microsoft.Sql/servers/databases/ledgerDigestUploads,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersDatabasesMaintenanceWindow,Microsoft.Sql/servers/databases/maintenanceWindows,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersDatabasesWorkloadGroup,Microsoft.Sql/servers/databases/workloadGroups,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersDatabasesWorkloadGroupsWorkloadClassifier,Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersDevOpsAuditingSetting,Microsoft.Sql/servers/devOpsAuditingSettings,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersDnsAlias,Microsoft.Sql/servers/dnsAliases,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersJobAgent,Microsoft.Sql/servers/jobAgents,conformance,azurerm_mssql_job_agent;azurerm_mssql_job_credential,true,1,0,0,0,1,2,0,n/a (no provider path)
+sql.azure.hfl.dev/ServersJobAgentsCredential,Microsoft.Sql/servers/jobAgents/credentials,kind test (TestSQLElasticJobs),,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersJobAgentsJob,Microsoft.Sql/servers/jobAgents/jobs,conformance,azurerm_mssql_job;azurerm_mssql_job_schedule;azurerm_mssql_job_target_group,false,0,0,0,0,0,0,0,n/a (no provider path)
+sql.azure.hfl.dev/ServersJobAgentsJobsStep,Microsoft.Sql/servers/jobAgents/jobs/steps,kind test (TestSQLElasticJobs),,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersJobAgentsPrivateEndpoint,Microsoft.Sql/servers/jobAgents/privateEndpoints,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersJobAgentsTargetGroup,Microsoft.Sql/servers/jobAgents/targetGroups,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersPrivateEndpointConnection,Microsoft.Sql/servers/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersSqlVulnerabilityAssessment,Microsoft.Sql/servers/sqlVulnerabilityAssessments,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaseline,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,conformance,,no Upjet resource,,,,,,,,
+sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaselinesRule,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/ContextCache,Microsoft.Storage/contextCaches,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/ContextCachesContextCacheContainer,Microsoft.Storage/contextCaches/contextCacheContainers,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/StorageAccountsAdvancedPlatformMetric,Microsoft.Storage/storageAccounts/advancedPlatformMetrics,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/StorageAccountsBlobAccessPointConfiguration,Microsoft.Storage/storageAccounts/blobAccessPointConfigurations,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/StorageAccountsConnector,Microsoft.Storage/storageAccounts/connectors,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/StorageAccountsDataShare,Microsoft.Storage/storageAccounts/dataShares,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/StorageAccountsEncryptionScope,Microsoft.Storage/storageAccounts/encryptionScopes,conformance,azurerm_storage_encryption_scope,true,0,1,0,0,0,1,1,n/a (no provider path)
+storage.azure.hfl.dev/StorageAccountsInventoryPolicy,Microsoft.Storage/storageAccounts/inventoryPolicies,conformance,azurerm_storage_blob_inventory_policy,true,0,1,0,0,1,2,0,n/a (provider)
+storage.azure.hfl.dev/StorageAccountsLocalUser,Microsoft.Storage/storageAccounts/localUsers,conformance,azurerm_storage_account_local_user,true,0,1,0,0,1,2,0,n/a (no provider path)
+storage.azure.hfl.dev/StorageAccountsObjectReplicationPolicy,Microsoft.Storage/storageAccounts/objectReplicationPolicies,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/StorageAccountsPrivateEndpointConnection,Microsoft.Storage/storageAccounts/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+storage.azure.hfl.dev/StorageAccountsStorageTaskAssignment,Microsoft.Storage/storageAccounts/storageTaskAssignments,conformance,,no Upjet resource,,,,,,,,
+subscription.azure.hfl.dev/SubscriptionTenantPolicy,Microsoft.Subscription/policies,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/PrivateLinkHub,Microsoft.Synapse/privateLinkHubs,conformance,azurerm_synapse_private_link_hub,true,0,1,0,0,0,1,0,agrees
+synapse.azure.hfl.dev/WorkspacesAdministrator,Microsoft.Synapse/workspaces/administrators,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesAuditingSetting,Microsoft.Synapse/workspaces/auditingSettings,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesAzureADOnlyAuthentication,Microsoft.Synapse/workspaces/azureADOnlyAuthentications,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesDedicatedSQLMinimalTlsSetting,Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesEncryptionProtector,Microsoft.Synapse/workspaces/encryptionProtector,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesExtendedAuditingSetting,Microsoft.Synapse/workspaces/extendedAuditingSettings,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesFirewallRule,Microsoft.Synapse/workspaces/firewallRules,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesIntegrationRuntime,Microsoft.Synapse/workspaces/integrationRuntimes,conformance,azurerm_synapse_integration_runtime_azure;azurerm_synapse_integration_runtime_self_hosted,true,0,2,0,0,0,2,0,n/a (no provider path)
+synapse.azure.hfl.dev/WorkspacesKey,Microsoft.Synapse/workspaces/keys,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesManagedIdentitySqlControlSetting,Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesPrivateEndpointConnection,Microsoft.Synapse/workspaces/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSecurityAlertPolicy,Microsoft.Synapse/workspaces/securityAlertPolicies,conformance,azurerm_synapse_sql_pool_security_alert_policy,true,0,1,0,0,1,1,1,n/a (no provider path)
+synapse.azure.hfl.dev/WorkspacesSqlAdministrator,Microsoft.Synapse/workspaces/sqlAdministrators,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPool,Microsoft.Synapse/workspaces/sqlPools,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPoolsAuditingSetting,Microsoft.Synapse/workspaces/sqlPools/auditingSettings,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicy,Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicyRule,Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies/rules,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPoolsExtendedAuditingSetting,Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings,conformance,azurerm_synapse_sql_pool_extended_auditing_policy,true,0,1,0,0,1,1,0,n/a (no provider path)
+synapse.azure.hfl.dev/WorkspacesSqlPoolsGeoBackupPolicy,Microsoft.Synapse/workspaces/sqlPools/geoBackupPolicies,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPoolsMaintenanceWindow,Microsoft.Synapse/workspaces/sqlPools/maintenancewindows,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPoolsSecurityAlertPolicy,Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies,conformance,azurerm_synapse_sql_pool_security_alert_policy,true,0,1,0,0,1,1,1,n/a (no provider path)
+synapse.azure.hfl.dev/WorkspacesSqlPoolsTransparentDataEncryption,Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption,conformance,,no Upjet resource,,,,,,,,
+synapse.azure.hfl.dev/WorkspacesSqlPoolsVulnerabilityAssessment,Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments,conformance,azurerm_synapse_sql_pool_vulnerability_assessment;azurerm_synapse_workspace_vulnerability_assessment,false;true,0,1,0,0,0,2,1,n/a (provider)
+synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroup,Microsoft.Synapse/workspaces/sqlPools/workloadGroups,conformance,azurerm_synapse_sql_pool_workload_group,true,0,1,0,0,0,1,1,n/a (no provider path)
+synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroupClassifier,Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers,conformance,azurerm_synapse_sql_pool_workload_classifier,true,0,1,0,0,0,1,1,n/a (no provider path)
+synapse.azure.hfl.dev/WorkspacesVulnerabilityAssessment,Microsoft.Synapse/workspaces/vulnerabilityAssessments,conformance,azurerm_synapse_sql_pool_vulnerability_assessment;azurerm_synapse_workspace_vulnerability_assessment,false;true,0,1,0,0,0,2,1,n/a (provider)
+web.azure.hfl.dev/AiGateway,Microsoft.Web/aigateways,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/ApiConnection,Microsoft.Web/connections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/Certificate,Microsoft.Web/certificates,conformance,azurerm_app_service_certificate;azurerm_app_service_certificate_binding;azurerm_app_service_managed_certificate,false;true,0,0,0,0,3,2,0,n/a (provider)
+web.azure.hfl.dev/ConnectionGateway,Microsoft.Web/connectionGateways,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/CustomApi,Microsoft.Web/customApis,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/HostingEnvironment,Microsoft.Web/hostingEnvironments,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/HostingEnvironmentsConfigurationCustomDnsSuffix,Microsoft.Web/hostingEnvironments/configurations,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/HostingEnvironmentsConfigurationNetworking,Microsoft.Web/hostingEnvironments/configurations,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/HostingEnvironmentsPrivateEndpointConnection,Microsoft.Web/hostingEnvironments/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/KubeEnvironment,Microsoft.Web/kubeEnvironments,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyFtp,Microsoft.Web/sites/basicPublishingCredentialsPolicies,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyScm,Microsoft.Web/sites/basicPublishingCredentialsPolicies,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesCertificate,Microsoft.Web/sites/certificates,conformance,azurerm_app_service_certificate;azurerm_app_service_certificate_binding;azurerm_app_service_managed_certificate,false;true,0,0,0,0,3,2,0,n/a (provider)
+web.azure.hfl.dev/SitesConfigAppSettings,Microsoft.Web/sites/config,kind test,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesConfigAuthSettingsV2,Microsoft.Web/sites/config,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesConfigConnectionStrings,Microsoft.Web/sites/config,kind test,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesConfigLogs,Microsoft.Web/sites/config,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesConfigSlotConfigNames,Microsoft.Web/sites/config,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesDomainOwnershipIdentifier,Microsoft.Web/sites/domainOwnershipIdentifiers,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesFunction,Microsoft.Web/sites/functions,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesHostNameBinding,Microsoft.Web/sites/hostNameBindings,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesHybridConnection,Microsoft.Web/sites/hybridconnection,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesPremieraddon,Microsoft.Web/sites/premieraddons,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesPrivateAccess,Microsoft.Web/sites/privateAccess,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesPrivateEndpointConnection,Microsoft.Web/sites/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesPublicCertificate,Microsoft.Web/sites/publicCertificates,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSitecontainer,Microsoft.Web/sites/sitecontainers,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlot,Microsoft.Web/sites/slots,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyFtp,Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyScm,Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsCertificate,Microsoft.Web/sites/slots/certificates,conformance,azurerm_app_service_certificate;azurerm_app_service_certificate_binding;azurerm_app_service_managed_certificate,false;true,0,0,0,0,3,2,0,n/a (provider)
+web.azure.hfl.dev/SitesSlotsConfigAuthSettingsV2,Microsoft.Web/sites/slots/config,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsConfigLogs,Microsoft.Web/sites/slots/config,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsDomainOwnershipIdentifier,Microsoft.Web/sites/slots/domainOwnershipIdentifiers,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsFunction,Microsoft.Web/sites/slots/functions,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsHostNameBinding,Microsoft.Web/sites/slots/hostNameBindings,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsHybridConnection,Microsoft.Web/sites/slots/hybridconnection,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsPremieraddon,Microsoft.Web/sites/slots/premieraddons,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsPrivateAccess,Microsoft.Web/sites/slots/privateAccess,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsPrivateEndpointConnection,Microsoft.Web/sites/slots/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsPublicCertificate,Microsoft.Web/sites/slots/publicCertificates,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsSitecontainer,Microsoft.Web/sites/slots/sitecontainers,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsSourcecontrol,Microsoft.Web/sites/slots/sourcecontrols,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsVirtualNetworkConnection,Microsoft.Web/sites/slots/virtualNetworkConnections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesSlotsVirtualNetworkConnectionsGateway,Microsoft.Web/sites/slots/virtualNetworkConnections/gateways,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesVirtualNetworkConnection,Microsoft.Web/sites/virtualNetworkConnections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/SitesVirtualNetworkConnectionsGateway,Microsoft.Web/sites/virtualNetworkConnections/gateways,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/StaticSite,Microsoft.Web/staticSites,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/StaticSitesBasicAuth,Microsoft.Web/staticSites/basicAuth,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/StaticSitesCustomDomain,Microsoft.Web/staticSites/customDomains,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/StaticSitesDatabaseConnection,Microsoft.Web/staticSites/databaseConnections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/StaticSitesLinkedBackend,Microsoft.Web/staticSites/linkedBackends,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/StaticSitesPrivateEndpointConnection,Microsoft.Web/staticSites/privateEndpointConnections,conformance,,no Upjet resource,,,,,,,,
+web.azure.hfl.dev/StaticSitesUserProvidedFunctionApp,Microsoft.Web/staticSites/userProvidedFunctionApps,conformance,,no Upjet resource,,,,,,,,

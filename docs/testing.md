@@ -40,6 +40,19 @@ kept as sent), and anything Azure does that the fake does not model
 (`docs/fake-cloud.md`, "Where the fakes differ from Azure"). That is layers
 2 and 3.
 
+**Upjet's hand examples (HFL-700).** `TestUpjetExamplesOnFake`
+(`test/e2e/arm_upjet_examples_test.go`) runs each hand-written example of
+Crossplane's provider-upjet-azure that maps onto a generated kind of ours
+the same way, with the example's values merged over the smallest object
+and the kind's fixture, and checks too that every string value of the
+example reached the fake. The examples, their values mapped onto our CRDs,
+are `docs/coverage/upjet-examples.json`, written by `hack/coverage/run.sh`
+from the Upjet slice in `hack/upjet/`; what did not map, and the examples
+that do not run with the reason, are in `docs/coverage/upjet-examples.csv`
+and `hack/coverage/upjet.yaml` (docs/coverage/README.md, "Upjet"). An
+example the fake refuses is a finding: fix the kind or the fake, or list
+it there with the reason.
+
 ### Layer 2: kind tests and fake rules
 
 Write one when a kind has behaviour beyond create, read, change and delete:

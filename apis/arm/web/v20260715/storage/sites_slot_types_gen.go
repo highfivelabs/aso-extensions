@@ -450,21 +450,6 @@ type DaprConfig_STATUS struct {
 	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
-// Storage version of v20260715.ExtendedLocation
-// Extended Location.
-type ExtendedLocation struct {
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-}
-
-// Storage version of v20260715.ExtendedLocation_STATUS
-// Extended Location.
-type ExtendedLocation_STATUS struct {
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Type        *string                `json:"type,omitempty"`
-}
-
 // Storage version of v20260715.FunctionAppConfig
 // Function app configuration.
 type FunctionAppConfig struct {
@@ -1023,22 +1008,6 @@ type McpSettings struct {
 type McpSettings_STATUS struct {
 	PropertyBag genruntime.PropertyBag   `json:"$propertyBag,omitempty"`
 	Servers     []McpServerConfig_STATUS `json:"servers,omitempty"`
-}
-
-// Storage version of v20260715.NameValuePair
-// Name value pair.
-type NameValuePair struct {
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Value       *string                `json:"value,omitempty"`
-}
-
-// Storage version of v20260715.NameValuePair_STATUS
-// Name value pair.
-type NameValuePair_STATUS struct {
-	Name        *string                `json:"name,omitempty"`
-	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
-	Value       *string                `json:"value,omitempty"`
 }
 
 // Storage version of v20260715.PushSettings

@@ -1,0 +1,17 @@
+typeFilters:
+  - action: include
+    group: subscription
+    version: v20211001
+    because: the newest stable version of the Subscription API; ASO exports its Alias (subscription.azure.com), we export only the tenant's subscription policy
+  - action: prune
+    group: subscription
+    because: every other version is left alone
+
+groupModelConfiguration:
+  2021-10-01:
+    # Microsoft.Subscription/policies/default: the tenant's policy on
+    # subscriptions moving into or out of it. A tenant scope singleton (no
+    # owner, as ASO's Alias), with no DELETE in the spec (detach-on-delete).
+    Policy:
+      $exportAs: SubscriptionTenantPolicy
+      $supportedFrom: v0.1.0

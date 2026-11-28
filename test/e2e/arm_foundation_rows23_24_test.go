@@ -167,11 +167,9 @@ func TestRow24DdosPartnerCdnWaf(t *testing.T) {
 		return nil
 	})
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(waf), waf); err != nil {
-		t.Fatal(err)
-	}
-	waf.Spec.Tags = map[string]string{"team": "sec", "tier": "1"}
-	if err := k8s.Update(ctx, waf); err != nil {
+	if err := change(t, waf, func(waf *cdn.CdnWebApplicationFirewallPolicy) {
+		waf.Spec.Tags = map[string]string{"team": "sec", "tier": "1"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, wafID, func(r map[string]any) error {

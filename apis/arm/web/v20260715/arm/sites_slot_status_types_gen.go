@@ -38,15 +38,6 @@ type SitesSlot_STATUS struct {
 	Type *string `json:"type,omitempty"`
 }
 
-// Extended Location.
-type ExtendedLocation_STATUS struct {
-	// Name: Name of extended location.
-	Name *string `json:"name,omitempty"`
-
-	// Type: Type of extended location.
-	Type *string `json:"type,omitempty"`
-}
-
 // Managed service identity.
 type ManagedServiceIdentity_STATUS struct {
 	// PrincipalId: Principal Id of managed service identity.
@@ -1104,15 +1095,6 @@ type McpSettings_STATUS struct {
 	// Servers: Array of MCP server configurations. This array is replaced in its entirety on update; individual servers cannot
 	// be patched independently. An empty array signals that MCP should be disabled/deleted.
 	Servers []McpServerConfig_STATUS `json:"servers,omitempty"`
-}
-
-// Name value pair.
-type NameValuePair_STATUS struct {
-	// Name: Pair name.
-	Name *string `json:"name,omitempty"`
-
-	// Value: Pair value.
-	Value *string `json:"value,omitempty"`
 }
 
 // Push settings for the App.

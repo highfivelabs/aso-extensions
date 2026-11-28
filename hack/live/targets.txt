@@ -1,6 +1,17 @@
 # The only Azure targets live tests may touch (docs/live-runs.md), one
-# <subscription ID>/<resource group> per line. ${AZURE_SUBSCRIPTION_ID}
-# stands for that variable's value: the ID is not in the tree
-# (.env.example). Added by a reviewed change, never from the command line.
-# The identity is Contributor on this resource group only.
+# per line. ${AZURE_SUBSCRIPTION_ID} stands for that variable's value: the
+# ID is not in the tree (.env.example). Added by a reviewed change, never
+# from the command line.
+#
+# A resource group: <subscription ID>/<resource group>. Every live test may
+# touch it. The identity is Contributor on it.
 ${AZURE_SUBSCRIPTION_ID}/aso-extensions-live-tests
+#
+# The subscription itself: <subscription ID> followed by the only tests
+# that may touch it (docs/plan.md section 8, Q15, answered 2026-11-23: option
+# b). The identity holds the narrow custom roles of hack/live/roles/ there;
+# each test named here deletes or restores what it changes
+# (test/live/subscription_test.go). A test not named here that reaches for
+# the subscription skips. The tenant policy and the management groups are
+# never live-tested (fake only).
+${AZURE_SUBSCRIPTION_ID} TestLiveAccessReviews TestLiveCostTagInheritance TestLiveDefenderAlertRules TestLiveDefenderPlan TestLiveAzurePolicy

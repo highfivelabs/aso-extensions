@@ -1,0 +1,75 @@
+# IoT kinds ASO does not export (Microsoft.Devices; docs/plan.md f75, tier 3
+# row t16 of docs/coverage/foundation.md): an IoT hub's certificates and
+# private endpoint connections (iothub.json 2023-06-30, the newest stable; ASO's own IotHub
+# is 2021-07-02), owned by ASO's IotHub; and the Device Provisioning
+# Service with its certificates and private endpoint connections
+# (iotdps.json 2026-11-01, the newest stable), in a resource group.
+#
+# Not exported: the built-in endpoint's consumer groups
+# (IotHubs/{hub}/eventHubEndpoints/{endpoint}/ConsumerGroups/{name}): the
+# eventHubEndpoints segment is no resource, so the generator owns the kind
+# by a resource group and cannot build its ID (docs/plan.md f75).
+typeFilters:
+  - action: include
+    group: devices
+    version: v20230630
+    because: the newest stable IoT Hub version (ASO's IotHub is v20210702)
+  - action: include
+    group: devices
+    version: v20261101
+    because: the newest stable Device Provisioning Service version
+  - action: prune
+    group: devices
+    because: every other version is left alone (ASO has the IoT hub)
+typeTransformers:
+  # Copied from ASO's v2/azure-arm/devices.yaml (at the pin), where it is
+  # done for the IoT hub's authorization rules: the keys of a provisioning
+  # service's shared access policies are made by Azure.
+  - group: devices
+    version: v20261101
+    name: SharedAccessSignatureAuthorizationRuleAccessRightsDescription;SharedAccessSignatureAuthorizationRuleAccessRightsDescription_STATUS
+    property: PrimaryKey;SecondaryKey
+    remove: true
+    because: Azure makes the keys (ASO's devices.yaml removes them from the IoT hub's rules)
+  - group: devices
+    version: v20261101
+    name: ProvisioningService_Spec
+    property: Etag;Resourcegroup;Subscriptionid
+    remove: true
+    because: >-
+      Resource Manager's own metadata, which the spec models as writable:
+      the etag (ASO's devices.yaml removes the IoT hub's), and the resource
+      group and subscription, which the owner already makes.
+  - group: devices
+    version: v20261101
+    name: IotDpsPropertiesDescription
+    property: PrivateEndpointConnections
+    remove: true
+    because: a private endpoint makes the connections; ProvisioningServicesPrivateEndpointConnection approves them
+  - group: devices
+    version: v20261101
+    name: IotHubDefinitionDescription_STATUS
+    property: ConnectionString
+    remove: true
+    because: a linked hub's connection string holds its key; a Secret in the spec
+groupModelConfiguration:
+  2023-06-30:
+    IotHubs_Certificate:
+      $exportAs: IotHubsCertificate
+      $supportedFrom: v0.1.0
+    IotHubs_PrivateEndpointConnection:
+      $exportAs: IotHubsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+  2026-11-01:
+    ProvisioningService:
+      $exportAs: ProvisioningService
+      $supportedFrom: v0.1.0
+    ProvisioningServices_Certificate:
+      $exportAs: ProvisioningServicesCertificate
+      $supportedFrom: v0.1.0
+    ProvisioningServices_PrivateEndpointConnection:
+      $exportAs: ProvisioningServicesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    IotHubDefinitionDescription:
+      ConnectionString:
+        $importSecretMode: required # a linked IoT hub's connection string, with its key

@@ -2,8 +2,29 @@ typeFilters:
   - action: include
     group: devtestlab
     version: v20180915
-    because: the newest stable version of the DevTest Labs schedules, which hold a VM's auto-shutdown
-
+    because: the newest stable version of the DevTest Labs schedules, which hold a VM's auto-shutdown, and of the labs
+# A lab's secrets: the artifact repository's token, a user's secret, a lab
+# VM's administrator password and SSH key, and a formula's. The status never
+# holds them (docs/plan.md f51).
+typeTransformers:
+  - group: devtestlab
+    version: v20180915
+    name: ArtifactSourceProperties_STATUS
+    property: SecurityToken
+    remove: true
+    because: the token of the artifact repository; the status never holds it (docs/plan.md f51)
+  - group: devtestlab
+    version: v20180915
+    name: SecretProperties_STATUS
+    property: Value
+    remove: true
+    because: a user's secret; the status never holds it (docs/plan.md f51)
+  - group: devtestlab
+    version: v20180915
+    name: LabVirtualMachineProperties_STATUS;LabVirtualMachineCreationParameterProperties_STATUS
+    property: Password;SshKey
+    remove: true
+    because: a lab VM's administrator password or SSH key; the status never holds it (docs/plan.md f51)
 groupModelConfiguration:
   2018-09-15:
     Schedule:
@@ -12,3 +33,151 @@ groupModelConfiguration:
     ScheduleProperties:
       TargetResourceId:
         $referenceType: arm # the virtual machine a shutdown schedule applies to
+    # DevTest Labs (docs/plan.md f51): a lab and what it holds. A lab's cost
+    # settings have no DELETE (detach-on-delete); its policies sit under a
+    # policy set that is no resource (policysets/default), so they are not
+    # exported.
+    Lab:
+      $exportAs: Lab
+      $supportedFrom: v0.1.0
+    Labs_ArtifactSource:
+      $exportAs: LabsArtifactSource
+      $supportedFrom: v0.1.0
+    Labs_Cost:
+      $exportAs: LabsCost
+      $supportedFrom: v0.1.0
+    Labs_CustomImage:
+      $exportAs: LabsCustomImage
+      $supportedFrom: v0.1.0
+    Labs_Formula:
+      $exportAs: LabsFormula
+      $supportedFrom: v0.1.0
+    Labs_NotificationChannel:
+      $exportAs: LabsNotificationChannel
+      $supportedFrom: v0.1.0
+    Labs_Schedule:
+      $exportAs: LabsSchedule
+      $supportedFrom: v0.1.0
+    Labs_ServiceRunner:
+      $exportAs: LabsServiceRunner
+      $supportedFrom: v0.1.0
+    Labs_User:
+      $exportAs: LabsUser
+      $supportedFrom: v0.1.0
+    Labs_Users_Disk:
+      $exportAs: LabsUsersDisk
+      $supportedFrom: v0.1.0
+    Labs_Users_Environment:
+      $exportAs: LabsUsersEnvironment
+      $supportedFrom: v0.1.0
+    Labs_Users_Secret:
+      $exportAs: LabsUsersSecret
+      $supportedFrom: v0.1.0
+    Labs_Users_ServiceFabric:
+      $exportAs: LabsUsersServiceFabric
+      $supportedFrom: v0.1.0
+    Labs_Users_Servicefabrics_Schedule:
+      $exportAs: LabsUsersServicefabricsSchedule
+      $supportedFrom: v0.1.0
+    Labs_VirtualMachine:
+      $exportAs: LabsVirtualMachine
+      $supportedFrom: v0.1.0
+    Labs_Virtualmachines_Schedule:
+      $exportAs: LabsVirtualmachinesSchedule
+      $supportedFrom: v0.1.0
+    Labs_VirtualNetwork:
+      $exportAs: LabsVirtualNetwork
+      $supportedFrom: v0.1.0
+    ArtifactSourceProperties:
+      SecurityToken:
+        $importSecretMode: required # the artifact repository's personal access token
+    SecretProperties:
+      Value:
+        $importSecretMode: required # the user's secret
+    LabVirtualMachineProperties:
+      Password:
+        $importSecretMode: required # the administrator password
+      SshKey:
+        $importSecretMode: required # the administrator's SSH public key, kept with the password
+      LabVirtualNetworkId:
+        $referenceType: arm # the lab's virtual network, our LabsVirtualNetwork
+      CustomImageId:
+        $referenceType: arm # the lab's custom image, our LabsCustomImage
+      EnvironmentId:
+        $referenceType: arm # the environment that holds the VM, our LabsUsersEnvironment
+    LabVirtualMachineCreationParameterProperties:
+      Password:
+        $importSecretMode: required # a formula's administrator password
+      SshKey:
+        $importSecretMode: required
+      LabVirtualNetworkId:
+        $referenceType: arm
+      CustomImageId:
+        $referenceType: arm
+      EnvironmentId:
+        $referenceType: arm
+    ServiceFabricProperties:
+      EnvironmentId:
+        $referenceType: arm # the environment that holds the cluster, our LabsUsersEnvironment
+      ExternalServiceFabricId:
+        $referenceType: arm # the Microsoft.ServiceFabric cluster behind it
+    DiskProperties:
+      LeasedByLabVmId:
+        $referenceType: arm # the lab VM the disk is attached to, our LabsVirtualMachine
+      ManagedDiskId:
+        $referenceType: arm # a compute disk backing it
+      StorageAccountId:
+        $referenceType: arm # the storage account of a blob-backed disk
+    DataDiskProperties:
+      ExistingLabDiskId:
+        $referenceType: arm # a lab disk to attach, our LabsUsersDisk
+    IdentityProperties:
+      PrincipalId:
+        $referenceType: simple # an object ID, not a resource
+    NetworkInterfaceProperties:
+      VirtualNetworkId:
+        $referenceType: arm
+      PublicIpAddressId:
+        $referenceType: arm
+      SubnetId:
+        $referenceType: arm
+    ScheduleCreationParameterProperties:
+      TargetResourceId:
+        $referenceType: arm # the VM a formula's schedule applies to
+    CustomImagePropertiesFromPlan:
+      Id:
+        $referenceType: simple # the plan's name, not a resource ID
+    CustomImagePropertiesFromVm:
+      SourceVmId:
+        $referenceType: arm # the lab VM the image is captured from, our LabsVirtualMachine
+    CustomImageProperties:
+      ManagedImageId:
+        $referenceType: arm # a compute image
+      ManagedSnapshotId:
+        $referenceType: arm # a compute snapshot
+    FormulaPropertiesFromVm:
+      LabVmId:
+        $referenceType: arm # the lab VM a formula is made from, our LabsVirtualMachine
+    EnvironmentDeploymentProperties:
+      ArmTemplateId:
+        $referenceType: arm # an ARM template of the lab's artifact source
+    ArtifactInstallProperties:
+      ArtifactId:
+        $referenceType: arm # an artifact of the lab's artifact source
+    UserSecretStore:
+      KeyVaultId:
+        $referenceType: arm # the user's Key Vault
+    LabProperties:
+      MandatoryArtifactsResourceIdsWindows:
+        $referenceType: arm # artifacts of the lab's artifact sources
+      MandatoryArtifactsResourceIdsLinux:
+        $referenceType: arm
+    SubnetOverride:
+      ResourceId:
+        $referenceType: arm # a subnet, ASO's VirtualNetworksSubnet
+    VirtualNetworkProperties:
+      ExternalProviderResourceId:
+        $referenceType: arm # the virtual network, ASO's VirtualNetwork
+    Subnet:
+      ResourceId:
+        $referenceType: arm

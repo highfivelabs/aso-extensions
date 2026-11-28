@@ -141,6 +141,29 @@ groupModelConfiguration:
       Identity:
         $referenceType: arm+wellknown # permits `system` to use a system-assigned identity
   2026-07-01:
+    # docs/plan.md f49: sandbox groups and their network connections, and
+    # Azure SRE Agent agents and their connectors (specification/app's
+    # SreAgent, same version). Not a Dapr component's resiliency policies:
+    # they exist only here, and our ManagedEnvironmentsDaprComponent is a
+    # 2025-01-01 kind, so the policy's owner would be the unexported
+    # ManagedEnvironments_DaprComponent of this version (an ARM ID only).
+    SandboxGroup:
+      $exportAs: SandboxGroup
+      $supportedFrom: v0.1.0
+    SandboxGroups_VnetConnection:
+      $exportAs: SandboxGroupsVnetConnection
+      $supportedFrom: v0.1.0
+    Agent:
+      $exportAs: Agent
+      $supportedFrom: v0.1.0
+    Agents_Connector:
+      $exportAs: AgentsConnector
+      $supportedFrom: v0.1.0
+    # A container app's private endpoint connections (docs/plan.md f37; the
+    # first stable version with them), owned by ASO's ContainerApp.
+    ContainerApps_PrivateEndpointConnection:
+      $exportAs: ContainerAppsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
     # Our ContainerApp beside ASO's (2025-01-01), for `kind` (2026-11-13).
     # Labels as ASO's app.yaml has them for 2025-01-01.
     ContainerApp:

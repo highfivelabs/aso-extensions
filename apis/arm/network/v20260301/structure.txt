@@ -1440,6 +1440,34 @@ ApplicationGateway: Resource
     │   └── RuleSetVersion: *string
     └── Zones: string[]
 
+ApplicationSecurityGroupsAddressPrefixSet: Resource
+├── Owner: ApplicationSecurityGroup
+├── Spec: Object (4 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[a-zA-Z0-9]([a-zA-Z0-9_.-]{0,78}[a-zA-Z0-9_])?$"
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (1 property)
+│       └── AddressPrefixes: Validated<string[]> (1 rule)
+│           └── Rule 0: MinItems: 1
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── AddressPrefixes: string[]
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "Succeeded"
+    │       └── "Updating"
+    └── Type: *string
+
 DdosCustomPolicy: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (8 properties)
@@ -2642,6 +2670,304 @@ FirewallPoliciesKubeSelectorGroup: Resource
     │       └── "Updating"
     └── Type: *string
 
+FirewallPoliciesRuleCollectionGroupDraft: Resource
+├── Owner: FirewallPolicies_RuleCollectionGroup
+├── Spec: Object (4 properties)
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Priority: Validated<*int> (2 rules)
+│   │   ├── Rule 0: Maximum: 65000
+│   │   └── Rule 1: Minimum: 100
+│   └── RuleCollections: Object (2 properties)[]
+│       ├── FirewallPolicyFilter: *Object (5 properties)
+│       │   ├── Action: *Object (1 property)
+│       │   │   └── Type: *Enum (2 values)
+│       │   │       ├── "Allow"
+│       │   │       └── "Deny"
+│       │   ├── Name: *string
+│       │   ├── Priority: Validated<*int> (2 rules)
+│       │   │   ├── Rule 0: Maximum: 65000
+│       │   │   └── Rule 1: Minimum: 100
+│       │   ├── RuleCollectionType: *Enum (1 value)
+│       │   │   └── "FirewallPolicyFilterRuleCollection"
+│       │   └── Rules: Object (3 properties)[]
+│       │       ├── Application: *Object (14 properties)
+│       │       │   ├── Description: *string
+│       │       │   ├── DestinationAddresses: string[]
+│       │       │   ├── FqdnTags: string[]
+│       │       │   ├── HttpHeadersToInsert: Object (2 properties)[]
+│       │       │   │   ├── HeaderName: *string
+│       │       │   │   └── HeaderValue: *string
+│       │       │   ├── Name: *string
+│       │       │   ├── Protocols: Object (2 properties)[]
+│       │       │   │   ├── Port: Validated<*int> (2 rules)
+│       │       │   │   │   ├── Rule 0: Maximum: 64000
+│       │       │   │   │   └── Rule 1: Minimum: 0
+│       │       │   │   └── ProtocolType: *Enum (2 values)
+│       │       │   │       ├── "Http"
+│       │       │   │       └── "Https"
+│       │       │   ├── RuleType: *Enum (1 value)
+│       │       │   │   └── "ApplicationRule"
+│       │       │   ├── SourceAddresses: string[]
+│       │       │   ├── SourceIpGroups: string[]
+│       │       │   ├── SourceKubeSelectorGroups: string[]
+│       │       │   ├── TargetFqdns: string[]
+│       │       │   ├── TargetUrls: string[]
+│       │       │   ├── TerminateTLS: *bool
+│       │       │   └── WebCategories: string[]
+│       │       ├── Nat: *Object (11 properties)
+│       │       │   ├── Description: *string
+│       │       │   ├── DestinationAddresses: string[]
+│       │       │   ├── DestinationPorts: string[]
+│       │       │   ├── IpProtocols: Enum (4 values)[]
+│       │       │   │   ├── "Any"
+│       │       │   │   ├── "ICMP"
+│       │       │   │   ├── "TCP"
+│       │       │   │   └── "UDP"
+│       │       │   ├── Name: *string
+│       │       │   ├── RuleType: *Enum (1 value)
+│       │       │   │   └── "NatRule"
+│       │       │   ├── SourceAddresses: string[]
+│       │       │   ├── SourceIpGroups: string[]
+│       │       │   ├── TranslatedAddress: *string
+│       │       │   ├── TranslatedFqdn: *string
+│       │       │   └── TranslatedPort: *string
+│       │       └── Network: *Object (13 properties)
+│       │           ├── Description: *string
+│       │           ├── DestinationAddresses: string[]
+│       │           ├── DestinationFqdns: string[]
+│       │           ├── DestinationGeoLocations: string[]
+│       │           ├── DestinationIpGroups: string[]
+│       │           ├── DestinationPorts: string[]
+│       │           ├── IpProtocols: Enum (4 values)[]
+│       │           │   ├── "Any"
+│       │           │   ├── "ICMP"
+│       │           │   ├── "TCP"
+│       │           │   └── "UDP"
+│       │           ├── Name: *string
+│       │           ├── RuleType: *Enum (1 value)
+│       │           │   └── "NetworkRule"
+│       │           ├── SourceAddresses: string[]
+│       │           ├── SourceGeoLocations: string[]
+│       │           ├── SourceIpGroups: string[]
+│       │           └── SourceKubeSelectorGroups: string[]
+│       └── FirewallPolicyNat: *Object (5 properties)
+│           ├── Action: *Object (1 property)
+│           │   └── Type: *Enum (1 value)
+│           │       └── "DNAT"
+│           ├── Name: *string
+│           ├── Priority: Validated<*int> (2 rules)
+│           │   ├── Rule 0: Maximum: 65000
+│           │   └── Rule 1: Minimum: 100
+│           ├── RuleCollectionType: *Enum (1 value)
+│           │   └── "FirewallPolicyNatRuleCollection"
+│           └── Rules: Object (3 properties)[]
+│               ├── Application: *Object (14 properties)
+│               │   ├── Description: *string
+│               │   ├── DestinationAddresses: string[]
+│               │   ├── FqdnTags: string[]
+│               │   ├── HttpHeadersToInsert: Object (2 properties)[]
+│               │   │   ├── HeaderName: *string
+│               │   │   └── HeaderValue: *string
+│               │   ├── Name: *string
+│               │   ├── Protocols: Object (2 properties)[]
+│               │   │   ├── Port: Validated<*int> (2 rules)
+│               │   │   │   ├── Rule 0: Maximum: 64000
+│               │   │   │   └── Rule 1: Minimum: 0
+│               │   │   └── ProtocolType: *Enum (2 values)
+│               │   │       ├── "Http"
+│               │   │       └── "Https"
+│               │   ├── RuleType: *Enum (1 value)
+│               │   │   └── "ApplicationRule"
+│               │   ├── SourceAddresses: string[]
+│               │   ├── SourceIpGroups: string[]
+│               │   ├── SourceKubeSelectorGroups: string[]
+│               │   ├── TargetFqdns: string[]
+│               │   ├── TargetUrls: string[]
+│               │   ├── TerminateTLS: *bool
+│               │   └── WebCategories: string[]
+│               ├── Nat: *Object (11 properties)
+│               │   ├── Description: *string
+│               │   ├── DestinationAddresses: string[]
+│               │   ├── DestinationPorts: string[]
+│               │   ├── IpProtocols: Enum (4 values)[]
+│               │   │   ├── "Any"
+│               │   │   ├── "ICMP"
+│               │   │   ├── "TCP"
+│               │   │   └── "UDP"
+│               │   ├── Name: *string
+│               │   ├── RuleType: *Enum (1 value)
+│               │   │   └── "NatRule"
+│               │   ├── SourceAddresses: string[]
+│               │   ├── SourceIpGroups: string[]
+│               │   ├── TranslatedAddress: *string
+│               │   ├── TranslatedFqdn: *string
+│               │   └── TranslatedPort: *string
+│               └── Network: *Object (13 properties)
+│                   ├── Description: *string
+│                   ├── DestinationAddresses: string[]
+│                   ├── DestinationFqdns: string[]
+│                   ├── DestinationGeoLocations: string[]
+│                   ├── DestinationIpGroups: string[]
+│                   ├── DestinationPorts: string[]
+│                   ├── IpProtocols: Enum (4 values)[]
+│                   │   ├── "Any"
+│                   │   ├── "ICMP"
+│                   │   ├── "TCP"
+│                   │   └── "UDP"
+│                   ├── Name: *string
+│                   ├── RuleType: *Enum (1 value)
+│                   │   └── "NetworkRule"
+│                   ├── SourceAddresses: string[]
+│                   ├── SourceGeoLocations: string[]
+│                   ├── SourceIpGroups: string[]
+│                   └── SourceKubeSelectorGroups: string[]
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Priority: *int
+    ├── RuleCollections: Object (2 properties)[]
+    │   ├── FirewallPolicyFilter: *Object (5 properties)
+    │   │   ├── Action: *Object (1 property)
+    │   │   │   └── Type: *Enum (2 values)
+    │   │   │       ├── "Allow"
+    │   │   │       └── "Deny"
+    │   │   ├── Name: *string
+    │   │   ├── Priority: *int
+    │   │   ├── RuleCollectionType: *Enum (1 value)
+    │   │   │   └── "FirewallPolicyFilterRuleCollection"
+    │   │   └── Rules: Object (3 properties)[]
+    │   │       ├── Application: *Object (14 properties)
+    │   │       │   ├── Description: *string
+    │   │       │   ├── DestinationAddresses: string[]
+    │   │       │   ├── FqdnTags: string[]
+    │   │       │   ├── HttpHeadersToInsert: Object (2 properties)[]
+    │   │       │   │   ├── HeaderName: *string
+    │   │       │   │   └── HeaderValue: *string
+    │   │       │   ├── Name: *string
+    │   │       │   ├── Protocols: Object (2 properties)[]
+    │   │       │   │   ├── Port: *int
+    │   │       │   │   └── ProtocolType: *Enum (2 values)
+    │   │       │   │       ├── "Http"
+    │   │       │   │       └── "Https"
+    │   │       │   ├── RuleType: *Enum (1 value)
+    │   │       │   │   └── "ApplicationRule"
+    │   │       │   ├── SourceAddresses: string[]
+    │   │       │   ├── SourceIpGroups: string[]
+    │   │       │   ├── SourceKubeSelectorGroups: string[]
+    │   │       │   ├── TargetFqdns: string[]
+    │   │       │   ├── TargetUrls: string[]
+    │   │       │   ├── TerminateTLS: *bool
+    │   │       │   └── WebCategories: string[]
+    │   │       ├── Nat: *Object (11 properties)
+    │   │       │   ├── Description: *string
+    │   │       │   ├── DestinationAddresses: string[]
+    │   │       │   ├── DestinationPorts: string[]
+    │   │       │   ├── IpProtocols: Enum (4 values)[]
+    │   │       │   │   ├── "Any"
+    │   │       │   │   ├── "ICMP"
+    │   │       │   │   ├── "TCP"
+    │   │       │   │   └── "UDP"
+    │   │       │   ├── Name: *string
+    │   │       │   ├── RuleType: *Enum (1 value)
+    │   │       │   │   └── "NatRule"
+    │   │       │   ├── SourceAddresses: string[]
+    │   │       │   ├── SourceIpGroups: string[]
+    │   │       │   ├── TranslatedAddress: *string
+    │   │       │   ├── TranslatedFqdn: *string
+    │   │       │   └── TranslatedPort: *string
+    │   │       └── Network: *Object (13 properties)
+    │   │           ├── Description: *string
+    │   │           ├── DestinationAddresses: string[]
+    │   │           ├── DestinationFqdns: string[]
+    │   │           ├── DestinationGeoLocations: string[]
+    │   │           ├── DestinationIpGroups: string[]
+    │   │           ├── DestinationPorts: string[]
+    │   │           ├── IpProtocols: Enum (4 values)[]
+    │   │           │   ├── "Any"
+    │   │           │   ├── "ICMP"
+    │   │           │   ├── "TCP"
+    │   │           │   └── "UDP"
+    │   │           ├── Name: *string
+    │   │           ├── RuleType: *Enum (1 value)
+    │   │           │   └── "NetworkRule"
+    │   │           ├── SourceAddresses: string[]
+    │   │           ├── SourceGeoLocations: string[]
+    │   │           ├── SourceIpGroups: string[]
+    │   │           └── SourceKubeSelectorGroups: string[]
+    │   └── FirewallPolicyNat: *Object (5 properties)
+    │       ├── Action: *Object (1 property)
+    │       │   └── Type: *Enum (1 value)
+    │       │       └── "DNAT"
+    │       ├── Name: *string
+    │       ├── Priority: *int
+    │       ├── RuleCollectionType: *Enum (1 value)
+    │       │   └── "FirewallPolicyNatRuleCollection"
+    │       └── Rules: Object (3 properties)[]
+    │           ├── Application: *Object (14 properties)
+    │           │   ├── Description: *string
+    │           │   ├── DestinationAddresses: string[]
+    │           │   ├── FqdnTags: string[]
+    │           │   ├── HttpHeadersToInsert: Object (2 properties)[]
+    │           │   │   ├── HeaderName: *string
+    │           │   │   └── HeaderValue: *string
+    │           │   ├── Name: *string
+    │           │   ├── Protocols: Object (2 properties)[]
+    │           │   │   ├── Port: *int
+    │           │   │   └── ProtocolType: *Enum (2 values)
+    │           │   │       ├── "Http"
+    │           │   │       └── "Https"
+    │           │   ├── RuleType: *Enum (1 value)
+    │           │   │   └── "ApplicationRule"
+    │           │   ├── SourceAddresses: string[]
+    │           │   ├── SourceIpGroups: string[]
+    │           │   ├── SourceKubeSelectorGroups: string[]
+    │           │   ├── TargetFqdns: string[]
+    │           │   ├── TargetUrls: string[]
+    │           │   ├── TerminateTLS: *bool
+    │           │   └── WebCategories: string[]
+    │           ├── Nat: *Object (11 properties)
+    │           │   ├── Description: *string
+    │           │   ├── DestinationAddresses: string[]
+    │           │   ├── DestinationPorts: string[]
+    │           │   ├── IpProtocols: Enum (4 values)[]
+    │           │   │   ├── "Any"
+    │           │   │   ├── "ICMP"
+    │           │   │   ├── "TCP"
+    │           │   │   └── "UDP"
+    │           │   ├── Name: *string
+    │           │   ├── RuleType: *Enum (1 value)
+    │           │   │   └── "NatRule"
+    │           │   ├── SourceAddresses: string[]
+    │           │   ├── SourceIpGroups: string[]
+    │           │   ├── TranslatedAddress: *string
+    │           │   ├── TranslatedFqdn: *string
+    │           │   └── TranslatedPort: *string
+    │           └── Network: *Object (13 properties)
+    │               ├── Description: *string
+    │               ├── DestinationAddresses: string[]
+    │               ├── DestinationFqdns: string[]
+    │               ├── DestinationGeoLocations: string[]
+    │               ├── DestinationIpGroups: string[]
+    │               ├── DestinationPorts: string[]
+    │               ├── IpProtocols: Enum (4 values)[]
+    │               │   ├── "Any"
+    │               │   ├── "ICMP"
+    │               │   ├── "TCP"
+    │               │   └── "UDP"
+    │               ├── Name: *string
+    │               ├── RuleType: *Enum (1 value)
+    │               │   └── "NetworkRule"
+    │               ├── SourceAddresses: string[]
+    │               ├── SourceGeoLocations: string[]
+    │               ├── SourceIpGroups: string[]
+    │               └── SourceKubeSelectorGroups: string[]
+    ├── Size: *string
+    └── Type: *string
+
 FirewallPoliciesSignatureOverride: Resource
 ├── Owner: FirewallPolicy
 ├── Spec: Object (4 properties)
@@ -2750,6 +3076,32 @@ LocalNetworkGateway: Resource
     ├── ResourceGuid: *string
     ├── Tags: map[string]string
     └── Type: *string
+
+NetworkInterfacesTapConfiguration: Resource
+├── Owner: NetworkInterface
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── VirtualNetworkTap: *Object (1 property)
+│       └── Reference: *genruntime.ResourceReference
+└── Status: Object (7 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Type: *string
+    └── VirtualNetworkTap: *Object (1 property)
+        └── Id: *string
 
 NetworkManager: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
@@ -4354,6 +4706,225 @@ NetworkVirtualAppliancesVirtualApplianceSite: Resource
     │   └── "Updating"
     └── Type: *string
 
+NetworkWatchersConnectionMonitor: Resource
+├── Owner: NetworkWatcher
+├── Spec: Object (14 properties)
+│   ├── AutoStart: *bool
+│   ├── AzureName: string
+│   ├── Destination: *Object (3 properties)
+│   │   ├── Address: *string
+│   │   ├── Port: Validated<*int> (2 rules)
+│   │   │   ├── Rule 0: Maximum: 65535
+│   │   │   └── Rule 1: Minimum: 0
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── Endpoints: Object (9 properties)[]
+│   │   ├── Address: *string
+│   │   ├── CoverageLevel: *Enum (6 values)
+│   │   │   ├── "AboveAverage"
+│   │   │   ├── "Average"
+│   │   │   ├── "BelowAverage"
+│   │   │   ├── "Default"
+│   │   │   ├── "Full"
+│   │   │   └── "Low"
+│   │   ├── Filter: *Object (2 properties)
+│   │   │   ├── Items: Object (2 properties)[]
+│   │   │   │   ├── Address: *string
+│   │   │   │   └── Type: *Enum (1 value)
+│   │   │   │       └── "AgentAddress"
+│   │   │   └── Type: *Enum (1 value)
+│   │   │       └── "Include"
+│   │   ├── LocationDetails: *Object (1 property)
+│   │   │   └── Region: *string
+│   │   ├── Name: *string
+│   │   ├── ResourceReference: *genruntime.ResourceReference
+│   │   ├── Scope: *Object (2 properties)
+│   │   │   ├── Exclude: Object (1 property)[]
+│   │   │   │   └── Address: *string
+│   │   │   └── Include: Object (1 property)[]
+│   │   │       └── Address: *string
+│   │   ├── SubscriptionId: *string
+│   │   └── Type: *Enum (9 values)
+│   │       ├── "AzureArcNetwork"
+│   │       ├── "AzureArcVM"
+│   │       ├── "AzureSubnet"
+│   │       ├── "AzureVM"
+│   │       ├── "AzureVMSS"
+│   │       ├── "AzureVNet"
+│   │       ├── "ExternalAddress"
+│   │       ├── "MMAWorkspaceMachine"
+│   │       └── "MMAWorkspaceNetwork"
+│   ├── Location: *string
+│   ├── MonitoringIntervalInSeconds: Validated<*int> (2 rules)
+│   │   ├── Rule 0: Maximum: 1800
+│   │   └── Rule 1: Minimum: 30
+│   ├── Notes: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Outputs: Object (2 properties)[]
+│   │   ├── Type: *Enum (1 value)
+│   │   │   └── "Workspace"
+│   │   └── WorkspaceSettings: *Object (1 property)
+│   │       └── WorkspaceResourceReference: *genruntime.ResourceReference
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Source: *Object (2 properties)
+│   │   ├── Port: Validated<*int> (2 rules)
+│   │   │   ├── Rule 0: Maximum: 65535
+│   │   │   └── Rule 1: Minimum: 0
+│   │   └── ResourceReference: *genruntime.ResourceReference
+│   ├── Tags: map[string]string
+│   ├── TestConfigurations: Object (8 properties)[]
+│   │   ├── HttpConfiguration: *Object (6 properties)
+│   │   │   ├── Method: *Enum (2 values)
+│   │   │   │   ├── "Get"
+│   │   │   │   └── "Post"
+│   │   │   ├── Path: *string
+│   │   │   ├── Port: Validated<*int> (2 rules)
+│   │   │   │   ├── Rule 0: Maximum: 65535
+│   │   │   │   └── Rule 1: Minimum: 0
+│   │   │   ├── PreferHTTPS: *bool
+│   │   │   ├── RequestHeaders: Object (2 properties)[]
+│   │   │   │   ├── Name: *string
+│   │   │   │   └── Value: *string
+│   │   │   └── ValidStatusCodeRanges: string[]
+│   │   ├── IcmpConfiguration: *Object (1 property)
+│   │   │   └── DisableTraceRoute: *bool
+│   │   ├── Name: *string
+│   │   ├── PreferredIPVersion: *Enum (2 values)
+│   │   │   ├── "IPv4"
+│   │   │   └── "IPv6"
+│   │   ├── Protocol: *Enum (3 values)
+│   │   │   ├── "Http"
+│   │   │   ├── "Icmp"
+│   │   │   └── "Tcp"
+│   │   ├── SuccessThreshold: *Object (2 properties)
+│   │   │   ├── ChecksFailedPercent: *int
+│   │   │   └── RoundTripTimeMs: *float64
+│   │   ├── TcpConfiguration: *Object (3 properties)
+│   │   │   ├── DestinationPortBehavior: *Enum (2 values)
+│   │   │   │   ├── "ListenIfAvailable"
+│   │   │   │   └── "None"
+│   │   │   ├── DisableTraceRoute: *bool
+│   │   │   └── Port: Validated<*int> (2 rules)
+│   │   │       ├── Rule 0: Maximum: 65535
+│   │   │       └── Rule 1: Minimum: 0
+│   │   └── TestFrequencySec: *int
+│   └── TestGroups: Object (5 properties)[]
+│       ├── Destinations: string[]
+│       ├── Disable: *bool
+│       ├── Name: *string
+│       ├── Sources: string[]
+│       └── TestConfigurations: string[]
+└── Status: Object (20 properties)
+    ├── AutoStart: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── ConnectionMonitorType: *Enum (2 values)
+    │   ├── "MultiEndpoint"
+    │   └── "SingleSourceDestination"
+    ├── Destination: *Object (3 properties)
+    │   ├── Address: *string
+    │   ├── Port: *int
+    │   └── ResourceId: *string
+    ├── Endpoints: Object (9 properties)[]
+    │   ├── Address: *string
+    │   ├── CoverageLevel: *Enum (6 values)
+    │   │   ├── "AboveAverage"
+    │   │   ├── "Average"
+    │   │   ├── "BelowAverage"
+    │   │   ├── "Default"
+    │   │   ├── "Full"
+    │   │   └── "Low"
+    │   ├── Filter: *Object (2 properties)
+    │   │   ├── Items: Object (2 properties)[]
+    │   │   │   ├── Address: *string
+    │   │   │   └── Type: *Enum (1 value)
+    │   │   │       └── "AgentAddress"
+    │   │   └── Type: *Enum (1 value)
+    │   │       └── "Include"
+    │   ├── LocationDetails: *Object (1 property)
+    │   │   └── Region: *string
+    │   ├── Name: *string
+    │   ├── ResourceId: *string
+    │   ├── Scope: *Object (2 properties)
+    │   │   ├── Exclude: Object (1 property)[]
+    │   │   │   └── Address: *string
+    │   │   └── Include: Object (1 property)[]
+    │   │       └── Address: *string
+    │   ├── SubscriptionId: *string
+    │   └── Type: *Enum (9 values)
+    │       ├── "AzureArcNetwork"
+    │       ├── "AzureArcVM"
+    │       ├── "AzureSubnet"
+    │       ├── "AzureVM"
+    │       ├── "AzureVMSS"
+    │       ├── "AzureVNet"
+    │       ├── "ExternalAddress"
+    │       ├── "MMAWorkspaceMachine"
+    │       └── "MMAWorkspaceNetwork"
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── MonitoringIntervalInSeconds: *int
+    ├── MonitoringStatus: *string
+    ├── Name: *string
+    ├── Notes: *string
+    ├── Outputs: Object (2 properties)[]
+    │   ├── Type: *Enum (1 value)
+    │   │   └── "Workspace"
+    │   └── WorkspaceSettings: *Object (1 property)
+    │       └── WorkspaceResourceId: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── Source: *Object (2 properties)
+    │   ├── Port: *int
+    │   └── ResourceId: *string
+    ├── StartTime: *string
+    ├── Tags: map[string]string
+    ├── TestConfigurations: Object (8 properties)[]
+    │   ├── HttpConfiguration: *Object (6 properties)
+    │   │   ├── Method: *Enum (2 values)
+    │   │   │   ├── "Get"
+    │   │   │   └── "Post"
+    │   │   ├── Path: *string
+    │   │   ├── Port: *int
+    │   │   ├── PreferHTTPS: *bool
+    │   │   ├── RequestHeaders: Object (2 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   └── Value: *string
+    │   │   └── ValidStatusCodeRanges: string[]
+    │   ├── IcmpConfiguration: *Object (1 property)
+    │   │   └── DisableTraceRoute: *bool
+    │   ├── Name: *string
+    │   ├── PreferredIPVersion: *Enum (2 values)
+    │   │   ├── "IPv4"
+    │   │   └── "IPv6"
+    │   ├── Protocol: *Enum (3 values)
+    │   │   ├── "Http"
+    │   │   ├── "Icmp"
+    │   │   └── "Tcp"
+    │   ├── SuccessThreshold: *Object (2 properties)
+    │   │   ├── ChecksFailedPercent: *int
+    │   │   └── RoundTripTimeMs: *float64
+    │   ├── TcpConfiguration: *Object (3 properties)
+    │   │   ├── DestinationPortBehavior: *Enum (2 values)
+    │   │   │   ├── "ListenIfAvailable"
+    │   │   │   └── "None"
+    │   │   ├── DisableTraceRoute: *bool
+    │   │   └── Port: *int
+    │   └── TestFrequencySec: *int
+    ├── TestGroups: Object (5 properties)[]
+    │   ├── Destinations: string[]
+    │   ├── Disable: *bool
+    │   ├── Name: *string
+    │   ├── Sources: string[]
+    │   └── TestConfigurations: string[]
+    └── Type: *string
+
 P2sVpnGateway: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (11 properties)
@@ -5553,6 +6124,45 @@ VirtualNetworkGatewayConnection: Resource
     │   └── Id: *string
     └── VirtualNetworkGateway2: *Object (1 property)
         └── Id: *string
+
+VirtualNetworkTap: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── DestinationLoadBalancerFrontEndIPConfiguration: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── DestinationNetworkInterfaceIPConfiguration: *Object (1 property)
+│   │   └── Reference: *genruntime.ResourceReference
+│   ├── DestinationPort: *int
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (13 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── DestinationLoadBalancerFrontEndIPConfiguration: *Object (1 property)
+    │   └── Id: *string
+    ├── DestinationNetworkInterfaceIPConfiguration: *Object (1 property)
+    │   └── Id: *string
+    ├── DestinationPort: *int
+    ├── Etag: *string
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── NetworkInterfaceTapConfigurations: Object (1 property)[]
+    │   └── Id: *string
+    ├── ProvisioningState: *Enum (6 values)
+    │   ├── "Canceled"
+    │   ├── "Creating"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── ResourceGuid: *string
+    ├── Tags: map[string]string
+    └── Type: *string
 
 VirtualRouter: Resource
 ├── Owner: resources/vv20191001.ResourceGroup

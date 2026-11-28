@@ -31,7 +31,80 @@
 // checked for where they are kept and what they name (policy.go); so are
 // policy remediations and attestations (policyinsights.go), and role
 // definitions and Privileged Identity Management requests (pim.go: built-in
-// roles listed by name, schedule requests that cannot be deleted), budgets
+// roles listed by name, schedule requests that cannot be deleted), access
+// reviews and the tenant's subscription policy (accessreview.go: flat PUT
+// bodies kept as properties, GUID names, singletons that cannot be
+// deleted), Network Watcher connection monitors and address prefix sets
+// (networkwatcher.go: test groups that name the monitor's own endpoints and
+// test configurations, CIDR prefixes), Defender for Cloud governance rules
+// (governance.go: GUID keys, one priority per scope), Sentinel settings and
+// the workspace manager (sentinel.go: settings named by kind, members,
+// groups and assignments that name what exists), Defender custom
+// assessments (assessments.go: GUID metadata keys, an assessment named after
+// metadata that exists), Cosmos DB role definitions and assignments for the
+// Cassandra, Gremlin, MongoDB and Table APIs (cosmosrbac.go: GUID names, an
+// assignment's definition of the same API and account), Azure Compute
+// Gallery and dedicated host groups (gallery.go: names, versions and their
+// sources, fault domains), Static Web Apps' children and an app's virtual
+// network connections (staticsites.go: what they link to exists), an app's
+// or slot's sidecar containers and private access (sitechildren.go: one main
+// container, the networks named exist), App Service Environments
+// (hostingenvironments.go: the network named exists, a custom DNS suffix
+// with its certificate), SQL Managed Instance children and instance pools
+// (sqlmanagedinstance.go: keys and the protector naming one, assessments'
+// storage, Entra-only authentication after an Entra admin), SQL DevOps
+// auditing and workload groups (sqlserverextras.go: a target, shares within
+// their cap), Microsoft Foundry managed networks and outbound rules
+// (foundry.go: the default name, no way back to V1, a rule's target
+// exists), Azure Cosmos DB for PostgreSQL clusters (cosmospostgres.go: what
+// a new cluster needs, its node count, a replica's source, firewall rule
+// addresses, role passwords), Cosmos DB fleets and MongoDB vCore cluster
+// users (cosmosfleet.go: a fleetspace's pool, the account a fleetspace
+// account names, a user's Entra object ID), storage connectors, data shares
+// and blob access points (storagenewcomers.go: source types kept, what a
+// new share needs), Container Apps sandbox groups and SRE agents
+// (appextras.go: a group's environment link kept, what they name exists, a
+// subnet with AzureVNet egress), Recovery Services vault settings
+// (vaultsettings.go: soft delete always on, redundancy locked by protected
+// items, customer-managed keys kept), DevTest Labs (devtestlab.go: fixed
+// schedule and cost names, a lab VM's network and subnet in its lab, its
+// sign-in, a secret's value), Azure Site Recovery (siterecovery.go: one
+// Azure fabric per region, a policy's snapshot frequency, what mappings,
+// replicated items and recovery plans name, a mapping for each item), App
+// Service leftovers (webextras.go: a certificate's source, the gateway's
+// name, a static web app's basic authentication, a slot's repository, a
+// Kubernetes environment's custom location), Logic Apps API connections,
+// custom APIs and data gateways (logicconnections.go: the API a connection
+// uses in its region, its parameter values kept aside, a custom API's
+// definition, a gateway's installation), Application Insights smart
+// detection rules (smartdetection.go: a rule Azure defines, no DELETE),
+// alert processing rules (alertprocessing.go: global, scopes and action
+// groups that exist, one action, a schedule in order), virtual network TAP
+// (vnettap.go: one destination that exists, a VXLAN port, a tap
+// configuration naming a TAP that exists, the TAP listing its
+// configurations), Service Bus and Event Hubs namespaces' network rule
+// sets and disaster recovery aliases and Event Hubs application groups
+// (messaging.go: the default rule set, IPv4 masks, subnets that exist, a
+// partner namespace of the same service in one pairing, a client group
+// identifier, unique policy names), Event Grid system topics, event
+// subscriptions and MQTT broker children (eventgrid.go: one system topic a
+// source, destinations that exist, https webhooks, topic templates,
+// permission bindings naming what exists), API Management operations,
+// policies, tags, schemas and providers (apimanagement.go: required
+// properties, declared template parameters, <policies> XML, tags that exist,
+// identity provider types), a MySQL flexible server's threat protection
+// setting (mysql.go: Default, Enabled or Disabled, no DELETE), container
+// group profiles and NGroups (containerinstance.go: containers with images
+// and requests, profiles that exist), Web PubSub and SignalR children
+// (signalr.go: SKUs, Premium replicas elsewhere, hub names, certificates and
+// domains, shared private links to what exists), Azure Data Explorer
+// cluster children (kusto.go: leader clusters, private link targets, images,
+// one script source), Azure Monitor
+// pipeline groups
+// (monitorpipeline.go: a custom location, unique and complete receivers,
+// processors and exporters, pipelines naming what is declared), a VM's
+// diagnostic run commands (diagnosticruncommands.go: one source, a gallery
+// script that exists), budgets
 // and cost exports (cost.go: Cost Management scopes, notifications, delivery,
 // an obfuscated SAS token), and site-to-site VPN connections and local
 // network gateways (vpn.go: the gateways a connection names, a shared key
@@ -343,6 +416,14 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			return
 		}
 		writeJSON(w, http.StatusOK, a.render(id, *res))
+	case http.MethodHead:
+		// CheckExistence, which ASO's reconciler uses for a resource with
+		// no GET (an API Management workspace group's users): 204 or 404.
+		if _, ok := a.resources[key]; ok {
+			w.WriteHeader(http.StatusNoContent)
+		} else {
+			w.WriteHeader(http.StatusNotFound)
+		}
 	case http.MethodPut:
 		if l := a.lockOver(id, "ReadOnly"); l != nil {
 			writeScopeLocked(w, r.Method, id, l)
@@ -370,6 +451,10 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			}
 		}
 		if status, code, msg := a.checkPolicy(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := checkFlatBody(id, body); code != "" {
 			writeError(w, status, code, msg)
 			return
 		}
@@ -434,6 +519,170 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 			writeError(w, status, code, msg)
 			return
 		}
+		if status, code, msg := a.checkNetworkWatcher(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkGovernance(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSentinel(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkAssessments(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkCosmosRBAC(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkGallery(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkStaticSites(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkPrivateEndpointConnections(id); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSQLJobs(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSiteChildren(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkHostingEnvironments(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSQLManagedInstance(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSQLServerExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkFoundry(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkCosmosPostgres(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkCosmosFleet(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkStorageNewcomers(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkAppExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkVaultSettings(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkDevTestLab(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSiteRecovery(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkWebExtras(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkKusto(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSignalR(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkContainerInstance(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := checkMySQL(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkAPIManagement(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkBatch(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkLogic(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkDevices(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkDataFactory(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSynapse(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkMachineLearning(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkEventGrid(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkMessaging(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkVirtualNetworkTap(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkAlertProcessingRule(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkSmartDetection(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkLogicConnections(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkMonitorPipeline(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
+		if status, code, msg := a.checkDiagnosticRunCommand(id, body); code != "" {
+			writeError(w, status, code, msg)
+			return
+		}
 		status, code, msg, erAfter := a.checkExpressRoute(id, body)
 		if code != "" {
 			writeError(w, status, code, msg)
@@ -455,7 +704,9 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		if props == nil {
 			props = map[string]any{}
 		}
-		props["provisioningState"] = "Succeeded"
+		if !propertiesAreAMap(id) {
+			props["provisioningState"] = "Succeeded"
+		}
 		body["properties"] = props
 		a.compute(id, body, props)
 		status = http.StatusOK
@@ -484,6 +735,30 @@ func (a *ARM) serveResource(w http.ResponseWriter, r *http.Request, id string) {
 		}
 		if isManagedHSMKey(id) {
 			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A managed HSM key cannot be deleted through Resource Manager; delete it in the HSM's data plane.")
+			return
+		}
+		if wpsSharedPLR.MatchString(id) && strings.Contains(strings.ToLower(id), "/replicas/") {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A replica's shared private link resource cannot be deleted; it is deleted with its replica.")
+			return
+		}
+		if mysqlThreatProtection.MatchString(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A server's advanced threat protection setting cannot be deleted; it is deleted with its server.")
+			return
+		}
+		if messagingRuleSet.MatchString(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A namespace's network rule set cannot be deleted; it is deleted with its namespace.")
+			return
+		}
+		if isSmartDetectionRule(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A smart detection rule cannot be deleted; it lives as long as its component.")
+			return
+		}
+		if synapseUndeletable(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "A Synapse workspace's setting cannot be deleted; it is deleted with its workspace.")
+			return
+		}
+		if undeletableSingleton(id) {
+			writeError(w, http.StatusMethodNotAllowed, "MethodNotAllowed", "Access review settings and the subscription policy cannot be deleted; change them with another PUT.")
 			return
 		}
 		if _, ok := a.resources[key]; !ok {

@@ -122,11 +122,9 @@ func TestRegistryTokensAndWebhooks(t *testing.T) {
 	}
 
 	// Disabling the token is a change PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(token), token); err != nil {
-		t.Fatal(err)
-	}
-	token.Spec.Status = ptr(acr.TokenStatus("disabled"))
-	if err := k8s.Update(ctx, token); err != nil {
+	if err := change(t, token, func(token *acr.RegistriesToken) {
+		token.Spec.Status = ptr(acr.TokenStatus("disabled"))
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, tokenID, func(r map[string]any) error {

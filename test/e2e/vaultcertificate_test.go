@@ -141,8 +141,9 @@ func TestVaultCertificateLifecycle(t *testing.T) {
 	})
 
 	// Disabling patches the current version; no new import.
-	vc.Spec.Enabled = new(bool)
-	if err := k8s.Update(ctx, vc); err != nil {
+	if err := change(t, vc, func(vc *kvv1.VaultCertificate) {
+		vc.Spec.Enabled = new(bool)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "VaultCertificate Ready disabled", ready(vc))
@@ -179,8 +180,9 @@ func TestVaultCertificateLifecycle(t *testing.T) {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "soft-deleted name refused", notReadyWith(again, "a soft-deleted certificate orders-tls holds the name"))
-	again.Spec.CreateMode = strPtr("createOrRecover")
-	if err := k8s.Update(ctx, again); err != nil {
+	if err := change(t, again, func(again *kvv1.VaultCertificate) {
+		again.Spec.CreateMode = strPtr("createOrRecover")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "recovered and Ready", ready(again))

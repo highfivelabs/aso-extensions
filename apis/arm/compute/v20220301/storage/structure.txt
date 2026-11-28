@@ -84,3 +84,13 @@ VirtualMachinesRunCommand: Resource
 
 augmentConversionForInstanceViewStatus_STATUS: Interface
 
+augmentConversionForRunCommandInputParameter: Interface
+
+augmentConversionForRunCommandInputParameter_STATUS: Interface
+
+augmentConversionForVirtualMachineRunCommandInstanceView_STATUS: Interface
+
+augmentConversionForVirtualMachineRunCommandScriptSource: Interface
+
+augmentConversionForVirtualMachineRunCommandScriptSource_STATUS: Interface
+

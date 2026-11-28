@@ -365,7 +365,7 @@ spec: {azureName: $1.internal, location: global, owner: {name: rg}}
 EOF
   local now; now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   local cond="{\"type\":\"Ready\",\"status\":\"True\",\"severity\":\"\",\"reason\":\"Succeeded\",\"lastTransitionTime\":\"${now}\",\"observedGeneration\":1}"
-  kubectl -n "$1" patch flexibleserver pg --subresource=status --type=merge \
+  kubectl -n "$1" patch flexibleservers.dbforpostgresql.azure.com pg --subresource=status --type=merge \
     -p "{\"status\":{\"fullyQualifiedDomainName\":\"postgres.fake-cloud.svc\",\"conditions\":[${cond}]}}" >/dev/null
   kubectl -n "$1" patch vault vault --subresource=status --type=merge \
     -p "{\"status\":{\"properties\":{\"vaultUri\":\"https://fakevault.fake-cloud.svc/\"},\"conditions\":[${cond}]}}" >/dev/null

@@ -117,11 +117,9 @@ func TestVaultsProtectedItem(t *testing.T) {
 	}
 
 	// Only the first data disk, then protection stopped (data kept).
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(item), item); err != nil {
-		t.Fatal(err)
-	}
-	item.Spec.DiskExclusionProperties = &rsv.DiskExclusionProperties{DiskLunList: []int{0}, IsInclusionList: ptr(true)}
-	if err := k8s.Update(ctx, item); err != nil {
+	if err := change(t, item, func(item *rsv.VaultsProtectedItem) {
+		item.Spec.DiskExclusionProperties = &rsv.DiskExclusionProperties{DiskLunList: []int{0}, IsInclusionList: ptr(true)}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, itemID, func(r map[string]any) error {
@@ -132,11 +130,9 @@ func TestVaultsProtectedItem(t *testing.T) {
 		}
 		return nil
 	})
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(item), item); err != nil {
-		t.Fatal(err)
-	}
-	item.Spec.ProtectionState = ptr("ProtectionStopped")
-	if err := k8s.Update(ctx, item); err != nil {
+	if err := change(t, item, func(item *rsv.VaultsProtectedItem) {
+		item.Spec.ProtectionState = ptr("ProtectionStopped")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, itemID, func(r map[string]any) error {

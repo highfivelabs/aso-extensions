@@ -97,6 +97,11 @@
 | ScheduledActionStatus_STATUS                 | v20260601 |
 | ScheduledAction_STATUS                       | v20260601 |
 | ScheduledAction_Spec                         | v20260601 |
+| Setting                                      | v20260601 |
+| Setting_STATUS                               | v20260601 |
+| Setting_Spec                                 | v20260601 |
+| SettingsKind                                 | v20260601 |
+| SettingsKind_STATUS                          | v20260601 |
 | StatusType                                   | v20260601 |
 | StatusType_STATUS                            | v20260601 |
 | SystemAssignedServiceIdentity                | v20260601 |
@@ -106,6 +111,10 @@
 | SystemData_CreatedByType_STATUS              | v20260601 |
 | SystemData_LastModifiedByType_STATUS         | v20260601 |
 | SystemData_STATUS                            | v20260601 |
+| TagInheritanceProperties                     | v20260601 |
+| TagInheritanceProperties_STATUS              | v20260601 |
+| TagInheritanceSetting_Name                   | v20260601 |
+| TagInheritanceSetting_STATUS                 | v20260601 |
 | TimeGrainType                                | v20260601 |
 | TimeGrainType_STATUS                         | v20260601 |
 | TimeframeType                                | v20260601 |

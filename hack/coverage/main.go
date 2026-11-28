@@ -132,7 +132,17 @@ func run(root string, check, verbose bool) error {
 	if err != nil {
 		return err
 	}
+	up, err := upjet(root, rows, ours, prio)
+	if err != nil {
+		return err
+	}
+	for f, b := range upjetOutputs(up) {
+		files[f] = b
+	}
 	return finish(root, check, files, []block{
+		{coverageDir + "/README.md", "<!-- upjet:start -->", "<!-- upjet:end -->", upjetNumbers(up)},
+		{"README.md", "<!-- upjet-summary:start -->", "<!-- upjet-summary:end -->", upjetSummary(up)},
+		{coverageDir + "/foundation.md", "<!-- upjet-gaps:start -->", "<!-- upjet-gaps:end -->", upjetGapTable(up, 25)},
 		{"README.md", startMarker, endMarker, readmeSection(svcs, tiers, cats, prio, tf)},
 		{coverageDir + "/foundation.md", "<!-- foundation:start -->", "<!-- foundation:end -->", foundationTable(rows, res, prio, avm, cats)},
 		{coverageDir + "/README.md", "<!-- numbers:start -->", "<!-- numbers:end -->", numbersBlock(&src, stats, docs, res, rows, svcs, tiers, cats, official, ours, tf)},
@@ -178,7 +188,8 @@ func finish(root string, check bool, files map[string][]byte, blocks []block) er
 			have[sub+"/"+e.Name()] = true
 		}
 	}
-	for _, f := range []string{"services.csv", "resources.csv", "attributes.csv", "tiers.csv", "categories.csv"} {
+	for _, f := range []string{"services.csv", "resources.csv", "attributes.csv", "tiers.csv", "categories.csv",
+		"upjet-references.csv", "upjet-checks.csv", "upjet-examples.csv", "upjet-ledger.csv", "upjet-gaps.csv", "upjet-examples.json"} {
 		if _, err := os.Stat(filepath.Join(dir, f)); err == nil {
 			have[f] = true
 		}

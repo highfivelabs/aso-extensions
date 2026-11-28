@@ -17,7 +17,85 @@ typeFilters:
     version: v20250401
     because: >-
       our VirtualMachine beside ASO's (2022-03-01), for storageProfile.diskControllerType and patchSettings.automaticByPlatformSettings.bypassPlatformSafetyChecksOnUserSchedule (the catalog's avm-res-compute-virtualmachine, 2026-11-13); 2025-04-01 is the version of ASO's newest compute kinds
+  - action: include
+    group: compute
+    version: v20260303
+    because: Azure Compute Gallery (galleries, image definitions and versions, VM applications and versions), the newest stable GalleryRP version
+  - action: include
+    group: compute
+    version: v20260401
+    because: a VM's diagnostic run commands (docs/plan.md f55), only in the newest stable ComputeRP version; owned by ASO's VirtualMachine
+  - action: include
+    group: compute
+    version: v20260302
+    because: a disk access's private endpoint connections (docs/plan.md f37), the newest stable DiskRP version; owned by ASO's DiskAccess (2024-03-02)
 groupModelConfiguration:
+  2026-03-02:
+    DiskAccesses_PrivateEndpointConnection:
+      $exportAs: DiskAccessesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+  # Azure Compute Gallery, which ASO has none of (2026-11-23).
+  2026-03-03:
+    Gallery:
+      $exportAs: Gallery
+      $supportedFrom: v0.1.0
+    Galleries_Image:
+      $exportAs: GalleriesImage
+      $supportedFrom: v0.1.0
+    Galleries_Images_Version:
+      $exportAs: GalleriesImagesVersion
+      $supportedFrom: v0.1.0
+    Galleries_Application:
+      $exportAs: GalleriesApplication
+      $supportedFrom: v0.1.0
+    Galleries_Applications_Version:
+      $exportAs: GalleriesApplicationsVersion
+      $supportedFrom: v0.1.0
+    # A gallery's scripts and in-VM access control profiles (the metadata
+    # security protocol's rules), each with its versions (docs/plan.md f45).
+    Galleries_Script:
+      $exportAs: GalleriesScript
+      $supportedFrom: v0.1.0
+    Galleries_Scripts_Version:
+      $exportAs: GalleriesScriptsVersion
+      $supportedFrom: v0.1.0
+    Galleries_InVMAccessControlProfile:
+      $exportAs: GalleriesInVMAccessControlProfile
+      $supportedFrom: v0.1.0
+    Galleries_InVMAccessControlProfiles_Version:
+      $exportAs: GalleriesInVMAccessControlProfilesVersion
+      $supportedFrom: v0.1.0
+    GalleryDiskImageSource:
+      Id:
+        $referenceType: arm # the source disk or snapshot (autolabel, reviewed)
+    DataDiskImageEncryption:
+      DiskEncryptionSetId:
+        $referenceType: arm # a disk encryption set: ASO's DiskEncryptionSet or an ARM ID (autolabel wrote simple; reviewed)
+    OSDiskImageEncryption:
+      DiskEncryptionSetId:
+        $referenceType: arm # a disk encryption set: ASO's DiskEncryptionSet or an ARM ID (autolabel wrote simple; reviewed)
+    GalleryArtifactVersionFullSource:
+      VirtualMachineId:
+        $referenceType: arm # the source virtual machine (autolabel wrote simple; reviewed)
+      Id:
+        $referenceType: arm # the source managed image or gallery image version (autolabel, reviewed)
+      CommunityGalleryImageId:
+        $referenceType: simple # a community gallery image's path, not an ARM ID (autolabel, reviewed)
+  # A VM's diagnostic run commands (docs/plan.md f55): run commands kept
+  # apart for diagnostics, with the run command's properties and labels.
+  2026-04-01:
+    VirtualMachines_DiagnosticRunCommand:
+      $exportAs: VirtualMachinesDiagnosticRunCommand
+      $supportedFrom: v0.1.0
+    VirtualMachineRunCommandProperties:
+      RunAsPassword:
+        $importSecretMode: optional # the password of the account the script runs as, from a Secret
+    VirtualMachineRunCommandProperties_STATUS:
+      RunAsPassword:
+        $importSecretMode: never
+    VirtualMachineRunCommandScriptSource:
+      GalleryScriptReferenceId:
+        $referenceType: arm # a gallery script version, our GalleriesScriptsVersion (autolabel wrote simple; reviewed)
   2022-03-01:
     VirtualMachines_RunCommand:
       $exportAs: VirtualMachinesRunCommand
@@ -33,6 +111,29 @@ groupModelConfiguration:
     # ASO's compute.yaml has them for its 2022-03-01 VirtualMachine.
     VirtualMachine:
       $exportAs: VirtualMachine
+      $supportedFrom: v0.1.0
+    # SSH public keys kept as resources, proximity placement groups and
+    # dedicated host groups with their hosts (2026-11-23), at the version of
+    # our VirtualMachine.
+    SshPublicKey:
+      $exportAs: SshPublicKey
+      $supportedFrom: v0.1.0
+    ProximityPlacementGroup:
+      $exportAs: ProximityPlacementGroup
+      $supportedFrom: v0.1.0
+    HostGroup:
+      $exportAs: HostGroup
+      $supportedFrom: v0.1.0
+    HostGroups_Host:
+      $exportAs: HostGroupsHost
+      $supportedFrom: v0.1.0
+    # Restore point collections and their restore points: a VM's crash- or
+    # application-consistent snapshots (docs/plan.md f45).
+    RestorePointCollection:
+      $exportAs: RestorePointCollection
+      $supportedFrom: v0.1.0
+    RestorePointCollections_RestorePoint:
+      $exportAs: RestorePointCollectionsRestorePoint
       $supportedFrom: v0.1.0
     ApiEntityReference:
       Id:
@@ -81,3 +182,6 @@ groupModelConfiguration:
     HostEndpointSettings:
       InVMAccessControlProfileReferenceId:
         $referenceType: arm # a gallery inVMAccessControlProfile version's ARM ID (autolabel wrote simple)
+    RestorePointCollectionSourceProperties:
+      Id:
+        $referenceType: arm # the source virtual machine: ASO's or our VirtualMachine, or an ARM ID (autolabel, reviewed)

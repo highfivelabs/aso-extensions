@@ -168,11 +168,9 @@ func TestManagedNamespacesAndSnapshot(t *testing.T) {
 		return nil
 	})
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(namespaceObj), namespaceObj); err != nil {
-		t.Fatal(err)
-	}
-	namespaceObj.Spec.Properties.DefaultResourceQuota.CpuRequest = ptr("2")
-	if err := k8s.Update(ctx, namespaceObj); err != nil {
+	if err := change(t, namespaceObj, func(namespaceObj *cs.ManagedClustersManagedNamespace) {
+		namespaceObj.Spec.Properties.DefaultResourceQuota.CpuRequest = ptr("2")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, nsID, func(r map[string]any) error {

@@ -540,6 +540,70 @@ WorkspacesStorageInsightConfig: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+WorkspacesSummaryLog: Resource
+├── Owner: Workspace
+├── Spec: Object (7 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "[^/]+"
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── RuleDefinition: *Object (6 properties)
+│   │   ├── BinDelay: *int
+│   │   ├── BinSize: *int
+│   │   ├── BinStartTime: *string
+│   │   ├── DestinationTable: *string
+│   │   ├── Query: *string
+│   │   └── TimeSelector: *Enum (1 value)
+│   │       └── "TimeGenerated"
+│   └── RuleType: *Enum (1 value)
+│       └── "User"
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── Id: *string
+    ├── IsActive: *bool
+    ├── Name: *string
+    ├── ProvisioningState: *Enum (5 values)
+    │   ├── "Canceled"
+    │   ├── "Deleting"
+    │   ├── "Failed"
+    │   ├── "Succeeded"
+    │   └── "Updating"
+    ├── RuleDefinition: *Object (6 properties)
+    │   ├── BinDelay: *int
+    │   ├── BinSize: *int
+    │   ├── BinStartTime: *string
+    │   ├── DestinationTable: *string
+    │   ├── Query: *string
+    │   └── TimeSelector: *Enum (1 value)
+    │       └── "TimeGenerated"
+    ├── RuleType: *Enum (1 value)
+    │   └── "User"
+    ├── StatusCode: *Enum (2 values)
+    │   ├── "DataPlaneError"
+    │   └── "UserAction"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
 WorkspacesTable: Resource
 ├── Owner: Workspace
 ├── Spec: Object (9 properties)

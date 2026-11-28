@@ -40,6 +40,19 @@ case "${1:-}" in
     resources | awk '{print "  " $2 " " $3 " (created " $4 ")"}'
     echo "tags on the group: $(api "${ARM}${RG}?api-version=2021-04-01" | jq -c '.tags')"
     echo "budgets at the group: $(api "${ARM}${RG}/providers/Microsoft.Consumption/budgets?api-version=2023-05-01" | jq -c '[.value[]?.name]')"
+    # What the subscription-scope tests (test/live/subscription_test.go) make
+    # carries the run ID in its name or display name; each test deletes it.
+    # Listed only (the sweep never deletes at the subscription); empty when
+    # the identity cannot read there (hack/live/roles/ not assigned).
+    SUB="/subscriptions/${AZURE_SUBSCRIPTION_ID}"
+    live='[.value[]? | select((.name|test("-ax[0-9]{6}[0-9a-f]{4}$")) or ((.properties.displayName // "")|startswith("aso-extensions live"))) | .name]'
+    for t in "Microsoft.Authorization/policyDefinitions 2023-04-01" "Microsoft.Authorization/policySetDefinitions 2023-04-01" \
+      "Microsoft.Authorization/accessReviewScheduleDefinitions 2021-12-01-preview" "Microsoft.Security/alertsSuppressionRules 2019-01-01-preview" \
+      "Microsoft.Security/governanceRules 2022-01-01-preview"; do
+      read -r type v <<<"${t}"
+      echo "live-run ${type} at the subscription: $(api "${ARM}${SUB}/providers/${type}?api-version=${v}" | jq -c "${live}" 2>/dev/null || echo '[]')"
+    done
+    echo "live-run policy assignments in the group: $(api "${ARM}${RG}/providers/Microsoft.Authorization/policyAssignments?api-version=2023-04-01&\$filter=atExactScope()" | jq -c "${live}" 2>/dev/null || echo '[]')"
     ;;
   --since|--before)
     mode="$1" at="${2:?time}"

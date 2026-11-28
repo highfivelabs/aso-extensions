@@ -19,5 +19,7 @@ WorkspacesSavedSearchExtension: Object (0 properties)
 
 WorkspacesStorageInsightConfigExtension: Object (0 properties)
 
+WorkspacesSummaryLogExtension: Object (0 properties)
+
 WorkspacesTableExtension: Object (0 properties)
 

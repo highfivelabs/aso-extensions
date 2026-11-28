@@ -42,7 +42,7 @@ Microsoft.AgFoodPlatform,Microsoft.AgFoodPlatform/farmBeats/extensions,2,,0,,0,2
 Microsoft.AgFoodPlatform,Microsoft.AgFoodPlatform/farmBeats/privateEndpointConnections,4,,0,,0,4,false,spec_api=2023-06-01-preview; spec-preview-only
 Microsoft.AgFoodPlatform,Microsoft.AgFoodPlatform/farmBeats/solutions,8,,0,,0,8,false,spec_api=2023-06-01-preview; spec-preview-only
 Microsoft.AgriculturePlatform,Microsoft.AgriculturePlatform/agriServices,23,,0,,0,23,false,spec_api=2024-06-01-preview; spec-preview-only
-Microsoft.AlertsManagement,Microsoft.AlertsManagement/actionRules,18,,0,,0,18,false,spec_api=2021-08-08
+Microsoft.AlertsManagement,Microsoft.AlertsManagement/actionRules,18,,0,alertsmanagement.azure.hfl.dev/ActionRule,18,0,false,spec_api=2021-08-08; ours_api=2021-08-08
 Microsoft.AlertsManagement,Microsoft.AlertsManagement/issues,4,,0,,0,4,false,spec_api=2025-03-01-preview; spec-preview-only
 Microsoft.AlertsManagement,Microsoft.AlertsManagement/prometheusRuleGroups,19,alertsmanagement.azure.com/PrometheusRuleGroup,19,,0,0,false,spec_api=2023-03-01; official_api=2023-03-01
 Microsoft.AlertsManagement,Microsoft.AlertsManagement/smartDetectorAlertRules,13,alertsmanagement.azure.com/SmartDetectorAlertRule,13,,0,0,false,spec_api=2021-04-01; official_api=2021-04-01
@@ -63,8 +63,8 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/modelProvi
 Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/modelProviders/models,54,,0,,0,54,false,spec_api=2026-11-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/telemetryExporters,16,,0,,0,16,false,spec_api=2026-11-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/aigateways/workspaces/toolServers,83,,0,,0,83,false,spec_api=2026-11-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/gateways,8,,0,,0,8,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/gateways/configConnections,2,,0,,0,2,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/gateways,8,,0,apimanagement.azure.hfl.dev/Gateway,6,2,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/gateways/configConnections,2,,0,apimanagement.azure.hfl.dev/GatewayConfigConnection,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/gateways/hostnameBindings,4,,0,,0,4,false,spec_api=2025-09-01-preview; spec-preview-only
 Microsoft.ApiManagement,Microsoft.ApiManagement/service,58,apimanagement.azure.com/Service,49,,0,9,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/api-version-sets,5,,0,,0,5,false,spec_api=2018-01-01
@@ -73,103 +73,103 @@ Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/diagnostics,33,apim
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/issues,6,,0,,0,6,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/issues/attachments,3,,0,,0,3,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/issues/comments,3,,0,,0,3,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations,94,,0,,0,94,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations/tags,0,,0,,0,0,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations,94,,0,apimanagement.azure.hfl.dev/ApiOperation,94,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations/policies,2,,0,apimanagement.azure.hfl.dev/ApiOperationPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/operations/tags,0,,0,apimanagement.azure.hfl.dev/ApiOperationTag,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/policies,2,apimanagement.azure.com/ApiPolicy,2,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/releases,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers,3,,0,,0,3,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/schemas,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tagDescriptions,3,,0,,0,3,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tags,0,,0,,0,0,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/releases,2,,0,apimanagement.azure.hfl.dev/ApiRelease,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers,3,,0,apimanagement.azure.hfl.dev/ApiResolver,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/resolvers/policies,2,,0,apimanagement.azure.hfl.dev/ApiResolverPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/schemas,4,,0,apimanagement.azure.hfl.dev/ApiSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tagDescriptions,3,,0,apimanagement.azure.hfl.dev/ApiTagDescription,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tags,0,,0,apimanagement.azure.hfl.dev/ApiTag,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/tools,3,,0,,0,3,false,spec_api=2025-09-01-preview; spec-preview-only
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/wikis,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/apis/wikis,1,,0,apimanagement.azure.hfl.dev/ApiWiki,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/apiVersionSets,5,apimanagement.azure.com/ApiVersionSet,5,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/authorizationProviders,5,apimanagement.azure.com/AuthorizationProvider,3,,0,2,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/authorizationProviders/authorizations,6,apimanagement.azure.com/AuthorizationProvidersAuthorization,2,,0,4,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/authorizationProviders/authorizations/accessPolicies,3,apimanagement.azure.com/AuthorizationProvidersAuthorizationsAccessPolicy,3,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/authorizationServers,19,,0,,0,19,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/authorizationServers,19,,0,apimanagement.azure.hfl.dev/AuthorizationServer,19,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/backends,36,apimanagement.azure.com/Backend,36,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/caches,4,,0,,0,4,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/caches,4,,0,apimanagement.azure.hfl.dev/Cache,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/certificates,4,apimanagement.azure.com/Certificate,4,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/clientApplications,3,,0,,0,3,false,spec_api=2025-09-01-preview; spec-preview-only
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/clientApplications/productLinks,1,,0,,0,1,false,spec_api=2025-09-01-preview; spec-preview-only
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/contentTypes,5,,0,,0,5,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/contentTypes/contentItems,1,,0,,0,1,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/diagnostics,33,apimanagement.azure.com/Diagnostic,33,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/documentations,2,,0,,0,2,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/documentations,2,,0,apimanagement.azure.hfl.dev/Documentation,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/gateways,5,apimanagement.azure.com/ServiceGateway,5,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/gateways/apis,1,apimanagement.azure.com/ServiceGatewayApi,1,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/gateways/certificateAuthorities,1,apimanagement.azure.com/ServiceGatewayCertificateAuthority,1,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/gateways/hostnameConfigurations,6,apimanagement.azure.com/ServiceGatewayHostnameConfiguration,6,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/groups,4,apimanagement.azure.com/Group,4,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/groups/users,0,,0,,0,0,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/identityProviders,11,,0,,0,11,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/identityProviders,11,,0,apimanagement.azure.hfl.dev/IdentityProvider,11,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/loggers,5,apimanagement.azure.com/Logger,4,,0,1,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/namedValues,6,apimanagement.azure.com/NamedValue,6,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/notifications,0,,0,,0,0,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/notifications/recipientEmails,0,,0,,0,0,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/notifications/recipientUsers,0,,0,,0,0,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/openidConnectProviders,7,,0,,0,7,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/openidConnectProviders,7,,0,apimanagement.azure.hfl.dev/OpenIdConnectProvider,7,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/policies,2,apimanagement.azure.com/Policy,2,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/policyFragments,3,apimanagement.azure.com/PolicyFragment,3,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/policyRestrictions,2,,0,,0,2,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/policyRestrictions,2,,0,apimanagement.azure.hfl.dev/PolicyRestriction,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/portalconfigs,12,,0,,0,12,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/portalRevisions,2,,0,,0,2,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/portalsettings,8,,0,,0,8,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/privateEndpointConnections,3,,0,,0,3,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/privateEndpointConnections,3,,0,apimanagement.azure.hfl.dev/PrivateEndpointConnection,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products,7,apimanagement.azure.com/Product,7,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/apiLinks,1,,0,apimanagement.azure.hfl.dev/ProductApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/apis,0,apimanagement.azure.com/ProductApi,0,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/groupLinks,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/groupLinks,1,,0,apimanagement.azure.hfl.dev/ProductGroupLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/groups,0,apimanagement.azure.com/ProductGroup,0,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/policies,2,apimanagement.azure.com/ProductPolicy,2,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/tags,0,,0,,0,0,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/wikis,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/tags,0,,0,apimanagement.azure.hfl.dev/ProductTag,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/products/wikis,1,,0,apimanagement.azure.hfl.dev/ProductWiki,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/properties,4,,0,,0,4,false,spec_api=2019-01-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/schemas,4,,0,,0,4,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/schemas,4,,0,apimanagement.azure.hfl.dev/GlobalSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/subscriptions,7,apimanagement.azure.com/Subscription,7,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/operationLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/productLinks,1,,0,,0,1,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags,1,,0,apimanagement.azure.hfl.dev/Tag,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/apiLinks,1,,0,apimanagement.azure.hfl.dev/TagApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/operationLinks,1,,0,apimanagement.azure.hfl.dev/TagOperationLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/tags/productLinks,1,,0,apimanagement.azure.hfl.dev/TagProductLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/templates,7,,0,,0,7,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/tenant,4,,0,,0,4,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/users,10,apimanagement.azure.com/User,10,,0,0,false,spec_api=2024-05-01; official_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis,42,,0,,0,42,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/diagnostics,33,,0,,0,33,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations,94,,0,,0,94,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/releases,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/schemas,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apiVersionSets,5,,0,,0,5,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/backends,36,,0,,0,36,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/certificates,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/diagnostics,33,,0,,0,33,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups/users,0,,0,,0,0,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/loggers,5,,0,,0,5,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/namedValues,6,,0,,0,6,false,spec_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces,2,,0,apimanagement.azure.hfl.dev/Workspace,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis,42,,0,apimanagement.azure.hfl.dev/WorkspaceApi,42,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/diagnostics,33,,0,apimanagement.azure.hfl.dev/WorkspaceApiDiagnostic,33,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations,94,,0,apimanagement.azure.hfl.dev/WorkspaceApiOperation,94,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/operations/policies,2,,0,apimanagement.azure.hfl.dev/WorkspaceApiOperationPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/policies,2,,0,apimanagement.azure.hfl.dev/WorkspaceApiPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/releases,2,,0,apimanagement.azure.hfl.dev/WorkspaceApiRelease,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apis/schemas,4,,0,apimanagement.azure.hfl.dev/WorkspaceApiSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/apiVersionSets,5,,0,apimanagement.azure.hfl.dev/WorkspaceApiVersionSet,5,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/backends,36,,0,apimanagement.azure.hfl.dev/WorkspaceBackend,36,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/certificates,4,,0,apimanagement.azure.hfl.dev/WorkspaceCertificate,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/diagnostics,33,,0,apimanagement.azure.hfl.dev/WorkspaceDiagnostic,33,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups,4,,0,apimanagement.azure.hfl.dev/WorkspaceGroup,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/groups/users,0,,0,apimanagement.azure.hfl.dev/WorkspaceGroupUser,0,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/loggers,5,,0,apimanagement.azure.hfl.dev/WorkspaceLogger,4,1,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/namedValues,6,,0,apimanagement.azure.hfl.dev/WorkspaceNamedValue,6,0,false,spec_api=2024-05-01; ours_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/notifications,0,,0,,0,0,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/notifications/recipientEmails,0,,0,,0,0,false,spec_api=2024-05-01
 Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/notifications/recipientUsers,0,,0,,0,0,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policyFragments,3,,0,,0,3,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products,7,,0,,0,7,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/groupLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/policies,2,,0,,0,2,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/schemas,4,,0,,0,4,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/subscriptions,7,,0,,0,7,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/apiLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/operationLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/productLinks,1,,0,,0,1,false,spec_api=2024-05-01
-Microsoft.App,Microsoft.App/agents,32,,0,,0,32,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/agents/connectors,5,,0,,0,5,false,spec_api=2026-07-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policies,2,,0,apimanagement.azure.hfl.dev/WorkspacePolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/policyFragments,3,,0,apimanagement.azure.hfl.dev/WorkspacePolicyFragment,3,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products,7,,0,apimanagement.azure.hfl.dev/WorkspaceProduct,7,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/apiLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceProductApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/groupLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceProductGroupLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/products/policies,2,,0,apimanagement.azure.hfl.dev/WorkspaceProductPolicy,2,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/schemas,4,,0,apimanagement.azure.hfl.dev/WorkspaceSchema,4,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/subscriptions,7,,0,apimanagement.azure.hfl.dev/WorkspaceSubscription,7,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags,1,,0,apimanagement.azure.hfl.dev/WorkspaceTag,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/apiLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceTagApiLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/operationLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceTagOperationLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.ApiManagement,Microsoft.ApiManagement/service/workspaces/tags/productLinks,1,,0,apimanagement.azure.hfl.dev/WorkspaceTagProductLink,1,0,false,spec_api=2024-05-01; ours_api=2024-05-01
+Microsoft.App,Microsoft.App/agents,32,,0,app.azure.hfl.dev/Agent,32,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.App,Microsoft.App/agents/connectors,5,,0,app.azure.hfl.dev/AgentsConnector,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/builders,7,,0,,0,7,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/builders/builds,12,,0,,0,12,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/connectedEnvironments,11,,0,app.azure.hfl.dev/ConnectedEnvironment,11,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
@@ -178,7 +178,7 @@ Microsoft.App,Microsoft.App/connectedEnvironments/daprComponents,13,,0,app.azure
 Microsoft.App,Microsoft.App/connectedEnvironments/storages,6,,0,app.azure.hfl.dev/ConnectedEnvironmentsStorage,6,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/containerApps,141,app.azure.com/ContainerApp,132,app.azure.hfl.dev/ContainerApp,9,0,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/containerApps/authConfigs,75,app.azure.com/AuthConfig,72,,0,3,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
-Microsoft.App,Microsoft.App/containerApps/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/containerApps/privateEndpointConnections,4,,0,app.azure.hfl.dev/ContainerAppsPrivateEndpointConnection,3,1,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/containerApps/resiliencyPolicies,19,,0,,0,19,false,spec_api=2025-02-02-preview; spec-preview-only
 Microsoft.App,Microsoft.App/containerApps/sourcecontrols,17,,0,app.azure.hfl.dev/ContainerAppsSourceControl,17,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/jobs,80,app.azure.com/Job,80,,0,0,false,spec_api=2026-07-01; official_api=2025-01-01; official-api-differs-from-spec
@@ -195,8 +195,8 @@ Microsoft.App,Microsoft.App/managedEnvironments/maintenanceConfigurations,3,,0,a
 Microsoft.App,Microsoft.App/managedEnvironments/managedCertificates,4,,0,app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate,4,0,false,spec_api=2026-07-01; ours_api=2025-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/privateEndpointConnections,4,,0,app.azure.hfl.dev/ManagedEnvironmentsPrivateEndpointConnection,3,1,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.App,Microsoft.App/managedEnvironments/storages,9,,0,app.azure.hfl.dev/ManagedEnvironmentsStorage,9,0,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
-Microsoft.App,Microsoft.App/sandboxGroups,3,,0,,0,3,false,spec_api=2026-07-01
-Microsoft.App,Microsoft.App/sandboxGroups/vnetConnections,1,,0,,0,1,false,spec_api=2026-07-01
+Microsoft.App,Microsoft.App/sandboxGroups,3,,0,app.azure.hfl.dev/SandboxGroup,3,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.App,Microsoft.App/sandboxGroups/vnetConnections,1,,0,app.azure.hfl.dev/SandboxGroupsVnetConnection,1,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.App,Microsoft.App/sessionPools,46,,0,app.azure.hfl.dev/SessionPool,31,15,false,spec_api=2026-07-01; ours_api=2026-01-01; ours-api-differs-from-spec
 Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports,12,,0,,0,12,false,spec_api=2024-06-27
 Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports/evidences,5,,0,,0,5,false,spec_api=2024-06-27
@@ -204,7 +204,7 @@ Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports/scop
 Microsoft.AppComplianceAutomation,Microsoft.AppComplianceAutomation/reports/webhooks,8,,0,,0,8,false,spec_api=2024-06-27
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores,15,appconfiguration.azure.com/ConfigurationStore,15,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/keyValues,3,appconfiguration.azure.com/KeyValue,3,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
-Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/privateEndpointConnections,3,,0,,0,3,false,spec_api=2024-06-01
+Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/privateEndpointConnections,3,,0,appconfiguration.azure.hfl.dev/ConfigurationStoresPrivateEndpointConnection,3,0,false,spec_api=2024-06-01; ours_api=2024-06-01
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/replicas,1,appconfiguration.azure.com/Replica,1,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.AppConfiguration,Microsoft.AppConfiguration/configurationStores/snapshots,5,appconfiguration.azure.com/Snapshot,5,,0,0,false,spec_api=2024-06-01; official_api=2024-06-01
 Microsoft.AppLink,Microsoft.AppLink/appLinks,5,,0,,0,5,false,spec_api=2026-08-01-preview; spec-preview-only
@@ -238,10 +238,10 @@ Microsoft.AppPlatform,Microsoft.AppPlatform/Spring/serviceRegistries,0,,0,,0,0,f
 Microsoft.AppPlatform,Microsoft.AppPlatform/Spring/storages,3,,0,,0,3,false,spec_api=2023-12-01
 Microsoft.Attestation,Microsoft.Attestation/attestationProviders,21,,0,,0,21,false,spec_api=2021-06-01
 Microsoft.Attestation,Microsoft.Attestation/attestationProviders/privateEndpointConnections,4,,0,,0,4,false,spec_api=2021-06-01
-Microsoft.Authorization,Microsoft.Authorization/accessReviewHistoryDefinitions,20,,0,,0,20,false,spec_api=2021-12-01-preview; spec-preview-only
-Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleDefinitions,24,,0,,0,24,false,spec_api=2021-12-01-preview; spec-preview-only
+Microsoft.Authorization,Microsoft.Authorization/accessReviewHistoryDefinitions,20,,0,authorization.azure.hfl.dev/AccessReviewHistoryDefinition,14,6,false,spec_api=2021-12-01-preview; spec-preview-only; ours_api=2021-12-01-preview
+Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleDefinitions,24,,0,authorization.azure.hfl.dev/AccessReviewScheduleDefinition,5,19,false,spec_api=2021-12-01-preview; spec-preview-only; ours_api=2021-12-01-preview
 Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleDefinitions/instances,4,,0,,0,4,false,spec_api=2021-12-01-preview; spec-preview-only
-Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleSettings,15,,0,,0,15,false,spec_api=2021-12-01-preview; spec-preview-only
+Microsoft.Authorization,Microsoft.Authorization/accessReviewScheduleSettings,15,,0,authorization.azure.hfl.dev/AccessReviewScheduleSetting,9,6,false,spec_api=2021-12-01-preview; spec-preview-only; ours_api=2021-12-01-preview
 Microsoft.Authorization,Microsoft.Authorization/locks,3,,0,authorization.azure.hfl.dev/ManagementLock,3,0,false,spec_api=2020-05-01; ours_api=2020-05-01
 Microsoft.Authorization,Microsoft.Authorization/policyassignments,27,,0,authorization.azure.hfl.dev/PolicyAssignment,27,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.Authorization,Microsoft.Authorization/policydefinitions,22,,0,authorization.azure.hfl.dev/PolicyDefinition,21,1,false,spec_api=2026-07-01; ours_api=2026-07-01
@@ -502,10 +502,10 @@ Microsoft.AzureStackHCI,Microsoft.AzureStackHCI/virtualNetworks/subnets,8,,0,,0,
 Microsoft.Backup.Admin,Microsoft.Backup.Admin/backupLocations,9,,0,,0,9,false,spec_api=2018-09-01
 Microsoft.BareMetalInfrastructure,Microsoft.BareMetalInfrastructure/bareMetalStorageInstances,11,,0,,0,11,false,spec_api=2023-04-06
 Microsoft.Batch,Microsoft.Batch/batchAccounts,20,batch.azure.com/BatchAccount,20,,0,0,false,spec_api=2025-06-01; official_api=2024-07-01; official-api-differs-from-spec
-Microsoft.Batch,Microsoft.Batch/batchAccounts/applications,4,,0,,0,4,false,spec_api=2025-06-01
+Microsoft.Batch,Microsoft.Batch/batchAccounts/applications,4,,0,batch.azure.hfl.dev/BatchAccountsApplication,4,0,false,spec_api=2025-06-01; ours_api=2025-06-01
 Microsoft.Batch,Microsoft.Batch/batchAccounts/applications/versions,2,,0,,0,2,false,spec_api=2025-06-01
 Microsoft.Batch,Microsoft.Batch/batchAccounts/certificates,5,,0,,0,5,false,spec_api=2024-02-01
-Microsoft.Batch,Microsoft.Batch/batchAccounts/pools,154,,0,,0,154,false,spec_api=2025-06-01
+Microsoft.Batch,Microsoft.Batch/batchAccounts/pools,154,,0,batch.azure.hfl.dev/BatchAccountsPool,154,0,false,spec_api=2025-06-01; ours_api=2025-06-01
 Microsoft.Billing,Microsoft.Billing/billingAccounts/associatedTenants,5,,0,,0,5,false,spec_api=2024-04-01
 Microsoft.Billing,Microsoft.Billing/billingAccounts/billingProfiles,60,,0,,0,60,false,spec_api=2024-04-01
 Microsoft.Billing,Microsoft.Billing/billingAccounts/billingProfiles/customers/policies,6,,0,,0,6,false,spec_api=2024-04-01
@@ -547,12 +547,12 @@ Microsoft.Cache,Microsoft.Cache/redis/accessPolicyAssignments,3,cache.azure.com/
 Microsoft.Cache,Microsoft.Cache/redis/firewallRules,2,cache.azure.com/RedisFirewallRule,2,,0,0,false,spec_api=2024-11-01; official_api=2024-11-01
 Microsoft.Cache,Microsoft.Cache/redis/linkedServers,3,cache.azure.com/RedisLinkedServer,3,,0,0,false,spec_api=2024-11-01; official_api=2024-11-01
 Microsoft.Cache,Microsoft.Cache/redis/patchSchedules,3,cache.azure.com/RedisPatchSchedule,3,,0,0,false,spec_api=2024-11-01; official_api=2024-11-01
-Microsoft.Cache,Microsoft.Cache/redis/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-11-01
+Microsoft.Cache,Microsoft.Cache/redis/privateEndpointConnections,4,,0,cache.azure.hfl.dev/RedisPrivateEndpointConnection,3,1,false,spec_api=2024-11-01; ours_api=2024-11-01
 Microsoft.Cache,Microsoft.Cache/redisEnterprise,17,cache.azure.com/RedisEnterprise,13,,0,4,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/databases,15,cache.azure.com/RedisEnterpriseDatabase,14,,0,1,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/databases/accessPolicyAssignments,2,cache.azure.com/RedisEnterpriseDatabaseAccessPolicyAssignment,2,,0,0,false,spec_api=2026-09-01; official_api=2025-07-01; official-api-differs-from-spec
 Microsoft.Cache,Microsoft.Cache/redisEnterprise/migrations,5,,0,,0,5,false,spec_api=2026-09-01
-Microsoft.Cache,Microsoft.Cache/redisEnterprise/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-09-01
+Microsoft.Cache,Microsoft.Cache/redisEnterprise/privateEndpointConnections,4,,0,cache.azure.hfl.dev/RedisEnterprisePrivateEndpointConnection,3,1,false,spec_api=2026-09-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Capacity,Microsoft.Capacity/reservationOrders,18,,0,,0,18,false,spec_api=2022-11-01
 Microsoft.Capacity,Microsoft.Capacity/resourceProviders/locations/serviceLimits,5,,0,,0,5,false,spec_api=2020-10-25
 Microsoft.Cdn,Microsoft.Cdn/cdnWebApplicationFirewallPolicies,39,,0,cdn.azure.hfl.dev/CdnWebApplicationFirewallPolicy,39,0,false,spec_api=2026-10-01; ours_api=2026-10-01
@@ -594,25 +594,25 @@ Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/connections,13,
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/defenderForAISettings,2,,0,cognitiveservices.azure.hfl.dev/AccountsDefenderForAISetting,2,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/deployments,31,cognitiveservices.azure.com/Deployment,20,,0,11,false,spec_api=2026-09-01; official_api=2025-06-01; official-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/encryptionScopes,7,,0,cognitiveservices.azure.hfl.dev/AccountsEncryptionScope,7,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks,9,,0,,0,9,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks/outboundRules,5,,0,,0,5,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks,9,,0,cognitiveservices.azure.hfl.dev/AccountsManagedNetwork,9,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/managedNetworks/outboundRules,5,,0,cognitiveservices.azure.hfl.dev/AccountsManagedNetworksOutboundRule,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/privateEndpointConnections,6,,0,cognitiveservices.azure.hfl.dev/AccountsPrivateEndpointConnection,5,1,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects,6,cognitiveservices.azure.com/Project,6,,0,0,false,spec_api=2026-09-01; official_api=2025-06-01; official-api-differs-from-spec
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications,24,,0,,0,24,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications/agentDeployments,13,,0,,0,13,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications,24,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsApplication,24,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/applications/agentDeployments,13,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsApplicationsAgentDeployment,13,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/capabilityHosts,4,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsCapabilityHost,4,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/projects/connections,13,,0,cognitiveservices.azure.hfl.dev/AccountsProjectsConnection,13,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiBlocklists,2,,0,cognitiveservices.azure.hfl.dev/AccountsRaiBlocklist,2,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiBlocklists/raiBlocklistItems,3,,0,cognitiveservices.azure.hfl.dev/AccountsRaiBlocklistsRaiBlocklistItem,3,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiPolicies,35,,0,cognitiveservices.azure.hfl.dev/AccountsRaiPolicy,11,24,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiToolLabels,5,,0,,0,5,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raitopics,9,,0,,0,9,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raiToolLabels,5,,0,cognitiveservices.azure.hfl.dev/AccountsRaiToolLabel,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/raitopics,9,,0,cognitiveservices.azure.hfl.dev/AccountsRaiTopic,9,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/accounts/testRaiExternalSafetyProvider,7,,0,,0,7,false,spec_api=2026-09-01
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/commitmentPlans,16,,0,cognitiveservices.azure.hfl.dev/CommitmentPlan,16,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/commitmentPlans/accountAssociations,2,,0,cognitiveservices.azure.hfl.dev/CommitmentPlansAccountAssociation,2,0,false,spec_api=2026-09-01; ours_api=2025-06-01; ours-api-differs-from-spec
 Microsoft.CognitiveServices,Microsoft.CognitiveServices/quotaTiers,1,,0,,0,1,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiExternalSafetyProviders,7,,0,,0,7,false,spec_api=2026-09-01
-Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiPolicy,35,,0,,0,35,false,spec_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiExternalSafetyProviders,7,,0,cognitiveservices.azure.hfl.dev/RaiExternalSafetyProvider,7,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.CognitiveServices,Microsoft.CognitiveServices/raiPolicy,35,,0,cognitiveservices.azure.hfl.dev/RaiPolicy,35,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.Communication,Microsoft.Communication/communicationServices,8,communication.azure.com/CommunicationService,6,,0,2,false,spec_api=2026-03-18; official_api=2023-04-01; official-api-differs-from-spec
 Microsoft.Communication,Microsoft.Communication/communicationServices/smtpUsernames,3,,0,,0,3,false,spec_api=2026-03-18
 Microsoft.Communication,Microsoft.Communication/emailServices,3,communication.azure.com/EmailService,3,,0,0,false,spec_api=2026-03-18; official_api=2023-04-01; official-api-differs-from-spec
@@ -627,29 +627,29 @@ Microsoft.Compute,Microsoft.Compute/capacityReservationGroups/capacityReservatio
 Microsoft.Compute,Microsoft.Compute/cloudServices,35,,0,,0,35,false,spec_api=2024-11-04
 Microsoft.Compute,Microsoft.Compute/cloudServices/updateDomains,0,,0,,0,0,false,spec_api=2024-11-04
 Microsoft.Compute,Microsoft.Compute/diskAccesses,5,compute.azure.com/DiskAccess,4,,0,1,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/diskAccesses/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-03-02
+Microsoft.Compute,Microsoft.Compute/diskAccesses/privateEndpointConnections,3,,0,compute.azure.hfl.dev/DiskAccessesPrivateEndpointConnection,3,0,false,spec_api=2026-03-02; ours_api=2026-03-02
 Microsoft.Compute,Microsoft.Compute/diskEncryptionSets,9,compute.azure.com/DiskEncryptionSet,9,,0,0,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/disks,62,compute.azure.com/Disk,58,,0,4,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/galleries,14,,0,,0,14,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/applications,16,,0,,0,16,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/applications/versions,52,,0,,0,52,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/images,26,,0,,0,26,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/images/versions,61,,0,,0,61,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles,5,,0,,0,5,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles/versions,30,,0,,0,30,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/scripts,8,,0,,0,8,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/galleries/scripts/versions,43,,0,,0,43,false,spec_api=2026-03-03
-Microsoft.Compute,Microsoft.Compute/hostGroups,6,,0,,0,6,false,spec_api=2026-04-01
-Microsoft.Compute,Microsoft.Compute/hostGroups/hosts,8,,0,,0,8,false,spec_api=2026-04-01
+Microsoft.Compute,Microsoft.Compute/galleries,14,,0,compute.azure.hfl.dev/Gallery,13,1,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/applications,16,,0,compute.azure.hfl.dev/GalleriesApplication,16,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/applications/versions,52,,0,compute.azure.hfl.dev/GalleriesApplicationsVersion,52,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/images,26,,0,compute.azure.hfl.dev/GalleriesImage,26,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/images/versions,61,,0,compute.azure.hfl.dev/GalleriesImagesVersion,61,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles,5,,0,compute.azure.hfl.dev/GalleriesInVMAccessControlProfile,5,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/inVMAccessControlProfiles/versions,30,,0,compute.azure.hfl.dev/GalleriesInVMAccessControlProfilesVersion,30,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/scripts,8,,0,compute.azure.hfl.dev/GalleriesScript,8,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/galleries/scripts/versions,43,,0,compute.azure.hfl.dev/GalleriesScriptsVersion,43,0,false,spec_api=2026-03-03; ours_api=2026-03-03
+Microsoft.Compute,Microsoft.Compute/hostGroups,6,,0,compute.azure.hfl.dev/HostGroup,6,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
+Microsoft.Compute,Microsoft.Compute/hostGroups/hosts,8,,0,compute.azure.hfl.dev/HostGroupsHost,8,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/images,24,compute.azure.com/Image,24,,0,0,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/interconnectBlocks,10,,0,,0,10,false,spec_api=2026-04-01
-Microsoft.Compute,Microsoft.Compute/proximityPlacementGroups,10,,0,,0,10,false,spec_api=2026-04-01
-Microsoft.Compute,Microsoft.Compute/restorePointCollections,4,,0,,0,4,false,spec_api=2026-04-01
-Microsoft.Compute,Microsoft.Compute/restorePointCollections/restorePoints,43,,0,,0,43,false,spec_api=2026-04-01
+Microsoft.Compute,Microsoft.Compute/proximityPlacementGroups,10,,0,compute.azure.hfl.dev/ProximityPlacementGroup,10,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
+Microsoft.Compute,Microsoft.Compute/restorePointCollections,4,,0,compute.azure.hfl.dev/RestorePointCollection,4,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
+Microsoft.Compute,Microsoft.Compute/restorePointCollections/restorePoints,43,,0,compute.azure.hfl.dev/RestorePointCollectionsRestorePoint,43,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/snapshots,55,compute.azure.com/Snapshot,52,,0,3,false,spec_api=2026-03-02; official_api=2024-03-02; official-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/sshPublicKeys,3,,0,,0,3,false,spec_api=2026-04-01
+Microsoft.Compute,Microsoft.Compute/sshPublicKeys,3,,0,compute.azure.hfl.dev/SshPublicKey,3,0,false,spec_api=2026-04-01; ours_api=2025-04-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines,218,compute.azure.com/VirtualMachine,169,compute.azure.hfl.dev/VirtualMachine,34,15,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec; ours_api=2025-04-01; ours-api-differs-from-spec
-Microsoft.Compute,Microsoft.Compute/virtualMachines/diagnosticRunCommands,24,,0,,0,24,false,spec_api=2026-04-01
+Microsoft.Compute,Microsoft.Compute/virtualMachines/diagnosticRunCommands,24,,0,compute.azure.hfl.dev/VirtualMachinesDiagnosticRunCommand,24,0,false,spec_api=2026-04-01; ours_api=2026-04-01
 Microsoft.Compute,Microsoft.Compute/virtualMachines/extensions,27,compute.azure.com/VirtualMachinesExtension,26,,0,1,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachines/runCommands,24,,0,compute.azure.hfl.dev/VirtualMachinesRunCommand,15,9,false,spec_api=2026-04-01; ours_api=2022-03-01; ours-api-differs-from-spec
 Microsoft.Compute,Microsoft.Compute/virtualMachineScaleSets,268,compute.azure.com/VirtualMachineScaleSet,176,,0,92,false,spec_api=2026-04-01; official_api=2022-03-01; official-api-differs-from-spec
@@ -695,10 +695,10 @@ Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualMachine
 Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates,8,,0,,0,8,false,spec_api=2023-12-01
 Microsoft.ConnectedVMwarevSphere,Microsoft.ConnectedVMwarevSphere/virtualNetworks,8,,0,,0,8,false,spec_api=2023-12-01
 Microsoft.Consumption,Microsoft.Consumption/budgets,26,,0,consumption.azure.hfl.dev/Budget,26,0,false,spec_api=2026-06-01; ours_api=2026-06-01
-Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroupProfiles,124,,0,,0,124,false,spec_api=2026-07-01
+Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroupProfiles,124,,0,containerinstance.azure.hfl.dev/ContainerGroupProfile,123,1,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.ContainerInstance,Microsoft.ContainerInstance/containerGroups,131,containerinstance.azure.com/ContainerGroup,92,,0,39,false,spec_api=2026-07-01; official_api=2021-10-01; official-api-differs-from-spec
-Microsoft.ContainerInstance,Microsoft.ContainerInstance/ngroups,37,,0,,0,37,false,spec_api=2026-07-01
-Microsoft.ContainerInstance,Microsoft.ContainerInstance/sandboxGroups,5,,0,,0,5,false,spec_api=2026-07-01
+Microsoft.ContainerInstance,Microsoft.ContainerInstance/ngroups,37,,0,containerinstance.azure.hfl.dev/NGroup,37,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.ContainerInstance,Microsoft.ContainerInstance/sandboxGroups,5,,0,containerinstance.azure.hfl.dev/SandboxGroup,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries,26,containerregistry.azure.com/Registry,26,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/cacheRules,3,containerregistry.azure.com/RegistryCacheRule,3,,0,0,false,spec_api=2025-11-01; official_api=2025-11-01
 Microsoft.ContainerRegistry,Microsoft.ContainerRegistry/registries/connectedRegistries,13,,0,containerregistry.azure.hfl.dev/RegistriesConnectedRegistry,12,1,false,spec_api=2025-11-01; ours_api=2025-11-01
@@ -744,7 +744,7 @@ Microsoft.CostManagement,Microsoft.CostManagement/costAllocationRules,10,,0,,0,1
 Microsoft.CostManagement,Microsoft.CostManagement/exports,28,,0,costmanagement.azure.hfl.dev/Export,27,1,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/markupRules,6,,0,,0,6,false,spec_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/scheduledActions,20,,0,costmanagement.azure.hfl.dev/ScheduledAction,20,0,false,spec_api=2026-06-01; ours_api=2026-06-01
-Microsoft.CostManagement,Microsoft.CostManagement/settings,2,,0,,0,2,false,spec_api=2026-06-01
+Microsoft.CostManagement,Microsoft.CostManagement/settings,2,,0,costmanagement.azure.hfl.dev/Setting,2,0,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.CostManagement,Microsoft.CostManagement/views,34,,0,,0,34,false,spec_api=2026-06-01
 Microsoft.CustomerInsights,Microsoft.CustomerInsights/hubs,6,,0,,0,6,false,spec_api=2017-04-26
 Microsoft.CustomerInsights,Microsoft.CustomerInsights/hubs/authorizationPolicies,3,,0,,0,3,false,spec_api=2017-04-26
@@ -801,18 +801,18 @@ Microsoft.Datadog,Microsoft.Datadog/monitors/monitoredSubscriptions,19,,0,,0,19,
 Microsoft.Datadog,Microsoft.Datadog/monitors/singleSignOnConfigurations,2,,0,,0,2,false,spec_api=2025-06-11
 Microsoft.Datadog,Microsoft.Datadog/monitors/tagRules,15,,0,,0,15,false,spec_api=2025-06-11
 Microsoft.DataFactory,Microsoft.DataFactory/factories,26,datafactory.azure.com/Factory,25,,0,1,false,spec_api=2018-06-01; official_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/adfcdcs,52,,0,,0,52,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/credentials,5,,0,,0,5,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/dataflows,54,,0,,0,54,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/datasets,13,,0,,0,13,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/globalParameters,2,,0,,0,2,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/integrationRuntimes,57,,0,,0,57,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/linkedservices,32,,0,,0,32,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks,1,,0,,0,1,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints,5,,0,,0,5,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/pipelines,39,,0,,0,39,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/privateEndpointConnections,4,,0,,0,4,false,spec_api=2018-06-01
-Microsoft.DataFactory,Microsoft.DataFactory/factories/triggers,17,,0,,0,17,false,spec_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/adfcdcs,52,,0,datafactory.azure.hfl.dev/FactoriesAdfcdc,51,1,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/credentials,5,,0,datafactory.azure.hfl.dev/FactoriesCredential,3,2,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/dataflows,54,,0,datafactory.azure.hfl.dev/FactoriesDataflow,4,50,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/datasets,13,,0,datafactory.azure.hfl.dev/FactoriesDatasetAvro;datafactory.azure.hfl.dev/FactoriesDatasetAzureDatabricksDeltaLakeDataset;datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlDWTable;datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlTable;datafactory.azure.hfl.dev/FactoriesDatasetBinary;datafactory.azure.hfl.dev/FactoriesDatasetCosmosDbSqlApiCollection;datafactory.azure.hfl.dev/FactoriesDatasetDelimitedText;datafactory.azure.hfl.dev/FactoriesDatasetExcel;datafactory.azure.hfl.dev/FactoriesDatasetHttpFile;datafactory.azure.hfl.dev/FactoriesDatasetJson;datafactory.azure.hfl.dev/FactoriesDatasetOrc;datafactory.azure.hfl.dev/FactoriesDatasetParquet;datafactory.azure.hfl.dev/FactoriesDatasetRestResource;datafactory.azure.hfl.dev/FactoriesDatasetXml,11,2,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/globalParameters,2,,0,datafactory.azure.hfl.dev/FactoriesGlobalParameter,2,0,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/integrationRuntimes,57,,0,datafactory.azure.hfl.dev/FactoriesIntegrationRuntime,4,53,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/linkedservices,32,,0,datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobFS;datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobStorage;datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureDatabricks;datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureKeyVault;datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSqlDW;datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSqlDatabase;datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSynapseArtifacts;datafactory.azure.hfl.dev/FactoriesLinkedServiceCosmosDb;datafactory.azure.hfl.dev/FactoriesLinkedServiceHttpServer;datafactory.azure.hfl.dev/FactoriesLinkedServiceRestService,9,23,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks,1,,0,datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork,0,1,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints,5,,0,datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint,3,2,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/pipelines,39,,0,datafactory.azure.hfl.dev/FactoriesPipeline,10,29,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/privateEndpointConnections,4,,0,datafactory.azure.hfl.dev/FactoriesPrivateEndpointConnection,4,0,false,spec_api=2018-06-01; ours_api=2018-06-01
+Microsoft.DataFactory,Microsoft.DataFactory/factories/triggers,17,,0,datafactory.azure.hfl.dev/FactoriesTrigger,11,6,false,spec_api=2018-06-01; ours_api=2018-06-01
 Microsoft.DataLakeAnalytics,Microsoft.DataLakeAnalytics/accounts,24,,0,,0,24,false,spec_api=2016-11-01
 Microsoft.DataLakeAnalytics,Microsoft.DataLakeAnalytics/accounts/computePolicies,4,,0,,0,4,false,spec_api=2016-11-01
 Microsoft.DataLakeAnalytics,Microsoft.DataLakeAnalytics/accounts/dataLakeStoreAccounts,1,,0,,0,1,false,spec_api=2016-11-01
@@ -833,8 +833,8 @@ Microsoft.DataMigration,Microsoft.DataMigration/sqlMigrationServices,3,,0,,0,3,f
 Microsoft.DataProtection,Microsoft.DataProtection/backupVaults,23,dataprotection.azure.com/BackupVault,13,,0,10,false,spec_api=2026-07-01; official_api=2023-11-01; official-api-differs-from-spec
 Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupInstances,51,dataprotection.azure.com/BackupVaultsBackupInstance,41,,0,10,false,spec_api=2026-07-01; official_api=2023-11-01; official-api-differs-from-spec
 Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupPolicies,21,dataprotection.azure.com/BackupVaultsBackupPolicy,21,,0,0,false,spec_api=2026-07-01; official_api=2023-11-01; official-api-differs-from-spec
-Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupResourceGuardProxies,5,,0,,0,5,false,spec_api=2026-07-01
-Microsoft.DataProtection,Microsoft.DataProtection/resourceGuards,4,,0,,0,4,false,spec_api=2026-07-01
+Microsoft.DataProtection,Microsoft.DataProtection/backupVaults/backupResourceGuardProxies,5,,0,dataprotection.azure.hfl.dev/BackupVaultsBackupResourceGuardProxy,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.DataProtection,Microsoft.DataProtection/resourceGuards,4,,0,dataprotection.azure.hfl.dev/ResourceGuard,4,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.DataReplication,Microsoft.DataReplication/replicationFabrics,12,,0,,0,12,false,spec_api=2026-05-01
 Microsoft.DataReplication,Microsoft.DataReplication/replicationFabrics/fabricAgents,19,,0,,0,19,false,spec_api=2026-05-01
 Microsoft.DataReplication,Microsoft.DataReplication/replicationVaults,6,,0,,0,6,false,spec_api=2026-05-01
@@ -861,13 +861,13 @@ Microsoft.DBforMariaDB,Microsoft.DBforMariaDB/servers/securityAlertPolicies,7,,0
 Microsoft.DBforMariaDB,Microsoft.DBforMariaDB/servers/virtualNetworkRules,2,,0,,0,2,false,spec_api=2018-06-01
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers,44,dbformysql.azure.com/FlexibleServer,44,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/administrators,5,dbformysql.azure.com/FlexibleServersAdministrator,5,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings,1,,0,,0,1,false,spec_api=2024-12-30
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings,1,,0,dbformysql.azure.hfl.dev/FlexibleServersAdvancedThreatProtectionSetting,1,0,false,spec_api=2024-12-30; ours_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/backups,0,,0,,0,0,false,spec_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/backupsV2,4,,0,,0,4,false,spec_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/configurations,3,dbformysql.azure.com/FlexibleServersConfiguration,3,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/databases,2,dbformysql.azure.com/FlexibleServersDatabase,2,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/firewallRules,2,dbformysql.azure.com/FlexibleServersFirewallRule,2,,0,0,false,spec_api=2024-12-30; official_api=2024-12-30
-Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-12-30
+Microsoft.DBforMySQL,Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections,4,,0,dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection,3,1,false,spec_api=2024-12-30; ours_api=2024-12-30
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers,22,,0,,0,22,false,spec_api=2017-12-01
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers/administrators,4,,0,,0,4,false,spec_api=2017-12-01
 Microsoft.DBforMySQL,Microsoft.DBforMySQL/servers/configurations,2,,0,,0,2,false,spec_api=2017-12-01
@@ -885,15 +885,15 @@ Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/configuratio
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/databases,2,dbforpostgresql.azure.com/FlexibleServersDatabase,2,,0,0,false,spec_api=2026-10-01; official_api=2025-08-01; official-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/firewallRules,2,dbforpostgresql.azure.com/FlexibleServersFirewallRule,2,,0,0,false,spec_api=2026-10-01; official_api=2025-08-01; official-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/migrations,25,,0,,0,25,false,spec_api=2026-10-01
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-10-01
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections,4,,0,dbforpostgresql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection,3,1,false,spec_api=2026-10-01; ours_api=2025-08-01; ours-api-differs-from-spec
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/users,22,,0,dbforpostgresql.azure.hfl.dev/User,22,0,false,"outside-denominator; a database role, not an ARM resource; extends ASO's PostgreSQL User"
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints,2,dbforpostgresql.azure.com/FlexibleServersVirtualEndpoint,2,,0,0,false,spec_api=2026-10-01; official_api=2025-08-01; official-api-differs-from-spec
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2,24,,0,,0,24,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/coordinatorConfigurations,1,,0,,0,1,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules,2,,0,,0,2,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations,1,,0,,0,1,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/privateEndpointConnections,4,,0,,0,4,false,spec_api=2022-11-08
-Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/roles,1,,0,,0,1,false,spec_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2,24,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2,24,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/coordinatorConfigurations,1,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2CoordinatorConfiguration,1,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules,2,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2FirewallRule,2,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations,1,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2NodeConfiguration,1,0,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/privateEndpointConnections,4,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2PrivateEndpointConnection,3,1,false,spec_api=2022-11-08; ours_api=2022-11-08
+Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/serverGroupsv2/roles,1,,0,dbforpostgresql.azure.hfl.dev/ServerGroupsv2Role,1,0,false,spec_api=2022-11-08; ours_api=2022-11-08
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/servers/keys,2,,0,,0,2,false,spec_api=2020-01-01
 Microsoft.DBforPostgreSQL,Microsoft.DBforPostgreSQL/servers/securityAlertPolicies,7,,0,,0,7,false,spec_api=2017-12-01
 Microsoft.DelegatedNetwork,Microsoft.DelegatedNetwork/controller,2,,0,,0,2,false,spec_api=2021-03-15
@@ -944,12 +944,12 @@ Microsoft.DeviceRegistry,Microsoft.DeviceRegistry/schemaRegistries,10,,0,,0,10,f
 Microsoft.DeviceRegistry,Microsoft.DeviceRegistry/schemaRegistries/schemas,5,,0,,0,5,false,spec_api=2026-11-01
 Microsoft.DeviceRegistry,Microsoft.DeviceRegistry/schemaRegistries/schemas/schemaVersions,2,,0,,0,2,false,spec_api=2026-11-01
 Microsoft.Devices,Microsoft.Devices/IotHubs,114,devices.azure.com/IotHub,95,,0,19,false,spec_api=2023-06-30; official_api=2021-07-02; official-api-differs-from-spec
-Microsoft.Devices,Microsoft.Devices/IotHubs/certificates,2,,0,,0,2,false,spec_api=2023-06-30
+Microsoft.Devices,Microsoft.Devices/IotHubs/certificates,2,,0,devices.azure.hfl.dev/IotHubsCertificate,2,0,false,spec_api=2023-06-30; ours_api=2023-06-30
 Microsoft.Devices,Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGroups,1,,0,,0,1,false,spec_api=2023-06-30
-Microsoft.Devices,Microsoft.Devices/iotHubs/privateEndpointConnections,4,,0,,0,4,false,spec_api=2023-06-30
-Microsoft.Devices,Microsoft.Devices/provisioningServices,35,,0,,0,35,false,spec_api=2026-11-01
-Microsoft.Devices,Microsoft.Devices/provisioningServices/certificates,2,,0,,0,2,false,spec_api=2026-11-01
-Microsoft.Devices,Microsoft.Devices/provisioningServices/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-11-01
+Microsoft.Devices,Microsoft.Devices/iotHubs/privateEndpointConnections,4,,0,devices.azure.hfl.dev/IotHubsPrivateEndpointConnection,3,1,false,spec_api=2023-06-30; ours_api=2023-06-30
+Microsoft.Devices,Microsoft.Devices/provisioningServices,35,,0,devices.azure.hfl.dev/ProvisioningService,26,9,false,spec_api=2026-11-01; ours_api=2026-11-01
+Microsoft.Devices,Microsoft.Devices/provisioningServices/certificates,2,,0,devices.azure.hfl.dev/ProvisioningServicesCertificate,2,0,false,spec_api=2026-11-01; ours_api=2026-11-01
+Microsoft.Devices,Microsoft.Devices/provisioningServices/privateEndpointConnections,4,,0,devices.azure.hfl.dev/ProvisioningServicesPrivateEndpointConnection,3,1,false,spec_api=2026-11-01; ours_api=2026-11-01
 Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/accounts,13,,0,,0,13,false,spec_api=2023-07-01
 Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/accounts/instances,7,,0,,0,7,false,spec_api=2023-07-01
 Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/accounts/privateEndpointConnectionProxies,22,,0,,0,22,false,spec_api=2023-07-01
@@ -958,24 +958,24 @@ Microsoft.DeviceUpdate,Microsoft.DeviceUpdate/updateInstances,5,,0,,0,5,false,sp
 Microsoft.DevOps,Microsoft.DevOps/pipelines,19,,0,,0,19,false,spec_api=2020-07-13-preview; spec-preview-only
 Microsoft.DevOpsInfrastructure,Microsoft.DevOpsInfrastructure/pools,52,,0,,0,52,false,spec_api=2026-06-02
 Microsoft.DevSpaces,Microsoft.DevSpaces/controllers,6,,0,,0,6,false,spec_api=2019-04-01
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/artifactsources,10,,0,,0,10,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/costs,16,,0,,0,16,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/customimages,18,,0,,0,18,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/formulas,71,,0,,0,71,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/notificationchannels,7,,0,,0,7,false,spec_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs,15,,0,devtestlab.azure.hfl.dev/Lab,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/artifactsources,10,,0,devtestlab.azure.hfl.dev/LabsArtifactSource,10,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/costs,16,,0,devtestlab.azure.hfl.dev/LabsCost,16,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/customimages,18,,0,devtestlab.azure.hfl.dev/LabsCustomImage,18,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/formulas,71,,0,devtestlab.azure.hfl.dev/LabsFormula,71,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/notificationchannels,7,,0,devtestlab.azure.hfl.dev/LabsNotificationChannel,7,0,false,spec_api=2018-09-15; ours_api=2018-09-15
 Microsoft.DevTestLab,Microsoft.DevTestLab/labs/policysets/policies,8,,0,,0,8,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/schedules,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/servicerunners,6,,0,,0,6,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users,9,,0,,0,9,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/disks,10,,0,,0,10,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/environments,6,,0,,0,6,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/secrets,3,,0,,0,3,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics,4,,0,,0,4,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics/schedules,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines,64,,0,,0,64,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines/schedules,15,,0,,0,15,false,spec_api=2018-09-15
-Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualnetworks,14,,0,,0,14,false,spec_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/schedules,15,,0,devtestlab.azure.hfl.dev/LabsSchedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/servicerunners,6,,0,devtestlab.azure.hfl.dev/LabsServiceRunner,6,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users,9,,0,devtestlab.azure.hfl.dev/LabsUser,9,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/disks,10,,0,devtestlab.azure.hfl.dev/LabsUsersDisk,10,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/environments,6,,0,devtestlab.azure.hfl.dev/LabsUsersEnvironment,6,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/secrets,3,,0,devtestlab.azure.hfl.dev/LabsUsersSecret,3,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics,4,,0,devtestlab.azure.hfl.dev/LabsUsersServiceFabric,4,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/users/servicefabrics/schedules,15,,0,devtestlab.azure.hfl.dev/LabsUsersServicefabricsSchedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines,64,,0,devtestlab.azure.hfl.dev/LabsVirtualMachine,64,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualmachines/schedules,15,,0,devtestlab.azure.hfl.dev/LabsVirtualmachinesSchedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
+Microsoft.DevTestLab,Microsoft.DevTestLab/labs/virtualnetworks,14,,0,devtestlab.azure.hfl.dev/LabsVirtualNetwork,14,0,false,spec_api=2018-09-15; ours_api=2018-09-15
 Microsoft.DevTestLab,Microsoft.DevTestLab/schedules,15,,0,devtestlab.azure.hfl.dev/Schedule,15,0,false,spec_api=2018-09-15; ours_api=2018-09-15
 Microsoft.DigitalTwins,Microsoft.DigitalTwins/digitalTwinsInstances,10,,0,,0,10,false,spec_api=2023-01-31
 Microsoft.DigitalTwins,Microsoft.DigitalTwins/digitalTwinsInstances/endpoints,15,,0,,0,15,false,spec_api=2023-01-31
@@ -999,8 +999,8 @@ Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces,7,
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables,14,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTable,12,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTablesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraRoleAssignments,3,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraRoleAssignment,3,0,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/cassandraRoleDefinitions,7,,0,documentdb.azure.hfl.dev/DatabaseAccountsCassandraRoleDefinition,7,0,false,spec_api=2026-03-15; ours_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/chaosFaults,4,,0,,0,4,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/copyJobs,8,,0,,0,8,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/dataTransferJobs,22,,0,,0,22,false,spec_api=2025-05-01-preview; spec-preview-only
@@ -1008,16 +1008,16 @@ Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases,11,,
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs,37,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraph,29,8,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraphsThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinRoleAssignments,3,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinRoleAssignment,3,0,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/gremlinRoleDefinitions,7,,0,documentdb.azure.hfl.dev/DatabaseAccountsGremlinRoleDefinition,7,0,false,spec_api=2026-03-15; ours_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbDatabases,11,documentdb.azure.com/MongodbDatabase,9,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections,16,documentdb.azure.com/MongodbDatabaseCollection,14,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/collections/throughputSettings,8,documentdb.azure.com/MongodbDatabaseCollectionThroughputSetting,6,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings,8,documentdb.azure.com/MongodbDatabaseThroughputSetting,6,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbRoleDefinitions,8,documentdb.azure.com/MongodbRoleDefinition,8,,0,0,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongodbUserDefinitions,7,documentdb.azure.com/MongodbUserDefinition,7,,0,0,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleAssignments,3,,0,documentdb.azure.hfl.dev/DatabaseAccountsMongoMIRoleAssignment,3,0,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/mongoMIRoleDefinitions,7,,0,documentdb.azure.hfl.dev/DatabaseAccountsMongoMIRoleDefinition,7,0,false,spec_api=2026-03-15; ours_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/notebookWorkspaces,0,,0,,0,0,false,spec_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections,5,,0,documentdb.azure.hfl.dev/DatabaseAccountsPrivateEndpointConnection,5,0,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/services,4,,0,documentdb.azure.hfl.dev/DatabaseAccountsService,4,0,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
@@ -1031,17 +1031,17 @@ Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containe
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings,8,documentdb.azure.com/SqlDatabaseThroughputSetting,6,,0,2,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments,3,documentdb.azure.com/SqlRoleAssignment,3,,0,0,false,spec_api=2026-03-15; official_api=2024-08-15; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions,6,,0,documentdb.azure.hfl.dev/DatabaseAccountsSqlRoleDefinition,5,1,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments,3,,0,,0,3,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions,7,,0,,0,7,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments,3,,0,documentdb.azure.hfl.dev/DatabaseAccountsTableRoleAssignment,3,0,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions,7,,0,documentdb.azure.hfl.dev/DatabaseAccountsTableRoleDefinition,7,0,false,spec_api=2026-03-15; ours_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables,11,,0,documentdb.azure.hfl.dev/DatabaseAccountsTable,9,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings,8,,0,documentdb.azure.hfl.dev/DatabaseAccountsTablesThroughputSetting,6,2,false,spec_api=2026-03-15; ours_api=2024-08-15; ours-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/fleets,3,,0,,0,3,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces,7,,0,,0,7,false,spec_api=2026-03-15
-Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts,2,,0,,0,2,false,spec_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/fleets,3,,0,documentdb.azure.hfl.dev/Fleet,2,1,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces,7,,0,documentdb.azure.hfl.dev/FleetsFleetspace,7,0,false,spec_api=2026-03-15; ours_api=2026-03-15
+Microsoft.DocumentDB,Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts,2,,0,documentdb.azure.hfl.dev/FleetsFleetspacesFleetspaceAccount,2,0,false,spec_api=2026-03-15; ours_api=2026-03-15
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters,26,documentdb.azure.com/MongoCluster,16,,0,10,false,spec_api=2026-06-01; official_api=2024-07-01; official-api-differs-from-spec
 Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/firewallRules,2,documentdb.azure.com/FirewallRule,2,,0,0,false,spec_api=2026-06-01; official_api=2024-07-01; official-api-differs-from-spec
-Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-06-01
-Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/users,4,,0,,0,4,false,spec_api=2026-06-01
+Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/privateEndpointConnections,4,,0,documentdb.azure.hfl.dev/MongoClustersPrivateEndpointConnection,3,1,false,spec_api=2026-06-01; ours_api=2024-07-01; ours-api-differs-from-spec
+Microsoft.DocumentDB,Microsoft.DocumentDB/mongoClusters/users,4,,0,documentdb.azure.hfl.dev/MongoClustersUser,4,0,false,spec_api=2026-06-01; ours_api=2026-06-01
 Microsoft.DocumentDB,Microsoft.DocumentDB/throughputPools,3,,0,,0,3,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DocumentDB,Microsoft.DocumentDB/throughputPools/throughputPoolAccounts,2,,0,,0,2,false,spec_api=2025-05-01-preview; spec-preview-only
 Microsoft.DomainRegistration,Microsoft.DomainRegistration/domains,68,,0,,0,68,false,spec_api=2024-11-01
@@ -1104,38 +1104,38 @@ Microsoft.EventGrid,Microsoft.EventGrid/domains/topics,0,eventgrid.azure.com/Dom
 Microsoft.EventGrid,Microsoft.EventGrid/domains/topics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/eventSubscriptions,38,eventgrid.azure.com/EventSubscription,38,,0,0,false,spec_api=2025-02-15; official_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/namespaces,45,eventgrid.azure.com/Namespace,34,,0,11,false,spec_api=2025-02-15; official_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/caCertificates,2,,0,,0,2,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clientGroups,2,,0,,0,2,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clients,6,,0,,0,6,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/permissionBindings,4,,0,,0,4,false,spec_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/caCertificates,2,,0,eventgrid.azure.hfl.dev/NamespacesCaCertificate,2,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clientGroups,2,,0,eventgrid.azure.hfl.dev/NamespacesClientGroup,2,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/clients,6,,0,eventgrid.azure.hfl.dev/NamespacesClient,6,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/permissionBindings,4,,0,eventgrid.azure.hfl.dev/NamespacesPermissionBinding,4,0,false,spec_api=2025-02-15; ours_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/namespaces/privateEndpointConnections,6,,0,,0,6,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topics,3,eventgrid.azure.com/NamespaceTopic,3,,0,0,false,spec_api=2025-02-15; official_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topics/eventSubscriptions,39,,0,,0,39,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topicSpaces,2,,0,,0,2,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/partnerConfigurations,7,,0,,0,7,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces,9,,0,,0,9,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces/channels,14,,0,,0,14,false,spec_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topics/eventSubscriptions,39,,0,eventgrid.azure.hfl.dev/NamespacesTopicsEventSubscription,39,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/namespaces/topicSpaces,2,,0,eventgrid.azure.hfl.dev/NamespacesTopicSpace,2,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/partnerConfigurations,7,,0,eventgrid.azure.hfl.dev/PartnerConfiguration,7,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces,9,,0,eventgrid.azure.hfl.dev/PartnerNamespace,9,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces/channels,14,,0,eventgrid.azure.hfl.dev/PartnerNamespacesChannel,14,0,false,spec_api=2025-02-15; ours_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections,6,,0,,0,6,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/partnerRegistrations,3,,0,,0,3,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/partnerTopics,18,,0,,0,18,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/partnerTopics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/systemTopics,9,,0,,0,9,false,spec_api=2025-02-15
-Microsoft.EventGrid,Microsoft.EventGrid/systemTopics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/partnerRegistrations,3,,0,eventgrid.azure.hfl.dev/PartnerRegistration,3,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/partnerTopics,18,,0,eventgrid.azure.hfl.dev/PartnerTopic,14,4,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/partnerTopics/eventSubscriptions,38,,0,eventgrid.azure.hfl.dev/PartnerTopicsEventSubscription,38,0,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/systemTopics,9,,0,eventgrid.azure.hfl.dev/SystemTopic,5,4,false,spec_api=2025-02-15; ours_api=2025-02-15
+Microsoft.EventGrid,Microsoft.EventGrid/systemTopics/eventSubscriptions,38,,0,eventgrid.azure.hfl.dev/SystemTopicsEventSubscription,38,0,false,spec_api=2025-02-15; ours_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics,29,eventgrid.azure.com/Topic,25,,0,4,false,spec_api=2025-02-15; official_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics/eventSubscriptions,38,,0,,0,38,false,spec_api=2025-02-15
 Microsoft.EventGrid,Microsoft.EventGrid/topics/privateEndpointConnections,6,,0,,0,6,false,spec_api=2025-02-15
-Microsoft.EventHub,Microsoft.EventHub/clusters,7,,0,,0,7,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/clusters,7,,0,eventhub.azure.hfl.dev/Cluster,7,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces,32,eventhub.azure.com/Namespace,22,,0,10,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.EventHub,Microsoft.EventHub/namespaces/applicationGroups,6,,0,,0,6,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/applicationGroups,6,,0,eventhub.azure.hfl.dev/NamespacesApplicationGroup,6,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces/AuthorizationRules,1,eventhub.azure.com/NamespacesAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.EventHub,Microsoft.EventHub/namespaces/disasterRecoveryConfigs,2,,0,,0,2,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/disasterRecoveryConfigs,2,,0,eventhub.azure.hfl.dev/NamespacesDisasterRecoveryConfig,2,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces/eventhubs,23,eventhub.azure.com/NamespacesEventhub,20,,0,3,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.EventHub,Microsoft.EventHub/namespaces/eventhubs/authorizationRules,1,eventhub.azure.com/NamespacesEventhubsAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.EventHub,Microsoft.EventHub/namespaces/eventhubs/consumergroups,1,eventhub.azure.com/NamespacesEventhubsConsumerGroup,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.EventHub,Microsoft.EventHub/namespaces/ipfilterrules,3,,0,,0,3,false,spec_api=2018-01-01-preview; spec-preview-only
-Microsoft.EventHub,Microsoft.EventHub/namespaces/networkRuleSets,7,,0,,0,7,false,spec_api=2026-01-01
-Microsoft.EventHub,Microsoft.EventHub/namespaces/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-01-01
-Microsoft.EventHub,Microsoft.EventHub/namespaces/schemagroups,3,,0,,0,3,false,spec_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/networkRuleSets,7,,0,eventhub.azure.hfl.dev/NamespacesNetworkRuleSet,7,0,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/privateEndpointConnections,4,,0,eventhub.azure.hfl.dev/NamespacesPrivateEndpointConnection,3,1,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.EventHub,Microsoft.EventHub/namespaces/schemagroups,3,,0,eventhub.azure.hfl.dev/NamespacesSchemaGroup,3,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.EventHub,Microsoft.EventHub/namespaces/virtualnetworkrules,1,,0,,0,1,false,spec_api=2018-01-01-preview; spec-preview-only
 Microsoft.ExtendedLocation,Microsoft.ExtendedLocation/customLocations,11,,0,,0,11,false,spec_api=2021-08-15
 Microsoft.Fabric,Microsoft.Fabric/capacities,5,,0,,0,5,false,spec_api=2023-11-01
@@ -1240,7 +1240,7 @@ Microsoft.Insights,Microsoft.Insights/components/favorites,7,,0,,0,7,false,spec_
 Microsoft.Insights,Microsoft.Insights/components/linkedStorageAccounts,1,,0,insights.azure.hfl.dev/ComponentsLinkedStorageAccount,1,0,false,spec_api=2020-03-01-preview; spec-preview-only; ours_api=2020-03-01-preview
 Microsoft.Insights,Microsoft.Insights/components/myanalyticsItems,3,,0,,0,3,false,spec_api=2015-05-01
 Microsoft.Insights,Microsoft.Insights/components/pricingPlans,5,insights.azure.com/PricingPlan,5,,0,0,false,spec_api=2017-10-01; official_api=2017-10-01
-Microsoft.Insights,Microsoft.Insights/components/ProactiveDetectionConfigs,12,,0,,0,12,false,spec_api=2015-05-01
+Microsoft.Insights,Microsoft.Insights/components/ProactiveDetectionConfigs,12,,0,insights.azure.hfl.dev/ComponentsProactiveDetectionConfig,11,1,false,spec_api=2015-05-01; ours_api=2018-05-01-preview; ours-api-differs-from-spec
 Microsoft.Insights,Microsoft.Insights/dataCollectionEndpoints,16,insights.azure.com/DataCollectionEndpoint,12,,0,4,false,spec_api=2024-03-11; official_api=2024-03-11
 Microsoft.Insights,Microsoft.Insights/dataCollectionRuleAssociations,3,insights.azure.com/DataCollectionRuleAssociation,3,,0,0,false,spec_api=2024-03-11; official_api=2024-03-11
 Microsoft.Insights,Microsoft.Insights/dataCollectionRules,140,insights.azure.com/DataCollectionRule,140,,0,0,false,spec_api=2024-03-11; official_api=2024-03-11
@@ -1324,15 +1324,15 @@ Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/loadBalancers,4,,0,,0,4,
 Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/services,1,,0,,0,1,false,spec_api=2024-03-01
 Microsoft.KubernetesRuntime,Microsoft.KubernetesRuntime/storageClasses,23,,0,,0,23,false,spec_api=2024-03-01
 Microsoft.Kusto,Microsoft.Kusto/clusters,42,kusto.azure.com/Cluster,40,,0,2,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
-Microsoft.Kusto,Microsoft.Kusto/clusters/attachedDatabaseConfigurations,14,,0,,0,14,false,spec_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/attachedDatabaseConfigurations,14,,0,kusto.azure.hfl.dev/ClustersAttachedDatabaseConfiguration,14,0,false,spec_api=2025-02-14; ours_api=2025-02-14
 Microsoft.Kusto,Microsoft.Kusto/clusters/databases,3,kusto.azure.com/Database,0,,0,3,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
 Microsoft.Kusto,Microsoft.Kusto/clusters/databases/dataConnections,9,kusto.azure.com/DataConnection,0,,0,9,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
 Microsoft.Kusto,Microsoft.Kusto/clusters/databases/principalAssignments,4,kusto.azure.com/PrincipalAssignment,4,,0,0,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
-Microsoft.Kusto,Microsoft.Kusto/clusters/databases/scripts,8,,0,,0,8,false,spec_api=2025-02-14
-Microsoft.Kusto,Microsoft.Kusto/clusters/managedPrivateEndpoints,4,,0,,0,4,false,spec_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/databases/scripts,8,,0,kusto.azure.hfl.dev/ClustersDatabasesScript,8,0,false,spec_api=2025-02-14; ours_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/managedPrivateEndpoints,4,,0,kusto.azure.hfl.dev/ClustersManagedPrivateEndpoint,4,0,false,spec_api=2025-02-14; ours_api=2025-02-14
 Microsoft.Kusto,Microsoft.Kusto/clusters/principalAssignments,4,kusto.azure.com/ClusterPrincipalAssignment,4,,0,0,false,spec_api=2025-02-14; official_api=2024-04-13; official-api-differs-from-spec
-Microsoft.Kusto,Microsoft.Kusto/clusters/privateEndpointConnections,2,,0,,0,2,false,spec_api=2025-02-14
-Microsoft.Kusto,Microsoft.Kusto/clusters/sandboxCustomImages,4,,0,,0,4,false,spec_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/privateEndpointConnections,2,,0,kusto.azure.hfl.dev/ClustersPrivateEndpointConnection,2,0,false,spec_api=2025-02-14; ours_api=2025-02-14
+Microsoft.Kusto,Microsoft.Kusto/clusters/sandboxCustomImages,4,,0,kusto.azure.hfl.dev/ClustersSandboxCustomImage,4,0,false,spec_api=2025-02-14; ours_api=2025-02-14
 Microsoft.LabServices,Microsoft.LabServices/labaccounts,5,,0,,0,5,false,spec_api=2018-10-15
 Microsoft.LabServices,Microsoft.LabServices/labaccounts/galleryimages,7,,0,,0,7,false,spec_api=2018-10-15
 Microsoft.LabServices,Microsoft.LabServices/labaccounts/labs,7,,0,,0,7,false,spec_api=2018-10-15
@@ -1347,18 +1347,18 @@ Microsoft.LabServices,Microsoft.LabServices/labs/users,2,,0,,0,2,false,spec_api=
 Microsoft.LoadTestService,Microsoft.LoadTestService/loadTests,8,,0,,0,8,false,spec_api=2022-12-01
 Microsoft.LoadTestService,Microsoft.LoadTestService/playwrightWorkspaces,4,,0,,0,4,false,spec_api=2025-09-01
 Microsoft.Logic,Microsoft.Logic/automationProjects,5,,0,,0,5,false,spec_api=2026-04-01-preview; spec-preview-only
-Microsoft.Logic,Microsoft.Logic/integrationAccounts,5,,0,,0,5,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/agreements,560,,0,,0,560,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/assemblies,12,,0,,0,12,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/batchConfigurations,19,,0,,0,19,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/certificates,7,,0,,0,7,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/maps,7,,0,,0,7,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/partners,6,,0,,0,6,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/schemas,9,,0,,0,9,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/integrationAccounts/sessions,3,,0,,0,3,false,spec_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts,5,,0,logic.azure.hfl.dev/IntegrationAccount,4,1,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/agreements,560,,0,logic.azure.hfl.dev/IntegrationAccountsAgreement,560,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/assemblies,12,,0,logic.azure.hfl.dev/IntegrationAccountsAssembly,12,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/batchConfigurations,19,,0,logic.azure.hfl.dev/IntegrationAccountsBatchConfiguration,19,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/certificates,7,,0,logic.azure.hfl.dev/IntegrationAccountsCertificate,7,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/maps,7,,0,logic.azure.hfl.dev/IntegrationAccountsMap,7,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/partners,6,,0,logic.azure.hfl.dev/IntegrationAccountsPartner,6,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/schemas,9,,0,logic.azure.hfl.dev/IntegrationAccountsSchema,9,0,false,spec_api=2019-05-01; ours_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/integrationAccounts/sessions,3,,0,logic.azure.hfl.dev/IntegrationAccountsSession,3,0,false,spec_api=2019-05-01; ours_api=2019-05-01
 Microsoft.Logic,Microsoft.Logic/integrationServiceEnvironments,19,,0,,0,19,false,spec_api=2019-05-01
 Microsoft.Logic,Microsoft.Logic/integrationServiceEnvironments/managedApis,4,,0,,0,4,false,spec_api=2019-05-01
-Microsoft.Logic,Microsoft.Logic/workflows,32,,0,,0,32,false,spec_api=2019-05-01
+Microsoft.Logic,Microsoft.Logic/workflows,32,,0,logic.azure.hfl.dev/Workflow,31,1,false,spec_api=2019-05-01; ours_api=2019-05-01
 Microsoft.M365SecurityAndCompliance,Microsoft.M365SecurityAndCompliance/privateLinkServicesForEDMUpload,22,,0,,0,22,false,spec_api=2021-03-25-preview; spec-preview-only
 Microsoft.M365SecurityAndCompliance,Microsoft.M365SecurityAndCompliance/privateLinkServicesForEDMUpload/privateEndpointConnections,4,,0,,0,4,false,spec_api=2021-03-25-preview; spec-preview-only
 Microsoft.M365SecurityAndCompliance,Microsoft.M365SecurityAndCompliance/privateLinkServicesForM365ComplianceCenter,22,,0,,0,22,false,spec_api=2021-03-25-preview; spec-preview-only
@@ -1375,46 +1375,46 @@ Microsoft.MachineLearning,Microsoft.MachineLearning/commitmentPlans,6,,0,,0,6,fa
 Microsoft.MachineLearning,Microsoft.MachineLearning/webServices,72,,0,,0,72,false,spec_api=2017-01-01
 Microsoft.MachineLearning,Microsoft.MachineLearning/workspaces,7,,0,,0,7,false,spec_api=2019-10-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries,33,machinelearningservices.azure.com/Registry,30,,0,3,false,spec_api=2026-09-01; official_api=2024-04-01; official-api-differs-from-spec
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/codes,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/codes/versions,6,,0,,0,6,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/components,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/components/versions,6,,0,,0,6,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/data,5,,0,,0,5,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/data/versions,8,,0,,0,8,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/environments,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/environments/versions,20,,0,,0,20,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/models,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/models/versions,12,,0,,0,12,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/codes,4,,0,machinelearningservices.azure.hfl.dev/RegistriesCode,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/codes/versions,6,,0,machinelearningservices.azure.hfl.dev/RegistriesCodesVersion,6,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/components,4,,0,machinelearningservices.azure.hfl.dev/RegistriesComponent,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/components/versions,6,,0,machinelearningservices.azure.hfl.dev/RegistriesComponentsVersion,6,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/data,5,,0,machinelearningservices.azure.hfl.dev/RegistriesData,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/data/versions,8,,0,machinelearningservices.azure.hfl.dev/RegistriesDataVersion,8,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/environments,4,,0,machinelearningservices.azure.hfl.dev/RegistriesEnvironment,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/environments/versions,20,,0,machinelearningservices.azure.hfl.dev/RegistriesEnvironmentsVersion,20,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/models,4,,0,machinelearningservices.azure.hfl.dev/RegistriesModel,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/registries/models/versions,12,,0,machinelearningservices.azure.hfl.dev/RegistriesModelsVersion,12,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces,61,machinelearningservices.azure.com/Workspace,50,,0,11,false,spec_api=2026-09-01; official_api=2024-04-01; official-api-differs-from-spec
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints,16,,0,,0,16,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints/deployments,39,,0,,0,39,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/capabilityHosts,10,,0,,0,10,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/codes,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/codes/versions,6,,0,,0,6,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/components,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/components/versions,6,,0,,0,6,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints,16,,0,machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpoint,16,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/batchEndpoints/deployments,39,,0,machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpointsDeployment,39,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/capabilityHosts,10,,0,machinelearningservices.azure.hfl.dev/WorkspacesCapabilityHost,10,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/codes,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesCode,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/codes/versions,6,,0,machinelearningservices.azure.hfl.dev/WorkspacesCodesVersion,6,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/components,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesComponent,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/components/versions,6,,0,machinelearningservices.azure.hfl.dev/WorkspacesComponentsVersion,6,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/computes,30,machinelearningservices.azure.com/WorkspacesCompute,30,,0,0,false,spec_api=2026-09-01; official_api=2024-04-01; official-api-differs-from-spec
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/connections,13,machinelearningservices.azure.com/WorkspacesConnection,9,,0,4,false,spec_api=2026-09-01; official_api=2024-04-01; official-api-differs-from-spec
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/data,5,,0,,0,5,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/data/versions,8,,0,,0,8,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/datastores,25,,0,,0,25,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments/versions,20,,0,,0,20,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,25,,0,,0,25,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions,8,,0,,0,8,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,230,,0,,0,230,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/data,5,,0,machinelearningservices.azure.hfl.dev/WorkspacesData,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/data/versions,8,,0,machinelearningservices.azure.hfl.dev/WorkspacesDataVersion,8,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/datastores,25,,0,machinelearningservices.azure.hfl.dev/WorkspacesDatastore,25,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesEnvironment,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/environments/versions,20,,0,machinelearningservices.azure.hfl.dev/WorkspacesEnvironmentsVersion,20,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeatureset,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featuresets/versions,25,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturesetsVersion,23,2,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntity,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions,8,,0,machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntitiesVersion,8,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/jobs,230,,0,machinelearningservices.azure.hfl.dev/WorkspacesJob,1,229,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/labelingJobs,19,,0,,0,19,false,spec_api=2020-09-01-preview; spec-preview-only
 Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/marketplaceSubscriptions,1,,0,,0,1,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/models,4,,0,,0,4,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/models/versions,12,,0,,0,12,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints,19,,0,,0,19,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments,57,,0,,0,57,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/outboundRules,5,,0,,0,5,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/privateEndpointConnections,13,,0,,0,13,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,307,,0,,0,307,false,spec_api=2026-09-01
-Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,13,,0,,0,13,false,spec_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/models,4,,0,machinelearningservices.azure.hfl.dev/WorkspacesModel,4,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/models/versions,12,,0,machinelearningservices.azure.hfl.dev/WorkspacesModelsVersion,12,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints,19,,0,machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpoint,19,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments,57,,0,machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpointsDeployment,57,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/outboundRules,5,,0,machinelearningservices.azure.hfl.dev/WorkspacesOutboundRule,5,0,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/privateEndpointConnections,13,,0,machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection,12,1,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/schedules,307,,0,machinelearningservices.azure.hfl.dev/WorkspacesSchedule,5,302,false,spec_api=2026-09-01; ours_api=2026-09-01
+Microsoft.MachineLearningServices,Microsoft.MachineLearningServices/workspaces/serverlessEndpoints,13,,0,machinelearningservices.azure.hfl.dev/WorkspacesServerlessEndpoint,13,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.Maintenance,Microsoft.Maintenance/applyUpdates,0,,0,,0,0,false,spec_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/configurationAssignments,9,,0,maintenance.azure.hfl.dev/ConfigurationAssignment,9,0,false,spec_api=2023-04-01; ours_api=2023-04-01
 Microsoft.Maintenance,Microsoft.Maintenance/maintenanceConfigurations,19,,0,maintenance.azure.hfl.dev/MaintenanceConfiguration,19,0,false,spec_api=2023-04-01; ours_api=2023-04-01
@@ -1515,7 +1515,7 @@ Microsoft.Monitor,Microsoft.Monitor/accounts,6,monitor.azure.com/Account,3,,0,3,
 Microsoft.Monitor,Microsoft.Monitor/accounts/issues,12,,0,,0,12,false,spec_api=2025-10-03
 Microsoft.Monitor,Microsoft.Monitor/accounts/metricsContainers,1,,0,,0,1,false,spec_api=2025-10-03
 Microsoft.Monitor,Microsoft.Monitor/observabilityAgents,9,,0,,0,9,false,spec_api=2026-05-01-preview; spec-preview-only
-Microsoft.Monitor,Microsoft.Monitor/pipelineGroups,52,,0,,0,52,false,spec_api=2026-04-01
+Microsoft.Monitor,Microsoft.Monitor/pipelineGroups,52,,0,monitor.azure.hfl.dev/PipelineGroup,52,0,false,spec_api=2026-04-01; ours_api=2026-04-01
 Microsoft.Monitor,Microsoft.Monitor/slis,58,,0,,0,58,false,spec_api=2025-03-01-preview; spec-preview-only
 Microsoft.MySQLDiscovery,Microsoft.MySQLDiscovery/MySQLSites,7,,0,,0,7,false,spec_api=2024-09-30-preview; spec-preview-only
 Microsoft.MySQLDiscovery,Microsoft.MySQLDiscovery/MySQLSites/MySQLServers,21,,0,,0,21,false,spec_api=2024-09-30-preview; spec-preview-only
@@ -1536,7 +1536,7 @@ Microsoft.Network,Microsoft.Network/applicationGateways,266,network.azure.com/Ap
 Microsoft.Network,Microsoft.Network/applicationGateways/privateEndpointConnections,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies,57,network.azure.com/WebApplicationFirewallPolicy,45,,0,12,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/applicationSecurityGroups,3,network.azure.com/ApplicationSecurityGroup,2,,0,1,false,spec_api=2026-03-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/applicationSecurityGroups/addressPrefixSets,1,,0,,0,1,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/applicationSecurityGroups/addressPrefixSets,1,,0,network.azure.hfl.dev/ApplicationSecurityGroupsAddressPrefixSet,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/authenticationPolicies,14,,0,,0,14,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/azureFirewalls,64,network.azure.com/AzureFirewall,58,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/bastionHosts,26,network.azure.com/BastionHost,20,,0,6,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
@@ -1583,7 +1583,7 @@ Microsoft.Network,Microsoft.Network/firewallPolicies,41,network.azure.com/Firewa
 Microsoft.Network,Microsoft.Network/firewallPolicies/firewallPolicyDrafts,36,,0,network.azure.hfl.dev/FirewallPoliciesFirewallPolicyDraft,36,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/kubeSelectorGroups,8,,0,network.azure.hfl.dev/FirewallPoliciesKubeSelectorGroup,8,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups,30,network.azure.com/FirewallPoliciesRuleCollectionGroup,27,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts,30,,0,,0,30,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts,30,,0,network.azure.hfl.dev/FirewallPoliciesRuleCollectionGroupDraft,30,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firewallPolicies/signatureOverrides,1,,0,network.azure.hfl.dev/FirewallPoliciesSignatureOverride,1,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/firstPartyServiceTags,3,,0,,0,3,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/frontDoors,61,,0,,0,61,false,spec_api=2026-04-01
@@ -1601,7 +1601,7 @@ Microsoft.Network,Microsoft.Network/natGateways,12,network.azure.com/NatGateway,
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles,4,,0,,0,4,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/NetworkExperimentProfiles/Experiments,8,,0,,0,8,false,spec_api=2026-04-01
 Microsoft.Network,Microsoft.Network/networkInterfaces,531,network.azure.com/NetworkInterface,529,,0,2,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,,0,281,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkInterfaces/tapConfigurations,281,,0,network.azure.hfl.dev/NetworkInterfacesTapConfiguration,281,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagerConnections,2,,0,network.azure.hfl.dev/NetworkManagerConnection,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers,6,,0,network.azure.hfl.dev/NetworkManager,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkManagers/commits,5,,0,network.azure.hfl.dev/NetworkManagersCommit,5,0,false,spec_api=2026-03-01; ours_api=2026-03-01
@@ -1638,7 +1638,7 @@ Microsoft.Network,Microsoft.Network/networkVirtualAppliances/networkVirtualAppli
 Microsoft.Network,Microsoft.Network/networkVirtualAppliances/virtualApplianceSites,4,,0,network.azure.hfl.dev/NetworkVirtualAppliancesVirtualApplianceSite,4,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkWatchers,3,network.azure.com/NetworkWatcher,2,,0,1,false,spec_api=2026-03-01; official_api=2024-10-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkWatchers/connectionAnalyzers,23,,0,,0,23,false,spec_api=2026-03-01
-Microsoft.Network,Microsoft.Network/networkWatchers/connectionMonitors,46,,0,,0,46,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/networkWatchers/connectionMonitors,46,,0,network.azure.hfl.dev/NetworkWatchersConnectionMonitor,46,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/networkWatchers/flowLogs,18,network.azure.com/NetworkWatchersFlowLog,16,,0,2,false,spec_api=2026-03-01; official_api=2024-10-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/networkWatchers/packetCaptures,20,,0,,0,20,false,spec_api=2026-03-01
 Microsoft.Network,Microsoft.Network/p2svpnGateways,24,,0,network.azure.hfl.dev/P2sVpnGateway,24,0,false,spec_api=2026-03-01; ours_api=2026-03-01
@@ -1693,7 +1693,7 @@ Microsoft.Network,Microsoft.Network/virtualNetworkGateways/natRules,7,,0,,0,7,fa
 Microsoft.Network,Microsoft.Network/virtualNetworks,118,network.azure.com/VirtualNetwork,17,,0,101,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworks/subnets,69,network.azure.com/VirtualNetworksSubnet,66,,0,3,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
 Microsoft.Network,Microsoft.Network/virtualNetworks/virtualNetworkPeerings,25,network.azure.com/VirtualNetworksVirtualNetworkPeering,25,,0,0,false,spec_api=2026-03-01; official_api=2025-03-01; official-api-differs-from-spec
-Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,,0,280,false,spec_api=2026-03-01
+Microsoft.Network,Microsoft.Network/virtualNetworkTaps,280,,0,network.azure.hfl.dev/VirtualNetworkTap,280,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters,6,,0,network.azure.hfl.dev/VirtualRouter,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualRouters/peerings,2,,0,network.azure.hfl.dev/VirtualRoutersPeering,2,0,false,spec_api=2026-03-01; ours_api=2026-03-01
 Microsoft.Network,Microsoft.Network/virtualWans,6,,0,network.azure.hfl.dev/VirtualWan,6,0,false,spec_api=2026-03-01; ours_api=2026-03-01
@@ -1731,7 +1731,7 @@ Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces,47,notification
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/authorizationRules,5,notificationhubs.azure.com/NamespacesAuthorizationRule,3,,0,2,false,spec_api=2023-09-01; official_api=2023-09-01
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/notificationHubs,38,notificationhubs.azure.com/NotificationHub,38,,0,0,false,spec_api=2023-09-01; official_api=2023-09-01
 Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/notificationHubs/authorizationRules,5,notificationhubs.azure.com/NotificationHubsAuthorizationRule,3,,0,2,false,spec_api=2023-09-01; official_api=2023-09-01
-Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,3,,0,,0,3,false,spec_api=2023-09-01
+Microsoft.NotificationHubs,Microsoft.NotificationHubs/namespaces/privateEndpointConnections,3,,0,notificationhubs.azure.hfl.dev/NamespacesPrivateEndpointConnection,2,1,false,spec_api=2023-09-01; ours_api=2023-09-01
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites,13,,0,,0,13,false,spec_api=2023-06-06
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites/clusters,4,,0,,0,4,false,spec_api=2023-06-06
 Microsoft.OffAzure,Microsoft.OffAzure/hypervSites/hosts,3,,0,,0,3,false,spec_api=2023-06-06
@@ -1762,7 +1762,7 @@ Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedSer
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/linkedStorageAccounts,1,,0,operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount,1,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/savedSearches,9,,0,operationalinsights.azure.hfl.dev/WorkspacesSavedSearch,9,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/storageInsightConfigs,6,,0,operationalinsights.azure.hfl.dev/WorkspacesStorageInsightConfig,6,0,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
-Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,,0,11,false,spec_api=2026-03-01
+Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/summaryLogs,11,,0,operationalinsights.azure.hfl.dev/WorkspacesSummaryLog,9,2,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationalInsights,Microsoft.OperationalInsights/workspaces/tables,20,,0,operationalinsights.azure.hfl.dev/WorkspacesTable,19,1,false,spec_api=2026-03-01; ours_api=2025-07-01; ours-api-differs-from-spec
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementAssociations,2,,0,operationsmanagement.azure.hfl.dev/ManagementAssociation,2,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
 Microsoft.OperationsManagement,Microsoft.OperationsManagement/ManagementConfigurations,6,,0,operationsmanagement.azure.hfl.dev/ManagementConfiguration,6,0,false,spec_api=2015-11-01-preview; spec-preview-only; ours_api=2015-11-01-preview
@@ -1835,32 +1835,32 @@ Microsoft.RecommendationsService,Microsoft.RecommendationsService/accounts,12,,0
 Microsoft.RecommendationsService,Microsoft.RecommendationsService/accounts/modeling,6,,0,,0,6,false,spec_api=2022-02-01
 Microsoft.RecommendationsService,Microsoft.RecommendationsService/accounts/serviceEndpoints,3,,0,,0,3,false,spec_api=2022-02-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults,37,,0,recoveryservices.azure.hfl.dev/Vault,35,2,false,spec_api=2026-07-01; ours_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupconfig,11,,0,,0,11,false,spec_api=2026-10-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupEncryptionConfigs,8,,0,,0,8,false,spec_api=2026-10-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupconfig,11,,0,recoveryservices.azure.hfl.dev/VaultsBackupConfig,11,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupEncryptionConfigs,8,,0,recoveryservices.azure.hfl.dev/VaultsBackupEncryptionConfig,8,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/backupProtectionIntent,11,,0,,0,11,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers,42,,0,,0,42,false,spec_api=2026-10-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems,57,,0,recoveryservices.azure.hfl.dev/VaultsProtectedItem,5,52,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupPolicies,140,,0,recoveryservices.azure.hfl.dev/VaultsBackupPolicy,137,3,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupResourceGuardProxies,8,,0,recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy,8,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupstorageconfig,9,,0,,0,9,false,spec_api=2026-10-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/backupstorageconfig,9,,0,recoveryservices.azure.hfl.dev/VaultsBackupStorageConfig,9,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/certificates,2,,0,,0,2,false,spec_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/extendedInformation,5,,0,,0,5,false,spec_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/privateEndpointConnections,9,,0,recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection,9,0,false,spec_api=2026-10-01; ours_api=2026-07-01; ours-api-differs-from-spec
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationAlertSettings,3,,0,,0,3,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics,10,,0,,0,10,false,spec_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationAlertSettings,3,,0,recoveryservices.azure.hfl.dev/VaultsReplicationAlertSetting,3,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics,10,,0,recoveryservices.azure.hfl.dev/VaultsReplicationFabric,10,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationNetworks/replicationNetworkMappings,4,,0,,0,4,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers,1,,0,,0,1,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems,44,,0,,0,44,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems,111,,0,,0,111,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters,163,,0,,0,163,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionContainerMappings,12,,0,,0,12,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationRecoveryServicesProviders,18,,0,,0,18,false,spec_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers,1,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainer,1,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems,44,,0,recoveryservices.azure.hfl.dev/VaultsReplicationMigrationItem,44,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems,111,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectedItem,111,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters,163,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionCluster,162,1,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionContainerMappings,12,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainerMapping,12,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationRecoveryServicesProviders,18,,0,recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryServicesProvider,18,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications/replicationStorageClassificationMappings,1,,0,,0,1,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationvCenters,5,,0,,0,5,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationPolicies,22,,0,,0,22,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationProtectionIntents,55,,0,,0,55,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationRecoveryPlans,31,,0,,0,31,false,spec_api=2026-07-01
-Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationVaultSettings,2,,0,,0,2,false,spec_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationFabrics/replicationvCenters,5,,0,recoveryservices.azure.hfl.dev/VaultsReplicationvCenter,5,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationPolicies,22,,0,recoveryservices.azure.hfl.dev/VaultsReplicationPolicy,22,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationProtectionIntents,55,,0,recoveryservices.azure.hfl.dev/VaultsReplicationProtectionIntent,55,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationRecoveryPlans,31,,0,recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryPlan,31,0,false,spec_api=2026-07-01; ours_api=2026-07-01
+Microsoft.RecoveryServices,Microsoft.RecoveryServices/vaults/replicationVaultSettings,2,,0,recoveryservices.azure.hfl.dev/VaultsReplicationVaultSetting,2,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.RedHatOpenShift,Microsoft.RedHatOpenShift/hcpOpenShiftClusters,40,redhatopenshift.azure.com/HcpOpenShiftCluster,40,,0,0,false,spec_api=2026-10-01; official_api=2026-10-01
 Microsoft.RedHatOpenShift,Microsoft.RedHatOpenShift/hcpOpenShiftClusters/externalAuths,16,redhatopenshift.azure.com/HcpOpenShiftClustersExternalAuth,16,,0,0,false,spec_api=2026-10-01; official_api=2026-10-01
 Microsoft.RedHatOpenShift,Microsoft.RedHatOpenShift/hcpOpenShiftClusters/nodePools,24,redhatopenshift.azure.com/HcpOpenShiftClustersNodePool,24,,0,0,false,spec_api=2026-10-01; official_api=2026-10-01
@@ -1911,11 +1911,11 @@ Microsoft.Search,Microsoft.Search/searchServices/sharedPrivateLinkResources,6,,0
 Microsoft.SecretSyncController,Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses,9,,0,,0,9,false,spec_api=2026-09-25-preview; spec-preview-only
 Microsoft.SecretSyncController,Microsoft.SecretSyncController/secretSyncs,10,,0,,0,10,false,spec_api=2026-09-25-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/advancedThreatProtectionSettings,1,,0,security.azure.hfl.dev/AdvancedThreatProtectionSetting,1,0,false,spec_api=2019-01-01; ours_api=2019-01-01
-Microsoft.Security,Microsoft.Security/alertsSuppressionRules,7,,0,,0,7,false,spec_api=2019-01-01-preview; spec-preview-only
+Microsoft.Security,Microsoft.Security/alertsSuppressionRules,7,,0,security.azure.hfl.dev/AlertsSuppressionRule,6,1,false,spec_api=2019-01-01-preview; spec-preview-only; ours_api=2019-01-01-preview
 Microsoft.Security,Microsoft.Security/apiCollections,0,,0,,0,0,false,spec_api=2023-11-15
 Microsoft.Security,Microsoft.Security/applications,4,,0,,0,4,false,spec_api=2022-07-01-preview; spec-preview-only
-Microsoft.Security,Microsoft.Security/assessmentMetadata,18,,0,,0,18,false,spec_api=2025-05-04
-Microsoft.Security,Microsoft.Security/assessments,36,,0,,0,36,false,spec_api=2025-05-04
+Microsoft.Security,Microsoft.Security/assessmentMetadata,18,,0,security.azure.hfl.dev/AssessmentMetadata,18,0,false,spec_api=2025-05-04; ours_api=2025-05-04
+Microsoft.Security,Microsoft.Security/assessments,36,,0,security.azure.hfl.dev/Assessment,36,0,false,spec_api=2025-05-04; ours_api=2025-05-04
 Microsoft.Security,Microsoft.Security/assessments/governanceAssignments,10,,0,,0,10,false,spec_api=2022-01-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/assignments,13,,0,,0,13,false,spec_api=2021-08-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/automations,20,,0,security.azure.hfl.dev/Automation,20,0,false,spec_api=2023-12-01-preview; spec-preview-only; ours_api=2023-12-01-preview
@@ -1925,14 +1925,14 @@ Microsoft.Security,Microsoft.Security/customRecommendations,7,,0,security.azure.
 Microsoft.Security,Microsoft.Security/dataScanners,2,,0,,0,2,false,spec_api=2026-08-01
 Microsoft.Security,Microsoft.Security/defenderForStorageSettings,10,,0,security.azure.hfl.dev/DefenderForStorageSetting,10,0,false,spec_api=2025-06-01; ours_api=2025-06-01
 Microsoft.Security,Microsoft.Security/deviceSecurityGroups,15,,0,,0,15,false,spec_api=2019-08-01
-Microsoft.Security,Microsoft.Security/governanceRules,16,,0,,0,16,false,spec_api=2022-01-01-preview; spec-preview-only
+Microsoft.Security,Microsoft.Security/governanceRules,16,,0,security.azure.hfl.dev/GovernanceRule,15,1,false,spec_api=2022-01-01-preview; spec-preview-only; ours_api=2022-01-01-preview
 Microsoft.Security,Microsoft.Security/informationProtectionPolicies,15,,0,,0,15,false,spec_api=2017-08-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/iotSecuritySolutions,16,,0,,0,16,false,spec_api=2019-08-01
 Microsoft.Security,Microsoft.Security/locations/jitNetworkAccessPolicies,19,,0,,0,19,false,spec_api=2020-01-01
 Microsoft.Security,Microsoft.Security/pricings,8,,0,security.azure.hfl.dev/Pricing,8,0,false,spec_api=2026-07-01; ours_api=2026-07-01
 Microsoft.Security,Microsoft.Security/pricings/securityOperators,0,,0,,0,0,false,spec_api=2023-01-01-preview; spec-preview-only
-Microsoft.Security,Microsoft.Security/privateLinks,3,,0,,0,3,false,spec_api=2026-01-01
-Microsoft.Security,Microsoft.Security/privateLinks/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-01-01
+Microsoft.Security,Microsoft.Security/privateLinks,3,,0,security.azure.hfl.dev/PrivateLink,3,0,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.Security,Microsoft.Security/privateLinks/privateEndpointConnections,4,,0,security.azure.hfl.dev/PrivateLinksPrivateEndpointConnection,3,1,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.Security,Microsoft.Security/securityConnectors,78,,0,security.azure.hfl.dev/SecurityConnector,78,0,false,spec_api=2026-08-01-preview; spec-preview-only; ours_api=2026-08-01-preview
 Microsoft.Security,Microsoft.Security/securityConnectors/devops,9,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsConfiguration,9,0,false,spec_api=2025-03-01; ours_api=2025-03-01
 Microsoft.Security,Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs,7,,0,security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsOrg,7,0,false,spec_api=2025-03-01; ours_api=2025-03-01
@@ -1946,8 +1946,8 @@ Microsoft.Security,Microsoft.Security/serverVulnerabilityAssessmentsSettings,2,,
 Microsoft.Security,Microsoft.Security/serviceEntitlements,4,,0,,0,4,false,spec_api=2026-09-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/serviceEntitlementSettings,3,,0,,0,3,false,spec_api=2026-09-16-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/settings,2,,0,security.azure.hfl.dev/Setting,0,2,false,spec_api=2022-05-01; ours_api=2022-05-01
-Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments,1,,0,,0,1,false,spec_api=2026-04-01-preview; spec-preview-only
-Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments/baselineRules,2,,0,,0,2,false,spec_api=2026-04-01-preview; spec-preview-only
+Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments,1,,0,security.azure.hfl.dev/SqlVulnerabilityAssessment,1,0,false,spec_api=2026-04-01-preview; spec-preview-only; ours_api=2026-04-01-preview
+Microsoft.Security,Microsoft.Security/sqlVulnerabilityAssessments/baselineRules,2,,0,security.azure.hfl.dev/SqlVulnerabilityAssessmentsBaselineRule,2,0,false,spec_api=2026-04-01-preview; spec-preview-only; ours_api=2026-04-01-preview
 Microsoft.Security,Microsoft.Security/standardAssignments,13,,0,security.azure.hfl.dev/StandardAssignment,12,1,false,spec_api=2024-08-01; ours_api=2024-08-01
 Microsoft.Security,Microsoft.Security/standards,9,,0,,0,9,false,spec_api=2021-08-01-preview; spec-preview-only
 Microsoft.Security,Microsoft.Security/workspaceSettings,2,,0,security.azure.hfl.dev/WorkspaceSetting,2,0,false,spec_api=2017-08-01-preview; spec-preview-only; ours_api=2017-08-01-preview
@@ -1983,26 +1983,26 @@ Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents,16,,0,,0,16,fals
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents/comments,2,,0,,0,2,false,spec_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents/relations,2,,0,,0,2,false,spec_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/incidents/tasks,12,,0,,0,12,false,spec_api=2025-09-01
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/metadata,33,,0,,0,33,false,spec_api=2025-09-01
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/metadata,33,,0,securityinsights.azure.hfl.dev/ContentMetadata,32,1,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/onboardingStates,2,,0,securityinsights.azure.hfl.dev/OnboardingState,2,0,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/securityMLAnalyticsSettings,16,,0,securityinsights.azure.hfl.dev/SecurityMLAnalyticsSetting,16,0,false,spec_api=2025-09-01; ours_api=2025-09-01
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/settings,3,,0,,0,3,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/sourcecontrols,16,,0,,0,16,false,spec_api=2025-09-01
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/settings,3,,0,securityinsights.azure.hfl.dev/Setting,0,3,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/sourcecontrols,16,,0,securityinsights.azure.hfl.dev/SourceControl,16,0,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/threatIntelligence/indicators,39,,0,,0,39,false,spec_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/watchlists,22,,0,securityinsights.azure.hfl.dev/Watchlist,22,0,false,spec_api=2025-09-01; ours_api=2025-09-01
 Microsoft.SecurityInsights,Microsoft.SecurityInsights/watchlists/watchlistItems,11,,0,securityinsights.azure.hfl.dev/WatchlistsWatchlistItem,11,0,false,spec_api=2025-09-01; ours_api=2025-09-01
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerAssignments,2,,0,,0,2,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerConfigurations,1,,0,,0,1,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerGroups,3,,0,,0,3,false,spec_api=2025-04-01-preview; spec-preview-only
-Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerMembers,2,,0,,0,2,false,spec_api=2025-04-01-preview; spec-preview-only
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerAssignments,2,,0,securityinsights.azure.hfl.dev/WorkspaceManagerAssignment,2,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerConfigurations,1,,0,securityinsights.azure.hfl.dev/WorkspaceManagerConfiguration,1,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerGroups,3,,0,securityinsights.azure.hfl.dev/WorkspaceManagerGroup,3,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
+Microsoft.SecurityInsights,Microsoft.SecurityInsights/workspaceManagerMembers,2,,0,securityinsights.azure.hfl.dev/WorkspaceManagerMember,2,0,false,spec_api=2025-04-01-preview; spec-preview-only; ours_api=2025-10-01-preview; ours-api-differs-from-spec
 Microsoft.SerialConsole,Microsoft.SerialConsole/serialPorts,2,,0,,0,2,false,spec_api=2024-07-01
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces,28,servicebus.azure.com/Namespace,19,,0,9,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/AuthorizationRules,1,servicebus.azure.com/NamespacesAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
-Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs,2,,0,,0,2,false,spec_api=2026-01-01
+Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs,2,,0,servicebus.azure.hfl.dev/NamespacesDisasterRecoveryConfig,2,0,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/ipfilterrules,3,,0,,0,3,false,spec_api=2018-01-01-preview; spec-preview-only
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/migrationConfigurations,2,,0,,0,2,false,spec_api=2026-01-01
-Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/networkRuleSets,7,,0,,0,7,false,spec_api=2026-01-01
-Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/privateEndpointConnections,4,,0,,0,4,false,spec_api=2026-01-01
+Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/networkRuleSets,7,,0,servicebus.azure.hfl.dev/NamespacesNetworkRuleSet,7,0,false,spec_api=2026-01-01; ours_api=2026-01-01
+Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/privateEndpointConnections,4,,0,servicebus.azure.hfl.dev/NamespacesPrivateEndpointConnection,3,1,false,spec_api=2026-01-01; ours_api=2026-01-01
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/queues,17,servicebus.azure.com/NamespacesQueue,15,,0,2,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/queues/authorizationRules,1,servicebus.azure.com/QueueAuthorizationRule,1,,0,0,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
 Microsoft.ServiceBus,Microsoft.ServiceBus/namespaces/topics,12,servicebus.azure.com/NamespacesTopic,10,,0,2,false,spec_api=2026-01-01; official_api=2024-01-01; official-api-differs-from-spec
@@ -2039,18 +2039,18 @@ Microsoft.ServiceNetworking,Microsoft.ServiceNetworking/trafficControllers/secur
 Microsoft.SignalRService,Microsoft.SignalRService/signalR,38,signalrservice.azure.com/SignalR,38,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
 Microsoft.SignalRService,Microsoft.SignalRService/signalR/customCertificates,3,signalrservice.azure.com/CustomCertificate,3,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
 Microsoft.SignalRService,Microsoft.SignalRService/signalR/customDomains,2,signalrservice.azure.com/CustomDomain,2,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/signalR/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/signalR/privateEndpointConnections,4,,0,signalrservice.azure.hfl.dev/SignalRPrivateEndpointConnection,4,0,false,spec_api=2024-03-01; ours_api=2024-03-01
 Microsoft.SignalRService,Microsoft.SignalRService/signalR/replicas,7,signalrservice.azure.com/Replica,7,,0,0,false,spec_api=2024-03-01; official_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/signalR/replicas/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/signalR/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub,28,,0,,0,28,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customCertificates,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customDomains,2,,0,,0,2,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/hubs,13,,0,,0,13,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/privateEndpointConnections,4,,0,,0,4,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas,7,,0,,0,7,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
-Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources,3,,0,,0,3,false,spec_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/signalR/replicas/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/SignalRReplicasSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/signalR/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/SignalRSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub,28,,0,signalrservice.azure.hfl.dev/WebPubSub,28,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customCertificates,3,,0,signalrservice.azure.hfl.dev/WebPubSubCustomCertificate,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/customDomains,2,,0,signalrservice.azure.hfl.dev/WebPubSubCustomDomain,2,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/hubs,13,,0,signalrservice.azure.hfl.dev/WebPubSubHub,13,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/privateEndpointConnections,4,,0,signalrservice.azure.hfl.dev/WebPubSubPrivateEndpointConnection,4,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas,7,,0,signalrservice.azure.hfl.dev/WebPubSubReplica,7,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/replicas/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/WebPubSubReplicasSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
+Microsoft.SignalRService,Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources,3,,0,signalrservice.azure.hfl.dev/WebPubSubSharedPrivateLinkResource,3,0,false,spec_api=2024-03-01; ours_api=2024-03-01
 Microsoft.SoftwarePlan,Microsoft.SoftwarePlan/hybridUseBenefits,2,,0,,0,2,false,spec_api=2019-12-01
 Microsoft.Solutions,Microsoft.Solutions/applicationDefinitions,30,,0,,0,30,false,spec_api=2021-07-01
 Microsoft.Solutions,Microsoft.Solutions/applications,26,,0,,0,26,false,spec_api=2021-07-01
@@ -2058,36 +2058,36 @@ Microsoft.Solutions,Microsoft.Solutions/jitRequests,8,,0,,0,8,false,spec_api=202
 Microsoft.Sovereign,Microsoft.Sovereign/landingZoneAccounts,5,,0,,0,5,false,spec_api=2025-02-27-preview; spec-preview-only
 Microsoft.Sovereign,Microsoft.Sovereign/landingZoneAccounts/landingZoneConfigurations,43,,0,,0,43,false,spec_api=2025-02-27-preview; spec-preview-only
 Microsoft.Sovereign,Microsoft.Sovereign/landingZoneAccounts/landingZoneRegistrations,4,,0,,0,4,false,spec_api=2025-02-27-preview; spec-preview-only
-Microsoft.Sql,Microsoft.Sql/instancePools,11,,0,,0,11,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/instancePools,11,,0,sql.azure.hfl.dev/InstancePool,11,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/locations/instanceFailoverGroups,7,sql.azure.com/InstanceFailoverGroup,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/locations/serverTrustGroups,2,,0,,0,2,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances,46,sql.azure.com/ManagedInstance,46,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/administrators,4,,0,,0,4,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/advancedThreatProtectionSettings,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/azureADOnlyAuthentications,1,,0,,0,1,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/administrators,4,,0,sql.azure.hfl.dev/ManagedInstancesAdministrator,4,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/advancedThreatProtectionSettings,1,,0,sql.azure.hfl.dev/ManagedInstancesAdvancedThreatProtectionSetting,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/azureADOnlyAuthentications,1,,0,sql.azure.hfl.dev/ManagedInstancesAzureADOnlyAuthentication,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases,19,sql.azure.com/ManagedInstancesDatabase,19,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies,5,,0,,0,5,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/ledgerDigestUploads,1,,0,,0,1,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings,1,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesAdvancedThreatProtectionSetting,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies,5,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesBackupLongTermRetentionPolicy,5,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies,1,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesBackupShortTermRetentionPolicy,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/ledgerDigestUploads,1,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesLedgerDigestUpload,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/securityAlertPolicies,7,,0,,0,7,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/securityAlertPolicies,7,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesSecurityAlertPolicy,7,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases/transparentDataEncryption,1,sql.azure.com/ManagedInstancesDatabasesTransparentDataEncryption,1,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments,6,,0,sql.azure.hfl.dev/ManagedInstancesDatabasesVulnerabilityAssessment,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments/rules/baselines,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/distributedAvailabilityGroups,8,,0,,0,8,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/dnsAliases,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/dtc,9,,0,,0,9,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/encryptionProtector,3,,0,,0,3,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/keys,2,,0,,0,2,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/privateEndpointConnections,3,,0,,0,3,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/distributedAvailabilityGroups,8,,0,sql.azure.hfl.dev/ManagedInstancesDistributedAvailabilityGroup,8,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/dnsAliases,1,,0,sql.azure.hfl.dev/ManagedInstancesDnsAlias,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/dtc,9,,0,sql.azure.hfl.dev/ManagedInstancesDtc,9,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/encryptionProtector,3,,0,sql.azure.hfl.dev/ManagedInstancesEncryptionProtector,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/keys,2,,0,sql.azure.hfl.dev/ManagedInstancesKey,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/privateEndpointConnections,3,,0,sql.azure.hfl.dev/ManagedInstancesPrivateEndpointConnection,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/managedInstances/restorableDroppedDatabases/backupShortTermRetentionPolicies,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/securityAlertPolicies,7,,0,,0,7,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/serverConfigurationOptions,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/serverTrustCertificates,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/sqlAgent,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/startStopSchedules,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/managedInstances/vulnerabilityAssessments,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/securityAlertPolicies,7,,0,sql.azure.hfl.dev/ManagedInstancesSecurityAlertPolicy,7,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/serverConfigurationOptions,1,,0,sql.azure.hfl.dev/ManagedInstancesServerConfigurationOption,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/serverTrustCertificates,1,,0,sql.azure.hfl.dev/ManagedInstancesServerTrustCertificate,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/sqlAgent,1,,0,sql.azure.hfl.dev/ManagedInstancesSqlAgent,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/startStopSchedules,6,,0,sql.azure.hfl.dev/ManagedInstancesStartStopSchedule,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/managedInstances/vulnerabilityAssessments,6,,0,sql.azure.hfl.dev/ManagedInstancesVulnerabilityAssessment,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers,22,sql.azure.com/Server,22,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/administrators,4,sql.azure.com/ServersAdministrator,4,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/advancedThreatProtectionSettings,1,sql.azure.com/ServersAdvancedThreatProtectionSetting,1,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
@@ -2105,13 +2105,13 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/auditingSettings,10,sql.azure.com/
 Microsoft.Sql,Microsoft.Sql/servers/databases/backupLongTermRetentionPolicies,6,sql.azure.com/ServersDatabasesBackupLongTermRetentionPolicy,6,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/backupShortTermRetentionPolicies,2,sql.azure.com/ServersDatabasesBackupShortTermRetentionPolicy,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/connectionPolicies,7,,0,,0,7,false,spec_api=2014-04-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies,2,,0,,0,2,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies,2,,0,sql.azure.hfl.dev/ServersDatabasesDataMaskingPolicy,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/dataMaskingPolicies/rules,11,,0,,0,11,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/extendedAuditingSettings,11,,0,,0,11,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/extensions,12,,0,,0,12,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/geoBackupPolicies,1,,0,sql.azure.hfl.dev/ServersDatabasesGeoBackupPolicy,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/ledgerDigestUploads,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/maintenanceWindows,3,,0,,0,3,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/ledgerDigestUploads,1,,0,sql.azure.hfl.dev/ServersDatabasesLedgerDigestUpload,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/maintenanceWindows,3,,0,sql.azure.hfl.dev/ServersDatabasesMaintenanceWindow,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/replicationLinks,1,,0,,0,1,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/schemas/tables/columns/sensitivityLabels,6,,0,,0,6,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/securityAlertPolicies,7,sql.azure.com/ServersDatabasesSecurityAlertPolicy,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
@@ -2123,31 +2123,31 @@ Microsoft.Sql,Microsoft.Sql/servers/databases/transparentDataEncryption,2,sql.az
 Microsoft.Sql,Microsoft.Sql/servers/databases/users,8,,0,sql.azure.hfl.dev/User,8,0,false,"outside-denominator; a database user, not an ARM resource; ASO's Azure SQL User with Entra users (ASO pull request #5104)"
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments,6,sql.azure.com/ServersDatabasesVulnerabilityAssessment,6,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/databases/vulnerabilityAssessments/rules/baselines,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers,6,,0,,0,6,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/devOpsAuditingSettings,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups,6,,0,sql.azure.hfl.dev/ServersDatabasesWorkloadGroup,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers,6,,0,sql.azure.hfl.dev/ServersDatabasesWorkloadGroupsWorkloadClassifier,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/devOpsAuditingSettings,6,,0,sql.azure.hfl.dev/ServersDevOpsAuditingSetting,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/disasterRecoveryConfiguration,0,,0,,0,0,false,spec_api=2014-04-01
-Microsoft.Sql,Microsoft.Sql/servers/dnsAliases,0,,0,,0,0,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/dnsAliases,0,,0,sql.azure.hfl.dev/ServersDnsAlias,0,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/elasticPools,19,sql.azure.com/ServersElasticPool,19,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/encryptionProtector,3,sql.azure.com/ServersEncryptionProtector,3,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/extendedAuditingSettings,12,,0,,0,12,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/failoverGroups,8,sql.azure.com/ServersFailoverGroup,8,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/firewallRules,2,sql.azure.com/ServersFirewallRule,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/ipv6FirewallRules,2,sql.azure.com/ServersIPV6FirewallRule,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents,11,,0,,0,11,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/credentials,2,,0,,0,2,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs,6,,0,,0,6,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents,11,,0,sql.azure.hfl.dev/ServersJobAgent,11,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/credentials,2,,0,sql.azure.hfl.dev/ServersJobAgentsCredential,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs,6,,0,sql.azure.hfl.dev/ServersJobAgentsJob,6,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs/executions,0,,0,,0,0,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs/steps,19,,0,,0,19,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/privateEndpoints,1,,0,,0,1,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/jobAgents/targetGroups,7,,0,,0,7,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/jobs/steps,19,,0,sql.azure.hfl.dev/ServersJobAgentsJobsStep,19,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/privateEndpoints,1,,0,sql.azure.hfl.dev/ServersJobAgentsPrivateEndpoint,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/jobAgents/targetGroups,7,,0,sql.azure.hfl.dev/ServersJobAgentsTargetGroup,7,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/keys,2,sql.azure.com/ServersKey,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/outboundFirewallRules,0,sql.azure.com/ServersOutboundFirewallRule,0,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/privateEndpointConnections,3,,0,,0,3,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/privateEndpointConnections,3,,0,sql.azure.hfl.dev/ServersPrivateEndpointConnection,3,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/securityAlertPolicies,7,sql.azure.com/ServersSecurityAlertPolicy,7,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments,1,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessment,1,0,false,spec_api=2025-01-01; ours_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,2,,0,,0,2,false,spec_api=2025-01-01
-Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules,2,,0,,0,2,false,spec_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines,2,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaseline,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
+Microsoft.Sql,Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules,2,,0,sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaselinesRule,2,0,false,spec_api=2025-01-01; ours_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/syncAgents,1,,0,,0,1,false,spec_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/virtualNetworkRules,2,sql.azure.com/ServersVirtualNetworkRule,2,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
 Microsoft.Sql,Microsoft.Sql/servers/vulnerabilityAssessments,6,sql.azure.com/ServersVulnerabilityAssessment,6,,0,0,false,spec_api=2025-01-01; official_api=2025-01-01
@@ -2157,16 +2157,16 @@ Microsoft.SqlVirtualMachine,Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/
 Microsoft.SqlVirtualMachine,Microsoft.SqlVirtualMachine/sqlVirtualMachines,85,,0,,0,85,false,spec_api=2023-10-01
 Microsoft.StandbyPool,Microsoft.StandbyPool/standbyContainerGroupPools,9,,0,,0,9,false,spec_api=2026-04-01
 Microsoft.StandbyPool,Microsoft.StandbyPool/standbyVirtualMachinePools,11,,0,,0,11,false,spec_api=2026-04-01
-Microsoft.Storage,Microsoft.Storage/contextCaches,12,,0,,0,12,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/contextCaches/contextCacheContainers,4,,0,,0,4,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/contextCaches,12,,0,storage.azure.hfl.dev/ContextCache,11,1,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/contextCaches/contextCacheContainers,4,,0,storage.azure.hfl.dev/ContextCachesContextCacheContainer,4,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts,89,storage.azure.com/StorageAccount,86,,0,3,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
-Microsoft.Storage,Microsoft.Storage/storageAccounts/advancedPlatformMetrics,3,,0,,0,3,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/blobAccessPointConfigurations,18,,0,,0,18,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/advancedPlatformMetrics,3,,0,storage.azure.hfl.dev/StorageAccountsAdvancedPlatformMetric,3,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/storageAccounts/blobAccessPointConfigurations,18,,0,storage.azure.hfl.dev/StorageAccountsBlobAccessPointConfiguration,18,0,false,spec_api=2026-09-01; ours_api=2026-09-01
 Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices,26,storage.azure.com/StorageAccountsBlobService,26,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices/containers,9,storage.azure.com/StorageAccountsBlobServicesContainer,7,,0,2,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies,3,,0,,0,3,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/connectors,11,,0,,0,11,false,spec_api=2026-09-01
-Microsoft.Storage,Microsoft.Storage/storageAccounts/dataShares,8,,0,,0,8,false,spec_api=2026-09-01
+Microsoft.Storage,Microsoft.Storage/storageAccounts/connectors,11,,0,storage.azure.hfl.dev/StorageAccountsConnector,11,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
+Microsoft.Storage,Microsoft.Storage/storageAccounts/dataShares,8,,0,storage.azure.hfl.dev/StorageAccountsDataShare,8,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/encryptionScopes,4,,0,storage.azure.hfl.dev/StorageAccountsEncryptionScope,4,0,false,spec_api=2026-09-01; ours_api=2026-06-01; ours-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/fileServices,15,storage.azure.com/StorageAccountsFileService,15,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
 Microsoft.Storage,Microsoft.Storage/storageAccounts/fileServices/shares,14,storage.azure.com/StorageAccountsFileServicesShare,14,,0,0,false,spec_api=2026-09-01; official_api=2026-06-01; official-api-differs-from-spec
@@ -2213,7 +2213,7 @@ Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs/inputs,15,,0,,
 Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs/outputs,14,,0,,0,14,false,spec_api=2020-03-01
 Microsoft.StreamAnalytics,Microsoft.StreamAnalytics/streamingjobs/transformations,3,,0,,0,3,false,spec_api=2020-03-01
 Microsoft.Subscription,Microsoft.Subscription/aliases,9,subscription.azure.com/Alias,9,,0,0,false,spec_api=2021-10-01; official_api=2021-10-01
-Microsoft.Subscription,Microsoft.Subscription/policies,3,,0,,0,3,false,spec_api=2021-10-01
+Microsoft.Subscription,Microsoft.Subscription/policies,3,,0,subscription.azure.hfl.dev/SubscriptionTenantPolicy,3,0,false,spec_api=2021-10-01; ours_api=2021-10-01
 Microsoft.Subscription,Microsoft.Subscription/subscriptionDefinitions,3,,0,,0,3,false,spec_api=2017-11-01-preview; spec-preview-only
 Microsoft.Subscriptions.Admin,Microsoft.Subscriptions.Admin/directoryTenants,2,,0,,0,2,false,spec_api=2015-11-01; spec-preview-only
 Microsoft.Subscriptions.Admin,Microsoft.Subscriptions.Admin/locations,3,,0,,0,3,false,spec_api=2015-11-01; spec-preview-only
@@ -2226,44 +2226,44 @@ Microsoft.Support,Microsoft.Support/fileWorkspaces,0,,0,,0,0,false,spec_api=2024
 Microsoft.Support,Microsoft.Support/fileWorkspaces/files,3,,0,,0,3,false,spec_api=2024-04-01
 Microsoft.Support,Microsoft.Support/supportTickets,31,,0,,0,31,false,spec_api=2024-04-01
 Microsoft.Support,Microsoft.Support/supportTickets/communications,3,,0,,0,3,false,spec_api=2024-04-01
-Microsoft.Synapse,Microsoft.Synapse/privateLinkHubs,3,,0,,0,3,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/privateLinkHubs,3,,0,synapse.azure.hfl.dev/PrivateLinkHub,2,1,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces,37,synapse.azure.com/Workspace,34,,0,3,false,spec_api=2021-06-01; official_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/administrators,4,,0,,0,4,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/auditingSettings,10,,0,,0,10,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/azureADOnlyAuthentications,1,,0,,0,1,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/administrators,4,,0,synapse.azure.hfl.dev/WorkspacesAdministrator,4,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/auditingSettings,10,,0,synapse.azure.hfl.dev/WorkspacesAuditingSetting,10,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/azureADOnlyAuthentications,1,,0,synapse.azure.hfl.dev/WorkspacesAzureADOnlyAuthentication,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/bigDataPools,30,synapse.azure.com/WorkspacesBigDataPool,30,,0,0,false,spec_api=2021-06-01; official_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings,1,,0,,0,1,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/encryptionProtector,2,,0,,0,2,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/extendedAuditingSettings,11,,0,,0,11,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/firewallRules,2,,0,,0,2,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/integrationRuntimes,43,,0,,0,43,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/keys,2,,0,,0,2,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings,1,,0,synapse.azure.hfl.dev/WorkspacesDedicatedSQLMinimalTlsSetting,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/encryptionProtector,2,,0,synapse.azure.hfl.dev/WorkspacesEncryptionProtector,2,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/extendedAuditingSettings,11,,0,synapse.azure.hfl.dev/WorkspacesExtendedAuditingSetting,11,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/firewallRules,2,,0,synapse.azure.hfl.dev/WorkspacesFirewallRule,2,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/integrationRuntimes,43,,0,synapse.azure.hfl.dev/WorkspacesIntegrationRuntime,2,41,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/keys,2,,0,synapse.azure.hfl.dev/WorkspacesKey,2,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools,12,,0,,0,12,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/attachedDatabaseConfigurations,10,,0,,0,10,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/databases,3,,0,,0,3,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections,10,,0,,0,10,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments,4,,0,,0,4,false,spec_api=2021-06-01-preview; spec-preview-only
 Microsoft.Synapse,Microsoft.Synapse/workspaces/kustoPools/principalAssignments,4,,0,,0,4,false,spec_api=2021-06-01-preview; spec-preview-only
-Microsoft.Synapse,Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings,1,,0,,0,1,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/privateEndpointConnections,3,,0,,0,3,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/securityAlertPolicies,7,,0,,0,7,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlAdministrators,4,,0,,0,4,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings,1,,0,synapse.azure.hfl.dev/WorkspacesManagedIdentitySqlControlSetting,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/privateEndpointConnections,3,,0,synapse.azure.hfl.dev/WorkspacesPrivateEndpointConnection,2,1,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/securityAlertPolicies,7,,0,synapse.azure.hfl.dev/WorkspacesSecurityAlertPolicy,7,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlAdministrators,4,,0,synapse.azure.hfl.dev/WorkspacesSqlAdministrator,4,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlDatabases,6,,0,,0,6,false,spec_api=2020-04-01-preview; spec-preview-only
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools,14,,0,,0,14,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/auditingSettings,8,,0,,0,8,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies,2,,0,,0,2,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies/rules,11,,0,,0,11,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings,10,,0,,0,10,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/geoBackupPolicies,1,,0,,0,1,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/maintenancewindows,3,,0,,0,3,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools,14,,0,synapse.azure.hfl.dev/WorkspacesSqlPool,13,1,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/auditingSettings,8,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsAuditingSetting,8,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies,2,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicy,2,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies/rules,11,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicyRule,11,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings,10,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsExtendedAuditingSetting,10,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/geoBackupPolicies,1,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsGeoBackupPolicy,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/maintenancewindows,3,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsMaintenanceWindow,3,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns/sensitivityLabels,5,,0,,0,5,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies,7,,0,,0,7,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption,1,,0,,0,1,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments,6,,0,,0,6,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies,7,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsSecurityAlertPolicy,7,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption,1,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsTransparentDataEncryption,1,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments,6,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsVulnerabilityAssessment,6,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments/rules/baselines,1,,0,,0,1,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/workloadGroups,6,,0,,0,6,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers,6,,0,,0,6,false,spec_api=2021-06-01
-Microsoft.Synapse,Microsoft.Synapse/workspaces/vulnerabilityAssessments,6,,0,,0,6,false,spec_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/workloadGroups,6,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroup,6,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers,6,,0,synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroupClassifier,6,0,false,spec_api=2021-06-01; ours_api=2021-06-01
+Microsoft.Synapse,Microsoft.Synapse/workspaces/vulnerabilityAssessments,6,,0,synapse.azure.hfl.dev/WorkspacesVulnerabilityAssessment,6,0,false,spec_api=2021-06-01; ours_api=2021-06-01
 Microsoft.Syntex,Microsoft.Syntex/documentProcessors,4,,0,,0,4,false,spec_api=2022-09-15-preview; spec-preview-only
 Microsoft.TestBase,Microsoft.TestBase/testBaseAccounts,7,,0,,0,7,false,spec_api=2023-11-01-preview; spec-preview-only
 Microsoft.TestBase,Microsoft.TestBase/testBaseAccounts/actionRequests,10,,0,,0,10,false,spec_api=2023-11-01-preview; spec-preview-only
@@ -2286,19 +2286,19 @@ Microsoft.VirtualMachineImages,Microsoft.VirtualMachineImages/imageTemplates/tri
 Microsoft.VMwareCloudSimple,Microsoft.VMwareCloudSimple/dedicatedCloudNodes,13,,0,,0,13,false,spec_api=2019-04-01
 Microsoft.VMwareCloudSimple,Microsoft.VMwareCloudSimple/dedicatedCloudServices,3,,0,,0,3,false,spec_api=2019-04-01
 Microsoft.VMwareCloudSimple,Microsoft.VMwareCloudSimple/virtualMachines,35,,0,,0,35,false,spec_api=2019-04-01
-Microsoft.Web,Microsoft.Web/aigateways,3,,0,,0,3,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/aigateways,3,,0,web.azure.hfl.dev/AiGateway,2,1,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/certificates,11,,0,web.azure.hfl.dev/Certificate,11,0,false,spec_api=2026-07-15; ours_api=2026-07-15
-Microsoft.Web,Microsoft.Web/connectionGateways,13,,0,,0,13,false,spec_api=2016-06-01
-Microsoft.Web,Microsoft.Web/connections,26,,0,,0,26,false,spec_api=2016-06-01
+Microsoft.Web,Microsoft.Web/connectionGateways,13,,0,web.azure.hfl.dev/ConnectionGateway,13,0,false,spec_api=2016-06-01; ours_api=2016-06-01
+Microsoft.Web,Microsoft.Web/connections,26,,0,web.azure.hfl.dev/ApiConnection,19,7,false,spec_api=2016-06-01; ours_api=2016-06-01
 Microsoft.Web,Microsoft.Web/containerApps,50,,0,,0,50,false,spec_api=2023-12-01
 Microsoft.Web,Microsoft.Web/csrs,10,,0,,0,10,false,spec_api=2015-08-01
-Microsoft.Web,Microsoft.Web/customApis,29,,0,,0,29,false,spec_api=2016-06-01
-Microsoft.Web,Microsoft.Web/hostingEnvironments,25,,0,,0,25,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/hostingEnvironments/configurations,8,,0,,0,8,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/customApis,29,,0,web.azure.hfl.dev/CustomApi,29,0,false,spec_api=2016-06-01; ours_api=2016-06-01
+Microsoft.Web,Microsoft.Web/hostingEnvironments,25,,0,web.azure.hfl.dev/HostingEnvironment,16,9,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/hostingEnvironments/configurations,8,,0,web.azure.hfl.dev/HostingEnvironmentsConfigurationCustomDnsSuffix;web.azure.hfl.dev/HostingEnvironmentsConfigurationNetworking,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/hostingEnvironments/multiRolePools,19,,0,,0,19,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/hostingEnvironments/privateEndpointConnections,6,,0,,0,6,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/hostingEnvironments/privateEndpointConnections,6,,0,web.azure.hfl.dev/HostingEnvironmentsPrivateEndpointConnection,5,1,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/hostingEnvironments/workerPools,19,,0,,0,19,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/kubeEnvironments,24,,0,,0,24,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/kubeEnvironments,24,,0,web.azure.hfl.dev/KubeEnvironment,24,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/managedHostingEnvironments,69,,0,,0,69,false,spec_api=2015-08-01
 Microsoft.Web,Microsoft.Web/publishingUsers,6,,0,,0,6,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/serverfarms,54,web.azure.com/ServerFarm,54,,0,0,false,spec_api=2026-07-15; official_api=2026-07-15
@@ -2306,67 +2306,67 @@ Microsoft.Web,Microsoft.Web/serverfarms/virtualNetworkConnections/gateways,3,,0,
 Microsoft.Web,Microsoft.Web/serverfarms/virtualNetworkConnections/routes,4,,0,,0,4,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites,244,web.azure.com/Site,244,,0,0,false,spec_api=2026-07-15; official_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/backups,15,,0,,0,15,false,spec_api=2015-08-01
-Microsoft.Web,Microsoft.Web/sites/basicPublishingCredentialsPolicies,2,,0,web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyFtp,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/certificates,11,,0,,0,11,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/config,302,,0,web.azure.hfl.dev/SitesConfigAppSettings;web.azure.hfl.dev/SitesConfigAuthSettingsV2;web.azure.hfl.dev/SitesConfigConnectionStrings,82,220,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/basicPublishingCredentialsPolicies,2,,0,web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyFtp;web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyScm,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/certificates,11,,0,web.azure.hfl.dev/SitesCertificate,11,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/config,302,,0,web.azure.hfl.dev/SitesConfigAppSettings;web.azure.hfl.dev/SitesConfigAuthSettingsV2;web.azure.hfl.dev/SitesConfigConnectionStrings;web.azure.hfl.dev/SitesConfigLogs;web.azure.hfl.dev/SitesConfigSlotConfigNames,99,203,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/deployments,10,,0,,0,10,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/domainOwnershipIdentifiers,2,,0,,0,2,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/domainOwnershipIdentifiers,2,,0,web.azure.hfl.dev/SitesDomainOwnershipIdentifier,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/extensions,15,,0,,0,15,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/functions,14,,0,,0,14,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/functions,14,,0,web.azure.hfl.dev/SitesFunction,14,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/functions/keys,1,,0,,0,1,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/hostNameBindings,9,,0,web.azure.hfl.dev/SitesHostNameBinding,9,0,false,spec_api=2026-07-15; ours_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/hybridconnection,8,,0,,0,8,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/hybridconnection,8,,0,web.azure.hfl.dev/SitesHybridConnection,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/hybridConnectionNamespaces/relays,9,,0,,0,9,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/instances/deployments,13,,0,,0,13,false,spec_api=2015-08-01
 Microsoft.Web,Microsoft.Web/sites/instances/extensions,15,,0,,0,15,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/networkConfig,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/premieraddons,8,,0,,0,8,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/privateAccess,7,,0,,0,7,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/privateEndpointConnections,6,,0,,0,6,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/publicCertificates,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/sitecontainers,16,,0,,0,16,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/premieraddons,8,,0,web.azure.hfl.dev/SitesPremieraddon,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/privateAccess,7,,0,web.azure.hfl.dev/SitesPrivateAccess,7,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/privateEndpointConnections,6,,0,web.azure.hfl.dev/SitesPrivateEndpointConnection,5,1,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/publicCertificates,3,,0,web.azure.hfl.dev/SitesPublicCertificate,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/sitecontainers,16,,0,web.azure.hfl.dev/SitesSitecontainer,16,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/siteextensions,0,,0,,0,0,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots,244,,0,web.azure.hfl.dev/SitesSlot,244,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/backups,15,,0,,0,15,false,spec_api=2015-08-01
-Microsoft.Web,Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies,2,,0,,0,2,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/certificates,11,,0,,0,11,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/config,299,,0,,0,299,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies,2,,0,web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyFtp;web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyScm,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/certificates,11,,0,web.azure.hfl.dev/SitesSlotsCertificate,11,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/config,299,,0,web.azure.hfl.dev/SitesSlotsConfigAuthSettingsV2;web.azure.hfl.dev/SitesSlotsConfigLogs,93,206,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/deployments,10,,0,,0,10,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/domainOwnershipIdentifiers,2,,0,,0,2,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/domainOwnershipIdentifiers,2,,0,web.azure.hfl.dev/SitesSlotsDomainOwnershipIdentifier,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/extensions,15,,0,,0,15,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/functions,14,,0,,0,14,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/functions,14,,0,web.azure.hfl.dev/SitesSlotsFunction,14,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/functions/keys,1,,0,,0,1,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/hostNameBindings,9,,0,web.azure.hfl.dev/SitesSlotsHostNameBinding,9,0,false,spec_api=2026-07-15; ours_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/hybridconnection,8,,0,,0,8,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/hybridconnection,8,,0,web.azure.hfl.dev/SitesSlotsHybridConnection,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/hybridConnectionNamespaces/relays,9,,0,,0,9,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/instances/deployments,13,,0,,0,13,false,spec_api=2015-08-01
 Microsoft.Web,Microsoft.Web/sites/slots/instances/extensions,15,,0,,0,15,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/networkConfig,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/premieraddons,8,,0,,0,8,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/privateAccess,7,,0,,0,7,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/privateEndpointConnections,6,,0,,0,6,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/publicCertificates,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/sitecontainers,16,,0,,0,16,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/premieraddons,8,,0,web.azure.hfl.dev/SitesSlotsPremieraddon,8,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/privateAccess,7,,0,web.azure.hfl.dev/SitesSlotsPrivateAccess,7,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/privateEndpointConnections,6,,0,web.azure.hfl.dev/SitesSlotsPrivateEndpointConnection,5,1,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/publicCertificates,3,,0,web.azure.hfl.dev/SitesSlotsPublicCertificate,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/sitecontainers,16,,0,web.azure.hfl.dev/SitesSlotsSitecontainer,16,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/slots/siteextensions,0,,0,,0,0,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/sourcecontrols,15,,0,,0,15,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/virtualNetworkConnections,5,,0,,0,5,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/slots/virtualNetworkConnections/gateways,3,,0,,0,3,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/sourcecontrols,15,,0,web.azure.hfl.dev/SitesSlotsSourcecontrol,15,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/virtualNetworkConnections,5,,0,web.azure.hfl.dev/SitesSlotsVirtualNetworkConnection,5,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/slots/virtualNetworkConnections/gateways,3,,0,web.azure.hfl.dev/SitesSlotsVirtualNetworkConnectionsGateway,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sites/sourcecontrols,15,web.azure.com/SitesSourcecontrol,15,,0,0,false,spec_api=2026-07-15; official_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/virtualNetworkConnections,5,,0,,0,5,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/sites/virtualNetworkConnections/gateways,3,,0,,0,3,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/virtualNetworkConnections,5,,0,web.azure.hfl.dev/SitesVirtualNetworkConnection,5,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/sites/virtualNetworkConnections/gateways,3,,0,web.azure.hfl.dev/SitesVirtualNetworkConnectionsGateway,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/sourcecontrols,5,,0,,0,5,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/staticSites,40,,0,,0,40,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/staticSites/basicAuth,5,,0,,0,5,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/staticSites,40,,0,web.azure.hfl.dev/StaticSite,40,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/staticSites/basicAuth,5,,0,web.azure.hfl.dev/StaticSitesBasicAuth,5,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.Web,Microsoft.Web/staticSites/builds/config,2,,0,,0,2,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/staticSites/builds/databaseConnections,5,,0,,0,5,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/staticSites/builds/linkedBackends,3,,0,,0,3,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/staticSites/builds/userProvidedFunctionApps,3,,0,,0,3,false,spec_api=2026-07-15
 Microsoft.Web,Microsoft.Web/staticSites/config,2,,0,,0,2,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/staticSites/customDomains,2,,0,,0,2,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/staticSites/databaseConnections,5,,0,,0,5,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/staticSites/linkedBackends,3,,0,,0,3,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/staticSites/privateEndpointConnections,6,,0,,0,6,false,spec_api=2026-07-15
-Microsoft.Web,Microsoft.Web/staticSites/userProvidedFunctionApps,3,,0,,0,3,false,spec_api=2026-07-15
+Microsoft.Web,Microsoft.Web/staticSites/customDomains,2,,0,web.azure.hfl.dev/StaticSitesCustomDomain,2,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/staticSites/databaseConnections,5,,0,web.azure.hfl.dev/StaticSitesDatabaseConnection,5,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/staticSites/linkedBackends,3,,0,web.azure.hfl.dev/StaticSitesLinkedBackend,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/staticSites/privateEndpointConnections,6,,0,web.azure.hfl.dev/StaticSitesPrivateEndpointConnection,5,1,false,spec_api=2026-07-15; ours_api=2026-07-15
+Microsoft.Web,Microsoft.Web/staticSites/userProvidedFunctionApps,3,,0,web.azure.hfl.dev/StaticSitesUserProvidedFunctionApp,3,0,false,spec_api=2026-07-15; ours_api=2026-07-15
 Microsoft.WeightsAndBiases,Microsoft.WeightsAndBiases/instances,23,,0,,0,23,false,spec_api=2024-09-18
 Microsoft.Widget,Microsoft.Widget/employees,5,,0,,0,5,false,spec_api=2021-11-01
 Microsoft.WindowsESU,Microsoft.WindowsESU/multipleActivationKeys,7,,0,,0,7,false,spec_api=2019-09-16-preview; spec-preview-only

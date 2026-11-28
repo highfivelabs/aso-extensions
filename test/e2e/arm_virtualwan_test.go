@@ -181,13 +181,11 @@ func TestVirtualWAN(t *testing.T) {
 	})
 
 	// The connection associated with the hub route table, by object.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(conn), conn); err != nil {
-		t.Fatal(err)
-	}
-	conn.Spec.RoutingConfiguration = &network.RoutingConfiguration{
-		AssociatedRouteTable: &network.SubResource{Reference: ours("VirtualHubsHubRouteTable", "spokes")},
-	}
-	if err := k8s.Update(ctx, conn); err != nil {
+	if err := change(t, conn, func(conn *network.VirtualHubsHubVirtualNetworkConnection) {
+		conn.Spec.RoutingConfiguration = &network.RoutingConfiguration{
+			AssociatedRouteTable: &network.SubResource{Reference: ours("VirtualHubsHubRouteTable", "spokes")},
+		}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "VirtualHubsHubVirtualNetworkConnection Ready again", ready(conn))
@@ -201,11 +199,9 @@ func TestVirtualWAN(t *testing.T) {
 	})
 
 	// The hub changed: PUT again with its route tables.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(hub), hub); err != nil {
-		t.Fatal(err)
-	}
-	hub.Spec.Tags = map[string]string{"team": "network"}
-	if err := k8s.Update(ctx, hub); err != nil {
+	if err := change(t, hub, func(hub *network.VirtualHub) {
+		hub.Spec.Tags = map[string]string{"team": "network"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, hubID, func(r map[string]any) error {

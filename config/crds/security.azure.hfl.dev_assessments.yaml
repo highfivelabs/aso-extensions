@@ -1,0 +1,896 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: assessments.security.azure.hfl.dev
+spec:
+  group: security.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - security
+    kind: Assessment
+    listKind: AssessmentList
+    plural: assessments
+    singular: assessment
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20250504
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /security/resource-manager/Microsoft.Security/Security/stable/2025-05-04/security-Assessment.json
+          - ARM URI: /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              additionalData:
+                additionalProperties:
+                  type: string
+                description: 'AdditionalData: Additional data regarding the assessment'
+                type: object
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              metadata:
+                description: 'Metadata: Describes properties of an assessment metadata.'
+                properties:
+                  assessmentType:
+                    description: |-
+                      AssessmentType: BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on
+                      custom Azure Policy definition
+                    enum:
+                    - BuiltIn
+                    - BuiltInPolicy
+                    - Custom
+                    - CustomPolicy
+                    - CustomerManaged
+                    - DynamicBuiltIn
+                    - ManualBuiltIn
+                    - ManualBuiltInPolicy
+                    - ManualCustomPolicy
+                    - Unknown
+                    - VerifiedPartner
+                    type: string
+                  categories:
+                    items:
+                      description: The categories of resource that is at risk when
+                        the assessment is unhealthy
+                      enum:
+                      - AppServices
+                      - Compute
+                      - Container
+                      - Data
+                      - IdentityAndAccess
+                      - IoT
+                      - Networking
+                      type: string
+                    type: array
+                  description:
+                    description: 'Description: Human readable description of the assessment'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: User friendly display name of the assessment'
+                    type: string
+                  implementationEffort:
+                    description: 'ImplementationEffort: The implementation effort
+                      required to remediate this assessment'
+                    enum:
+                    - High
+                    - Low
+                    - Moderate
+                    type: string
+                  partnerData:
+                    description: 'PartnerData: Describes the partner that created
+                      the assessment'
+                    properties:
+                      partnerName:
+                        description: 'PartnerName: Name of the company of the partner'
+                        type: string
+                      productName:
+                        description: 'ProductName: Name of the product of the partner
+                          that created the assessment'
+                        type: string
+                      secret:
+                        description: 'Secret: Secret to authenticate the partner and
+                          verify it created the assessment - write only'
+                        properties:
+                          key:
+                            description: Key is the key in the Kubernetes secret being
+                              referenced
+                            type: string
+                          name:
+                            description: |-
+                              Name is the name of the Kubernetes secret being referenced.
+                              The secret must be in the same namespace as the resource
+                            type: string
+                        required:
+                        - key
+                        - name
+                        type: object
+                    required:
+                    - partnerName
+                    - secret
+                    type: object
+                  preview:
+                    description: 'Preview: True if this assessment is in preview release
+                      status'
+                    type: boolean
+                  remediationDescription:
+                    description: 'RemediationDescription: Human readable description
+                      of what you should do to mitigate this security issue'
+                    type: string
+                  severity:
+                    description: 'Severity: The severity level of the assessment'
+                    enum:
+                    - Critical
+                    - High
+                    - Low
+                    - Medium
+                    type: string
+                  threats:
+                    items:
+                      description: Threats impact of the assessment
+                      enum:
+                      - accountBreach
+                      - dataExfiltration
+                      - dataSpillage
+                      - denialOfService
+                      - elevationOfPrivilege
+                      - maliciousInsider
+                      - missingCoverage
+                      - threatResistance
+                      type: string
+                    type: array
+                  userImpact:
+                    description: 'UserImpact: The user impact of the assessment'
+                    enum:
+                    - High
+                    - Low
+                    - Moderate
+                    type: string
+                required:
+                - assessmentType
+                - displayName
+                - severity
+                type: object
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set armId alone, or group, kind and name together
+                  rule: 'has(self.armId) ? !(has(self.group) || has(self.kind) ||
+                    has(self.name)) : (has(self.group) && has(self.kind) && has(self.name))'
+              partnersData:
+                description: 'PartnersData: Data regarding 3rd party partner integration'
+                properties:
+                  partnerName:
+                    description: 'PartnerName: Name of the company of the partner'
+                    type: string
+                  secret:
+                    description: 'Secret: secret to authenticate the partner - write
+                      only'
+                    properties:
+                      key:
+                        description: Key is the key in the Kubernetes secret being
+                          referenced
+                        type: string
+                      name:
+                        description: |-
+                          Name is the name of the Kubernetes secret being referenced.
+                          The secret must be in the same namespace as the resource
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
+                required:
+                - partnerName
+                - secret
+                type: object
+              resourceDetails:
+                description: 'ResourceDetails: Details of the resource that was assessed'
+                properties:
+                  azure:
+                    description: 'Azure: Mutually exclusive with all other properties'
+                    properties:
+                      source:
+                        description: 'Source: The platform where the assessed resource
+                          resides'
+                        enum:
+                        - Azure
+                        type: string
+                    required:
+                    - source
+                    type: object
+                  onPremiseResourceDetails:
+                    description: 'OnPremiseResourceDetails: Mutually exclusive with
+                      all other properties'
+                    properties:
+                      machineName:
+                        description: 'MachineName: The name of the machine'
+                        type: string
+                      source:
+                        description: 'Source: The platform where the assessed resource
+                          resides'
+                        enum:
+                        - OnPremiseResourceDetails
+                        type: string
+                      sourceComputerId:
+                        description: 'SourceComputerId: The oms agent Id installed
+                          on the machine'
+                        type: string
+                      vmuuid:
+                        description: 'Vmuuid: The unique Id of the machine'
+                        type: string
+                      workspaceReference:
+                        description: 'WorkspaceReference: Azure resource Id of the
+                          workspace the machine is attached to'
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                    required:
+                    - machineName
+                    - source
+                    - sourceComputerId
+                    - vmuuid
+                    - workspaceReference
+                    type: object
+                  onPremiseSql:
+                    description: 'OnPremiseSql: Mutually exclusive with all other
+                      properties'
+                    properties:
+                      databaseName:
+                        description: 'DatabaseName: The Sql database name installed
+                          on the machine'
+                        type: string
+                      machineName:
+                        description: 'MachineName: The name of the machine'
+                        type: string
+                      serverName:
+                        description: 'ServerName: The Sql server name installed on
+                          the machine'
+                        type: string
+                      source:
+                        description: 'Source: The platform where the assessed resource
+                          resides'
+                        enum:
+                        - OnPremiseSql
+                        type: string
+                      sourceComputerId:
+                        description: 'SourceComputerId: The oms agent Id installed
+                          on the machine'
+                        type: string
+                      vmuuid:
+                        description: 'Vmuuid: The unique Id of the machine'
+                        type: string
+                      workspaceReference:
+                        description: 'WorkspaceReference: Azure resource Id of the
+                          workspace the machine is attached to'
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                    required:
+                    - databaseName
+                    - machineName
+                    - serverName
+                    - source
+                    - sourceComputerId
+                    - vmuuid
+                    - workspaceReference
+                    type: object
+                type: object
+              risk:
+                description: 'Risk: External model of risk result'
+                properties:
+                  attackPathsReferences:
+                    description: 'AttackPathsReferences: The attack paths references
+                      of the risk'
+                    items:
+                      type: string
+                    type: array
+                  isContextualRisk:
+                    description: 'IsContextualRisk: Indicates if the risk is contextual
+                      or static'
+                    type: boolean
+                  level:
+                    description: 'Level: The risk level'
+                    enum:
+                    - Critical
+                    - High
+                    - Low
+                    - Medium
+                    - None
+                    type: string
+                  paths:
+                    items:
+                      properties:
+                        edges:
+                          description: 'Edges: Connections between nodes'
+                          items:
+                            properties:
+                              id:
+                                description: 'Id: Edge identifier'
+                                type: string
+                              sourceId:
+                                description: 'SourceId: Source node identifier'
+                                type: string
+                              targetId:
+                                description: 'TargetId: Target node identifier'
+                                type: string
+                            required:
+                            - id
+                            - sourceId
+                            - targetId
+                            type: object
+                          type: array
+                        id:
+                          description: 'Id: Unique identifier for the path'
+                          type: string
+                        nodes:
+                          items:
+                            properties:
+                              id:
+                                description: 'Id: Node identifier'
+                                type: string
+                              nodePropertiesLabel:
+                                description: 'NodePropertiesLabel: Properties associated
+                                  with the node'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  riskFactors:
+                    description: 'RiskFactors: The factors of the risk adding base
+                      factor'
+                    items:
+                      type: string
+                    type: array
+                type: object
+              status:
+                description: 'Status: The result of the assessment'
+                properties:
+                  cause:
+                    description: 'Cause: Programmatic code for the cause of the assessment
+                      status'
+                    type: string
+                  code:
+                    description: 'Code: Programmatic code for the status of the assessment'
+                    enum:
+                    - Healthy
+                    - NotApplicable
+                    - Unhealthy
+                    type: string
+                  description:
+                    description: 'Description: Human readable description of the assessment
+                      status'
+                    type: string
+                required:
+                - code
+                type: object
+            required:
+            - owner
+            - resourceDetails
+            - status
+            type: object
+          status:
+            properties:
+              additionalData:
+                additionalProperties:
+                  type: string
+                description: 'AdditionalData: Additional data regarding the assessment'
+                type: object
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              displayName:
+                description: 'DisplayName: User friendly display name of the assessment'
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              links:
+                description: 'Links: Links relevant to the assessment'
+                properties:
+                  azurePortalUri:
+                    description: 'AzurePortalUri: Link to assessment in Azure Portal'
+                    type: string
+                type: object
+              metadata:
+                description: 'Metadata: Describes properties of an assessment metadata.'
+                properties:
+                  assessmentType:
+                    description: |-
+                      AssessmentType: BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on
+                      custom Azure Policy definition
+                    type: string
+                  categories:
+                    items:
+                      description: The categories of resource that is at risk when
+                        the assessment is unhealthy
+                      type: string
+                    type: array
+                  description:
+                    description: 'Description: Human readable description of the assessment'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: User friendly display name of the assessment'
+                    type: string
+                  implementationEffort:
+                    description: 'ImplementationEffort: The implementation effort
+                      required to remediate this assessment'
+                    type: string
+                  partnerData:
+                    description: 'PartnerData: Describes the partner that created
+                      the assessment'
+                    properties:
+                      partnerName:
+                        description: 'PartnerName: Name of the company of the partner'
+                        type: string
+                      productName:
+                        description: 'ProductName: Name of the product of the partner
+                          that created the assessment'
+                        type: string
+                    type: object
+                  policyDefinitionId:
+                    description: 'PolicyDefinitionId: Azure resource ID of the policy
+                      definition that turns this assessment calculation on'
+                    type: string
+                  preview:
+                    description: 'Preview: True if this assessment is in preview release
+                      status'
+                    type: boolean
+                  remediationDescription:
+                    description: 'RemediationDescription: Human readable description
+                      of what you should do to mitigate this security issue'
+                    type: string
+                  severity:
+                    description: 'Severity: The severity level of the assessment'
+                    type: string
+                  threats:
+                    items:
+                      description: Threats impact of the assessment
+                      type: string
+                    type: array
+                  userImpact:
+                    description: 'UserImpact: The user impact of the assessment'
+                    type: string
+                type: object
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              partnersData:
+                description: 'PartnersData: Data regarding 3rd party partner integration'
+                properties:
+                  partnerName:
+                    description: 'PartnerName: Name of the company of the partner'
+                    type: string
+                type: object
+              resourceDetails:
+                description: 'ResourceDetails: Details of the resource that was assessed'
+                properties:
+                  azure:
+                    description: 'Azure: Mutually exclusive with all other properties'
+                    properties:
+                      id:
+                        description: 'Id: Azure resource Id of the assessed resource'
+                        type: string
+                      source:
+                        description: 'Source: The platform where the assessed resource
+                          resides'
+                        type: string
+                    type: object
+                  onPremiseResourceDetails:
+                    description: 'OnPremiseResourceDetails: Mutually exclusive with
+                      all other properties'
+                    properties:
+                      machineName:
+                        description: 'MachineName: The name of the machine'
+                        type: string
+                      source:
+                        description: 'Source: The platform where the assessed resource
+                          resides'
+                        type: string
+                      sourceComputerId:
+                        description: 'SourceComputerId: The oms agent Id installed
+                          on the machine'
+                        type: string
+                      vmuuid:
+                        description: 'Vmuuid: The unique Id of the machine'
+                        type: string
+                      workspaceId:
+                        description: 'WorkspaceId: Azure resource Id of the workspace
+                          the machine is attached to'
+                        type: string
+                    type: object
+                  onPremiseSql:
+                    description: 'OnPremiseSql: Mutually exclusive with all other
+                      properties'
+                    properties:
+                      databaseName:
+                        description: 'DatabaseName: The Sql database name installed
+                          on the machine'
+                        type: string
+                      machineName:
+                        description: 'MachineName: The name of the machine'
+                        type: string
+                      serverName:
+                        description: 'ServerName: The Sql server name installed on
+                          the machine'
+                        type: string
+                      source:
+                        description: 'Source: The platform where the assessed resource
+                          resides'
+                        type: string
+                      sourceComputerId:
+                        description: 'SourceComputerId: The oms agent Id installed
+                          on the machine'
+                        type: string
+                      vmuuid:
+                        description: 'Vmuuid: The unique Id of the machine'
+                        type: string
+                      workspaceId:
+                        description: 'WorkspaceId: Azure resource Id of the workspace
+                          the machine is attached to'
+                        type: string
+                    type: object
+                type: object
+              risk:
+                description: 'Risk: External model of risk result'
+                properties:
+                  attackPathsReferences:
+                    description: 'AttackPathsReferences: The attack paths references
+                      of the risk'
+                    items:
+                      type: string
+                    type: array
+                  isContextualRisk:
+                    description: 'IsContextualRisk: Indicates if the risk is contextual
+                      or static'
+                    type: boolean
+                  level:
+                    description: 'Level: The risk level'
+                    type: string
+                  paths:
+                    items:
+                      properties:
+                        edges:
+                          description: 'Edges: Connections between nodes'
+                          items:
+                            properties:
+                              id:
+                                description: 'Id: Edge identifier'
+                                type: string
+                              sourceId:
+                                description: 'SourceId: Source node identifier'
+                                type: string
+                              targetId:
+                                description: 'TargetId: Target node identifier'
+                                type: string
+                            type: object
+                          type: array
+                        id:
+                          description: 'Id: Unique identifier for the path'
+                          type: string
+                        nodes:
+                          items:
+                            properties:
+                              id:
+                                description: 'Id: Node identifier'
+                                type: string
+                              nodePropertiesLabel:
+                                description: 'NodePropertiesLabel: Properties associated
+                                  with the node'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  riskFactors:
+                    description: 'RiskFactors: The factors of the risk adding base
+                      factor'
+                    items:
+                      type: string
+                    type: array
+                type: object
+              status:
+                description: 'Status: The result of the assessment'
+                properties:
+                  cause:
+                    description: 'Cause: Programmatic code for the cause of the assessment
+                      status'
+                    type: string
+                  code:
+                    description: 'Code: Programmatic code for the status of the assessment'
+                    type: string
+                  description:
+                    description: 'Description: Human readable description of the assessment
+                      status'
+                    type: string
+                  firstEvaluationDate:
+                    description: |-
+                      FirstEvaluationDate: The time that the assessment was created and first evaluated. Returned as UTC time in ISO 8601
+                      format
+                    type: string
+                  statusChangeDate:
+                    description: 'StatusChangeDate: The time that the status of the
+                      assessment last changed. Returned as UTC time in ISO 8601 format'
+                    type: string
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

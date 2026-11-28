@@ -91,11 +91,9 @@ func TestSitesSlotAndHostNameBinding(t *testing.T) {
 	})
 
 	// A change to the slot is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(slot), slot); err != nil {
-		t.Fatal(err)
-	}
-	slot.Spec.HttpsOnly = ptr(false)
-	if err := k8s.Update(ctx, slot); err != nil {
+	if err := change(t, slot, func(slot *webv1.SitesSlot) {
+		slot.Spec.HttpsOnly = ptr(false)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, slotID, func(r map[string]any) error {

@@ -1,0 +1,316 @@
+# API Management kinds ASO does not export (Microsoft.ApiManagement, the
+# 2024-05-01 specs, the newest stable version and the one of ASO's own
+# Service, Api and Product; docs/plan.md f64, the first part of tier 3 row t4
+# of docs/coverage/foundation.md): an API's operations (with their policies
+# and tags), schemas, tag descriptions and tags; a product's tags; the
+# service's tags, global schemas, identity providers (the developer portal's
+# sign-in), OpenID Connect providers and OAuth 2.0 authorization servers
+# (for the APIs' OAuth settings), and external caches. Owned by ASO's
+# Service, Api and Product and our ApiOperation.
+#
+# The second part (docs/plan.md f71): a GraphQL API's resolvers and their
+# policies; the links made from a tag's side (apiLinks, operationLinks,
+# productLinks) and from a product's (apiLinks, groupLinks; the same links
+# as ASO's ProductApi and ProductGroup, by ARM ID); API releases, wikis and
+# documentations, policy restrictions and private endpoint connections;
+# and the v2 gateways (Microsoft.ApiManagement/gateways, in a resource
+# group: a workspace gateway) with their configuration connections to a
+# workspace.
+#
+# The third part (docs/plan.md f72): workspaces (a Premium service's) and
+# their children, the same contracts as the service's own: APIs with their
+# operations, policies, releases, schemas and diagnostics, version sets,
+# backends, certificates, diagnostics, groups and their users, loggers,
+# named values, policies and fragments, products with their links and
+# policies, schemas, subscriptions, and tags with their links.
+#
+# Not exported here: a workspace's notifications and their recipients (no
+# attributes; their names are an enum of notification kinds), the
+# developer portal's content, API issues and the tenant's access keys.
+typeFilters:
+  - action: include
+    group: apimanagement
+    version: v20240501
+    because: the newest stable version, the one of ASO's Service, Api and Product (v20240501)
+  - action: prune
+    group: apimanagement
+    because: every other version is left alone (ASO has the service and most of its children)
+typeTransformers:
+  - name: Service_IdentityProvider_Name_Spec
+    group: apimanagement
+    version: v20240501
+    target:
+      name: string
+    because: >-
+      An identity provider's name is its type (aad, aadB2C, facebook, google,
+      microsoft, twitter). ASO's generator keeps such an enum in the storage
+      version, which then imports the API version that imports it, an import
+      cycle (as operationalinsights.yaml says of linked storage accounts). A
+      string it is; the fake, as Azure, refuses any other name.
+  - group: apimanagement
+    version: v20240501
+    name: AuthorizationServerContractProperties_STATUS
+    property: ResourceOwnerPassword
+    remove: true
+    because: a password; Azure does not return it, and it is not shown in the status
+  - group: apimanagement
+    version: v20240501
+    name: Service_PrivateEndpointConnection_Spec
+    property: Id
+    remove: true
+    because: >-
+      The connection's own ARM ID, which the request may repeat; the kind's
+      owner and name already make it.
+groupModelConfiguration:
+  2024-05-01:
+    Service_Apis_Operation:
+      $exportAs: ApiOperation
+      $supportedFrom: v0.1.0
+    Service_Apis_Operations_Policy:
+      $exportAs: ApiOperationPolicy
+      $supportedFrom: v0.1.0
+    Service_Apis_Operations_Tag:
+      $exportAs: ApiOperationTag
+      $supportedFrom: v0.1.0
+    Service_Apis_Schema:
+      $exportAs: ApiSchema
+      $supportedFrom: v0.1.0
+    Service_Apis_TagDescription:
+      $exportAs: ApiTagDescription
+      $supportedFrom: v0.1.0
+    Service_Apis_Tag:
+      $exportAs: ApiTag
+      $supportedFrom: v0.1.0
+    Service_Products_Tag:
+      $exportAs: ProductTag
+      $supportedFrom: v0.1.0
+    Service_Tag:
+      $exportAs: Tag
+      $supportedFrom: v0.1.0
+    Service_Schema:
+      $exportAs: GlobalSchema
+      $supportedFrom: v0.1.0
+    Service_IdentityProvider:
+      $exportAs: IdentityProvider
+      $supportedFrom: v0.1.0
+    Service_OpenidConnectProvider:
+      $exportAs: OpenIdConnectProvider
+      $supportedFrom: v0.1.0
+    Service_AuthorizationServer:
+      $exportAs: AuthorizationServer
+      $supportedFrom: v0.1.0
+    Service_Cache:
+      $exportAs: Cache
+      $supportedFrom: v0.1.0
+    Service_Apis_Resolver:
+      $exportAs: ApiResolver
+      $supportedFrom: v0.1.0
+    Service_Apis_Resolvers_Policy:
+      $exportAs: ApiResolverPolicy
+      $supportedFrom: v0.1.0
+    Service_Apis_Release:
+      $exportAs: ApiRelease
+      $supportedFrom: v0.1.0
+    Service_Apis_Wiki:
+      $exportAs: ApiWiki
+      $supportedFrom: v0.1.0
+    Service_Products_Wiki:
+      $exportAs: ProductWiki
+      $supportedFrom: v0.1.0
+    Service_Documentation:
+      $exportAs: Documentation
+      $supportedFrom: v0.1.0
+    Service_Tags_ApiLink:
+      $exportAs: TagApiLink
+      $supportedFrom: v0.1.0
+    Service_Tags_OperationLink:
+      $exportAs: TagOperationLink
+      $supportedFrom: v0.1.0
+    Service_Tags_ProductLink:
+      $exportAs: TagProductLink
+      $supportedFrom: v0.1.0
+    Service_Products_ApiLink:
+      $exportAs: ProductApiLink
+      $supportedFrom: v0.1.0
+    Service_Products_GroupLink:
+      $exportAs: ProductGroupLink
+      $supportedFrom: v0.1.0
+    Service_PolicyRestriction:
+      $exportAs: PolicyRestriction
+      $supportedFrom: v0.1.0
+    Service_PrivateEndpointConnection:
+      $exportAs: PrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Gateway:
+      $exportAs: Gateway
+      $supportedFrom: v0.1.0
+    Gateways_ConfigConnection:
+      $exportAs: GatewayConfigConnection
+      $supportedFrom: v0.1.0
+    ApiReleaseContractProperties:
+      ApiId:
+        $referenceType: arm # the API released (ASO's Api, or an ARM ID)
+    TagApiLinkContractProperties:
+      ApiId:
+        $referenceType: arm
+    TagOperationLinkContractProperties:
+      OperationId:
+        $referenceType: arm
+    TagProductLinkContractProperties:
+      ProductId:
+        $referenceType: arm
+    ProductApiLinkContractProperties:
+      ApiId:
+        $referenceType: arm
+    ProductGroupLinkContractProperties:
+      GroupId:
+        $referenceType: arm
+    BackendSubnetConfiguration:
+      Id:
+        $referenceType: arm # the subnet a workspace gateway is injected into
+    Service_Workspace:
+      $exportAs: Workspace
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Api:
+      $exportAs: WorkspaceApi
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Diagnostic:
+      $exportAs: WorkspaceApiDiagnostic
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Operation:
+      $exportAs: WorkspaceApiOperation
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Operations_Policy:
+      $exportAs: WorkspaceApiOperationPolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Policy:
+      $exportAs: WorkspaceApiPolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Release:
+      $exportAs: WorkspaceApiRelease
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Apis_Schema:
+      $exportAs: WorkspaceApiSchema
+      $supportedFrom: v0.1.0
+    Service_Workspaces_ApiVersionSet:
+      $exportAs: WorkspaceApiVersionSet
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Backend:
+      $exportAs: WorkspaceBackend
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Certificate:
+      $exportAs: WorkspaceCertificate
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Diagnostic:
+      $exportAs: WorkspaceDiagnostic
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Group:
+      $exportAs: WorkspaceGroup
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Groups_User:
+      $exportAs: WorkspaceGroupUser
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Logger:
+      $exportAs: WorkspaceLogger
+      $supportedFrom: v0.1.0
+    Service_Workspaces_NamedValue:
+      $exportAs: WorkspaceNamedValue
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Policy:
+      $exportAs: WorkspacePolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_PolicyFragment:
+      $exportAs: WorkspacePolicyFragment
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Product:
+      $exportAs: WorkspaceProduct
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Products_ApiLink:
+      $exportAs: WorkspaceProductApiLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Products_GroupLink:
+      $exportAs: WorkspaceProductGroupLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Products_Policy:
+      $exportAs: WorkspaceProductPolicy
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Schema:
+      $exportAs: WorkspaceSchema
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Subscription:
+      $exportAs: WorkspaceSubscription
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tag:
+      $exportAs: WorkspaceTag
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tags_ApiLink:
+      $exportAs: WorkspaceTagApiLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tags_OperationLink:
+      $exportAs: WorkspaceTagOperationLink
+      $supportedFrom: v0.1.0
+    Service_Workspaces_Tags_ProductLink:
+      $exportAs: WorkspaceTagProductLink
+      $supportedFrom: v0.1.0
+    # Copied from ASO's v2/azure-arm/apimanagement.yaml (2024-05-01, at the
+    # pin): the labels of the service-level types the workspace kinds share.
+    ApiCreateOrUpdateProperties:
+      ApiVersionSetId:
+        $referenceType: arm
+      SourceApiId:
+        $referenceType: arm
+    ApiVersionSetContractDetails:
+      Id:
+        $referenceType: arm
+    BackendContractProperties:
+      ResourceId:
+        $referenceType: arm
+    BackendProxyContract:
+      Password:
+        $importSecretMode: required
+    CertificateCreateOrUpdateProperties:
+      Data:
+        $importSecretMode: required
+      Password:
+        $importSecretMode: required
+    DiagnosticContractProperties:
+      LoggerId:
+        $referenceType: arm
+    KeyVaultContractCreateProperties:
+      IdentityClientId:
+        $importConfigMapMode: optional
+    LoggerContractProperties:
+      Credentials:
+        $importSecretMode: required
+      ResourceId:
+        $referenceType: arm
+    SubscriptionCreateParameterProperties:
+      PrimaryKey:
+        $importSecretMode: required
+      SecondaryKey:
+        $importSecretMode: required
+      OwnerId:
+        $referenceType: arm
+    CacheContractProperties:
+      ResourceId:
+        $referenceType: arm # the Azure Cache for Redis behind an external cache (ASO's Redis, or an ARM ID)
+      ConnectionString:
+        $importSecretMode: required # the cache's connection string, which holds its access key
+    AuthorizationServerContractProperties:
+      ClientSecret:
+        $importSecretMode: required
+      ResourceOwnerPassword:
+        $importSecretMode: required # the resource owner's password, for the password grant
+      TokenEndpoint:
+        $importSecretMode: never # a URL
+    IdentityProviderCreateContractProperties:
+      ClientSecret:
+        $importSecretMode: required
+      PasswordResetPolicyName:
+        $importSecretMode: never # the name of an Azure AD B2C policy
+    IdentityProviderContractProperties:
+      PasswordResetPolicyName:
+        $importSecretMode: never # the same, as the status shows it
+    OpenidConnectProviderContractProperties:
+      ClientSecret:
+        $importSecretMode: required
