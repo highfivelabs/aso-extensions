@@ -25,3 +25,31 @@ f66d0ac08369dbe85a3d749ab93b24c24df9a72e:test/e2e/arm_logic_connections_test.go:
 # not secrets; the rule reads an identifier ending in Api as a key.
 561e5910d6bdf8d31697de4071ff65e8fa196428:apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:generic-api-key:18856
 561e5910d6bdf8d31697de4071ff65e8fa196428:apis/arm/datafactory/v20180601/factories_pipeline_types_gen.go:generic-api-key:19448
+
+# Generated Go variable names, Azure's public built-in role IDs, and
+# made-up test inputs; each was read and is not a credential (HFL-815).
+07cddca91f65d949cfebaba16b83568b68b0658b:apis/arm/app/v20251002preview/managed_environment_types_gen.go:generic-api-key:2924
+07cddca91f65d949cfebaba16b83568b68b0658b:apis/arm/app/v20251002preview/managed_environment_types_gen.go:generic-api-key:3091
+0f8ea4ed7996d25304dc04ea247bf9c199bf9358:apis/arm/app/v20250101/managed_environments_certificate_types_gen.go:generic-api-key:1058
+0f8ea4ed7996d25304dc04ea247bf9c199bf9358:apis/arm/app/v20250101/managed_environments_certificate_types_gen.go:generic-api-key:895
+18ee4c1b1b11640c5ed369141ab2eb71ed22c5c7:apis/arm/storage/v20260601/storage_accounts_encryption_scope_types_gen.go:generic-api-key:359
+18ee4c1b1b11640c5ed369141ab2eb71ed22c5c7:apis/arm/storage/v20260601/storage_accounts_encryption_scope_types_gen.go:generic-api-key:785
+2d2bec814184dc41c69dc7457f3456aacbf4afc8:test/live/gateway_test.go:generic-api-key:237
+2d3b80a1a7a523105e5a8f4d0aab82db1374c2dd:pkg/fakecloud/arm/pim.go:generic-api-key:71
+31f3ed7142b0a45db411c944176c64f2cc1ee85f:test/e2e/web_appsettings_test.go:generic-api-key:41
+5f38ca5bdce5cab0740ab94e2465245ba5a60aaa:apis/arm/automation/v20241023/automation_account_types_gen.go:generic-api-key:1558
+5f38ca5bdce5cab0740ab94e2465245ba5a60aaa:apis/arm/automation/v20241023/automation_account_types_gen.go:generic-api-key:1745
+7a17fb10d4a629efd269d11c511f0c12d9dad844:apis/arm/cognitiveservices/v20250601/accounts_encryption_scope_types_gen.go:generic-api-key:1143
+7a17fb10d4a629efd269d11c511f0c12d9dad844:apis/arm/cognitiveservices/v20250601/accounts_encryption_scope_types_gen.go:generic-api-key:967
+7d824f5a6419ee0ffcdad610bb9e641ca905cedb:apis/arm/recoveryservices/v20260701/vault_types_gen.go:generic-api-key:5230
+7d824f5a6419ee0ffcdad610bb9e641ca905cedb:apis/arm/recoveryservices/v20260701/vault_types_gen.go:generic-api-key:5417
+85c57783988bfe95287cb4521d647a17cbcded54:apis/arm/compute/v20250401/virtual_machine_types_gen.go:generic-api-key:22227
+85c57783988bfe95287cb4521d647a17cbcded54:apis/arm/compute/v20250401/virtual_machine_types_gen.go:generic-api-key:22244
+85c57783988bfe95287cb4521d647a17cbcded54:apis/arm/compute/v20250401/virtual_machine_types_gen.go:generic-api-key:22411
+85c57783988bfe95287cb4521d647a17cbcded54:apis/arm/compute/v20250401/virtual_machine_types_gen.go:generic-api-key:22428
+bfd7fb7fb632f48c9f15cec10644063bc9316a76:apis/arm/app/v20260101/connected_environment_types_gen.go:generic-api-key:1277
+bfd7fb7fb632f48c9f15cec10644063bc9316a76:apis/arm/app/v20260101/connected_environment_types_gen.go:generic-api-key:1444
+bfd7fb7fb632f48c9f15cec10644063bc9316a76:apis/arm/app/v20260101/connected_environments_certificate_types_gen.go:generic-api-key:1058
+bfd7fb7fb632f48c9f15cec10644063bc9316a76:apis/arm/app/v20260101/connected_environments_certificate_types_gen.go:generic-api-key:891
+d852f8a1d0e8645fc0c94a69db40221a150d4857:apis/arm/operationalinsights/v20250701/cluster_types_gen.go:generic-api-key:1116
+d852f8a1d0e8645fc0c94a69db40221a150d4857:apis/arm/operationalinsights/v20250701/cluster_types_gen.go:generic-api-key:455
