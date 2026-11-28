@@ -15,7 +15,7 @@
 #   mode=groups  check:static, build and the tests of the groups only
 #   mode=full    task check
 #   groups=...   the groups (mode=groups)
-#   e2e=true     task operator-e2e runs too (on a Spot runner)
+#   e2e=true     task operator-e2e runs too
 #
 # Each path is one of:
 #   docs      *.md, docs/, LICENSE, NOTICE; UPSTREAM.md unless a row

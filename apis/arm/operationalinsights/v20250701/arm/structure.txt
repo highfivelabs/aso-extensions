@@ -499,6 +499,65 @@ WorkspacesStorageInsightConfig_Spec: Object (4 properties)
 │   └── Tables: string[]
 └── Tags: map[string]string
 
+WorkspacesSummaryLog_STATUS: Object (5 properties)
+├── Id: *string
+├── Name: *string
+├── Properties: *Object (7 properties)
+│   ├── Description: *string
+│   ├── DisplayName: *string
+│   ├── IsActive: *bool
+│   ├── ProvisioningState: *Enum (5 values)
+│   │   ├── "Canceled"
+│   │   ├── "Deleting"
+│   │   ├── "Failed"
+│   │   ├── "Succeeded"
+│   │   └── "Updating"
+│   ├── RuleDefinition: *Object (6 properties)
+│   │   ├── BinDelay: *int
+│   │   ├── BinSize: *int
+│   │   ├── BinStartTime: *string
+│   │   ├── DestinationTable: *string
+│   │   ├── Query: *string
+│   │   └── TimeSelector: *Enum (1 value)
+│   │       └── "TimeGenerated"
+│   ├── RuleType: *Enum (1 value)
+│   │   └── "User"
+│   └── StatusCode: *Enum (2 values)
+│       ├── "DataPlaneError"
+│       └── "UserAction"
+├── SystemData: *Object (6 properties)
+│   ├── CreatedAt: *string
+│   ├── CreatedBy: *string
+│   ├── CreatedByType: *Enum (4 values)
+│   │   ├── "Application"
+│   │   ├── "Key"
+│   │   ├── "ManagedIdentity"
+│   │   └── "User"
+│   ├── LastModifiedAt: *string
+│   ├── LastModifiedBy: *string
+│   └── LastModifiedByType: *Enum (4 values)
+│       ├── "Application"
+│       ├── "Key"
+│       ├── "ManagedIdentity"
+│       └── "User"
+└── Type: *string
+
+WorkspacesSummaryLog_Spec: Object (2 properties)
+├── Name: string
+└── Properties: *Object (4 properties)
+    ├── Description: *string
+    ├── DisplayName: *string
+    ├── RuleDefinition: *Object (6 properties)
+    │   ├── BinDelay: *int
+    │   ├── BinSize: *int
+    │   ├── BinStartTime: *string
+    │   ├── DestinationTable: *string
+    │   ├── Query: *string
+    │   └── TimeSelector: *Enum (1 value)
+    │       └── "TimeGenerated"
+    └── RuleType: *Enum (1 value)
+        └── "User"
+
 WorkspacesTable_STATUS: Object (5 properties)
 ├── Id: *string
 ├── Name: *string

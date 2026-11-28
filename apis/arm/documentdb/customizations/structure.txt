@@ -9,6 +9,10 @@ DatabaseAccountsCassandraKeyspacesTablesThroughputSettingExtension: Object (0 pr
 
 DatabaseAccountsCassandraKeyspacesThroughputSettingExtension: Object (0 properties)
 
+DatabaseAccountsCassandraRoleAssignmentExtension: Object (0 properties)
+
+DatabaseAccountsCassandraRoleDefinitionExtension: Object (0 properties)
+
 DatabaseAccountsGremlinDatabaseExtension: Object (0 properties)
 
 DatabaseAccountsGremlinDatabasesGraphExtension: Object (0 properties)
@@ -16,6 +20,14 @@ DatabaseAccountsGremlinDatabasesGraphExtension: Object (0 properties)
 DatabaseAccountsGremlinDatabasesGraphsThroughputSettingExtension: Object (0 properties)
 
 DatabaseAccountsGremlinDatabasesThroughputSettingExtension: Object (0 properties)
+
+DatabaseAccountsGremlinRoleAssignmentExtension: Object (0 properties)
+
+DatabaseAccountsGremlinRoleDefinitionExtension: Object (0 properties)
+
+DatabaseAccountsMongoMIRoleAssignmentExtension: Object (0 properties)
+
+DatabaseAccountsMongoMIRoleDefinitionExtension: Object (0 properties)
 
 DatabaseAccountsPrivateEndpointConnectionExtension: Object (0 properties)
 
@@ -27,5 +39,19 @@ DatabaseAccountsSqlRoleDefinitionExtension: Object (0 properties)
 
 DatabaseAccountsTableExtension: Object (0 properties)
 
+DatabaseAccountsTableRoleAssignmentExtension: Object (0 properties)
+
+DatabaseAccountsTableRoleDefinitionExtension: Object (0 properties)
+
 DatabaseAccountsTablesThroughputSettingExtension: Object (0 properties)
+
+FleetExtension: Object (0 properties)
+
+FleetsFleetspaceExtension: Object (0 properties)
+
+FleetsFleetspacesFleetspaceAccountExtension: Object (0 properties)
+
+MongoClustersPrivateEndpointConnectionExtension: Object (0 properties)
+
+MongoClustersUserExtension: Object (0 properties)
 

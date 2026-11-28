@@ -1,0 +1,467 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: apiconnections.web.azure.hfl.dev
+spec:
+  group: web.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - web
+    kind: ApiConnection
+    listKind: ApiConnectionList
+    plural: apiconnections
+    singular: apiconnection
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20160601
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /web/resource-manager/Microsoft.Web/AppService/stable/2016-06-01/logicAppsManagementClient.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/connections/{connectionName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              etag:
+                description: 'Etag: Resource ETag'
+                type: string
+              location:
+                description: 'Location: Resource location'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a resources.azure.com/ResourceGroup resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              properties:
+                properties:
+                  api:
+                    properties:
+                      brandColor:
+                        description: 'BrandColor: Brand color'
+                        type: string
+                      description:
+                        description: 'Description: The custom API description'
+                        type: string
+                      displayName:
+                        description: 'DisplayName: The display name'
+                        type: string
+                      iconUri:
+                        description: 'IconUri: The icon URI'
+                        type: string
+                      name:
+                        description: 'Name: The name of the API'
+                        type: string
+                      reference:
+                        description: 'Reference: Resource reference id'
+                        properties:
+                          armId:
+                            description: |-
+                              ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                              The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                              ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                            pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                            type: string
+                          group:
+                            description: Group is the Kubernetes group of the resource.
+                            type: string
+                          kind:
+                            description: Kind is the Kubernetes kind of the resource.
+                            type: string
+                          name:
+                            description: Name is the Kubernetes name of the resource.
+                            type: string
+                        type: object
+                      swagger:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        description: 'Swagger: The JSON representation of the swagger'
+                        type: object
+                      type:
+                        description: 'Type: Resource reference type'
+                        type: string
+                    type: object
+                  changedTime:
+                    description: 'ChangedTime: Timestamp of last connection change'
+                    type: string
+                  createdTime:
+                    description: 'CreatedTime: Timestamp of the connection creation'
+                    type: string
+                  customParameterValues:
+                    description: 'CustomParameterValues: Dictionary of custom parameter
+                      values'
+                    properties:
+                      name:
+                        description: |-
+                          Name is the name of the Kubernetes secret being referenced.
+                          The secret must be in the same namespace as the resource
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  displayName:
+                    description: 'DisplayName: Display name'
+                    type: string
+                  nonSecretParameterValues:
+                    additionalProperties:
+                      type: string
+                    description: 'NonSecretParameterValues: Dictionary of nonsecret
+                      parameter values'
+                    type: object
+                  parameterValues:
+                    description: 'ParameterValues: Dictionary of parameter values'
+                    properties:
+                      name:
+                        description: |-
+                          Name is the name of the Kubernetes secret being referenced.
+                          The secret must be in the same namespace as the resource
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  statuses:
+                    description: 'Statuses: Status of the connection'
+                    items:
+                      description: Connection status
+                      properties:
+                        status:
+                          description: 'Status: The gateway status'
+                          type: string
+                        target:
+                          description: 'Target: Target of the error'
+                          type: string
+                      type: object
+                    type: array
+                  testLinks:
+                    description: 'TestLinks: Links to test the API connection'
+                    items:
+                      description: API connection properties
+                      properties:
+                        method:
+                          description: 'Method: HTTP Method'
+                          type: string
+                        requestUri:
+                          description: 'RequestUri: Test link request URI'
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              etag:
+                description: 'Etag: Resource ETag'
+                type: string
+              id:
+                description: 'Id: Resource id'
+                type: string
+              location:
+                description: 'Location: Resource location'
+                type: string
+              name:
+                description: 'Name: Resource name'
+                type: string
+              properties:
+                properties:
+                  api:
+                    properties:
+                      brandColor:
+                        description: 'BrandColor: Brand color'
+                        type: string
+                      description:
+                        description: 'Description: The custom API description'
+                        type: string
+                      displayName:
+                        description: 'DisplayName: The display name'
+                        type: string
+                      iconUri:
+                        description: 'IconUri: The icon URI'
+                        type: string
+                      id:
+                        description: 'Id: Resource reference id'
+                        type: string
+                      name:
+                        description: 'Name: The name of the API'
+                        type: string
+                      swagger:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        description: 'Swagger: The JSON representation of the swagger'
+                        type: object
+                      type:
+                        description: 'Type: Resource reference type'
+                        type: string
+                    type: object
+                  changedTime:
+                    description: 'ChangedTime: Timestamp of last connection change'
+                    type: string
+                  createdTime:
+                    description: 'CreatedTime: Timestamp of the connection creation'
+                    type: string
+                  displayName:
+                    description: 'DisplayName: Display name'
+                    type: string
+                  nonSecretParameterValues:
+                    additionalProperties:
+                      type: string
+                    description: 'NonSecretParameterValues: Dictionary of nonsecret
+                      parameter values'
+                    type: object
+                  statuses:
+                    description: 'Statuses: Status of the connection'
+                    items:
+                      description: Connection status
+                      properties:
+                        error:
+                          description: 'Error: Connection error'
+                          properties:
+                            id:
+                              description: 'Id: Resource id'
+                              type: string
+                          type: object
+                        status:
+                          description: 'Status: The gateway status'
+                          type: string
+                        target:
+                          description: 'Target: Target of the error'
+                          type: string
+                      type: object
+                    type: array
+                  testLinks:
+                    description: 'TestLinks: Links to test the API connection'
+                    items:
+                      description: API connection properties
+                      properties:
+                        method:
+                          description: 'Method: HTTP Method'
+                          type: string
+                        requestUri:
+                          description: 'RequestUri: Test link request URI'
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                type: object
+              type:
+                description: 'Type: Resource type'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

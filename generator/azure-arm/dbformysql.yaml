@@ -1,0 +1,36 @@
+# Azure Database for MySQL flexible server children ASO does not export
+# (Microsoft.DBforMySQL, FlexibleServers openapi.json 2024-12-30, the newest
+# stable version and the one of ASO's own v20241230 FlexibleServer;
+# docs/plan.md f66, tier 3 row t6 of docs/coverage/foundation.md): a
+# server's Microsoft Defender for open-source relational databases setting
+# (advanced threat protection, its one setting, Default) and its private
+# endpoint connections. Owned by ASO's FlexibleServer. Not exported: the
+# retired single server (servers/*) and on-demand backups (backups and
+# backupsV2: a PUT takes a backup now, an operation).
+typeFilters:
+  - action: include
+    group: dbformysql
+    version: v20241230
+    because: the version of ASO's FlexibleServer (v20241230)
+  - action: prune
+    group: dbformysql
+    because: every other version is left alone
+typeTransformers:
+  - name: FlexibleServers_AdvancedThreatProtectionSetting_Name_Spec
+    group: dbformysql
+    version: v20241230
+    target:
+      name: string
+    because: >-
+      The setting's one name is Default. ASO's generator keeps such an enum in
+      the storage version, which then imports the API version that imports
+      it, an import cycle (as operationalinsights.yaml says). A string it is;
+      the fake, as Azure, refuses any other name.
+groupModelConfiguration:
+  2024-12-30:
+    FlexibleServers_AdvancedThreatProtectionSetting:
+      $exportAs: FlexibleServersAdvancedThreatProtectionSetting
+      $supportedFrom: v0.1.0
+    FlexibleServers_PrivateEndpointConnection:
+      $exportAs: FlexibleServersPrivateEndpointConnection
+      $supportedFrom: v0.1.0

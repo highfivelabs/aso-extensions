@@ -5,6 +5,7 @@ package e2e
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"hash/fnv"
 	"os"
@@ -47,7 +48,8 @@ import (
 // that is what a kind's own test is for (arm_*_test.go), written when a kind
 // has such behaviour. See docs/testing.md.
 //
-// conformanceFixtures says what a kind needs beyond the smallest object,
+// conformanceFixtures says what a kind needs beyond the smallest object
+// (keyed by kind, or by "group/Kind" where two groups share a kind name),
 // when the fake's rules for that kind ask for more; a kind listed there with
 // skip is not run, with the reason.
 func TestGeneratedKindsConformance(t *testing.T) {
@@ -61,7 +63,10 @@ func TestGeneratedKindsConformance(t *testing.T) {
 		gvk := schema.GroupVersionKind{Group: crd.Spec.Group, Version: version.Name, Kind: crd.Spec.Names.Kind}
 		t.Run(gvk.Kind, func(t *testing.T) {
 			t.Parallel()
-			fix := conformanceFixtures[gvk.Kind]
+			fix, ok := conformanceFixtures[gvk.Group+"/"+gvk.Kind]
+			if !ok {
+				fix = conformanceFixtures[gvk.Kind]
+			}
 			if fix.skip != "" {
 				t.Skip(fix.skip)
 			}
@@ -144,6 +149,12 @@ type conformanceFixture struct {
 	coveredBy string
 	// skip is why the kind is not run here.
 	skip string
+	// namespace, when set, is the namespace to run in instead of the
+	// kind's (a second run of the kind, as TestUpjetExamplesOnFake makes).
+	namespace string
+	// sent are strings the fake's resource must hold after the PUT (the
+	// values of an example).
+	sent []string
 }
 
 // conformanceContext is one kind's run: its namespace and the resource
@@ -190,7 +201,11 @@ var conformanceFixtures = map[string]conformanceFixture{}
 
 func conformance(t *testing.T, gvk schema.GroupVersionKind, meta genruntime.ARMMetaObject, specSchema apiextensionsv1.JSONSchemaProps, fix conformanceFixture) {
 	ctx := context.Background()
-	ns := namespace(t, conformanceNamespace(gvk))
+	nsName := conformanceNamespace(gvk)
+	if fix.namespace != "" {
+		nsName = fix.namespace
+	}
+	ns := namespace(t, nsName)
 	strictCredential(t, ns, clientA)
 	trustNamespace(ns)
 	c := &conformanceContext{ns: ns, resourceGroup: "/subscriptions/" + subID + "/resourceGroups/" + ns + "-rg"}
@@ -266,12 +281,25 @@ func conformance(t *testing.T, gvk schema.GroupVersionKind, meta genruntime.ARMM
 	if typ, _ := got["type"].(string); !strings.EqualFold(typ, meta.GetType()) {
 		t.Fatalf("%s: the fake holds %s of type %q; the kind's ARM type is %q", gvk.Kind, id, typ, meta.GetType())
 	}
-
-	if hasTagMap(specSchema) && !fix.keeps {
-		if err := unstructured.SetNestedField(obj.Object, map[string]any{"conformance": "2"}, "spec", "tags"); err != nil {
+	if len(fix.sent) > 0 {
+		body, err := json.Marshal(got)
+		if err != nil {
 			t.Fatal(err)
 		}
-		if err := k8s.Update(ctx, obj); err != nil {
+		for _, v := range fix.sent {
+			q, _ := json.Marshal(v)
+			if !strings.Contains(string(body), string(q)) {
+				t.Errorf("%s: the fake's resource does not hold %s, which the spec set: %s", gvk.Kind, q, body)
+			}
+		}
+	}
+
+	if hasTagMap(specSchema) && !fix.keeps {
+		if err := change(t, obj, func(obj *unstructured.Unstructured) {
+			if err := unstructured.SetNestedField(obj.Object, map[string]any{"conformance": "2"}, "spec", "tags"); err != nil {
+				t.Fatal(err)
+			}
+		}); err != nil {
 			t.Fatal(err)
 		}
 		expectResource(t, id, func(r map[string]any) error {

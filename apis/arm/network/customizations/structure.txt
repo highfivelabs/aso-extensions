@@ -3,6 +3,8 @@ github.com/highfivelabs/aso-extensions/apis/arm/network/customizations
 ----------------------------------------------------------------------
 ApplicationGatewayExtension: Object (0 properties)
 
+ApplicationSecurityGroupsAddressPrefixSetExtension: Object (0 properties)
+
 DdosCustomPolicyExtension: Object (0 properties)
 
 DnsResolverDomainListExtension: Object (0 properties)
@@ -39,11 +41,15 @@ FirewallPoliciesFirewallPolicyDraftExtension: Object (0 properties)
 
 FirewallPoliciesKubeSelectorGroupExtension: Object (0 properties)
 
+FirewallPoliciesRuleCollectionGroupDraftExtension: Object (0 properties)
+
 FirewallPoliciesSignatureOverrideExtension: Object (0 properties)
 
 IpGroupExtension: Object (0 properties)
 
 LocalNetworkGatewayExtension: Object (0 properties)
+
+NetworkInterfacesTapConfigurationExtension: Object (0 properties)
 
 NetworkManagerConnectionExtension: Object (0 properties)
 
@@ -107,6 +113,8 @@ NetworkVirtualAppliancesInboundSecurityRuleExtension: Object (0 properties)
 
 NetworkVirtualAppliancesVirtualApplianceSiteExtension: Object (0 properties)
 
+NetworkWatchersConnectionMonitorExtension: Object (0 properties)
+
 P2sVpnGatewayExtension: Object (0 properties)
 
 PrivateDnsZonesSOARecordExtension: Object (0 properties)
@@ -140,6 +148,8 @@ VirtualHubsRouteTableExtension: Object (0 properties)
 VirtualHubsRoutingIntentExtension: Object (0 properties)
 
 VirtualNetworkGatewayConnectionExtension: Object (0 properties)
+
+VirtualNetworkTapExtension: Object (0 properties)
 
 VirtualRouterExtension: Object (0 properties)
 

@@ -12,6 +12,10 @@ typeFilters:
     group: cognitiveservices
     version: v20250601
     because: the version of ASO's Account, Deployment and Project
+  - action: include
+    group: cognitiveservices
+    version: v20260901
+    because: Foundry's newer children (docs/plan.md f44), only in 2026-09-01
   - action: prune
     group: cognitiveservices
     because: every other version is left alone
@@ -68,3 +72,38 @@ groupModelConfiguration:
     CommitmentPlanAccountAssociationProperties:
       AccountId:
         $referenceType: arm # the account's ARM ID (autolabel wrote simple)
+  # Microsoft Foundry's newer children (docs/plan.md f44, 2026-11-23), only
+  # in 2026-09-01: an account's managed network and its outbound rules, RAI
+  # topics and tool labels, a project's agent applications and their
+  # deployments; and, directly under a subscription, RAI policies and
+  # external safety providers. Owned by ASO's Account and Project (at
+  # 2025-06-01; an owner is named by kind, not by version) or a
+  # subscription's ARM ID.
+  2026-09-01:
+    Accounts_ManagedNetwork:
+      $exportAs: AccountsManagedNetwork
+      $supportedFrom: v0.1.0
+    Accounts_ManagedNetworks_OutboundRule:
+      $exportAs: AccountsManagedNetworksOutboundRule
+      $supportedFrom: v0.1.0
+    Accounts_RaiTopic:
+      $exportAs: AccountsRaiTopic
+      $supportedFrom: v0.1.0
+    Accounts_RaiToolLabel:
+      $exportAs: AccountsRaiToolLabel
+      $supportedFrom: v0.1.0
+    Accounts_Projects_Application:
+      $exportAs: AccountsProjectsApplication
+      $supportedFrom: v0.1.0
+    Accounts_Projects_Applications_AgentDeployment:
+      $exportAs: AccountsProjectsApplicationsAgentDeployment
+      $supportedFrom: v0.1.0
+    RaiPolicy:
+      $exportAs: RaiPolicy
+      $supportedFrom: v0.1.0
+    RaiExternalSafetyProvider:
+      $exportAs: RaiExternalSafetyProvider
+      $supportedFrom: v0.1.0
+    PrivateEndpointOutboundRuleDestination:
+      ServiceResourceId:
+        $referenceType: arm # the resource a private endpoint outbound rule reaches (autolabel, reviewed)

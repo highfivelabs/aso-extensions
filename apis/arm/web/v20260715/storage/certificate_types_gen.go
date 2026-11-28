@@ -171,12 +171,6 @@ type CertificateList struct {
 	Items           []Certificate `json:"items"`
 }
 
-// Storage version of v20260715.APIVersion
-// +kubebuilder:validation:Enum={"2026-07-15"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2026-07-15")
-
 // Storage version of v20260715.Certificate_Spec
 type Certificate_Spec struct {
 	// AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
@@ -297,18 +291,6 @@ type HostingEnvironmentProfile_STATUS struct {
 	Name        *string                `json:"name,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Type        *string                `json:"type,omitempty"`
-}
-
-// Storage version of v20260715.SystemData_STATUS
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	CreatedAt          *string                `json:"createdAt,omitempty"`
-	CreatedBy          *string                `json:"createdBy,omitempty"`
-	CreatedByType      *string                `json:"createdByType,omitempty"`
-	LastModifiedAt     *string                `json:"lastModifiedAt,omitempty"`
-	LastModifiedBy     *string                `json:"lastModifiedBy,omitempty"`
-	LastModifiedByType *string                `json:"lastModifiedByType,omitempty"`
-	PropertyBag        genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 }
 
 func init() {

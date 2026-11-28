@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	asoinsights "github.com/Azure/azure-service-operator/v2/api/insights/v1api20200202/storage"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime"
@@ -69,11 +68,9 @@ func TestUserAssignedIdentityIsolationScope(t *testing.T) {
 		return nil
 	})
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(uai), uai); err != nil {
-		t.Fatal(err)
-	}
-	uai.Spec.IsolationScope = ptr(identity.IsolationScope("None"))
-	if err := k8s.Update(ctx, uai); err != nil {
+	if err := change(t, uai, func(uai *identity.UserAssignedIdentity) {
+		uai.Spec.IsolationScope = ptr(identity.IsolationScope("None"))
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, id, func(r map[string]any) error {

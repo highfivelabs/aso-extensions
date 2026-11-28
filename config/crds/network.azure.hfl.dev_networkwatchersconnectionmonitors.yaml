@@ -1,0 +1,997 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: networkwatchersconnectionmonitors.network.azure.hfl.dev
+spec:
+  group: network.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - network
+    kind: NetworkWatchersConnectionMonitor
+    listKind: NetworkWatchersConnectionMonitorList
+    plural: networkwatchersconnectionmonitors
+    singular: networkwatchersconnectionmonitor
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260301
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /network/resource-manager/Microsoft.Network/Network/stable/2026-03-01/networkWatcher.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              autoStart:
+                description: 'AutoStart: Determines if the connection monitor will
+                  start automatically once created.'
+                type: boolean
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                type: string
+              destination:
+                description: 'Destination: Describes the destination of connection
+                  monitor.'
+                properties:
+                  address:
+                    description: 'Address: Address of the connection monitor destination
+                      (IP or domain name).'
+                    type: string
+                  port:
+                    description: 'Port: The destination port used by connection monitor.'
+                    maximum: 65535
+                    minimum: 0
+                    type: integer
+                  resourceReference:
+                    description: 'ResourceReference: The ID of the resource used as
+                      the destination by connection monitor.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                type: object
+              endpoints:
+                description: 'Endpoints: List of connection monitor endpoints.'
+                items:
+                  description: Describes the connection monitor endpoint.
+                  properties:
+                    address:
+                      description: |-
+                        Address: Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine,
+                        MMAWorkspaceMachine endpoint type.
+                      type: string
+                    coverageLevel:
+                      description: 'CoverageLevel: Test coverage for the endpoint.'
+                      enum:
+                      - AboveAverage
+                      - Average
+                      - BelowAverage
+                      - Default
+                      - Full
+                      - Low
+                      type: string
+                    filter:
+                      description: 'Filter: Filter field is getting deprecated and
+                        should not be used. Instead use Include/Exclude scope fields
+                        for it.'
+                      properties:
+                        items:
+                          description: 'Items: List of items in the filter.'
+                          items:
+                            description: Describes the connection monitor endpoint
+                              filter item.
+                            properties:
+                              address:
+                                description: 'Address: The address of the filter item.'
+                                type: string
+                              type:
+                                description: 'Type: The type of item included in the
+                                  filter. Currently only ''AgentAddress'' is supported.'
+                                enum:
+                                - AgentAddress
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: 'Type: The behavior of the endpoint filter.
+                            Currently only ''Include'' is supported.'
+                          enum:
+                          - Include
+                          type: string
+                      type: object
+                    locationDetails:
+                      description: |-
+                        LocationDetails: Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains
+                        region details.
+                      properties:
+                        region:
+                          description: 'Region: Region for connection monitor endpoint.'
+                          type: string
+                      type: object
+                    name:
+                      description: 'Name: The name of the connection monitor endpoint.'
+                      type: string
+                    resourceReference:
+                      description: |-
+                        ResourceReference: Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet,
+                        AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type.
+                      properties:
+                        armId:
+                          description: |-
+                            ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                            The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                            ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                          pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                          type: string
+                        group:
+                          description: Group is the Kubernetes group of the resource.
+                          type: string
+                        kind:
+                          description: Kind is the Kubernetes kind of the resource.
+                          type: string
+                        name:
+                          description: Name is the Kubernetes name of the resource.
+                          type: string
+                      type: object
+                    scope:
+                      description: |-
+                        Scope: Endpoint scope defines which target resource to monitor in case of compound resource endpoints like VMSS,
+                        AzureSubnet, AzureVNet, MMAWorkspaceNetwork, AzureArcNetwork.
+                      properties:
+                        exclude:
+                          description: 'Exclude: List of items which needs to be excluded
+                            from the endpoint scope.'
+                          items:
+                            description: Describes the connection monitor endpoint
+                              scope item.
+                            properties:
+                              address:
+                                description: 'Address: The address of the endpoint
+                                  item. Supported types are IPv4/IPv6 subnet mask
+                                  or IPv4/IPv6 IP address.'
+                                type: string
+                            type: object
+                          type: array
+                        include:
+                          description: 'Include: List of items which needs to be included
+                            to the endpoint scope.'
+                          items:
+                            description: Describes the connection monitor endpoint
+                              scope item.
+                            properties:
+                              address:
+                                description: 'Address: The address of the endpoint
+                                  item. Supported types are IPv4/IPv6 subnet mask
+                                  or IPv4/IPv6 IP address.'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    subscriptionId:
+                      description: |-
+                        SubscriptionId: Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for
+                        'AzureArcNetwork' type endpoint.
+                      type: string
+                    type:
+                      description: 'Type: The endpoint type.'
+                      enum:
+                      - AzureArcNetwork
+                      - AzureArcVM
+                      - AzureSubnet
+                      - AzureVM
+                      - AzureVMSS
+                      - AzureVNet
+                      - ExternalAddress
+                      - MMAWorkspaceMachine
+                      - MMAWorkspaceNetwork
+                      type: string
+                  required:
+                  - name
+                  type: object
+                type: array
+              location:
+                description: 'Location: Connection monitor location.'
+                type: string
+              monitoringIntervalInSeconds:
+                description: 'MonitoringIntervalInSeconds: Monitoring interval in
+                  seconds.'
+                maximum: 1800
+                minimum: 30
+                type: integer
+              notes:
+                description: 'Notes: Optional notes to be associated with the connection
+                  monitor.'
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              outputs:
+                description: 'Outputs: List of connection monitor outputs.'
+                items:
+                  description: Describes a connection monitor output destination.
+                  properties:
+                    type:
+                      description: 'Type: Connection monitor output destination type.
+                        Currently, only "Workspace" is supported.'
+                      enum:
+                      - Workspace
+                      type: string
+                    workspaceSettings:
+                      description: 'WorkspaceSettings: Describes the settings for
+                        producing output into a log analytics workspace.'
+                      properties:
+                        workspaceResourceReference:
+                          description: 'WorkspaceResourceReference: Log analytics
+                            workspace resource ID.'
+                          properties:
+                            armId:
+                              description: |-
+                                ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                                The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                                ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                              pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                              type: string
+                            group:
+                              description: Group is the Kubernetes group of the resource.
+                              type: string
+                            kind:
+                              description: Kind is the Kubernetes kind of the resource.
+                              type: string
+                            name:
+                              description: Name is the Kubernetes name of the resource.
+                              type: string
+                          type: object
+                      type: object
+                  type: object
+                type: array
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a network.azure.com/NetworkWatcher resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              source:
+                description: 'Source: Describes the source of connection monitor.'
+                properties:
+                  port:
+                    description: 'Port: The source port used by connection monitor.'
+                    maximum: 65535
+                    minimum: 0
+                    type: integer
+                  resourceReference:
+                    description: 'ResourceReference: The ID of the resource used as
+                      the source by connection monitor.'
+                    properties:
+                      armId:
+                        description: |-
+                          ARMID is a string of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
+                          The /resourcegroups/{resourceGroupName} bit is optional as some resources are scoped at the subscription level
+                          ARMID is mutually exclusive with Group, Kind, Namespace and Name.
+                        pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                        type: string
+                      group:
+                        description: Group is the Kubernetes group of the resource.
+                        type: string
+                      kind:
+                        description: Kind is the Kubernetes kind of the resource.
+                        type: string
+                      name:
+                        description: Name is the Kubernetes name of the resource.
+                        type: string
+                    type: object
+                required:
+                - resourceReference
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Connection monitor tags.'
+                type: object
+              testConfigurations:
+                description: 'TestConfigurations: List of connection monitor test
+                  configurations.'
+                items:
+                  description: Describes a connection monitor test configuration.
+                  properties:
+                    httpConfiguration:
+                      description: 'HttpConfiguration: The parameters used to perform
+                        test evaluation over HTTP.'
+                      properties:
+                        method:
+                          description: 'Method: The HTTP method to use.'
+                          enum:
+                          - Get
+                          - Post
+                          type: string
+                        path:
+                          description: 'Path: The path component of the URI. For instance,
+                            "/dir1/dir2".'
+                          type: string
+                        port:
+                          description: 'Port: The port to connect to.'
+                          maximum: 65535
+                          minimum: 0
+                          type: integer
+                        preferHTTPS:
+                          description: 'PreferHTTPS: Value indicating whether HTTPS
+                            is preferred over HTTP in cases where the choice is not
+                            explicit.'
+                          type: boolean
+                        requestHeaders:
+                          description: 'RequestHeaders: The HTTP headers to transmit
+                            with the request.'
+                          items:
+                            description: The HTTP header.
+                            properties:
+                              name:
+                                description: 'Name: The name in HTTP header.'
+                                type: string
+                              value:
+                                description: 'Value: The value in HTTP header.'
+                                type: string
+                            type: object
+                          type: array
+                        validStatusCodeRanges:
+                          description: 'ValidStatusCodeRanges: HTTP status codes to
+                            consider successful. For instance, "2xx,301-304,418".'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    icmpConfiguration:
+                      description: 'IcmpConfiguration: The parameters used to perform
+                        test evaluation over ICMP.'
+                      properties:
+                        disableTraceRoute:
+                          description: 'DisableTraceRoute: Value indicating whether
+                            path evaluation with trace route should be disabled.'
+                          type: boolean
+                      type: object
+                    name:
+                      description: 'Name: The name of the connection monitor test
+                        configuration.'
+                      type: string
+                    preferredIPVersion:
+                      description: |-
+                        PreferredIPVersion: The preferred IP version to use in test evaluation. The connection monitor may choose to use a
+                        different version depending on other parameters.
+                      enum:
+                      - IPv4
+                      - IPv6
+                      type: string
+                    protocol:
+                      description: 'Protocol: The protocol to use in test evaluation.'
+                      enum:
+                      - Http
+                      - Icmp
+                      - Tcp
+                      type: string
+                    successThreshold:
+                      description: 'SuccessThreshold: The threshold for declaring
+                        a test successful.'
+                      properties:
+                        checksFailedPercent:
+                          description: 'ChecksFailedPercent: The maximum percentage
+                            of failed checks permitted for a test to evaluate as successful.'
+                          type: integer
+                        roundTripTimeMs:
+                          description: 'RoundTripTimeMs: The maximum round-trip time
+                            in milliseconds permitted for a test to evaluate as successful.'
+                          type: number
+                      type: object
+                    tcpConfiguration:
+                      description: 'TcpConfiguration: The parameters used to perform
+                        test evaluation over TCP.'
+                      properties:
+                        destinationPortBehavior:
+                          description: 'DestinationPortBehavior: Destination port
+                            behavior.'
+                          enum:
+                          - ListenIfAvailable
+                          - None
+                          type: string
+                        disableTraceRoute:
+                          description: 'DisableTraceRoute: Value indicating whether
+                            path evaluation with trace route should be disabled.'
+                          type: boolean
+                        port:
+                          description: 'Port: The port to connect to.'
+                          maximum: 65535
+                          minimum: 0
+                          type: integer
+                      type: object
+                    testFrequencySec:
+                      description: 'TestFrequencySec: The frequency of test evaluation,
+                        in seconds.'
+                      type: integer
+                  required:
+                  - name
+                  - protocol
+                  type: object
+                type: array
+              testGroups:
+                description: 'TestGroups: List of connection monitor test groups.'
+                items:
+                  description: Describes the connection monitor test group.
+                  properties:
+                    destinations:
+                      description: 'Destinations: List of destination endpoint names.'
+                      items:
+                        type: string
+                      type: array
+                    disable:
+                      description: 'Disable: Value indicating whether test group is
+                        disabled.'
+                      type: boolean
+                    name:
+                      description: 'Name: The name of the connection monitor test
+                        group.'
+                      type: string
+                    sources:
+                      description: 'Sources: List of source endpoint names.'
+                      items:
+                        type: string
+                      type: array
+                    testConfigurations:
+                      description: 'TestConfigurations: List of test configuration
+                        names.'
+                      items:
+                        type: string
+                      type: array
+                  required:
+                  - destinations
+                  - name
+                  - sources
+                  - testConfigurations
+                  type: object
+                type: array
+            required:
+            - owner
+            type: object
+          status:
+            properties:
+              autoStart:
+                description: 'AutoStart: Determines if the connection monitor will
+                  start automatically once created.'
+                type: boolean
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              connectionMonitorType:
+                description: 'ConnectionMonitorType: Type of connection monitor.'
+                type: string
+              destination:
+                description: 'Destination: Describes the destination of connection
+                  monitor.'
+                properties:
+                  address:
+                    description: 'Address: Address of the connection monitor destination
+                      (IP or domain name).'
+                    type: string
+                  port:
+                    description: 'Port: The destination port used by connection monitor.'
+                    type: integer
+                  resourceId:
+                    description: 'ResourceId: The ID of the resource used as the destination
+                      by connection monitor.'
+                    type: string
+                type: object
+              endpoints:
+                description: 'Endpoints: List of connection monitor endpoints.'
+                items:
+                  description: Describes the connection monitor endpoint.
+                  properties:
+                    address:
+                      description: |-
+                        Address: Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine,
+                        MMAWorkspaceMachine endpoint type.
+                      type: string
+                    coverageLevel:
+                      description: 'CoverageLevel: Test coverage for the endpoint.'
+                      type: string
+                    filter:
+                      description: 'Filter: Filter field is getting deprecated and
+                        should not be used. Instead use Include/Exclude scope fields
+                        for it.'
+                      properties:
+                        items:
+                          description: 'Items: List of items in the filter.'
+                          items:
+                            description: Describes the connection monitor endpoint
+                              filter item.
+                            properties:
+                              address:
+                                description: 'Address: The address of the filter item.'
+                                type: string
+                              type:
+                                description: 'Type: The type of item included in the
+                                  filter. Currently only ''AgentAddress'' is supported.'
+                                type: string
+                            type: object
+                          type: array
+                        type:
+                          description: 'Type: The behavior of the endpoint filter.
+                            Currently only ''Include'' is supported.'
+                          type: string
+                      type: object
+                    locationDetails:
+                      description: |-
+                        LocationDetails: Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains
+                        region details.
+                      properties:
+                        region:
+                          description: 'Region: Region for connection monitor endpoint.'
+                          type: string
+                      type: object
+                    name:
+                      description: 'Name: The name of the connection monitor endpoint.'
+                      type: string
+                    resourceId:
+                      description: |-
+                        ResourceId: Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet,
+                        MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type.
+                      type: string
+                    scope:
+                      description: |-
+                        Scope: Endpoint scope defines which target resource to monitor in case of compound resource endpoints like VMSS,
+                        AzureSubnet, AzureVNet, MMAWorkspaceNetwork, AzureArcNetwork.
+                      properties:
+                        exclude:
+                          description: 'Exclude: List of items which needs to be excluded
+                            from the endpoint scope.'
+                          items:
+                            description: Describes the connection monitor endpoint
+                              scope item.
+                            properties:
+                              address:
+                                description: 'Address: The address of the endpoint
+                                  item. Supported types are IPv4/IPv6 subnet mask
+                                  or IPv4/IPv6 IP address.'
+                                type: string
+                            type: object
+                          type: array
+                        include:
+                          description: 'Include: List of items which needs to be included
+                            to the endpoint scope.'
+                          items:
+                            description: Describes the connection monitor endpoint
+                              scope item.
+                            properties:
+                              address:
+                                description: 'Address: The address of the endpoint
+                                  item. Supported types are IPv4/IPv6 subnet mask
+                                  or IPv4/IPv6 IP address.'
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    subscriptionId:
+                      description: |-
+                        SubscriptionId: Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for
+                        'AzureArcNetwork' type endpoint.
+                      type: string
+                    type:
+                      description: 'Type: The endpoint type.'
+                      type: string
+                  type: object
+                type: array
+              etag:
+                description: 'Etag: A unique read-only string that changes whenever
+                  the resource is updated.'
+                type: string
+              id:
+                description: 'Id: ID of the connection monitor.'
+                type: string
+              location:
+                description: 'Location: Connection monitor location.'
+                type: string
+              monitoringIntervalInSeconds:
+                description: 'MonitoringIntervalInSeconds: Monitoring interval in
+                  seconds.'
+                type: integer
+              monitoringStatus:
+                description: 'MonitoringStatus: The monitoring status of the connection
+                  monitor.'
+                type: string
+              name:
+                description: 'Name: Name of the connection monitor.'
+                type: string
+              notes:
+                description: 'Notes: Optional notes to be associated with the connection
+                  monitor.'
+                type: string
+              outputs:
+                description: 'Outputs: List of connection monitor outputs.'
+                items:
+                  description: Describes a connection monitor output destination.
+                  properties:
+                    type:
+                      description: 'Type: Connection monitor output destination type.
+                        Currently, only "Workspace" is supported.'
+                      type: string
+                    workspaceSettings:
+                      description: 'WorkspaceSettings: Describes the settings for
+                        producing output into a log analytics workspace.'
+                      properties:
+                        workspaceResourceId:
+                          description: 'WorkspaceResourceId: Log analytics workspace
+                            resource ID.'
+                          type: string
+                      type: object
+                  type: object
+                type: array
+              provisioningState:
+                description: 'ProvisioningState: The provisioning state of the connection
+                  monitor.'
+                type: string
+              source:
+                description: 'Source: Describes the source of connection monitor.'
+                properties:
+                  port:
+                    description: 'Port: The source port used by connection monitor.'
+                    type: integer
+                  resourceId:
+                    description: 'ResourceId: The ID of the resource used as the source
+                      by connection monitor.'
+                    type: string
+                type: object
+              startTime:
+                description: 'StartTime: The date and time when the connection monitor
+                  was started.'
+                type: string
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Connection monitor tags.'
+                type: object
+              testConfigurations:
+                description: 'TestConfigurations: List of connection monitor test
+                  configurations.'
+                items:
+                  description: Describes a connection monitor test configuration.
+                  properties:
+                    httpConfiguration:
+                      description: 'HttpConfiguration: The parameters used to perform
+                        test evaluation over HTTP.'
+                      properties:
+                        method:
+                          description: 'Method: The HTTP method to use.'
+                          type: string
+                        path:
+                          description: 'Path: The path component of the URI. For instance,
+                            "/dir1/dir2".'
+                          type: string
+                        port:
+                          description: 'Port: The port to connect to.'
+                          type: integer
+                        preferHTTPS:
+                          description: 'PreferHTTPS: Value indicating whether HTTPS
+                            is preferred over HTTP in cases where the choice is not
+                            explicit.'
+                          type: boolean
+                        requestHeaders:
+                          description: 'RequestHeaders: The HTTP headers to transmit
+                            with the request.'
+                          items:
+                            description: The HTTP header.
+                            properties:
+                              name:
+                                description: 'Name: The name in HTTP header.'
+                                type: string
+                              value:
+                                description: 'Value: The value in HTTP header.'
+                                type: string
+                            type: object
+                          type: array
+                        validStatusCodeRanges:
+                          description: 'ValidStatusCodeRanges: HTTP status codes to
+                            consider successful. For instance, "2xx,301-304,418".'
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    icmpConfiguration:
+                      description: 'IcmpConfiguration: The parameters used to perform
+                        test evaluation over ICMP.'
+                      properties:
+                        disableTraceRoute:
+                          description: 'DisableTraceRoute: Value indicating whether
+                            path evaluation with trace route should be disabled.'
+                          type: boolean
+                      type: object
+                    name:
+                      description: 'Name: The name of the connection monitor test
+                        configuration.'
+                      type: string
+                    preferredIPVersion:
+                      description: |-
+                        PreferredIPVersion: The preferred IP version to use in test evaluation. The connection monitor may choose to use a
+                        different version depending on other parameters.
+                      type: string
+                    protocol:
+                      description: 'Protocol: The protocol to use in test evaluation.'
+                      type: string
+                    successThreshold:
+                      description: 'SuccessThreshold: The threshold for declaring
+                        a test successful.'
+                      properties:
+                        checksFailedPercent:
+                          description: 'ChecksFailedPercent: The maximum percentage
+                            of failed checks permitted for a test to evaluate as successful.'
+                          type: integer
+                        roundTripTimeMs:
+                          description: 'RoundTripTimeMs: The maximum round-trip time
+                            in milliseconds permitted for a test to evaluate as successful.'
+                          type: number
+                      type: object
+                    tcpConfiguration:
+                      description: 'TcpConfiguration: The parameters used to perform
+                        test evaluation over TCP.'
+                      properties:
+                        destinationPortBehavior:
+                          description: 'DestinationPortBehavior: Destination port
+                            behavior.'
+                          type: string
+                        disableTraceRoute:
+                          description: 'DisableTraceRoute: Value indicating whether
+                            path evaluation with trace route should be disabled.'
+                          type: boolean
+                        port:
+                          description: 'Port: The port to connect to.'
+                          type: integer
+                      type: object
+                    testFrequencySec:
+                      description: 'TestFrequencySec: The frequency of test evaluation,
+                        in seconds.'
+                      type: integer
+                  type: object
+                type: array
+              testGroups:
+                description: 'TestGroups: List of connection monitor test groups.'
+                items:
+                  description: Describes the connection monitor test group.
+                  properties:
+                    destinations:
+                      description: 'Destinations: List of destination endpoint names.'
+                      items:
+                        type: string
+                      type: array
+                    disable:
+                      description: 'Disable: Value indicating whether test group is
+                        disabled.'
+                      type: boolean
+                    name:
+                      description: 'Name: The name of the connection monitor test
+                        group.'
+                      type: string
+                    sources:
+                      description: 'Sources: List of source endpoint names.'
+                      items:
+                        type: string
+                      type: array
+                    testConfigurations:
+                      description: 'TestConfigurations: List of test configuration
+                        names.'
+                      items:
+                        type: string
+                      type: array
+                  type: object
+                type: array
+              type:
+                description: 'Type: Connection monitor type.'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

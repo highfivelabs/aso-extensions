@@ -219,6 +219,593 @@ func init() {
 	f["SecurityConnectorsDevOpsAzureDevOpsOrg"] = conformanceFixture{annotations: detach, stays: true}
 	f["SecurityConnectorsDevOpsAzureDevOpsProject"] = conformanceFixture{annotations: detach, stays: true}
 	f["SecurityConnectorsDevOpsAzureDevOpsRepo"] = conformanceFixture{annotations: detach, stays: true}
+	// A connection monitor has a test group naming its own endpoints and
+	// test configuration; an address prefix set at least one CIDR (the
+	// fake's rules, networkwatcher.go).
+	f["NetworkWatchersConnectionMonitor"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{
+			"endpoints":          []any{map[string]any{"name": "a", "address": "10.0.0.4"}, map[string]any{"name": "b", "address": "www.example.com"}},
+			"testConfigurations": []any{map[string]any{"name": "t", "protocol": "Tcp", "tcpConfiguration": map[string]any{"port": int64(443)}}},
+			"testGroups":         []any{map[string]any{"name": "g", "sources": []any{"a"}, "destinations": []any{"b"}, "testConfigurations": []any{"t"}}},
+		}
+	}}
+	f["ApplicationSecurityGroupsAddressPrefixSet"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"addressPrefixes": []any{"10.0.0.0/16"}}}
+	}}
+	// A virtual network TAP has one destination that exists; a NIC's tap
+	// configuration names a TAP that exists (vnettap.go).
+	f["VirtualNetworkTap"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"destinationNetworkInterfaceIPConfiguration": embedRef(
+			c.add(c.in("Microsoft.Network/networkInterfaces/collector/ipConfigurations/ipconfig1")))}
+	}}
+	// A Service Bus disaster recovery alias names a partner namespace of
+	// the service that exists; a private endpoint makes a connection
+	// (messaging.go, privateendpoints.go).
+	f["servicebus.azure.hfl.dev/NamespacesDisasterRecoveryConfig"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"partnerNamespaceReference": armRef(c.add(c.in("Microsoft.ServiceBus/namespaces/partner")))}
+	}}
+	f["servicebus.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	// The same for Event Hubs, whose application groups name their clients
+	// as SASKeyName= or AADAppID= (messaging.go).
+	f["eventhub.azure.hfl.dev/NamespacesDisasterRecoveryConfig"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"partnerNamespaceReference": armRef(c.add(c.in("Microsoft.EventHub/namespaces/partner")))}
+	}}
+	f["eventhub.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	// Log Analytics' "Cluster" fixture is another kind's: a dedicated Event
+	// Hubs cluster's SKU is Dedicated.
+	f["eventhub.azure.hfl.dev/Cluster"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "Dedicated", "capacity": int64(1)}}
+	}}
+	f["NamespacesApplicationGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"clientAppGroupIdentifier": "SASKeyName=conformance"}
+	}}
+	// Event Grid (eventgrid.go): a system topic's source and type; an event
+	// subscription's destination; a namespace topic subscription's delivery
+	// mode; a topic space's templates, a client group's query, a CA
+	// certificate's certificate; a permission binding's topic space and
+	// client group, which exist.
+	f["SystemTopic"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sourceReference": armRef(c.ref), "topicType": "Microsoft.Storage.StorageAccounts"}
+	}}
+	f["SystemTopicsEventSubscription"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"destination": map[string]any{"eventHub": map[string]any{"endpointType": "EventHub", "resourceReference": armRef(c.ref)}}}
+	}}
+	f["NamespacesTopicsEventSubscription"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"deliveryConfiguration": map[string]any{"deliveryMode": "Queue", "queue": map[string]any{"maxDeliveryCount": int64(1)}}}
+	}}
+	f["NamespacesTopicSpace"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"topicTemplates": []any{"conformance/#"}}
+	}}
+	f["NamespacesClientGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"query": "attributes.type = 'conformance'"}
+	}}
+	f["NamespacesCaCertificate"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"encodedCertificate": "conformance"}
+	}}
+	f["NamespacesPermissionBinding"] = conformanceFixture{
+		setup: func(c *conformanceContext) { c.add(c.owner+"/topicSpaces/ts", c.owner+"/clientGroups/cg") },
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"topicSpaceName": "ts", "clientGroupName": "cg", "permission": "Subscriber"}
+		}}
+	// API Management (apimanagement.go): what the spec requires of each
+	// kind, declared template parameters, <policies> XML, tag links naming a
+	// tag of the service that exists, an identity provider named by its type.
+	g := "apimanagement.azure.hfl.dev/"
+	secretRef := map[string]any{"name": "conformance", "key": "value"}
+	f[g+"ApiOperation"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance", "method": "GET", "urlTemplate": "/conformance"}
+	}}
+	f[g+"ApiOperationPolicy"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"value": "<policies><inbound><base /></inbound></policies>"}
+	}}
+	f[g+"Tag"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance"}
+	}}
+	serviceTag := conformanceFixture{setup: func(c *conformanceContext) { c.add(c.parent() + "/tags/conformance") }}
+	f[g+"ApiTag"], f[g+"ProductTag"] = serviceTag, serviceTag
+	f[g+"ApiOperationTag"] = conformanceFixture{setup: func(c *conformanceContext) { c.add(parentOf(c.parent()) + "/tags/conformance") }}
+	f[g+"ApiSchema"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"contentType": "application/vnd.oai.openapi.components+json"}
+	}}
+	f[g+"GlobalSchema"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"schemaType": "json"}
+	}}
+	f[g+"IdentityProvider"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "aad", "clientId": "conformance", "clientSecret": secretRef}
+	}}
+	f[g+"OpenIdConnectProvider"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance", "metadataEndpoint": "https://idp.example.com/.well-known/openid-configuration", "clientId": "conformance"}
+	}}
+	f[g+"AuthorizationServer"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{
+			"displayName": "Conformance", "clientId": "conformance", "grantTypes": []any{"authorizationCode"},
+			"clientRegistrationEndpoint": "https://idp.example.com/register", "authorizationEndpoint": "https://idp.example.com/authorize",
+		}
+	}}
+	f[g+"Cache"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"connectionString": secretRef, "useFromLocation": "default"}
+	}}
+	// The second part (f71): a resolver's path is Type/field and its policy
+	// <policies> XML; a link names what it links, in its own service; a
+	// configuration connection is a workspace gateway's (a SKU the fake's
+	// stand-in owner has not), so its own test runs it.
+	f[g+"ApiResolver"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"displayName": "Conformance", "path": "Query/conformance"}
+	}}
+	f[g+"ApiResolverPolicy"] = f[g+"ApiOperationPolicy"]
+	link := func(prop, rest string) conformanceFixture {
+		return conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{prop: armRef(c.add(c.parent() + rest))}
+		}}
+	}
+	f[g+"TagApiLink"], f[g+"ProductApiLink"] = link("apiReference", "/apis/conformance"), link("apiReference", "/apis/conformance")
+	f[g+"TagOperationLink"] = link("operationReference", "/apis/conformance/operations/conformance")
+	f[g+"TagProductLink"] = link("productReference", "/products/conformance")
+	f[g+"ProductGroupLink"] = link("groupReference", "/groups/conformance")
+	f[g+"GatewayConfigConnection"] = conformanceFixture{coveredBy: "TestAPIManagementLinksAndGateways"}
+	// The workspace kinds (f72): the same rules, scoped to the workspace
+	// (the owner's parent).
+	f[g+"WorkspaceApiOperation"], f[g+"WorkspaceApiOperationPolicy"], f[g+"WorkspaceTag"] = f[g+"ApiOperation"], f[g+"ApiOperationPolicy"], f[g+"Tag"]
+	f[g+"WorkspaceApiSchema"], f[g+"WorkspaceSchema"] = f[g+"ApiSchema"], f[g+"GlobalSchema"]
+	f[g+"WorkspaceTagApiLink"], f[g+"WorkspaceProductApiLink"] = link("apiReference", "/apis/conformance"), link("apiReference", "/apis/conformance")
+	f[g+"WorkspaceTagOperationLink"] = link("operationReference", "/apis/conformance/operations/conformance")
+	f[g+"WorkspaceTagProductLink"] = link("productReference", "/products/conformance")
+	f[g+"WorkspaceProductGroupLink"] = link("groupReference", "/groups/conformance")
+	// A Batch pool has a VM size and a virtual machine configuration
+	// (batch.go).
+	f["BatchAccountsPool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"vmSize": "STANDARD_D2S_V3", "deploymentConfiguration": map[string]any{"virtualMachineConfiguration": map[string]any{
+			"imageReference": map[string]any{"publisher": "canonical", "offer": "ubuntu-24_04-lts", "sku": "server"}, "nodeAgentSkuId": "batch.node.ubuntu 24.04"}}}
+	}}
+	// Logic Apps (logic.go): an integration account has a SKU (the first
+	// enum value is NotSpecified); a schema and a map their content; a
+	// batch configuration a release criterion; an assembly its content; an
+	// agreement names partners of its account and carries its type's
+	// content, so its own test runs it.
+	f["IntegrationAccount"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "Free"}}
+	}}
+	f["IntegrationAccountsSchema"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"schemaType": "Xml", "content": "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"/>"}
+	}}
+	f["IntegrationAccountsMap"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"mapType": "Liquid", "content": "{{ content }}"}
+	}}
+	f["IntegrationAccountsBatchConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"batchGroupName": "conformance", "releaseCriteria": map[string]any{"messageCount": int64(1)}}}
+	}}
+	f["IntegrationAccountsAssembly"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"assemblyName": "Conformance", "content": "TVqQAAMAAAAEAAAA"}}
+	}}
+	f["IntegrationAccountsCertificate"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"publicCertificate": "MIIBconformance"}
+	}}
+	f["IntegrationAccountsAgreement"] = conformanceFixture{coveredBy: "TestLogicWorkflowAndIntegrationAccount"}
+	// IoT (devices.go): a certificate carries its certificate; a
+	// provisioning service is S1.
+	iotCert := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"certificate": "MIIBconformance"}}
+	}}
+	f["IotHubsCertificate"], f["ProvisioningServicesCertificate"] = iotCert, iotCert
+	f["ProvisioningService"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "S1", "capacity": int64(1)}}
+	}}
+	f["IotHubsPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	f["ProvisioningServicesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// A private endpoint makes the connections of an API Management service
+	// and a Notification Hubs namespace (privateendpoints.go).
+	f[g+"PrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	f["notificationhubs.azure.hfl.dev/NamespacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// Event Grid partners (eventgrid.go): a partner namespace names a
+	// registration that exists; a partner topic its source; a partner
+	// topic's subscription a destination.
+	f["PartnerNamespace"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"partnerRegistrationFullyQualifiedReference": armRef(c.add(c.in("Microsoft.EventGrid/partnerRegistrations/conformance")))}
+	}}
+	f["PartnerTopic"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"source": "conformance"}
+	}}
+	f["PartnerTopicsEventSubscription"] = f["SystemTopicsEventSubscription"]
+	// Data Factory (datafactory.go): the managed network and global
+	// parameters are named default; a managed private endpoint names a
+	// target and group; a credential an identity that exists; a global
+	// parameter has a type; a private endpoint makes the connection.
+	f["FactoriesManagedVirtualNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "default"}
+	}}
+	f["FactoriesManagedVirtualNetworksManagedPrivateEndpoint"] = conformanceFixture{
+		owner: func(c *conformanceContext) string {
+			return c.add(c.in("Microsoft.DataFactory/factories/conformance/managedVirtualNetworks/default"), c.in("Microsoft.DataFactory/factories/conformance"))
+		},
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"properties": map[string]any{"groupId": "blob", "privateLinkResourceReference": armRef(c.ref)}}
+		}}
+	f["FactoriesCredential"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managedIdentity": map[string]any{"type": "ManagedIdentity",
+			"resourceReference": armRef(c.add(c.in("Microsoft.ManagedIdentity/userAssignedIdentities/conformance")))}}}
+	}}
+	f["FactoriesGlobalParameter"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "default", "properties": map[string]any{"conformance": map[string]any{"type": "String", "value": "conformance"}}}
+	}}
+	f["FactoriesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// Triggers, data flows and integration runtimes are unions (f86): a
+	// schedule trigger of no pipeline, a mapping data flow of nothing, a
+	// self-hosted runtime.
+	f["FactoriesTrigger"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"scheduleTrigger": map[string]any{"type": "ScheduleTrigger",
+			"recurrence": map[string]any{"frequency": "Day", "interval": int64(1)}}}}
+	}}
+	f["FactoriesDataflow"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"mappingDataFlow": map[string]any{"type": "MappingDataFlow"}}}
+	}}
+	f["FactoriesIntegrationRuntime"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"selfHosted": map[string]any{"type": "SelfHosted"}}}
+	}}
+	// Datasets, one kind per type (f88): a dataset names a linked service,
+	// which the fake requires to exist and be of a type the dataset reads; a
+	// parameterized name (an expression) is not checked, as Data Factory
+	// resolves it at run time. A file format dataset's location is a union
+	// (required, so the smallest object would have none of its members): a
+	// Data Lake Gen2 one.
+	for _, kind := range []string{"Avro", "AzureDatabricksDeltaLakeDataset", "AzureSqlDWTable", "AzureSqlTable", "Binary",
+		"CosmosDbSqlApiCollection", "DelimitedText", "Excel", "HttpFile", "Json", "Orc", "Parquet", "RestResource", "Xml"} {
+		fileFormat := map[string]bool{"Avro": true, "Binary": true, "DelimitedText": true, "Excel": true, "Json": true, "Orc": true, "Parquet": true, "Xml": true}[kind]
+		f["FactoriesDataset"+kind] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+			props := map[string]any{"linkedServiceName": map[string]any{"type": "LinkedServiceReference", "referenceName": "@{dataset().store}"}}
+			if fileFormat {
+				props["location"] = map[string]any{"azureBlobFSLocation": map[string]any{"type": "AzureBlobFSLocation"}}
+			}
+			return map[string]any{"properties": props}
+		}}
+	}
+	// Synapse (synapse.go): a firewall rule is an IPv4 range; an Entra admin
+	// names a login and sid; a key is a Key Vault key URL; enabled auditing
+	// has a destination; an assessment writes to a blob container; a
+	// runtime is Managed or SelfHosted; a private endpoint makes the
+	// connection.
+	syn := "synapse.azure.hfl.dev/"
+	f[syn+"WorkspacesFirewallRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"startIpAddress": "10.0.0.1", "endIpAddress": "10.0.0.9"}
+	}}
+	synAdmin := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"administratorType": "ActiveDirectory", "login": "conformance", "sid": "00000000-0000-0000-0000-0000000000c1"}
+	}}
+	f[syn+"WorkspacesAdministrator"], f[syn+"WorkspacesSqlAdministrator"] = synAdmin, synAdmin
+	f[syn+"WorkspacesKey"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"keyVaultUrl": "https://conformance.vault.azure.net/keys/conformance"}
+	}}
+	f[syn+"WorkspacesEncryptionProtector"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"serverKeyType": "ServiceManaged"}
+	}}
+	synAuditing := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"state": "Enabled", "isAzureMonitorTargetEnabled": true}
+	}}
+	f[syn+"WorkspacesAuditingSetting"], f[syn+"WorkspacesExtendedAuditingSetting"] = synAuditing, synAuditing
+	f[syn+"WorkspacesVulnerabilityAssessment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"storageContainerPath": "https://conformance.blob.core.windows.net/scans"}
+	}}
+	f[syn+"WorkspacesIntegrationRuntime"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managed": map[string]any{"type": "Managed"}}}
+	}}
+	f[syn+"WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// Machine Learning (machinelearning.go): an environment version names
+	// an image; a data version is uri_folder; a blob datastore its account and container; an outbound
+	// rule its destination; a private endpoint makes the connection.
+	mlEnv := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"image": "mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04"}}
+	}}
+	f["WorkspacesEnvironmentsVersion"], f["RegistriesEnvironmentsVersion"] = mlEnv, mlEnv
+	// A data version is one of the union's members (none is no body).
+	mlData := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"uri_Folder": map[string]any{"dataType": "uri_folder", "dataUri": "azureml://datastores/conformance/paths/conformance/"}}}
+	}}
+	f["WorkspacesDataVersion"], f["RegistriesDataVersion"] = mlData, mlData
+	f["WorkspacesDatastore"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"azureBlob": map[string]any{"datastoreType": "AzureBlob",
+			"accountName": "conformance", "containerName": "conformance", "credentials": map[string]any{"none": map[string]any{"credentialsType": "None"}}}}}
+	}}
+	f["WorkspacesOutboundRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"fqdn": map[string]any{"type": "FQDN", "destination": "pypi.org"}}}
+	}}
+	f["machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection"] = f["IotHubsPrivateEndpointConnection"]
+	// A job and a schedule are unions (f85): a command job; a schedule
+	// making one on a cron of five fields.
+	mlCommand := map[string]any{"command": map[string]any{"jobType": "Command", "command": "python train.py",
+		"environmentId": "azureml://registries/azureml/environments/sklearn-1.5/versions/1"}}
+	f["WorkspacesJob"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": mlCommand}
+	}}
+	f["WorkspacesSchedule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{
+			"action":  map[string]any{"createJob": map[string]any{"actionType": "CreateJob", "jobDefinition": mlCommand}},
+			"trigger": map[string]any{"cron": map[string]any{"triggerType": "Cron", "expression": "0 2 * * *"}}}}
+	}}
+	// A managed online deployment names its instance type (a union member).
+	f["WorkspacesOnlineEndpointsDeployment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managed": map[string]any{"endpointComputeType": "Managed", "instanceType": "Standard_DS3_v2"}}}
+	}}
+	// A dedicated SQL pool names a SKU; its auditing and assessment as the
+	// workspace's (synapse.go).
+	f[syn+"WorkspacesSqlPool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "DW100c"}}
+	}}
+	f[syn+"WorkspacesSqlPoolsAuditingSetting"], f[syn+"WorkspacesSqlPoolsExtendedAuditingSetting"] = synAuditing, synAuditing
+	f[syn+"WorkspacesSqlPoolsVulnerabilityAssessment"] = f[syn+"WorkspacesVulnerabilityAssessment"]
+	// A MySQL flexible server's threat protection setting is Default and
+	// Enabled or Disabled; a private endpoint makes a connection (mysql.go).
+	f["FlexibleServersAdvancedThreatProtectionSetting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "Default", "state": "Enabled"}
+	}}
+	f["dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	// A container group profile has an OS type and a container with an image
+	// and requests; an NGroup's profiles exist (containerinstance.go).
+	f["ContainerGroupProfile"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"osType": "Linux", "containers": []any{map[string]any{
+			"name": "conformance", "image": "mcr.microsoft.com/azuredocs/aci-helloworld",
+			"resources": map[string]any{"requests": map[string]any{"cpu": 1.0, "memoryInGB": 1.0}},
+		}}}
+	}}
+	f["NGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"containerGroupProfiles": []any{map[string]any{"resource": embedRef(c.add(c.in("Microsoft.ContainerInstance/containerGroupProfiles/conformance")))}}}
+	}}
+	// Web PubSub and SignalR (signalr.go): a known SKU; certificates and
+	// domains naming what they need; shared private links to what exists; a
+	// private endpoint makes a connection. A replica needs a Premium service
+	// in another region, which the conformance owner is not.
+	f["WebPubSub"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"sku": map[string]any{"name": "Free_F1", "capacity": int64(1)}}
+	}}
+	f["WebPubSubReplica"] = conformanceFixture{coveredBy: "TestWebPubSubAndSignalRKinds"}
+	f["WebPubSubCustomCertificate"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"keyVaultBaseUri": "https://conformance.vault.azure.net/", "keyVaultSecretName": "conformance"}
+	}}
+	f["WebPubSubCustomDomain"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"domainName": "conformance.example.com", "customCertificate": embedRef(c.add(c.owner + "/customCertificates/conformance"))}
+	}}
+	sharedLink := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"groupId": "sites", "privateLinkResourceReference": armRef(c.ref)}
+	}}
+	for _, k := range []string{"WebPubSubSharedPrivateLinkResource", "WebPubSubReplicasSharedPrivateLinkResource", "SignalRSharedPrivateLinkResource", "SignalRReplicasSharedPrivateLinkResource"} {
+		f[k] = sharedLink
+	}
+	for _, k := range []string{"WebPubSubPrivateEndpointConnection", "SignalRPrivateEndpointConnection"} {
+		f[k] = conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
+	}
+	// Data Explorer (kusto.go): a follower names another cluster; a managed
+	// private endpoint its target and groupId; an image its language and
+	// version; a script one source; a private endpoint makes a connection.
+	f["ClustersAttachedDatabaseConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"databaseName": "*", "defaultPrincipalsModificationKind": "Union", "clusterResourceReference": armRef(c.add(c.in("Microsoft.Kusto/clusters/leader")))}
+	}}
+	f["ClustersManagedPrivateEndpoint"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"groupId": "blob", "privateLinkResourceReference": armRef(c.ref)}
+	}}
+	f["ClustersSandboxCustomImage"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"language": "Python", "languageVersion": "3.10.8"}
+	}}
+	f["ClustersDatabasesScript"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"scriptContent": map[string]any{"name": "conformance", "key": "value"}}
+	}}
+	f["kusto.azure.hfl.dev/ClustersPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	// A backup vault's guard proxy names a guard; its DELETE needs an
+	// unlock, which the kind's extension sends (backup.go).
+	f["BackupVaultsBackupResourceGuardProxy"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"resourceGuardResourceReference": armRef(c.add(c.in("Microsoft.DataProtection/resourceGuards/conformance")))}}
+	}}
+	f["NetworkInterfacesTapConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"virtualNetworkTap": embedRef(c.add(c.in("Microsoft.Network/virtualNetworkTaps/conformance")))}
+	}}
+	// A governance rule gives a condition set (its key, a GUID, is the
+	// Claimer's); a summary rule a query and a bin size Azure allows (the
+	// fake's rules, governance.go and loganalytics.go).
+	f["GovernanceRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"conditionSets": []any{map[string]any{"conditions": []any{}}}}
+	}}
+	// Sentinel's workspace manager: a group names members, and an
+	// assignment a group, of the same workspace manager, which the fake
+	// checks exist (sentinel.go); the conformance owner is a resource group.
+	insights := func(c *conformanceContext) string { return c.resourceGroup + "/providers/Microsoft.SecurityInsights/" }
+	f["WorkspaceManagerGroup"] = conformanceFixture{
+		setup: func(c *conformanceContext) { c.add(insights(c) + "workspaceManagerMembers/m1") },
+		spec:  func(c *conformanceContext) map[string]any { return map[string]any{"memberResourceNames": []any{"m1"}} },
+	}
+	// Three groups have a kind named Setting: a key "group/Kind" is looked up
+	// before "Kind". Sentinel's is polymorphic and named after its kind.
+	f["securityinsights.azure.hfl.dev/Setting"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "Ueba", "ueba": map[string]any{"kind": "Ueba", "dataSources": []any{"AuditLogs"}}}
+	}}
+	f["costmanagement.azure.hfl.dev/Setting"] = conformanceFixture{}
+	f["WorkspaceManagerAssignment"] = conformanceFixture{
+		setup: func(c *conformanceContext) { c.add(insights(c) + "workspaceManagerGroups/g1") },
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"targetResourceName": "g1", "items": []any{map[string]any{"resourceReference": armRef(c.ref)}}}
+		},
+	}
+	// A custom assessment is named after assessment metadata in the
+	// resource's subscription, which the fake checks exists (assessments.go).
+	f["Assessment"] = conformanceFixture{
+		setup: func(c *conformanceContext) {
+			c.add("/subscriptions/" + subID + "/providers/Microsoft.Security/assessmentMetadata/" + conformanceAssessmentKey)
+		},
+		spec: func(c *conformanceContext) map[string]any {
+			return map[string]any{"azureName": conformanceAssessmentKey, "resourceDetails": map[string]any{"azure": map[string]any{"source": "Azure"}}}
+		},
+	}
+	// A private endpoint makes the connection; a PUT only changes it.
+	f["PrivateLinksPrivateEndpointConnection"] = conformanceFixture{setup: func(c *conformanceContext) {
+		c.add(c.owner + "/privateEndpointConnections/conformance")
+	}}
+	// A Cosmos DB role assignment names a role definition of its API in its
+	// account, which the fake checks exists, and is scoped to the account
+	// (cosmosrbac.go).
+	for kind, collection := range map[string]string{
+		"DatabaseAccountsCassandraRoleAssignment": "cassandraRoleDefinitions",
+		"DatabaseAccountsGremlinRoleAssignment":   "gremlinRoleDefinitions",
+		"DatabaseAccountsMongoMIRoleAssignment":   "mongoMIRoleDefinitions",
+		"DatabaseAccountsTableRoleAssignment":     "tableRoleDefinitions",
+	} {
+		f[kind] = conformanceFixture{
+			setup: func(c *conformanceContext) { c.add(c.owner + "/" + collection + "/" + conformanceRoleDefinition) },
+			spec: func(c *conformanceContext) map[string]any {
+				return map[string]any{"roleDefinitionId": c.owner + "/" + collection + "/" + conformanceRoleDefinition, "scope": c.owner, "principalId": conformancePrincipal}
+			},
+		}
+	}
+	// Gallery versions are named MajorVersion.MinorVersion.Patch; an image
+	// version names a source that exists, an application version its
+	// package's blob; a host group has 1 to 3 fault domains (gallery.go).
+	f["GalleriesImagesVersion"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "1.0.0", "storageProfile": map[string]any{"source": map[string]any{"reference": armRef(c.add(c.in("Microsoft.Compute/images/base")))}}}
+	}}
+	f["GalleriesApplicationsVersion"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "1.0.0", "publishingProfile": map[string]any{"source": map[string]any{"mediaLink": "https://example.blob.core.windows.net/pkgs/agent.zip"}}}
+	}}
+	f["GalleriesScriptsVersion"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "1.0.0", "properties": map[string]any{"publishingProfile": map[string]any{"source": map[string]any{"scriptLink": "https://example.blob.core.windows.net/scripts/harden.sh"}}}}
+	}}
+	f["HostGroup"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"platformFaultDomainCount": int64(1)}
+	}}
+	// Static Web Apps' links and an app's network connection name a
+	// resource the fake holds (staticsites.go); a private endpoint makes a
+	// connection, which a PUT only changes.
+	f["StaticSitesLinkedBackend"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"backendResourceReference": armRef(c.ref)}
+	}}
+	f["StaticSitesUserProvidedFunctionApp"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"functionAppResourceReference": armRef(c.ref)}
+	}}
+	f["SitesVirtualNetworkConnection"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"vnetResourceReference": armRef(c.ref)}
+	}}
+	pec := conformanceFixture{setup: func(c *conformanceContext) { c.add(c.owner + "/privateEndpointConnections/conformance") }}
+	f["SitesPrivateEndpointConnection"] = pec
+	f["SitesSlotsPrivateEndpointConnection"] = pec
+	f["HostingEnvironmentsPrivateEndpointConnection"] = pec
+	// Azure Cosmos DB for PostgreSQL (cosmospostgres.go): a new cluster
+	// has its password, coordinator and node count; a firewall rule IPv4
+	// addresses; a role a password; a configuration a value.
+	secret := map[string]any{"name": "conformance", "key": "value"}
+	f["ServerGroupsv2"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"administratorLoginPassword": secret, "coordinatorServerEdition": "GeneralPurpose",
+			"coordinatorStorageQuotaInMb": int64(131072), "coordinatorVCores": int64(2), "nodeCount": int64(0)}
+	}}
+	f["ServerGroupsv2FirewallRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"startIpAddress": "10.0.0.1", "endIpAddress": "10.0.0.2"}
+	}}
+	f["ServerGroupsv2Role"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"password": secret}
+	}}
+	pgConfig := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"value": "on"}
+	}}
+	f["ServerGroupsv2CoordinatorConfiguration"] = pgConfig
+	f["ServerGroupsv2NodeConfiguration"] = pgConfig
+	f["ServerGroupsv2PrivateEndpointConnection"] = pec
+	// Cosmos DB fleets and MongoDB vCore users (cosmosfleet.go): a
+	// fleetspace account names a Cosmos DB account; a user is an Entra
+	// object ID with an identity provider.
+	f["FleetsFleetspacesFleetspaceAccount"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"globalDatabaseAccountProperties": map[string]any{
+			"resourceReference": armRef(c.add(c.in("Microsoft.DocumentDB/databaseAccounts/conformance"))), "armLocation": "westus"}}
+	}}
+	f["MongoClustersUser"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": conformancePrincipal, "properties": map[string]any{
+			"identityProvider": map[string]any{"microsoftEntraID": map[string]any{"type": "MicrosoftEntraID",
+				"properties": map[string]any{"principalType": "servicePrincipal"}}},
+			"roles": []any{map[string]any{"db": "admin", "role": "root"}}}}
+	}}
+	// A storage connector and a blob access point configuration are one
+	// of several source types: an empty choice cannot be sent.
+	f["StorageAccountsConnector"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"dataSourceType": "Azure_DataShare", "source": map[string]any{"dataShare": map[string]any{
+			"type":           "DataShare",
+			"connection":     map[string]any{"dataShare": map[string]any{"type": "DataShare", "dataShareUri": "azds://westus:share-1:00000000-0000-0000-0000-000000000001"}},
+			"authProperties": map[string]any{"managedIdentity": map[string]any{"type": "ManagedIdentity", "identityResourceReference": armRef(c.ref)}},
+		}}}}
+	}}
+	f["StorageAccountsBlobAccessPointConfiguration"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"source": map[string]any{"s3Compatible": map[string]any{
+			"sourceType": "S3Compatible",
+			"connection": map[string]any{"endpoint": map[string]any{"connectionType": "Endpoint", "endpoint": "https://nas.example.com"}},
+			"auth":       map[string]any{"accessKey": map[string]any{"authType": "AccessKey", "accessKeyId": "conformance", "secretAccessKey": secret}},
+		}}}}
+	}}
+	// A sandbox group's network connection names a subnet (appextras.go).
+	f["SandboxGroupsVnetConnection"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"subnetReference": armRef(c.add(c.in("Microsoft.Network/virtualNetworks/conformance/subnets/sandboxes")))}}
+	}}
+	// An account's managed network is named default (foundry.go).
+	f["AccountsManagedNetwork"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "default"}
+	}}
+	// An outbound rule and an agent deployment are one of several types:
+	// an empty choice cannot be sent.
+	f["AccountsManagedNetworksOutboundRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"fqdn": map[string]any{"type": "FQDN", "destination": "pypi.org"}}}
+	}}
+	f["AccountsProjectsApplicationsAgentDeployment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"managed": map[string]any{"deploymentType": "Managed"}}}
+	}}
+	// An App Service Environment names a network the fake holds
+	// (hostingenvironments.go).
+	f["HostingEnvironment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"virtualNetwork": map[string]any{"reference": armRef(c.add(c.in("Microsoft.Network/virtualNetworks/ase")))}}
+	}}
+	// A slot's network connection names a network the fake holds, as an
+	// app's does (sitechildren.go).
+	f["SitesSlotsVirtualNetworkConnection"] = f["SitesVirtualNetworkConnection"]
+	f["StaticSitesPrivateEndpointConnection"] = pec
+	// The private endpoint connections of docs/plan.md f37 and f38: the fake refuses
+	// to make one (privateendpoints.go).
+	f["ServersPrivateEndpointConnection"] = pec
+	f["ContainerAppsPrivateEndpointConnection"] = pec
+	f["DiskAccessesPrivateEndpointConnection"] = pec
+	f["RedisPrivateEndpointConnection"] = pec
+	f["RedisEnterprisePrivateEndpointConnection"] = pec
+	f["ConfigurationStoresPrivateEndpointConnection"] = pec
+	f["FlexibleServersPrivateEndpointConnection"] = pec
+	f["MongoClustersPrivateEndpointConnection"] = pec
+	// Elastic Jobs: an agent names its job database, which the fake checks
+	// exists; a credential needs a username and password, and a step its
+	// target group in its own agent (sqljobs.go).
+	f["ServersJobAgent"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"databaseReference": armRef(c.add(c.owner + "/databases/jobs"))}
+	}}
+	f["ServersJobAgentsCredential"] = conformanceFixture{coveredBy: "TestSQLElasticJobs"}
+	// SQL Managed Instance children (sqlmanagedinstance.go): a Key Vault key
+	// gives its URI, the protector is service-managed here (one naming a key
+	// is TestSQLManagedInstanceChildren's), an assessment gives its
+	// container and a SAS, a pool names a subnet the fake holds.
+	f["ManagedInstancesPrivateEndpointConnection"] = pec
+	f["ManagedInstancesKey"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "vault_key_0123456789abcdef", "serverKeyType": "AzureKeyVault", "uri": "https://vault.vault.azure.net/keys/key/0123456789abcdef"}
+	}}
+	f["ManagedInstancesEncryptionProtector"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"serverKeyType": "ServiceManaged"}
+	}}
+	assessment := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"storageContainerPath": "https://st.blob.core.windows.net/va/", "storageContainerSasKey": map[string]any{"name": "conformance", "key": "value"}}
+	}}
+	f["ManagedInstancesVulnerabilityAssessment"] = assessment
+	f["ManagedInstancesDatabasesVulnerabilityAssessment"] = assessment
+	f["InstancePool"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"subnetReference": armRef(c.add(c.in("Microsoft.Network/virtualNetworks/pool"), c.in("Microsoft.Network/virtualNetworks/pool/subnets/pool")))}
+	}}
+	f["ServersJobAgentsJobsStep"] = conformanceFixture{coveredBy: "TestSQLElasticJobs"}
+	f["WorkspacesSummaryLog"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"ruleDefinition": map[string]any{"query": "AppRequests | summarize count() by bin(TimeGenerated, 1h)", "binSize": int64(60), "destinationTable": "Hourly_CL"}}
+	}}
 	// Foundation batch 2: kinds with required fields or specific owners.
 	f["DeploymentSafeguard"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"level": "Warn"}
@@ -276,7 +863,100 @@ func init() {
 	f["ExpressRouteLag"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
 		return map[string]any{"location": "westus", "properties": map[string]any{"peeringLocation": "Equinix-Silicon-Valley", "bandwidthInGbps": 100}}
 	}}
+	// DevTest Labs (devtestlab.go): a lab's and a lab VM's schedules and a
+	// lab's costs have fixed names; a lab VM signs in with a password and a
+	// user's secret has a value, both from the test's Secret.
+	f["LabsSchedule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "LabVmsShutdown", "taskType": "LabVmsShutdownTask", "dailyRecurrence": map[string]any{"time": "1900"}}
+	}}
+	f["LabsVirtualmachinesSchedule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "LabVmsShutdown", "taskType": "LabVmsShutdownTask", "dailyRecurrence": map[string]any{"time": "1900"}}
+	}}
+	f["LabsCost"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "targetCost", "currencyCode": "USD"}
+	}}
+	f["LabsVirtualMachine"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"userName": "labadmin", "password": map[string]any{"name": "conformance", "key": "value"}}
+	}}
+	f["LabsUsersSecret"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"value": map[string]any{"name": "conformance", "key": "value"}}
+	}}
+	// Azure Site Recovery: a migration item's only scenario is VMware (its
+	// provider-specific input is a one-of with nothing set otherwise).
+	f["VaultsReplicationMigrationItem"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{
+			"policyReference": armRef(c.ref),
+			"providerSpecificDetails": map[string]any{"vMwareCbt": map[string]any{
+				"instanceType": "VMwareCbt", "dataMoverRunAsAccountId": "mover", "snapshotRunAsAccountId": "snapshot",
+				"vmwareMachineReference": armRef(c.ref), "targetResourceGroupReference": armRef(c.ref), "targetNetworkReference": armRef(c.ref),
+				"disksToInclude": []any{map[string]any{
+					"diskId": "disk0", "isOSDisk": "true", "logStorageAccountReference": armRef(c.ref), "logStorageAccountSasSecretName": "sas",
+				}},
+			}},
+		}}
+	}}
+	// App Service leftovers (webextras.go): a certificate's PFX and password
+	// from the test's Secret, the integration gateway named primary, a slot's
+	// repository, basic authentication's scope and password, and a
+	// Kubernetes environment's custom location.
+	cert := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"pfxBlob": secret, "password": secret}
+	}}
+	f["SitesCertificate"], f["SitesSlotsCertificate"] = cert, cert
+	gateway := conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "primary", "vnetName": "vnet"}
+	}}
+	f["SitesVirtualNetworkConnectionsGateway"], f["SitesSlotsVirtualNetworkConnectionsGateway"] = gateway, gateway
+	f["SitesSlotsSourcecontrol"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"repoUrl": "https://github.com/contoso/app", "branch": "main", "isManualIntegration": true}
+	}}
+	f["StaticSitesBasicAuth"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"applicableEnvironmentsMode": "AllEnvironments", "password": secret}
+	}}
+	f["KubeEnvironment"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"extendedLocation": map[string]any{"name": c.add(c.in("Microsoft.ExtendedLocation/customLocations/arc"))}}
+	}}
+	// Azure Monitor pipeline groups run on a custom location and their
+	// pipelines name what they declare (monitorpipeline.go).
+	f["PipelineGroup"] = conformanceFixture{coveredBy: "TestMonitorPipelineGroup"}
+	// An alert processing rule is global, applies to a scope and has one
+	// action (alertprocessing.go).
+	f["ActionRule"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"location": "Global", "properties": map[string]any{
+			"scopesReferences": []any{armRef(c.resourceGroup)},
+			"actions":          []any{map[string]any{"removeAllActionGroups": map[string]any{"actionType": "RemoveAllActionGroups"}}},
+		}}
+	}}
+	// A smart detection rule is one Application Insights defines and has no
+	// DELETE (smartdetection.go): the object is detached and the rule stays.
+	f["ComponentsProactiveDetectionConfig"] = conformanceFixture{annotations: detach, stays: true, spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"azureName": "slowpageloadtime"}
+	}}
+	// Logic Apps connections name an API, custom APIs carry a definition and
+	// gateways name their installation (logicconnections.go).
+	f["ApiConnection"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"api": embedRef(c.add(c.in("Microsoft.Web/customApis/conformance")))}}
+	}}
+	f["CustomApi"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"apiDefinitions": map[string]any{"originalSwaggerUrl": "https://contoso.example/openapi.json"}}}
+	}}
+	f["ConnectionGateway"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		install := c.add("/subscriptions/" + subID + "/providers/Microsoft.Web/locations/westus/connectionGatewayInstallations/" + c.ns)
+		return map[string]any{"properties": map[string]any{"connectionGatewayInstallation": embedRef(install)}}
+	}}
+	// A diagnostic run command has one source (diagnosticruncommands.go).
+	f["VirtualMachinesDiagnosticRunCommand"] = conformanceFixture{spec: func(c *conformanceContext) map[string]any {
+		return map[string]any{"properties": map[string]any{"source": map[string]any{"script": "uptime"}}}
+	}}
 	for k, v := range f {
 		conformanceFixtures[k] = v
 	}
 }
+
+// conformanceAssessmentKey is the assessment metadata a conformance
+// Assessment reports on.
+const conformanceAssessmentKey = "00000000-0000-0000-0000-0000000000a1"
+
+// conformanceRoleDefinition is the Cosmos DB role definition a conformance
+// role assignment names.
+const conformanceRoleDefinition = "6b4a2d3c-1e5f-4a7b-8c9d-0e1f2a3b4c5d"

@@ -70,8 +70,9 @@ func TestOperationsManagementSolution(t *testing.T) {
 	if solution.Status.Properties == nil || solution.Status.Properties.WorkspaceResourceId == nil || *solution.Status.Properties.WorkspaceResourceId != workspaceID {
 		t.Fatalf("status: %+v", solution.Status.Properties)
 	}
-	solution.Spec.Tags = map[string]string{"team": "a", "tier": "1"}
-	if err := k8s.Update(ctx, solution); err != nil {
+	if err := change(t, solution, func(solution *om.Solution) {
+		solution.Spec.Tags = map[string]string{"team": "a", "tier": "1"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, solutionID, func(r map[string]any) error {

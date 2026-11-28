@@ -115,12 +115,10 @@ func TestManagedEnvironmentsDaprComponent(t *testing.T) {
 	}
 
 	// A change to the spec is PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(dc), dc); err != nil {
-		t.Fatal(err)
-	}
-	dc.Spec.Version = ptr("v2")
-	dc.Spec.Scopes = []string{"orders"}
-	if err := k8s.Update(ctx, dc); err != nil {
+	if err := change(t, dc, func(dc *appv1.ManagedEnvironmentsDaprComponent) {
+		dc.Spec.Version = ptr("v2")
+		dc.Spec.Scopes = []string{"orders"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, id, func(r map[string]any) error {

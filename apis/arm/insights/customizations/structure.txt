@@ -3,6 +3,8 @@ github.com/highfivelabs/aso-extensions/apis/arm/insights/customizations
 -----------------------------------------------------------------------
 ComponentsLinkedStorageAccountExtension: Object (0 properties)
 
+ComponentsProactiveDetectionConfigExtension: Object (0 properties)
+
 GuestDiagnosticSettingExtension: Object (0 properties)
 
 GuestDiagnosticSettingsAssociationExtension: Object (0 properties)

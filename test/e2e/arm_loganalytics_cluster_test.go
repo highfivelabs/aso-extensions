@@ -55,11 +55,9 @@ func TestLogAnalyticsClusterAndWorkspaceSources(t *testing.T) {
 		}
 		return nil
 	})
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(cluster), cluster); err != nil {
-		t.Fatal(err)
-	}
-	cluster.Spec.Sku.Capacity = ptr(1000)
-	if err := k8s.Update(ctx, cluster); err != nil {
+	if err := change(t, cluster, func(cluster *oi.Cluster) {
+		cluster.Spec.Sku.Capacity = ptr(1000)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, clusterID, func(r map[string]any) error {

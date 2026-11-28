@@ -110,18 +110,14 @@ func TestVPNConnection(t *testing.T) {
 	}
 
 	// A routing weight and the on-premises prefixes changed: PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(s2s), s2s); err != nil {
+	if err := change(t, s2s, func(s2s *network.VirtualNetworkGatewayConnection) {
+		s2s.Spec.RoutingWeight = ptr(10)
+	}); err != nil {
 		t.Fatal(err)
 	}
-	s2s.Spec.RoutingWeight = ptr(10)
-	if err := k8s.Update(ctx, s2s); err != nil {
-		t.Fatal(err)
-	}
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(onprem), onprem); err != nil {
-		t.Fatal(err)
-	}
-	onprem.Spec.LocalNetworkAddressSpace.AddressPrefixes = []string{"10.20.0.0/16", "10.21.0.0/16"}
-	if err := k8s.Update(ctx, onprem); err != nil {
+	if err := change(t, onprem, func(onprem *network.LocalNetworkGateway) {
+		onprem.Spec.LocalNetworkAddressSpace.AddressPrefixes = []string{"10.20.0.0/16", "10.21.0.0/16"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, s2sID, func(r map[string]any) error {

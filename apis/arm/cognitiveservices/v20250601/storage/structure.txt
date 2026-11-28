@@ -1432,3 +1432,17 @@ CommitmentPlansAccountAssociation: Resource
     ├── Tags: map[string]string
     └── Type: *string
 
+augmentConversionForCustomBlocklistConfig: Interface
+
+augmentConversionForCustomBlocklistConfig_STATUS: Interface
+
+augmentConversionForRaiPolicyContentFilter: Interface
+
+augmentConversionForRaiPolicyContentFilter_STATUS: Interface
+
+augmentConversionForRaiPolicyProperties: Interface
+
+augmentConversionForRaiPolicyProperties_STATUS: Interface
+
+augmentConversionForSystemData_STATUS: Interface
+

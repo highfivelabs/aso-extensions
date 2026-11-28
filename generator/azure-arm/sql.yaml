@@ -7,6 +7,25 @@
 # leaves it out: "Not actually supported in ARM at the moment", its sql.yaml
 # at the pin). The catalog's avm-res-sql-server needs both (2026-11-13).
 # Owned by ASO's Server and ServersDatabase.
+typeTransformers:
+  - group: sql
+    version: v20250101
+    name: SecurityAlertPolicyProperties_STATUS;SecurityAlertsPolicyProperties_STATUS
+    property: StorageAccountAccessKey
+    remove: true
+    because: a storage account key; the status never holds it (docs/plan.md f42)
+  - group: sql
+    version: v20250101
+    name: ServerDevOpsAuditSettingsProperties_STATUS
+    property: StorageAccountAccessKey
+    remove: true
+    because: a storage account key; the status never holds it (docs/plan.md f43)
+  - group: sql
+    version: v20250101
+    name: DatabaseVulnerabilityAssessmentProperties_STATUS;ManagedInstanceVulnerabilityAssessmentProperties_STATUS
+    property: StorageAccountAccessKey;StorageContainerSasKey
+    remove: true
+    because: a storage account key or SAS; the status never holds it (docs/plan.md f42)
 typeFilters:
   - action: include
     group: sql
@@ -23,3 +42,188 @@ groupModelConfiguration:
     Servers_Databases_GeoBackupPolicy:
       $exportAs: ServersDatabasesGeoBackupPolicy
       $supportedFrom: v0.1.0
+    # A server's private endpoint connections (docs/plan.md f37): a private
+    # endpoint makes one; the kind approves or rejects it.
+    Servers_PrivateEndpointConnection:
+      $exportAs: ServersPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    # Elastic Jobs (docs/plan.md f39): a job agent on a server (its job
+    # database a ServersDatabase by reference), its credentials (the
+    # password a Secret), jobs and their steps, target groups and the
+    # private endpoints it reaches targets through. A server's DNS alias.
+    Servers_JobAgent:
+      $exportAs: ServersJobAgent
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_Credential:
+      $exportAs: ServersJobAgentsCredential
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_Job:
+      $exportAs: ServersJobAgentsJob
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_Jobs_Step:
+      $exportAs: ServersJobAgentsJobsStep
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_TargetGroup:
+      $exportAs: ServersJobAgentsTargetGroup
+      $supportedFrom: v0.1.0
+    Servers_JobAgents_PrivateEndpoint:
+      $exportAs: ServersJobAgentsPrivateEndpoint
+      $supportedFrom: v0.1.0
+    Servers_DnsAlias:
+      $exportAs: ServersDnsAlias
+      $supportedFrom: v0.1.0
+    # SQL Managed Instance children (docs/plan.md f42, 2026-11-23), owned by
+    # ASO's ManagedInstance and ManagedInstancesDatabase (v2.22.0), which
+    # export the instance, its databases, their TDE and failover groups only;
+    # and instance pools, in a resource group.
+    ManagedInstances_Administrator:
+      $exportAs: ManagedInstancesAdministrator
+      $supportedFrom: v0.1.0
+    ManagedInstances_AzureADOnlyAuthentication:
+      $exportAs: ManagedInstancesAzureADOnlyAuthentication
+      $supportedFrom: v0.1.0
+    ManagedInstances_EncryptionProtector:
+      $exportAs: ManagedInstancesEncryptionProtector
+      $supportedFrom: v0.1.0
+    ManagedInstances_Key:
+      $exportAs: ManagedInstancesKey
+      $supportedFrom: v0.1.0
+    ManagedInstances_SecurityAlertPolicy:
+      $exportAs: ManagedInstancesSecurityAlertPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_VulnerabilityAssessment:
+      $exportAs: ManagedInstancesVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    ManagedInstances_AdvancedThreatProtectionSetting:
+      $exportAs: ManagedInstancesAdvancedThreatProtectionSetting
+      $supportedFrom: v0.1.0
+    ManagedInstances_PrivateEndpointConnection:
+      $exportAs: ManagedInstancesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    ManagedInstances_DnsAlias:
+      $exportAs: ManagedInstancesDnsAlias
+      $supportedFrom: v0.1.0
+    ManagedInstances_ServerTrustCertificate:
+      $exportAs: ManagedInstancesServerTrustCertificate
+      $supportedFrom: v0.1.0
+    ManagedInstances_StartStopSchedule:
+      $exportAs: ManagedInstancesStartStopSchedule
+      $supportedFrom: v0.1.0
+    ManagedInstances_Dtc:
+      $exportAs: ManagedInstancesDtc
+      $supportedFrom: v0.1.0
+    ManagedInstances_ServerConfigurationOption:
+      $exportAs: ManagedInstancesServerConfigurationOption
+      $supportedFrom: v0.1.0
+    ManagedInstances_SqlAgent:
+      $exportAs: ManagedInstancesSqlAgent
+      $supportedFrom: v0.1.0
+    ManagedInstances_DistributedAvailabilityGroup:
+      $exportAs: ManagedInstancesDistributedAvailabilityGroup
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_BackupShortTermRetentionPolicy:
+      $exportAs: ManagedInstancesDatabasesBackupShortTermRetentionPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_BackupLongTermRetentionPolicy:
+      $exportAs: ManagedInstancesDatabasesBackupLongTermRetentionPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_SecurityAlertPolicy:
+      $exportAs: ManagedInstancesDatabasesSecurityAlertPolicy
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_VulnerabilityAssessment:
+      $exportAs: ManagedInstancesDatabasesVulnerabilityAssessment
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_AdvancedThreatProtectionSetting:
+      $exportAs: ManagedInstancesDatabasesAdvancedThreatProtectionSetting
+      $supportedFrom: v0.1.0
+    ManagedInstances_Databases_LedgerDigestUpload:
+      $exportAs: ManagedInstancesDatabasesLedgerDigestUpload
+      $supportedFrom: v0.1.0
+    InstancePool:
+      $exportAs: InstancePool
+      $supportedFrom: v0.1.0
+    # Azure SQL server and database leftovers (docs/plan.md f43, 2026-11-23):
+    # Microsoft support operations auditing, dynamic data masking, a
+    # database's maintenance window and ledger digest uploads, workload
+    # groups and classifiers (dedicated SQL pools), and the express
+    # vulnerability assessment's baselines (under our
+    # ServersSqlVulnerabilityAssessment). ASO's sql.yaml has the masking
+    # policy, maintenance window and workload kinds commented out.
+    Servers_DevOpsAuditingSetting:
+      $exportAs: ServersDevOpsAuditingSetting
+      $supportedFrom: v0.1.0
+    Servers_Databases_DataMaskingPolicy:
+      $exportAs: ServersDatabasesDataMaskingPolicy
+      $supportedFrom: v0.1.0
+    Servers_Databases_MaintenanceWindow:
+      $exportAs: ServersDatabasesMaintenanceWindow
+      $supportedFrom: v0.1.0
+    Servers_Databases_LedgerDigestUpload:
+      $exportAs: ServersDatabasesLedgerDigestUpload
+      $supportedFrom: v0.1.0
+    Servers_Databases_WorkloadGroup:
+      $exportAs: ServersDatabasesWorkloadGroup
+      $supportedFrom: v0.1.0
+    Servers_Databases_WorkloadGroups_WorkloadClassifier:
+      $exportAs: ServersDatabasesWorkloadGroupsWorkloadClassifier
+      $supportedFrom: v0.1.0
+    Servers_SqlVulnerabilityAssessments_Baseline:
+      $exportAs: ServersSqlVulnerabilityAssessmentsBaseline
+      $supportedFrom: v0.1.0
+    Servers_SqlVulnerabilityAssessments_Baselines_Rule:
+      $exportAs: ServersSqlVulnerabilityAssessmentsBaselinesRule
+      $supportedFrom: v0.1.0
+    PrivateEndpointProperty:
+      Id:
+        $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)
+    JobStepOutput:
+      Credential:
+        $referenceType: arm # the credential's ARM ID, our ServersJobAgentsCredential (autolabel wrote simple)
+    JobStepProperties:
+      TargetGroup:
+        $referenceType: arm # the target group's ARM ID, our ServersJobAgentsTargetGroup (autolabel wrote simple)
+      Credential:
+        $referenceType: arm # the credential's ARM ID, our ServersJobAgentsCredential (autolabel wrote simple)
+    JobTarget:
+      RefreshCredential:
+        $referenceType: arm # the credential's ARM ID, our ServersJobAgentsCredential (autolabel wrote simple)
+    JobCredentialProperties:
+      Password:
+        $importSecretMode: required # the credential's password, from a Secret (autolabel, reviewed)
+    ManagedInstancePrivateEndpointProperty:
+      Id:
+        $referenceType: arm # the private endpoint's ARM ID (autolabel, reviewed)
+    InstancePoolProperties:
+      SubnetId:
+        $referenceType: arm # the subnet the pool is in (autolabel wrote simple; reviewed)
+    # Labels for the Managed Instance children, as ASO's sql.yaml has them
+    # for the server's: keys and SAS tokens from Secrets, an administrator's
+    # SID and tenant optionally from a ConfigMap.
+    SecurityAlertPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    SecurityAlertsPolicyProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required
+    DatabaseVulnerabilityAssessmentProperties:
+      StorageContainerPath:
+        $importConfigMapMode: optional
+      StorageAccountAccessKey:
+        $importSecretMode: required
+      StorageContainerSasKey:
+        $importSecretMode: required
+    ManagedInstanceVulnerabilityAssessmentProperties:
+      StorageContainerPath:
+        $importConfigMapMode: optional
+      StorageAccountAccessKey:
+        $importSecretMode: required
+      StorageContainerSasKey:
+        $importSecretMode: required
+    ManagedInstanceAdministratorProperties:
+      Sid:
+        $importConfigMapMode: optional
+      TenantId:
+        $importConfigMapMode: optional
+    ServerDevOpsAuditSettingsProperties:
+      StorageAccountAccessKey:
+        $importSecretMode: required # the audit storage account's key, from a Secret

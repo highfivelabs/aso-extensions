@@ -24,7 +24,7 @@ run the real client code against them.
 | Azure Database for PostgreSQL | PostgreSQL 17 in Docker (tests) or a pod (kind), TLS on, with `azure_pg_admin`, a password administrator, Entra administrators whose password is the fake token of the identity that may sign in as them, and stand-ins for `pgaadauth_create_principal` and `pgaadauth_create_principal_with_oid` | `pkg/fakecloud/postgres` |
 | Microsoft Graph | directory role assignments (`/beta` and `/v1.0` `roleManagement/directory/roleAssignments`: create, get, list with a `$filter` on `principalId`, `roleDefinitionId` and `directoryScopeId`, delete; no update, as in Graph) over a directory of principals, administrative units and role definitions (four built-in roles by template ID, and any a test adds); refuses an unknown principal, role or administrative unit (404), a scope that is neither `/` nor an administrative unit, both or neither of `directoryScopeId` and `appScopeId` (400) and the same assignment twice (409); takes gzipped bodies, as the Graph SDK's default middleware sends them; requests carry a bearer token the test decides to accept | `pkg/fakecloud/graph`, `cmd/fakegraph` |
 | Azure SQL Database | a TDS 7.4 server over TLS (go-mssqldb runs unchanged against it) with the database users and fixed-role memberships ASO's statements change: sign-in with the SQL administrator's password, a contained user's password, or an access token that signs in as an Entra principal (the server's Entra administrator, or a user created `FROM EXTERNAL PROVIDER`); only an administrator changes users; only a token connection creates Entra users (33159), and only for a name in its directory (33130); names compare without case | `pkg/fakecloud/azuresql`, `cmd/fakesql` |
-| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets', cost exports', site-to-site VPN's and ExpressRoute's (circuits, ports, gateways), Virtual WAN's (hubs, VPN gateways), Virtual Network Manager's and maintenance assignments' references and scopes; built-in role definitions listed by name; the properties Azure computes that clients read back (a vault's `vaultUri`, a key's `keyUri`, identities' principal, client and tenant IDs, a public IP's address and FQDN, a registry's login server, a workspace's `customerId`, record sets' FQDNs, a storage account's endpoints, an AKS cluster's FQDN, node resource group, kubelet identity and OIDC issuer, an App Service site's or slot's default host name and custom domain verification ID, an Azure SQL server's and a PostgreSQL or MySQL flexible server's FQDN, a Cosmos DB account's document endpoint and its locations' IDs, endpoints and read and write lists, an Automation account's hybrid service URL; an Automation account's agent registration information, its DSC server endpoint, answered to a GET), each derived from the resource's ID; the children Azure makes with a parent (a storage account's default blob, file, queue and table services, a DNS zone's SOA record set); Key Vault keys in the vault's data plane too (`https://<vault>.vault.azure.net`: get, update, delete, rotation policy), as stock ASO's `VaultKey` reads them; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01, level, notes and owners kept as sent) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
+| Resource Manager | a store of resources by ARM ID (PUT with the parent existing, GET, HEAD (204 or 404, for a resource with no GET), DELETE; the body is kept as sent with `id`, `name`, `type` and `provisioningState: Succeeded` added, no properties checked but the management group hierarchy's, Azure Policy's, Privileged Identity Management's, budgets', cost exports', site-to-site VPN's and ExpressRoute's (circuits, ports, gateways), Virtual WAN's (hubs, VPN gateways), Virtual Network Manager's and maintenance assignments' references and scopes; built-in role definitions listed by name; the properties Azure computes that clients read back (a vault's `vaultUri`, a key's `keyUri`, identities' principal, client and tenant IDs, a public IP's address and FQDN, a registry's login server, a workspace's `customerId`, record sets' FQDNs, a storage account's endpoints, an AKS cluster's FQDN, node resource group, kubelet identity and OIDC issuer, an App Service site's or slot's default host name and custom domain verification ID, an Azure SQL server's and a PostgreSQL or MySQL flexible server's FQDN, a Cosmos DB account's document endpoint and its locations' IDs, endpoints and read and write lists, an Automation account's hybrid service URL; an Automation account's agent registration information, its DSC server endpoint, answered to a GET), each derived from the resource's ID; the children Azure makes with a parent (a storage account's default blob, file, queue and table services, a DNS zone's SOA record set); Key Vault keys in the vault's data plane too (`https://<vault>.vault.azure.net`: get, update, delete, rotation policy), as stock ASO's `VaultKey` reads them; ASO's own ARM client, for the generated kinds, talks to it) and management locks (`Microsoft.Authorization/locks`, 2020-05-01, level, notes and owners kept as sent) at any scope that exists; a lock covers its scope and everything under it: `CanNotDelete` refuses deletes (and deleting a scope that holds a locked resource), `ReadOnly` also refuses writes, each with 409 `ScopeLocked`; locks themselves can always be changed; requests carry a bearer token the test decides to accept | `pkg/fakecloud/arm`, `cmd/fakearm` |
 | ASO | not run: its owner CRDs (generated from ASO's types at the pin) and `FlexibleServer`/`Vault`/`ResourceGroup` objects carrying the status, Ready condition and ARM ID annotation ASO would write | `config/test/aso-crds`, the tests |
 | TLS | a throwaway CA and server certificates; the manager trusts the CA through `SSL_CERT_FILE` on kind, through its client options in tests | `pkg/fakecloud/tlsutil` |
 
@@ -257,6 +257,25 @@ upstream's); the catalog's chart tests do that.
   policies themselves (a test stores the ones it names), and the error codes
   (the fake's own; what Azure answers to a DELETE of a request is not known
   here).
+- Access reviews (`Microsoft.Authorization/accessReviewScheduleDefinitions`,
+  `accessReviewHistoryDefinitions`, `accessReviewScheduleSettings`, API
+  2021-12-01-preview) and the tenant's subscription policy
+  (`Microsoft.Subscription/policies/default`, 2021-10-01;
+  `pkg/fakecloud/arm/accessreview.go`), from the specs: the PUT body of each is
+  the resource's properties themselves, which a GET returns under
+  `properties` (the fake keeps them so); a schedule or history definition's
+  name is a GUID (400; the API's examples and the portal make GUIDs, Azure's
+  refusal of another name is not known here); default settings are named
+  `default`, and the subscription policy is the tenant's alone, at
+  `/providers/Microsoft.Subscription/policies/default`, with exempted
+  principals as object IDs (400 each); neither singleton can be deleted (405,
+  no DELETE in the specs). Not modelled: an access review running
+  (instances, decisions, reviewers notified, a history report made; the
+  fake fills no instance or status), which scopes and principals Azure
+  accepts, Entra ID P2 licensing, the subscription policy being enforced on
+  subscriptions moving between tenants, who may write it (a global
+  administrator or an exempted principal), and the error codes (the fake's
+  own).
 - Budgets and cost exports (`Microsoft.Consumption/budgets`,
   `Microsoft.CostManagement/exports`; `pkg/fakecloud/arm/cost.go`), each rule
   from the spec's descriptions: either is kept at a subscription, resource
@@ -270,7 +289,9 @@ upstream's); the catalog's chart tests do that.
   neither); a `Custom` timeframe needs a `timePeriod`, periods end after they
   start, and a managed identity needs a location (400); the SAS token is kept
   and returned obfuscated, and a system-assigned identity gets a principal
-  and tenant ID. Not modelled: spend and notifications, an export running
+  and tenant ID. A Cost Management setting (`settings/{type}`) is tag
+  inheritance, its name and `kind` both `taginheritance` (400). Not
+  modelled: tags actually being inherited onto cost data, spend and notifications, an export running
   (no run history or next run time), the rules that depend on the day (a
   budget's start at most a year ahead, a recurrence starting in the future),
   the storage subscription's registration with
@@ -471,6 +492,485 @@ upstream's); the catalog's chart tests do that.
   a scope managed by two network managers for the same feature, the other tenant accepting a scope connection, a
   network manager connection's state, dynamic membership through Azure
   Policy, a static member's region, and the error codes (the fake's own).
+- Network Watcher connection monitors and application security group
+  address prefix sets (`networkWatchers/connectionMonitors`,
+  `applicationSecurityGroups/addressPrefixSets`, 2026-03-01;
+  `pkg/fakecloud/arm/networkwatcher.go`), from the spec: a (v2) monitor has
+  a test group, and each test group's sources and destinations name the
+  monitor's own endpoints and its test configurations the monitor's own
+  (400); an endpoint's `resourceId`, and a v1 monitor's source, must exist
+  (404); an address prefix set has at least one prefix, each CIDR (IPv4 or
+  IPv6, 400). Not modelled: a monitor running (no checks or results), the
+  Network Watcher agent, endpoint filters and scopes, the watcher's region,
+  a prefix set taking effect in security rules, and the error codes (the
+  fake's own). A rule collection group's draft
+  (`ruleCollectionGroups/{g}/ruleCollectionGroupDrafts/default`) is kept as
+  sent: deploying a draft is a POST on the policy, not faked.
+- A Service Bus or Event Hubs namespace's network rule set and
+  geo-disaster recovery alias (`Microsoft.ServiceBus` and
+  `Microsoft.EventHub` `namespaces/networkRuleSets/default` and
+  `disasterRecoveryConfigs`, 2026-01-01; `pkg/fakecloud/arm/messaging.go`):
+  the one rule set is named default (404 otherwise) and has no DELETE (405);
+  an IP rule's mask is an IPv4 address or CIDR range (400); a virtual
+  network rule names a subnet (400) that exists (404); an alias names a
+  partner namespace (400) that exists (404) and is another namespace of the
+  same service (400); a namespace is in one pairing at most (409). An Event
+  Hubs application group names its clients as `SASKeyName=<key>` or
+  `AADAppID=<GUID>` (400) with policies of unique names (400); schema groups
+  and dedicated clusters are kept as sent. The namespaces' private endpoint
+  connections follow `privateendpoints.go`.
+  Not modelled: the tiers each takes (private endpoints and pairing are
+  Premium's), the partner's region, the secondary's copy of the
+  alias, breaking the pairing and failover, and the error codes.
+- Event Grid system topics, event subscriptions and MQTT broker children
+  (`Microsoft.EventGrid`, 2025-02-15; `pkg/fakecloud/arm/eventgrid.go`): a
+  system topic names a source (400) that exists (404) and a topic type
+  (400), one system topic a source (409); a system topic's or namespace
+  topic's event subscription has a destination (400), one named by
+  resource ID exists (404), a webhook's URL is https (400), and a namespace
+  topic's delivers by Queue or Push with a destination (400); a topic space
+  has one to ten templates, a client group a query, a CA certificate its
+  certificate (400); a permission binding is Publisher or Subscriber (400)
+  and names a topic space and client group of its namespace that exist
+  (404). The partner resources (f77): a partner namespace names a partner
+  registration (400) that exists (404); a partner topic channel names the
+  subscriber's subscription, resource group and topic (400); a partner
+  configuration's authorized partners are named (400); a partner topic
+  names its source (400); a partner topic's subscription has a destination,
+  as a system topic's. Not modelled: events, the region a system topic
+  shares with its source, filter semantics, a webhook's validation
+  handshake, MQTT clients connecting, whether the namespace's broker is on,
+  a channel making its partner topic and activation, and the error codes.
+- API Management operations, policies, tags, schemas and providers
+  (`Microsoft.ApiManagement/service/...`, 2024-05-01;
+  `pkg/fakecloud/arm/apimanagement.go`): each kind sends what the spec
+  requires of it (400); an operation's URL template names only its
+  template parameters (400); an operation's policy in the xml or rawxml
+  format is XML with a `<policies>` root (400); an API's, product's or
+  operation's tag names a tag of the service that exists (404); an identity
+  provider is named by its type (400); a cache's Redis, when named, exists
+  (404). The second part (f71): a resolver has a display name and a
+  `Type/field` path (400) and its policy is `<policies>` XML (400); a link
+  from a tag's or a product's side names an API, operation, product or
+  group (400) of its own service (400) that exists (404); a release's
+  `apiId` is its own API (400); a wiki's documents exist (404); a v2
+  gateway has a SKU (400) and its backend subnet exists (404); a
+  configuration connection is a workspace gateway's (400) and names a
+  workspace that exists (404). The third part (f72): a workspace has a
+  display name (400) and is on a Premium or PremiumV2 service when the fake
+  holds the service's SKU (400; ASO's stand-ins carry none, so the e2e
+  tests do not show it); a workspace's children follow the rules above
+  scoped to the workspace (a tag link names the workspace's tag, a link
+  what is in the workspace, a release the workspace's API). Not modelled: the gateway serving the APIs,
+  policy semantics, resolvers being called, a workspace's APIs answering
+  only through a workspace gateway, the developer portal, the providers'
+  endpoints answering, which tiers take gateways, and the error codes.
+- Batch applications and pools (`Microsoft.Batch`, 2025-06-01;
+  `pkg/fakecloud/arm/batch.go`): a pool has a VM size and a virtual machine
+  configuration with an image reference and a node agent SKU (400), scales
+  fixed or automatically, not both, an automatic scale with a formula
+  (400), at least one task slot a node (400), a subnet that exists (404)
+  and application packages of its own account (400) that exist (404).
+  Applications are kept as sent. Not modelled: nodes allocated (a pool is
+  steady at once), quotas, images and node agents being real, start tasks
+  running, package versions, and the error codes.
+- Logic Apps workflows and integration accounts (`Microsoft.Logic`,
+  2019-05-01; `pkg/fakecloud/arm/logic.go`): a workflow's definition names
+  its `$schema` and `contentVersion` (400) and its integration account
+  exists (404); an integration account's SKU is Free, Basic or Standard
+  (400); a schema and a map have their type and content, an assembly its
+  name and content (400); a partner's business identities have a qualifier
+  and a value (400); an agreement names a host and a guest partner of its
+  account that exist (404), identities of those partners (400) and the
+  content of its type (400); a certificate has a public certificate or a
+  Key Vault key, the vault existing (404); a batch configuration has a
+  release criterion (400). Not modelled: workflows running, the definition
+  language beyond its two fields, the SKUs' artifact limits, B2B messages,
+  and the error codes.
+- IoT hub certificates and Device Provisioning Services
+  (`Microsoft.Devices`, 2023-06-30 and 2026-11-01;
+  `pkg/fakecloud/arm/devices.go`): a hub's or a provisioning service's
+  certificate carries its certificate (400); a provisioning service is S1
+  (400) and each IoT hub it links has a location and, unless reached with
+  a managed identity, a connection string (400). Connections follow
+  `privateendpoints.go`. Not modelled: devices, enrollments and their
+  attestation, proof of possession, allocation at work, and the error
+  codes.
+- Data Factory children (`Microsoft.DataFactory`, 2018-06-01;
+  `pkg/fakecloud/arm/datafactory.go`): a factory's managed virtual network
+  and global parameters are named `default` (400); a managed private
+  endpoint names a target that exists (404) and a group (400); a managed
+  identity credential names an identity that exists (404), a service
+  principal one its principal, key and tenant (400); a global parameter has
+  a type (400). Global parameters' properties are a map of the parameters:
+  the fake adds no `provisioningState` to them. Connections follow
+  `privateendpoints.go`. A trigger, data flow, change data capture or
+  integration runtime names others of the factory by reference (pipelines,
+  datasets, linked services, data flows, runtimes, credentials, the managed
+  network), and each exists (400, Data Factory's "invalid reference"); a
+  linked self-hosted runtime's shared runtime exists (404). A linked
+  service (one kind per type, docs/plan.md f87) names its runtime
+  (`connectVia`), a credential and the Key Vault linked service of a
+  secret's store by reference, and each exists (400, "invalid reference");
+  a secure string (`{"type": "SecureString", "value": ...}`) has a value
+  (400), and what a GET or PUT returns of a factory's child holds every
+  secure string's value as `**********`, as Data Factory never returns one
+  (the fake keeps the value, which a test reads with `Resource`); an Azure
+  Blob Storage linked service takes at most one of `connectionString`,
+  `sasUri` and `serviceEndpoint` (400; the spec calls them mutually
+  exclusive). A dataset (one kind per type, f88) names its linked
+  service, which exists (400, "invalid reference") and is of a type the
+  dataset reads (400): a table or collection dataset the store it is in
+  (`AzureSqlTable` an `AzureSqlDatabase` linked service), a file format
+  dataset the store of its location (`AzureBlobFSLocation` an `AzureBlobFS`
+  one); a parameterized name (an expression) is not checked, nor a pair
+  the fake's two tables do not list. A pipeline (f89) names datasets,
+  linked services, data flows and pipelines by reference, in its
+  activities and in those its control activities hold, and each exists
+  (400); its activity names are unique and an activity depends only on
+  activities of the pipeline (400). Not modelled: the managed network's isolation, a managed
+  endpoint's approval by its target, starting and stopping triggers, runs,
+  runtime nodes and states, a linked service's test connection and the
+  other per-type rules Data Factory applies (it checks a linked service's
+  properties when it is used, not all on PUT), Azure's exact mask text,
+  references written as expressions, and the error codes.
+- Synapse workspace children (`Microsoft.Synapse`, 2021-06-01;
+  `pkg/fakecloud/arm/synapse.go`): an IP firewall rule is an ordered IPv4
+  range (400); an Entra admin names its login and sid (400); Entra-only
+  authentication is enabled only once the workspace has an Entra admin
+  (400); a key is a Key Vault key URL (400); an `AzureKeyVault` encryption
+  protector names a key of the workspace that exists (404); enabled auditing
+  names a storage endpoint or Azure Monitor (400); a vulnerability
+  assessment names a blob container URL (400); an integration runtime is
+  `Managed` or `SelfHosted`, and a runtime linked by RBAC names a shared
+  runtime that exists (404); the singletons keep the names the spec's enums
+  give and refuse DELETE (405). Connections follow `privateendpoints.go`.
+  A dedicated SQL pool names a SKU, and a restore or recovery what it
+  restores (400), which exists (404); its settings keep their enum names
+  (400) and refuse DELETE (405); a `Number` masking rule names its range, a
+  `Text` one its prefix, suffix and replacement (400); a workload group's
+  percentages run 0 <= min <= max <= 100 (400). Not modelled: the
+  workspace's SQL endpoints (no audit, alert or scan runs, no masking or
+  workload management at query time), pausing and scaling a pool, key
+  activation, runtime nodes and states, and the error codes.
+- Machine Learning assets (`Microsoft.MachineLearningServices`, 2026-09-01;
+  `pkg/fakecloud/arm/machinelearning.go`): an asset version (code,
+  component, data, environment, model) is immutable once made, and a PUT
+  that changes its URI, image, build, component spec or type is refused
+  (409); an environment version names an image or a build (400); a
+  datastore's credentials carry what their type needs, and a blob datastore
+  names its account and container (400); an outbound rule names its
+  destination, and a private endpoint rule's target exists (404). An
+  online endpoint sends traffic only to its deployments that exist, 0 to
+  100 each and 100 in all (400); a batch endpoint's default deployment
+  exists (400); a managed online deployment names its instance type
+  (400). A job's compute exists (404); a job that exists may change only
+  its tags, display name, description, properties and archive flag (409: a
+  job runs once); a schedule's cron expression has five fields and a
+  recurrence's hours and minutes are in range (400). Connections follow
+  `privateendpoints.go`. Not modelled: what an asset points at, image
+  builds, the managed network, serving and scaling, a job running (no
+  status or outputs), a schedule firing, and the error codes.
+- A MySQL flexible server's advanced threat protection setting
+  (`Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings`,
+  2024-12-30; `pkg/fakecloud/arm/mysql.go`): one setting, Default (404
+  otherwise), Enabled or Disabled (400), with no DELETE (405). The server's
+  private endpoint connections follow `privateendpoints.go`. Not modelled:
+  threats detected, alerts, Defender's plan, and the error codes.
+- Container group profiles and NGroups (`Microsoft.ContainerInstance`,
+  2026-07-01; `pkg/fakecloud/arm/containerinstance.go`): a profile has an
+  OS type and at least one container, each named once, with an image and
+  CPU and memory requests (400); an NGroup's profiles are named (400) and
+  exist (404), its desired count not negative (400). Sandbox groups are
+  kept as sent. Not modelled: container groups being made, images, SKUs and
+  quotas, a profile's revisions, and the error codes.
+- Web PubSub services and their children, and SignalR shared private
+  links (`Microsoft.SignalRService`, 2024-03-01;
+  `pkg/fakecloud/arm/signalr.go`): a Web PubSub SKU is Free_F1,
+  Standard_S1, Premium_P1 or Premium_P2 (400); a replica is a Premium
+  service's, Premium, in another region (400); a hub's name is a letter
+  then letters, digits and underscores (400); a custom certificate names
+  its vault and secret (400) and a custom domain its domain (400) and a
+  certificate of its service that exists (404); a shared private link has a
+  groupId (400) and a target that exists (404), and a replica's has no
+  DELETE (405). Connections follow `privateendpoints.go`. Not modelled:
+  clients, event handlers being called, the tiers that take domains and
+  private links, and the error codes.
+- Azure Data Explorer cluster children (`Microsoft.Kusto`, 2025-02-14;
+  `pkg/fakecloud/arm/kusto.go`): a follower configuration names a database,
+  a principals modification kind and a leader cluster that exists and is
+  another (400, 404); a managed private endpoint a groupId and a target
+  that exists (400, 404); a sandbox image its language and a version or a
+  base image (400); a database script one source, URL or inline (400).
+  Connections follow `privateendpoints.go`. Not modelled: followers kept in
+  step, scripts running, images built, and the error codes.
+- Resource guard proxies (`Microsoft.RecoveryServices/vaults/` and
+  `Microsoft.DataProtection/backupVaults/backupResourceGuardProxies`;
+  `pkg/fakecloud/arm/backup.go`; the backup vault's added 2026-11-24, f70):
+  a proxy naming a guard is deleted only after a POST to its
+  `unlockDelete` names it and the guard's `deleteResourceGuardProxyRequests`
+  request (400 otherwise, as a live run of 2026-11-12 showed of Recovery
+  Services); one unlock opens one DELETE. Resource guards themselves are
+  kept as sent. Not modelled: the unlock's expiry and the guard's role
+  checks.
+- Virtual network TAP (`virtualNetworkTaps` and
+  `networkInterfaces/tapConfigurations`, 2026-03-01;
+  `pkg/fakecloud/arm/vnettap.go`): a TAP has one destination, a NIC's IP
+  configuration or a load balancer's frontend IP configuration, not both
+  (400), which exists (404), and a VXLAN `destinationPort` of 1 to 65535
+  (400); a tap configuration names a TAP (400) that exists (404); a TAP is
+  returned with `networkInterfaceTapConfigurations` listing the tap
+  configurations that name it. Not modelled: traffic being mirrored, the
+  destination's virtual network (Azure wants the TAP's or a peered one), the
+  VM sizes and NICs that can be tapped, whether Azure refuses deleting a TAP
+  still named by tap configurations, and the error codes (the fake's own).
+- Defender for Cloud governance rules (`Microsoft.Security/governanceRules`,
+  2022-01-01-preview; `pkg/fakecloud/arm/governance.go`), from the spec: a
+  rule's key (its name) is a GUID, its priority from 0 to 1000 and unique at
+  its scope, and it gives a condition set (400 each). Not modelled: owners
+  assigned to recommendations or notified, the condition sets' content
+  (free-form in the spec), excluded and member scopes, which scopes Azure
+  takes, and the error codes (the fake's own). Alerts suppression rules
+  (`alertsSuppressionRules`, 2019-01-01-preview) are kept as sent: no alert
+  is suppressed, and an expiry date in the past is not refused (Azure's rule
+  depends on the day).
+- Defender for Cloud custom assessments (`Microsoft.Security/assessmentMetadata`,
+  `assessments`, 2025-05-04; `pkg/fakecloud/arm/assessments.go`): a
+  metadata's key (its name) is a GUID (400); an assessment is named after
+  metadata that exists in its resource's subscription (404; the fake has no
+  built-in assessments) and gives a status code (400). Not modelled: built-in
+  metadata, the secure score, an assessment showing or expiring, and the
+  error codes. Defender private links and SQL vulnerability assessment
+  settings and baseline rules are kept as sent (no scan runs).
+- Cosmos DB role definitions and assignments of the Cassandra, Gremlin,
+  MongoDB (Entra) and Table APIs (2026-03-15; `pkg/fakecloud/arm/cosmosrbac.go`):
+  names are GUIDs (400); an assignment names a definition of the same API
+  in the same account (400) that exists (404), scoped to the account or a
+  path under it (400). Not modelled: built-in definitions, the data plane
+  enforcing anything, the principal existing, and the error codes.
+- Azure Compute Gallery and dedicated hosts (`Microsoft.Compute/galleries`
+  and children, 2026-03-03; `hostGroups`, 2025-04-01;
+  `pkg/fakecloud/arm/gallery.go`): a gallery's name has letters, digits,
+  dots and underscores only; a version's name is `X.Y.Z`; an image version
+  names a source that exists (404) and an application version its package's
+  `mediaLink`, a script version its `scriptLink`; a restore point
+  collection's source VM exists (404); a host group has 1 to 3 fault
+  domains (400 each). Not modelled: replication to regions (a version is
+  ready at once), OS state and generation matching, script parameters,
+  access control rules being enforced, restore points being taken, host
+  SKU availability, quota, and the error codes.
+- Static Web Apps' children and an App Service app's virtual network
+  connections (`Microsoft.Web/staticSites/*`, `sites/*/virtualNetworkConnections`,
+  2026-07-15; `pkg/fakecloud/arm/staticsites.go`): a linked backend, a
+  user-provided function app, a database connection and a network
+  connection name a resource that exists (404). Not modelled: custom domain
+  validation (a domain is Ready at once), builds, environments, the
+  repository and deployment token, one backend per site, SKUs, and the
+  error codes.
+- An App Service app's and slot's sidecar containers, private access and a
+  slot's virtual network connections (`Microsoft.Web/sites/*/sitecontainers`,
+  `.../privateAccess/virtualNetworks`, the same under `sites/*/slots`,
+  2026-07-15; `pkg/fakecloud/arm/sitechildren.go`): a container gives its
+  image and `isMain` (400), an app or slot has one main container (409);
+  private access and a slot's network connection name networks that exist
+  (404). Not modelled: images being pulled and containers started, registry
+  credentials, the Linux `sitecontainers` mode a sidecar app needs,
+  functions being deployed or run, premier add-ons being bought, and the
+  error codes.
+- App Service Environment v3 (`Microsoft.Web/hostingEnvironments` and its
+  `configurations/customdnssuffix`, 2026-07-15;
+  `pkg/fakecloud/arm/hostingenvironments.go`): an environment names a
+  network that exists (400 when it names none, 404); a custom DNS suffix
+  comes with its Key Vault certificate URL, and the other way round (400).
+  Not modelled: the subnet's delegation and size, the hours an environment
+  takes, the certificate being read, the addresses Azure assigns, and the
+  error codes.
+- The private endpoint connections of an Azure SQL server, a container
+  app, a disk access, an Azure Cache for Redis cache, a Redis Enterprise
+  cluster, an App Configuration store, a PostgreSQL flexible server, a
+  MongoDB vCore cluster, an App Service app or slot, a static web app, an
+  App Service Environment, a SQL managed instance, and (f61 to f76) the
+  messaging, MySQL, SignalR, Data Explorer, API Management, IoT hub,
+  Device Provisioning and Notification Hubs owners named in the file
+  (`.../privateEndpointConnections/*`; `pkg/fakecloud/arm/privateendpoints.go`):
+  a private endpoint makes a connection, so a PUT for one that does not
+  exist is 404 and a PUT changes one that does (approve, reject). Not
+  modelled: the private endpoint (a test adds the connection to the fake as
+  one would), the states Azure allows a move between (a rejected connection
+  cannot be approved again), and the error codes (the fake's own).
+- Azure SQL Managed Instance children and instance pools
+  (`Microsoft.Sql/managedInstances/*`, `instancePools`, 2025-01-01;
+  `pkg/fakecloud/arm/sqlmanagedinstance.go`): a Key Vault key gives its URI
+  (400); a Key Vault encryption protector names a key of its instance that
+  exists (404); a vulnerability assessment, the instance's or a database's,
+  gives its container and a key or SAS (400); Entra-only authentication is
+  turned on only after a Microsoft Entra administrator (400); a pool's
+  subnet exists (404); a private endpoint makes the instance's connections.
+  Not modelled: Key Vault being read, scans, schedules stopping the
+  instance, the SQL Server end of a distributed availability group, DTC
+  and SQL Agent, pool capacity, and the error codes.
+- Azure SQL Microsoft support operations auditing and workload groups
+  (`Microsoft.Sql/servers/*/devOpsAuditingSettings/Default`,
+  `.../databases/*/workloadGroups/*`, 2025-01-01;
+  `pkg/fakecloud/arm/sqlserverextras.go`): Enabled auditing names a storage
+  endpoint or Azure Monitor (400); a workload group's minimum share is no
+  more than its cap, both 0 to 100 (400). Not modelled: workload groups
+  needing a dedicated SQL pool, masking being applied, maintenance windows
+  being kept, ledger digests being uploaded, baselines matching scans, and
+  the error codes.
+- Azure Cosmos DB for PostgreSQL clusters
+  (`Microsoft.DBforPostgreSQL/serverGroupsv2/*`, 2022-11-08;
+  `pkg/fakecloud/arm/cosmospostgres.go`): a new cluster that is no replica
+  or restore has an administrator password, a coordinator edition, storage
+  and vCores and a node count (400); a node count is never 1 (400); a
+  replica's or restore's source cluster exists (404); a firewall rule has
+  IPv4 addresses (400; the CRD's pattern refuses others first); a role has
+  a password and a configuration a value (400); a private endpoint makes a
+  connection (`privateendpoints.go`). Not modelled: the servers a cluster
+  makes, its state, high availability, replicas kept in step, a
+  configuration's name being a server parameter, and the error codes.
+- Azure Cosmos DB fleets and MongoDB vCore cluster users
+  (`Microsoft.DocumentDB/fleets/*`, 2026-03-15, and
+  `mongoClusters/*/users/*`, 2026-06-01; `pkg/fakecloud/arm/cosmosfleet.go`):
+  a fleetspace's pool has its minimum at or below its maximum (400); a
+  fleetspace account names a Cosmos DB account (400) that exists (404); a
+  cluster user is named by an Entra object ID (400) and has an identity
+  provider (400). Not modelled: throughput being pooled, regions matching,
+  an account in one fleetspace only, the principal existing, roles being
+  granted in the cluster, and the error codes.
+- Storage connectors, data shares and blob access points
+  (`Microsoft.Storage/storageAccounts/*/{connectors,dataShares,blobAccessPointConfigurations}/*`,
+  2026-06-01 and 2026-09-01; `pkg/fakecloud/arm/storagenewcomers.go`): a
+  connector's and an access point's source type cannot change (400); a new
+  data share has its access policies and assets (400). Not modelled: the
+  connection test, data being shared or read through a connector or an
+  access point, capacity metrics being emitted, context caches caching, and
+  the error codes.
+- Container Apps sandbox groups and Azure SRE Agent agents
+  (`Microsoft.App/sandboxGroups/*`, `Microsoft.App/agents/*`, 2026-07-01;
+  `pkg/fakecloud/arm/appextras.go`): a sandbox group's environment link
+  cannot be changed or removed once set (409); the environment it links and
+  the subnet its network connection names exist (404; a connection names
+  one, 400); an agent's subnet and AzureVNet sandbox egress come together
+  (400). Not modelled: sandboxes running, the agent acting, its connectors
+  reaching their data sources, and the error codes.
+- Recovery Services vault settings (`vaults/*/backupconfig/vaultconfig`,
+  `backupstorageconfig/vaultstorageconfig`,
+  `backupEncryptionConfigs/backupResourceEncryptionConfig`, 2026-07-01;
+  `pkg/fakecloud/arm/vaultsettings.go`): soft delete set AlwaysON stays on
+  and its retention is 14 to 180 days (400); the storage redundancy cannot
+  change once the vault holds a protected item (400); customer-managed
+  encryption names its key and cannot go back to Microsoft-managed keys
+  (400). Not modelled: enhanced security and multi-user authorization,
+  cross-region restore taking effect, the key being reachable, and the
+  error codes.
+- DevTest Labs (`Microsoft.DevTestLab/labs/*`, 2018-09-15;
+  `pkg/fakecloud/arm/devtestlab.go`): a lab's schedules are named
+  `LabVmsShutdown` (`LabVmsShutdownTask`) or `LabVmAutoStart`
+  (`LabVmsStartupTask`) and a lab VM's is `LabVmsShutdown` (400); a lab's
+  cost settings are named `targetCost` (400); a lab virtual network names a
+  virtual network that exists (404); a lab VM names a virtual network of
+  its own lab that exists (404) and one of its lab subnets (400), and has a
+  password, or an SSH key when it signs in with one (400); a user's secret
+  has a value (400). Not modelled: VMs, disks and environments being made
+  (in the lab's resource group or their own), artifacts being applied,
+  schedules running, the lab's policies, and the error codes.
+- Azure Site Recovery, Azure to Azure (`vaults/*/replication*`, 2026-07-01;
+  `pkg/fakecloud/arm/siterecovery.go`): an Azure fabric names its region
+  (400) and a vault has one Azure fabric per region (409); an A2A policy's
+  app-consistent frequency is at most its recovery point retention (400); a
+  protection container mapping names a policy and a target container that
+  exist (404), not its own container (400); a replicated item names a
+  policy that exists (404), and for A2A the VM, recovery container and
+  recovery resource group exist (404) and its container maps to that
+  recovery container with that policy (400); a recovery plan's fabrics and
+  replicated items exist (404). Not modelled: replication running (initial
+  replication, recovery points, health), failover and the other POST
+  actions, the mobility agent, the on-premises scenarios beyond the generic
+  resource, and the error codes.
+- App Service leftovers (`sites/*/certificates`, `virtualNetworkConnections/*/gateways`,
+  `staticSites/*/basicAuth`, `sites/*/slots/*/sourcecontrols/web`,
+  `kubeEnvironments`, 2026-07-15; `pkg/fakecloud/arm/webextras.go`): an
+  app's or slot's certificate comes from a PFX with its password, a Key
+  Vault secret, or a host name (400); an integration's gateway is named
+  `primary` (400); a static web app's basic authentication is named
+  `default`, is refused on the Free plan, names its scope (and the
+  environments for `SpecifiedEnvironments`) and has a password or secret
+  URL (400); a slot's source control names its repository (400); a
+  Kubernetes environment names a custom location (400) that exists (404).
+  Not modelled: certificates read or issued, the VPN package, basic
+  authentication taking effect, deployments, the Arc cluster, AI gateways,
+  and the error codes.
+- Logic Apps API connections, custom APIs and on-premises data gateways
+  (`Microsoft.Web/connections`, `customApis`, `connectionGateways`,
+  2016-06-01; `pkg/fakecloud/arm/logicconnections.go`): a connection names
+  its API (400), a managed API in the connection's region (400) or a custom
+  API that exists (404), and its `parameterValues` and
+  `customParameterValues` are kept aside (`SharedKey`, under the
+  connection's ID and `/parameterValues/<name>`) and never returned; a
+  custom API carries an OpenAPI document, an OpenAPI URL or a WSDL (400),
+  and an OAuth connection parameter's client secret is kept aside and never
+  returned; a gateway names a gateway installation that exists (404). Not
+  modelled: OAuth consent and a connection's status, connections reaching
+  their target, the managed API catalogue (any name is accepted), the
+  gateway's machine, and the error codes.
+- Application Insights smart detection rules
+  (`Microsoft.Insights/components/ProactiveDetectionConfigs`,
+  2018-05-01-preview; `pkg/fakecloud/arm/smartdetection.go`): a rule is one
+  Application Insights defines (`slowpageloadtime` and the others its
+  documentation names; 400), and has no DELETE (405). Not modelled: the
+  rules running, mail, a rule's definition (Azure's own), and the error
+  codes.
+- Alert processing rules (`Microsoft.AlertsManagement/actionRules`,
+  2021-08-08; `pkg/fakecloud/arm/alertprocessing.go`): a rule is Global
+  (400), applies to at least one scope that exists (400, 404), and has
+  exactly one action: one to five action groups that exist, or removing
+  them all (400, 404); a schedule ends after it starts, and a weekly or
+  monthly recurrence names its days (400). Not modelled: alerts being
+  processed, time zone names, and the error codes.
+- Azure Monitor pipeline groups (`Microsoft.Monitor/pipelineGroups`,
+  2026-04-01; `pkg/fakecloud/arm/monitorpipeline.go`): a group runs on a
+  custom location (400) that exists (404); its receivers, processors and
+  exporters have unique names and a receiver or exporter carries its type's
+  settings (400); its pipelines name only what it declares (400). Not
+  modelled: the pipeline running, data reaching the data collection rule,
+  persistence, TLS certificates, and the error codes.
+- A VM's diagnostic run commands
+  (`virtualMachines/*/diagnosticRunCommands`, 2026-04-01;
+  `pkg/fakecloud/arm/diagnosticruncommands.go`): the source is exactly one
+  of a script, a script URI, a command ID or a gallery script version
+  (400), and a gallery script version exists (404). Not modelled: the
+  script running, its output, the run-as account, and the error codes. A
+  VM's ordinary run commands are not checked.
+- Microsoft Foundry managed networks and outbound rules
+  (`Microsoft.CognitiveServices/accounts/*/managedNetworks/*`, 2026-09-01;
+  `pkg/fakecloud/arm/foundry.go`): a managed network is named `default`
+  (400) and does not go back from V2 to V1 (400); a private endpoint rule's
+  target exists (404). Not modelled: the network being provisioned (its
+  firewall and endpoints), agents running, RAI topics training, tool labels
+  being applied, and the error codes.
+- Azure SQL Elastic Jobs (`Microsoft.Sql/servers/jobAgents/*`,
+  2025-01-01; `pkg/fakecloud/arm/sqljobs.go`): a job agent names a job
+  database that exists (404); a credential has a username and a password
+  (400); a job step names a target group, and any credential, that exist
+  (404) in its own job agent (400). Not modelled: jobs running (schedules,
+  executions, outputs), target group members being resolved, the job
+  database's schema, SKUs and managed identities, and the error codes.
+- Log Analytics summary rules (`workspaces/summaryLogs`, 2025-07-01;
+  `pkg/fakecloud/arm/loganalytics.go`): a rule's definition gives a query
+  and a bin size of 20, 30, 60, 120, 180, 360, 720 or 1440 minutes (400).
+  Not modelled: the rule running, its destination table being made, and
+  the query being valid KQL.
+- Microsoft Sentinel settings and the workspace manager
+  (`Microsoft.SecurityInsights/settings`, `workspaceManager*`,
+  2025-10-01-preview; `pkg/fakecloud/arm/sentinel.go`): a setting is named
+  after its kind (`Anomalies`, `EntityAnalytics`, `EyesOn`, `Ueba`; 400); a
+  member's target workspace, a group's members, an assignment's group and
+  its items must exist (404). Not modelled: settings taking effect, the
+  configuration's mode gating the rest, content being published to members
+  (no job fields), members in other tenants, and the error codes (the
+  fake's own). Content metadata and source controls (2025-09-01) are kept
+  as sent: no repository is reached and no OAuth code exchanged.
 - Resource Manager checks no role: real Azure lets only Owner and User
   Access Administrator (or a custom role with
   `Microsoft.Authorization/locks/*`) write locks, so ASO's identity may

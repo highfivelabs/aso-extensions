@@ -118,8 +118,9 @@ func TestDirectoryRoleAssignment(t *testing.T) {
 	}
 
 	// Graph does not update an assignment; the API server refuses the change.
-	globalReader.Spec.RoleDefinitionId = ptr(graph.SecurityReader)
-	if err := k8s.Update(ctx, globalReader); err == nil || !strings.Contains(err.Error(), "roleDefinitionId cannot be changed") {
+	if err := change(t, globalReader, func(globalReader *entrav1.DirectoryRoleAssignment) {
+		globalReader.Spec.RoleDefinitionId = ptr(graph.SecurityReader)
+	}); err == nil || !strings.Contains(err.Error(), "roleDefinitionId cannot be changed") {
 		t.Fatalf("changing the role: %v", err)
 	}
 

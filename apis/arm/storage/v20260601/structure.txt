@@ -4,6 +4,362 @@ github.com/highfivelabs/aso-extensions/apis/arm/storage/v20260601
 APIVersion: Enum (1 value)
 └── "2026-06-01"
 
+ContextCache: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (7 properties)
+│   ├── AzureName: Validated<string> (1 rule)
+│   │   └── Rule 0: Pattern: "^[a-z0-9][a-z0-9-]{1,22}[a-z0-9]$"
+│   ├── Identity: *Object (1 property)
+│   │   └── Type: *Enum (2 values)
+│   │       ├── "None"
+│   │       └── "SystemAssigned"
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (3 properties)
+│   │   ├── AccountKind: *Enum (3 values)
+│   │   │   ├── "DataZone"
+│   │   │   ├── "Global"
+│   │   │   └── "Regional"
+│   │   ├── Description: Validated<*string> (1 rule)
+│   │   │   └── Rule 0: MaxLength: 250
+│   │   └── Encryption: *Object (2 properties)
+│   │       ├── CustomerManagedKeyEncryption: *Object (2 properties)
+│   │       │   ├── KeyEncryptionKeyIdentity: *Object (4 properties)
+│   │       │   │   ├── DelegatedIdentityClientId: *Validated<string> (1 rule)
+│   │       │   │   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+│   │       │   │   ├── FederatedClientId: *Validated<string> (1 rule)
+│   │       │   │   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$"
+│   │       │   │   ├── IdentityType: *Enum (3 values)
+│   │       │   │   │   ├── "delegatedResourceIdentity"
+│   │       │   │   │   ├── "systemAssignedIdentity"
+│   │       │   │   │   └── "userAssignedIdentity"
+│   │       │   │   └── UserAssignedIdentityResourceReference: *genruntime.ResourceReference
+│   │       │   └── KeyEncryptionKeyUrl: *string
+│   │       └── InfrastructureEncryption: *Enum (2 values)
+│   │           ├── "disabled"
+│   │           └── "enabled"
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Identity: *Object (3 properties)
+    │   ├── PrincipalId: *string
+    │   ├── TenantId: *string
+    │   └── Type: *Enum (2 values)
+    │       ├── "None"
+    │       └── "SystemAssigned"
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (4 properties)
+    │   ├── AccountKind: *Enum (3 values)
+    │   │   ├── "DataZone"
+    │   │   ├── "Global"
+    │   │   └── "Regional"
+    │   ├── Description: *string
+    │   ├── Encryption: *Object (2 properties)
+    │   │   ├── CustomerManagedKeyEncryption: *Object (2 properties)
+    │   │   │   ├── KeyEncryptionKeyIdentity: *Object (4 properties)
+    │   │   │   │   ├── DelegatedIdentityClientId: *string
+    │   │   │   │   ├── FederatedClientId: *string
+    │   │   │   │   ├── IdentityType: *Enum (3 values)
+    │   │   │   │   │   ├── "delegatedResourceIdentity"
+    │   │   │   │   │   ├── "systemAssignedIdentity"
+    │   │   │   │   │   └── "userAssignedIdentity"
+    │   │   │   │   └── UserAssignedIdentityResourceId: *string
+    │   │   │   └── KeyEncryptionKeyUrl: *string
+    │   │   └── InfrastructureEncryption: *Enum (2 values)
+    │   │       ├── "disabled"
+    │   │       └── "enabled"
+    │   └── ProvisioningState: *Enum (7 values)
+    │       ├── "Accepted"
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       ├── "Succeeded"
+    │       └── "Updating"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+ContextCachesContextCacheContainer: Resource
+├── Owner: ContextCache
+├── Spec: Object (4 properties)
+│   ├── AzureName: string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (4 properties)
+│       ├── Description: Validated<*string> (1 rule)
+│       │   └── Rule 0: MaxLength: 250
+│       ├── ModelName: *string
+│       ├── Provider: *Enum (1 value)
+│       │   └── "OpenAI"
+│       └── TimeToLive: Validated<*int> (2 rules)
+│           ├── Rule 0: Maximum: 30
+│           └── Rule 1: Minimum: 1
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (5 properties)
+    │   ├── Description: *string
+    │   ├── ModelName: *string
+    │   ├── Provider: *Enum (1 value)
+    │   │   └── "OpenAI"
+    │   ├── ProvisioningState: *Enum (7 values)
+    │   │   ├── "Accepted"
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   ├── "Succeeded"
+    │   │   └── "Updating"
+    │   └── TimeToLive: *int
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+StorageAccountsAdvancedPlatformMetric: Resource
+├── Owner: StorageAccount
+├── Spec: Object (3 properties)
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── Properties: *Object (2 properties)
+│       ├── Enabled: *bool
+│       └── RuleConfig: *Object (2 properties)
+│           ├── FilterType: *Enum (3 values)
+│           │   ├── "AllContainersFilter"
+│           │   ├── "ContainerListFilter"
+│           │   └── "ContainerPrefixFilter"
+│           └── FilterValues: string[]
+└── Status: Object (6 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Name: *string
+    ├── Properties: *Object (5 properties)
+    │   ├── Enabled: *bool
+    │   ├── LastModifiedTime: *string
+    │   ├── MetricsEmitted: Enum (2 values)[]
+    │   │   ├── "ContainerBlobCount"
+    │   │   └── "ContainerUsedSize"
+    │   ├── RuleConfig: *Object (2 properties)
+    │   │   ├── FilterType: *Enum (3 values)
+    │   │   │   ├── "AllContainersFilter"
+    │   │   │   ├── "ContainerListFilter"
+    │   │   │   └── "ContainerPrefixFilter"
+    │   │   └── FilterValues: string[]
+    │   └── RuleType: *Enum (1 value)
+    │       └── "ContainerLevelCapacityMetrics"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    └── Type: *string
+
+StorageAccountsConnector: Resource
+├── Owner: StorageAccount
+├── Spec: Object (6 properties)
+│   ├── AzureName: Validated<string> (2 rules)
+│   │   ├── Rule 0: MaxLength: 63
+│   │   └── Rule 1: MinLength: 3
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (5 properties)
+│   │   ├── DataSourceType: *Enum (1 value)
+│   │   │   └── "Azure_DataShare"
+│   │   ├── Description: Validated<*string> (1 rule)
+│   │   │   └── Rule 0: MaxLength: 250
+│   │   ├── Source: *Object (1 property)
+│   │   │   └── DataShare: *Object (3 properties)
+│   │   │       ├── AuthProperties: *Object (1 property)
+│   │   │       │   └── ManagedIdentity: *Object (2 properties)
+│   │   │       │       ├── IdentityResourceReference: *genruntime.ResourceReference
+│   │   │       │       └── Type: *Enum (1 value)
+│   │   │       │           └── "ManagedIdentity"
+│   │   │       ├── Connection: *Object (1 property)
+│   │   │       │   └── DataShare: *Object (2 properties)
+│   │   │       │       ├── DataShareUri: Validated<*string> (1 rule)
+│   │   │       │       │   └── Rule 0: Pattern: "^azds://[a-zA-Z0-9-]+:[a-zA-Z0-9-_]+:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+│   │   │       │       └── Type: *Enum (1 value)
+│   │   │       │           └── "DataShare"
+│   │   │       └── Type: *Enum (1 value)
+│   │   │           └── "DataShare"
+│   │   ├── State: *Enum (2 values)
+│   │   │   ├── "Active"
+│   │   │   └── "Inactive"
+│   │   └── TestConnection: *bool
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (8 properties)
+    │   ├── CreationTime: *string
+    │   ├── DataSourceType: *Enum (1 value)
+    │   │   └── "Azure_DataShare"
+    │   ├── Description: *string
+    │   ├── ProvisioningState: *Enum (6 values)
+    │   │   ├── "Accepted"
+    │   │   ├── "Canceled"
+    │   │   ├── "Creating"
+    │   │   ├── "Deleting"
+    │   │   ├── "Failed"
+    │   │   └── "Succeeded"
+    │   ├── Source: *Object (1 property)
+    │   │   └── DataShare: *Object (3 properties)
+    │   │       ├── AuthProperties: *Object (1 property)
+    │   │       │   └── ManagedIdentity: *Object (2 properties)
+    │   │       │       ├── IdentityResourceId: *string
+    │   │       │       └── Type: *Enum (1 value)
+    │   │       │           └── "ManagedIdentity"
+    │   │       ├── Connection: *Object (1 property)
+    │   │       │   └── DataShare: *Object (2 properties)
+    │   │       │       ├── DataShareUri: *string
+    │   │       │       └── Type: *Enum (1 value)
+    │   │       │           └── "DataShare"
+    │   │       └── Type: *Enum (1 value)
+    │   │           └── "DataShare"
+    │   ├── State: *Enum (2 values)
+    │   │   ├── "Active"
+    │   │   └── "Inactive"
+    │   ├── TestConnection: *bool
+    │   └── UniqueId: *string
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
+StorageAccountsDataShare: Resource
+├── Owner: StorageAccount
+├── Spec: Object (6 properties)
+│   ├── AzureName: Validated<string> (2 rules)
+│   │   ├── Rule 0: MaxLength: 63
+│   │   └── Rule 1: MinLength: 3
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (2 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Properties: *Object (3 properties)
+│   │   ├── AccessPolicies: Object (3 properties)[]
+│   │   │   ├── Permission: *Enum (2 values)
+│   │   │   │   ├── "None"
+│   │   │   │   └── "Read"
+│   │   │   ├── PrincipalId: Validated<*string> (1 rule)
+│   │   │   │   └── Rule 0: Pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+│   │   │   └── TenantId: Validated<*string> (1 rule)
+│   │   │       └── Rule 0: Pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+│   │   ├── Assets: Object (2 properties)[]
+│   │   │   ├── AssetPath: *string
+│   │   │   └── DisplayName: *string
+│   │   └── Description: Validated<*string> (1 rule)
+│   │       └── Rule 0: MaxLength: 250
+│   └── Tags: map[string]string
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (6 properties)
+    │   ├── AccessPolicies: Object (3 properties)[]
+    │   │   ├── Permission: *Enum (2 values)
+    │   │   │   ├── "None"
+    │   │   │   └── "Read"
+    │   │   ├── PrincipalId: *string
+    │   │   └── TenantId: *string
+    │   ├── Assets: Object (2 properties)[]
+    │   │   ├── AssetPath: *string
+    │   │   └── DisplayName: *string
+    │   ├── DataShareIdentifier: *string
+    │   ├── DataShareUri: *string
+    │   ├── Description: *string
+    │   └── ProvisioningState: *Enum (6 values)
+    │       ├── "Accepted"
+    │       ├── "Canceled"
+    │       ├── "Creating"
+    │       ├── "Deleting"
+    │       ├── "Failed"
+    │       └── "Succeeded"
+    ├── SystemData: *Object (6 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *Enum (4 values)
+    │   │   ├── "Application"
+    │   │   ├── "Key"
+    │   │   ├── "ManagedIdentity"
+    │   │   └── "User"
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   └── LastModifiedByType: *Enum (4 values)
+    │       ├── "Application"
+    │       ├── "Key"
+    │       ├── "ManagedIdentity"
+    │       └── "User"
+    ├── Tags: map[string]string
+    └── Type: *string
+
 StorageAccountsEncryptionScope: Resource
 ├── Owner: StorageAccount
 ├── Spec: Object (7 properties)

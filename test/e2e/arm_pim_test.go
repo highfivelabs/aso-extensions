@@ -134,12 +134,11 @@ func TestPrivilegedIdentityManagement(t *testing.T) {
 		return nil
 	})
 	// The name stays what was recorded on later reconciles.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(activate), activate); err != nil {
-		t.Fatal(err)
-	}
-	recorded := activate.Spec.AzureName
-	activate.Spec.Justification = ptr("incident 42")
-	if err := k8s.Update(ctx, activate); err != nil {
+	var recorded string
+	if err := change(t, activate, func(activate *authorization.RoleAssignmentScheduleRequest) {
+		recorded = activate.Spec.AzureName
+		activate.Spec.Justification = ptr("incident 42")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, activeID, func(r map[string]any) error {
@@ -168,16 +167,14 @@ func TestPrivilegedIdentityManagement(t *testing.T) {
 	// detach-on-delete lets the object go, the request staying in Azure.
 	detach := func(obj client.Object) {
 		t.Helper()
-		if err := k8s.Get(ctx, client.ObjectKeyFromObject(obj), obj); err != nil {
-			t.Fatal(err)
-		}
-		a := obj.GetAnnotations()
-		if a == nil {
-			a = map[string]string{}
-		}
-		a["serviceoperator.azure.com/reconcile-policy"] = "detach-on-delete"
-		obj.SetAnnotations(a)
-		if err := k8s.Update(ctx, obj); err != nil {
+		if err := change(t, obj, func(obj client.Object) {
+			a := obj.GetAnnotations()
+			if a == nil {
+				a = map[string]string{}
+			}
+			a["serviceoperator.azure.com/reconcile-policy"] = "detach-on-delete"
+			obj.SetAnnotations(a)
+		}); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -186,11 +183,9 @@ func TestPrivilegedIdentityManagement(t *testing.T) {
 	// on an object already being deleted detach-on-delete takes effect at the
 	// next retry, which for this refusal is very slow (minutes); any change
 	// of the spec reconciles it at once.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(eligible), eligible); err != nil {
-		t.Fatal(err)
-	}
-	eligible.Spec.Justification = ptr("detached")
-	if err := k8s.Update(ctx, eligible); err != nil {
+	if err := change(t, eligible, func(eligible *authorization.RoleEligibilityScheduleRequest) {
+		eligible.Spec.Justification = ptr("detached")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	eventually(t, timeout, "the eligibility request object gone", gone(eligible))

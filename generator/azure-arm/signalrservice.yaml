@@ -1,0 +1,77 @@
+# Azure Web PubSub and SignalR Service kinds ASO does not export
+# (Microsoft.SignalRService, webpubsub.json and signalr.json 2024-03-01, the
+# newest stable version and the one of ASO's own SignalR; docs/plan.md f68,
+# tier 3 row t8 of docs/coverage/foundation.md): Web PubSub services and
+# their hubs, replicas, custom domains and certificates, shared private link
+# resources and private endpoint connections; and a SignalR service's shared
+# private link resources (its own and its replicas') and private endpoint
+# connections. Owned by a resource group, our WebPubSub and WebPubSubReplica,
+# and ASO's SignalR and Replica.
+#
+# Not done: the access keys of a Web PubSub service as a Secret (ASO exports
+# SignalR's with the SignalR management SDK; Web PubSub's would need the Web
+# PubSub SDK, a new dependency: docs/plan.md f68).
+typeFilters:
+  - action: include
+    group: signalrservice
+    version: v20240301
+    because: the newest stable version, the one of ASO's SignalR (v20240301)
+  - action: prune
+    group: signalrservice
+    because: every other version is left alone (ASO has SignalR and its replicas, custom domains and certificates)
+typeTransformers:
+  - group: signalrservice
+    version: v20240301
+    name: WebPubSub_Replica_Spec
+    property: Sku
+    target:
+      required: true
+    because: required by Azure, as ASO marks it on SignalR's replicas
+groupModelConfiguration:
+  2024-03-01:
+    WebPubSub:
+      $exportAs: WebPubSub
+      $supportedFrom: v0.1.0
+    WebPubSub_Hub:
+      $exportAs: WebPubSubHub
+      $supportedFrom: v0.1.0
+    WebPubSub_Replica:
+      $exportAs: WebPubSubReplica
+      $supportedFrom: v0.1.0
+    WebPubSub_CustomDomain:
+      $exportAs: WebPubSubCustomDomain
+      $supportedFrom: v0.1.0
+    WebPubSub_CustomCertificate:
+      $exportAs: WebPubSubCustomCertificate
+      $supportedFrom: v0.1.0
+    WebPubSub_SharedPrivateLinkResource:
+      $exportAs: WebPubSubSharedPrivateLinkResource
+      $supportedFrom: v0.1.0
+    WebPubSub_Replicas_SharedPrivateLinkResource:
+      $exportAs: WebPubSubReplicasSharedPrivateLinkResource
+      $supportedFrom: v0.1.0
+    WebPubSub_PrivateEndpointConnection:
+      $exportAs: WebPubSubPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    SignalR_SharedPrivateLinkResource:
+      $exportAs: SignalRSharedPrivateLinkResource
+      $supportedFrom: v0.1.0
+    SignalR_Replicas_SharedPrivateLinkResource:
+      $exportAs: SignalRReplicasSharedPrivateLinkResource
+      $supportedFrom: v0.1.0
+    SignalR_PrivateEndpointConnection:
+      $exportAs: SignalRPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    # As ASO's signalrservice.yaml configures its own SignalR's.
+    CustomCertificateProperties:
+      KeyVaultBaseURI:
+        $importConfigMapMode: optional
+    ResourceReference:
+      Id:
+        $referenceType: arm
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # the private endpoint of a connection (ASO's PrivateEndpoint, or an ARM ID)
+    SharedPrivateLinkResourceProperties:
+      PrivateLinkResourceId:
+        $referenceType: arm # the resource the service reaches privately (a function app, a key vault: ASO's kinds or an ARM ID)

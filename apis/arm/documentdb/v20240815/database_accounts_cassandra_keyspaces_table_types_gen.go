@@ -1370,14 +1370,14 @@ type CassandraSchema struct {
 var _ genruntime.ARMTransformer = &CassandraSchema{}
 
 // ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (schema *CassandraSchema) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if schema == nil {
+func (cassandraSchema *CassandraSchema) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
+	if cassandraSchema == nil {
 		return nil, nil
 	}
 	result := &arm.CassandraSchema{}
 
 	// Set property "ClusterKeys":
-	for _, item := range schema.ClusterKeys {
+	for _, item := range cassandraSchema.ClusterKeys {
 		item_ARM, err := item.ConvertToARM(resolved)
 		if err != nil {
 			return nil, err
@@ -1386,7 +1386,7 @@ func (schema *CassandraSchema) ConvertToARM(resolved genruntime.ConvertToARMReso
 	}
 
 	// Set property "Columns":
-	for _, item := range schema.Columns {
+	for _, item := range cassandraSchema.Columns {
 		item_ARM, err := item.ConvertToARM(resolved)
 		if err != nil {
 			return nil, err
@@ -1395,7 +1395,7 @@ func (schema *CassandraSchema) ConvertToARM(resolved genruntime.ConvertToARMReso
 	}
 
 	// Set property "PartitionKeys":
-	for _, item := range schema.PartitionKeys {
+	for _, item := range cassandraSchema.PartitionKeys {
 		item_ARM, err := item.ConvertToARM(resolved)
 		if err != nil {
 			return nil, err
@@ -1406,12 +1406,12 @@ func (schema *CassandraSchema) ConvertToARM(resolved genruntime.ConvertToARMReso
 }
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (schema *CassandraSchema) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (cassandraSchema *CassandraSchema) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.CassandraSchema{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (schema *CassandraSchema) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (cassandraSchema *CassandraSchema) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.CassandraSchema)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.CassandraSchema, got %T", armInput)
@@ -1424,7 +1424,7 @@ func (schema *CassandraSchema) PopulateFromARM(owner genruntime.ArbitraryOwnerRe
 		if err != nil {
 			return err
 		}
-		schema.ClusterKeys = append(schema.ClusterKeys, item1)
+		cassandraSchema.ClusterKeys = append(cassandraSchema.ClusterKeys, item1)
 	}
 
 	// Set property "Columns":
@@ -1434,7 +1434,7 @@ func (schema *CassandraSchema) PopulateFromARM(owner genruntime.ArbitraryOwnerRe
 		if err != nil {
 			return err
 		}
-		schema.Columns = append(schema.Columns, item1)
+		cassandraSchema.Columns = append(cassandraSchema.Columns, item1)
 	}
 
 	// Set property "PartitionKeys":
@@ -1444,7 +1444,7 @@ func (schema *CassandraSchema) PopulateFromARM(owner genruntime.ArbitraryOwnerRe
 		if err != nil {
 			return err
 		}
-		schema.PartitionKeys = append(schema.PartitionKeys, item1)
+		cassandraSchema.PartitionKeys = append(cassandraSchema.PartitionKeys, item1)
 	}
 
 	// No error
@@ -1452,7 +1452,7 @@ func (schema *CassandraSchema) PopulateFromARM(owner genruntime.ArbitraryOwnerRe
 }
 
 // AssignProperties_From_CassandraSchema populates our CassandraSchema from the provided source CassandraSchema
-func (schema *CassandraSchema) AssignProperties_From_CassandraSchema(source *storage.CassandraSchema) error {
+func (cassandraSchema *CassandraSchema) AssignProperties_From_CassandraSchema(source *storage.CassandraSchema) error {
 
 	// ClusterKeys
 	if source.ClusterKeys != nil {
@@ -1465,9 +1465,9 @@ func (schema *CassandraSchema) AssignProperties_From_CassandraSchema(source *sto
 			}
 			clusterKeyList[clusterKeyIndex] = clusterKey
 		}
-		schema.ClusterKeys = clusterKeyList
+		cassandraSchema.ClusterKeys = clusterKeyList
 	} else {
-		schema.ClusterKeys = nil
+		cassandraSchema.ClusterKeys = nil
 	}
 
 	// Columns
@@ -1481,9 +1481,9 @@ func (schema *CassandraSchema) AssignProperties_From_CassandraSchema(source *sto
 			}
 			columnList[columnIndex] = column
 		}
-		schema.Columns = columnList
+		cassandraSchema.Columns = columnList
 	} else {
-		schema.Columns = nil
+		cassandraSchema.Columns = nil
 	}
 
 	// PartitionKeys
@@ -1497,9 +1497,9 @@ func (schema *CassandraSchema) AssignProperties_From_CassandraSchema(source *sto
 			}
 			partitionKeyList[partitionKeyIndex] = partitionKey
 		}
-		schema.PartitionKeys = partitionKeyList
+		cassandraSchema.PartitionKeys = partitionKeyList
 	} else {
-		schema.PartitionKeys = nil
+		cassandraSchema.PartitionKeys = nil
 	}
 
 	// No error
@@ -1507,14 +1507,14 @@ func (schema *CassandraSchema) AssignProperties_From_CassandraSchema(source *sto
 }
 
 // AssignProperties_To_CassandraSchema populates the provided destination CassandraSchema from our CassandraSchema
-func (schema *CassandraSchema) AssignProperties_To_CassandraSchema(destination *storage.CassandraSchema) error {
+func (cassandraSchema *CassandraSchema) AssignProperties_To_CassandraSchema(destination *storage.CassandraSchema) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// ClusterKeys
-	if schema.ClusterKeys != nil {
-		clusterKeyList := make([]storage.ClusterKey, len(schema.ClusterKeys))
-		for clusterKeyIndex, clusterKeyItem := range schema.ClusterKeys {
+	if cassandraSchema.ClusterKeys != nil {
+		clusterKeyList := make([]storage.ClusterKey, len(cassandraSchema.ClusterKeys))
+		for clusterKeyIndex, clusterKeyItem := range cassandraSchema.ClusterKeys {
 			var clusterKey storage.ClusterKey
 			err := clusterKeyItem.AssignProperties_To_ClusterKey(&clusterKey)
 			if err != nil {
@@ -1528,9 +1528,9 @@ func (schema *CassandraSchema) AssignProperties_To_CassandraSchema(destination *
 	}
 
 	// Columns
-	if schema.Columns != nil {
-		columnList := make([]storage.Column, len(schema.Columns))
-		for columnIndex, columnItem := range schema.Columns {
+	if cassandraSchema.Columns != nil {
+		columnList := make([]storage.Column, len(cassandraSchema.Columns))
+		for columnIndex, columnItem := range cassandraSchema.Columns {
 			var column storage.Column
 			err := columnItem.AssignProperties_To_Column(&column)
 			if err != nil {
@@ -1544,9 +1544,9 @@ func (schema *CassandraSchema) AssignProperties_To_CassandraSchema(destination *
 	}
 
 	// PartitionKeys
-	if schema.PartitionKeys != nil {
-		partitionKeyList := make([]storage.CassandraPartitionKey, len(schema.PartitionKeys))
-		for partitionKeyIndex, partitionKeyItem := range schema.PartitionKeys {
+	if cassandraSchema.PartitionKeys != nil {
+		partitionKeyList := make([]storage.CassandraPartitionKey, len(cassandraSchema.PartitionKeys))
+		for partitionKeyIndex, partitionKeyItem := range cassandraSchema.PartitionKeys {
 			var partitionKey storage.CassandraPartitionKey
 			err := partitionKeyItem.AssignProperties_To_CassandraPartitionKey(&partitionKey)
 			if err != nil {
@@ -1571,7 +1571,7 @@ func (schema *CassandraSchema) AssignProperties_To_CassandraSchema(destination *
 }
 
 // Initialize_From_CassandraSchema_STATUS populates our CassandraSchema from the provided source CassandraSchema_STATUS
-func (schema *CassandraSchema) Initialize_From_CassandraSchema_STATUS(source *CassandraSchema_STATUS) error {
+func (cassandraSchema *CassandraSchema) Initialize_From_CassandraSchema_STATUS(source *CassandraSchema_STATUS) error {
 
 	// ClusterKeys
 	if source.ClusterKeys != nil {
@@ -1584,9 +1584,9 @@ func (schema *CassandraSchema) Initialize_From_CassandraSchema_STATUS(source *Ca
 			}
 			clusterKeyList[clusterKeyIndex] = clusterKey
 		}
-		schema.ClusterKeys = clusterKeyList
+		cassandraSchema.ClusterKeys = clusterKeyList
 	} else {
-		schema.ClusterKeys = nil
+		cassandraSchema.ClusterKeys = nil
 	}
 
 	// Columns
@@ -1600,9 +1600,9 @@ func (schema *CassandraSchema) Initialize_From_CassandraSchema_STATUS(source *Ca
 			}
 			columnList[columnIndex] = column
 		}
-		schema.Columns = columnList
+		cassandraSchema.Columns = columnList
 	} else {
-		schema.Columns = nil
+		cassandraSchema.Columns = nil
 	}
 
 	// PartitionKeys
@@ -1616,9 +1616,9 @@ func (schema *CassandraSchema) Initialize_From_CassandraSchema_STATUS(source *Ca
 			}
 			partitionKeyList[partitionKeyIndex] = partitionKey
 		}
-		schema.PartitionKeys = partitionKeyList
+		cassandraSchema.PartitionKeys = partitionKeyList
 	} else {
-		schema.PartitionKeys = nil
+		cassandraSchema.PartitionKeys = nil
 	}
 
 	// No error
@@ -1640,12 +1640,12 @@ type CassandraSchema_STATUS struct {
 var _ genruntime.FromARMConverter = &CassandraSchema_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (schema *CassandraSchema_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (cassandraSchema *CassandraSchema_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.CassandraSchema_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (schema *CassandraSchema_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (cassandraSchema *CassandraSchema_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.CassandraSchema_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.CassandraSchema_STATUS, got %T", armInput)
@@ -1658,7 +1658,7 @@ func (schema *CassandraSchema_STATUS) PopulateFromARM(owner genruntime.Arbitrary
 		if err != nil {
 			return err
 		}
-		schema.ClusterKeys = append(schema.ClusterKeys, item1)
+		cassandraSchema.ClusterKeys = append(cassandraSchema.ClusterKeys, item1)
 	}
 
 	// Set property "Columns":
@@ -1668,7 +1668,7 @@ func (schema *CassandraSchema_STATUS) PopulateFromARM(owner genruntime.Arbitrary
 		if err != nil {
 			return err
 		}
-		schema.Columns = append(schema.Columns, item1)
+		cassandraSchema.Columns = append(cassandraSchema.Columns, item1)
 	}
 
 	// Set property "PartitionKeys":
@@ -1678,7 +1678,7 @@ func (schema *CassandraSchema_STATUS) PopulateFromARM(owner genruntime.Arbitrary
 		if err != nil {
 			return err
 		}
-		schema.PartitionKeys = append(schema.PartitionKeys, item1)
+		cassandraSchema.PartitionKeys = append(cassandraSchema.PartitionKeys, item1)
 	}
 
 	// No error
@@ -1686,7 +1686,7 @@ func (schema *CassandraSchema_STATUS) PopulateFromARM(owner genruntime.Arbitrary
 }
 
 // AssignProperties_From_CassandraSchema_STATUS populates our CassandraSchema_STATUS from the provided source CassandraSchema_STATUS
-func (schema *CassandraSchema_STATUS) AssignProperties_From_CassandraSchema_STATUS(source *storage.CassandraSchema_STATUS) error {
+func (cassandraSchema *CassandraSchema_STATUS) AssignProperties_From_CassandraSchema_STATUS(source *storage.CassandraSchema_STATUS) error {
 
 	// ClusterKeys
 	if source.ClusterKeys != nil {
@@ -1699,9 +1699,9 @@ func (schema *CassandraSchema_STATUS) AssignProperties_From_CassandraSchema_STAT
 			}
 			clusterKeyList[clusterKeyIndex] = clusterKey
 		}
-		schema.ClusterKeys = clusterKeyList
+		cassandraSchema.ClusterKeys = clusterKeyList
 	} else {
-		schema.ClusterKeys = nil
+		cassandraSchema.ClusterKeys = nil
 	}
 
 	// Columns
@@ -1715,9 +1715,9 @@ func (schema *CassandraSchema_STATUS) AssignProperties_From_CassandraSchema_STAT
 			}
 			columnList[columnIndex] = column
 		}
-		schema.Columns = columnList
+		cassandraSchema.Columns = columnList
 	} else {
-		schema.Columns = nil
+		cassandraSchema.Columns = nil
 	}
 
 	// PartitionKeys
@@ -1731,9 +1731,9 @@ func (schema *CassandraSchema_STATUS) AssignProperties_From_CassandraSchema_STAT
 			}
 			partitionKeyList[partitionKeyIndex] = partitionKey
 		}
-		schema.PartitionKeys = partitionKeyList
+		cassandraSchema.PartitionKeys = partitionKeyList
 	} else {
-		schema.PartitionKeys = nil
+		cassandraSchema.PartitionKeys = nil
 	}
 
 	// No error
@@ -1741,14 +1741,14 @@ func (schema *CassandraSchema_STATUS) AssignProperties_From_CassandraSchema_STAT
 }
 
 // AssignProperties_To_CassandraSchema_STATUS populates the provided destination CassandraSchema_STATUS from our CassandraSchema_STATUS
-func (schema *CassandraSchema_STATUS) AssignProperties_To_CassandraSchema_STATUS(destination *storage.CassandraSchema_STATUS) error {
+func (cassandraSchema *CassandraSchema_STATUS) AssignProperties_To_CassandraSchema_STATUS(destination *storage.CassandraSchema_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// ClusterKeys
-	if schema.ClusterKeys != nil {
-		clusterKeyList := make([]storage.ClusterKey_STATUS, len(schema.ClusterKeys))
-		for clusterKeyIndex, clusterKeyItem := range schema.ClusterKeys {
+	if cassandraSchema.ClusterKeys != nil {
+		clusterKeyList := make([]storage.ClusterKey_STATUS, len(cassandraSchema.ClusterKeys))
+		for clusterKeyIndex, clusterKeyItem := range cassandraSchema.ClusterKeys {
 			var clusterKey storage.ClusterKey_STATUS
 			err := clusterKeyItem.AssignProperties_To_ClusterKey_STATUS(&clusterKey)
 			if err != nil {
@@ -1762,9 +1762,9 @@ func (schema *CassandraSchema_STATUS) AssignProperties_To_CassandraSchema_STATUS
 	}
 
 	// Columns
-	if schema.Columns != nil {
-		columnList := make([]storage.Column_STATUS, len(schema.Columns))
-		for columnIndex, columnItem := range schema.Columns {
+	if cassandraSchema.Columns != nil {
+		columnList := make([]storage.Column_STATUS, len(cassandraSchema.Columns))
+		for columnIndex, columnItem := range cassandraSchema.Columns {
 			var column storage.Column_STATUS
 			err := columnItem.AssignProperties_To_Column_STATUS(&column)
 			if err != nil {
@@ -1778,9 +1778,9 @@ func (schema *CassandraSchema_STATUS) AssignProperties_To_CassandraSchema_STATUS
 	}
 
 	// PartitionKeys
-	if schema.PartitionKeys != nil {
-		partitionKeyList := make([]storage.CassandraPartitionKey_STATUS, len(schema.PartitionKeys))
-		for partitionKeyIndex, partitionKeyItem := range schema.PartitionKeys {
+	if cassandraSchema.PartitionKeys != nil {
+		partitionKeyList := make([]storage.CassandraPartitionKey_STATUS, len(cassandraSchema.PartitionKeys))
+		for partitionKeyIndex, partitionKeyItem := range cassandraSchema.PartitionKeys {
 			var partitionKey storage.CassandraPartitionKey_STATUS
 			err := partitionKeyItem.AssignProperties_To_CassandraPartitionKey_STATUS(&partitionKey)
 			if err != nil {

@@ -32,13 +32,16 @@ if [[ "${ASO_EXT_LIVE:-}" != create-real-azure-resources ]]; then
   exit 2
 fi
 # targets.txt writes the subscription as ${AZURE_SUBSCRIPTION_ID} (the ID is
-# not in the tree): put its value in before comparing.
+# not in the tree): put its value in before comparing. A line's first field
+# is the target; a subscription line's other fields name the tests that may
+# touch it, which test/live checks (subscriptionScope).
 targets() {
-  local line
+  local line target
   while IFS= read -r line || [[ -n "${line}" ]]; do
-    line="${line%%#*}"; line="${line//[[:space:]]/}"
+    line="${line%%#*}"
+    read -r target _ <<<"${line}" || true
     # shellcheck disable=SC2016 # the placeholder is literal text
-    if [[ -n "${line}" ]]; then echo "${line//'${AZURE_SUBSCRIPTION_ID}'/${AZURE_SUBSCRIPTION_ID}}"; fi
+    if [[ -n "${target}" ]]; then echo "${target//'${AZURE_SUBSCRIPTION_ID}'/${AZURE_SUBSCRIPTION_ID}}"; fi
   done < hack/live/targets.txt
 }
 grep -qx "${AZURE_SUBSCRIPTION_ID}/${LIVE_RESOURCE_GROUP}" <(targets) \

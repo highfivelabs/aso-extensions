@@ -5,15 +5,48 @@ typeTransformers:
     property: SasUrl
     remove: true
     because: a SAS URL carries its signature; the status never holds it
+  - group: web
+    version: v20260715
+    name: DatabaseConnectionProperties_STATUS
+    property: ConnectionString
+    remove: true
+    because: a connection string carries its credential; the status never holds it
+  - group: web
+    version: v20260715
+    name: RelayServiceConnectionEntityProperties_STATUS
+    property: EntityConnectionString;ResourceConnectionString
+    remove: true
+    because: Relay connection strings carry their SAS keys; the status never holds them
+  - group: web
+    version: v20160601
+    name: Connection_Properties_STATUS
+    property: ParameterValues;CustomParameterValues
+    remove: true
+    because: an API connection's parameter values carry its credentials (connection strings, keys, passwords); the status never holds them
+  - group: web
+    version: v20160601
+    name: ApiOAuthSettings_STATUS
+    property: ClientSecret
+    remove: true
+    because: a custom API's OAuth client secret; the status never holds it
+  - group: web
+    version: v20260715
+    name: SiteContainerProperties_STATUS
+    property: PasswordSecret
+    remove: true
+    because: a sidecar's registry password; the status never holds it
 typeFilters:
   - action: include
     group: web
     version: v20260715
     because: the version of ASO's Site and ServerFarm, the owners of what we generate
+  - action: include
+    group: web
+    version: v20160601
+    because: the only version of the Logic Apps API connections, custom APIs and on-premises data gateways (logicAppsManagementClient.json; docs/plan.md f56)
   - action: prune
     group: web
     because: every other version is left alone
-
 groupModelConfiguration:
   2026-07-15:
     Certificate:
@@ -45,6 +78,155 @@ groupModelConfiguration:
     Sites_BasicPublishingCredentialsPolicies_Scm:
       $exportAs: SitesBasicPublishingCredentialsPolicyScm
       $supportedFrom: v0.1.0
+    # Static Web Apps (which ASO has none of) and their children, and more
+    # children of ASO's Site (2026-11-23).
+    StaticSite:
+      $exportAs: StaticSite
+      $supportedFrom: v0.1.0
+    StaticSites_CustomDomain:
+      $exportAs: StaticSitesCustomDomain
+      $supportedFrom: v0.1.0
+    StaticSites_LinkedBackend:
+      $exportAs: StaticSitesLinkedBackend
+      $supportedFrom: v0.1.0
+    StaticSites_UserProvidedFunctionApp:
+      $exportAs: StaticSitesUserProvidedFunctionApp
+      $supportedFrom: v0.1.0
+    StaticSites_DatabaseConnection:
+      $exportAs: StaticSitesDatabaseConnection
+      $supportedFrom: v0.1.0
+    StaticSites_PrivateEndpointConnection:
+      $exportAs: StaticSitesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Sites_DomainOwnershipIdentifier:
+      $exportAs: SitesDomainOwnershipIdentifier
+      $supportedFrom: v0.1.0
+    Sites_PrivateEndpointConnection:
+      $exportAs: SitesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Sites_PublicCertificate:
+      $exportAs: SitesPublicCertificate
+      $supportedFrom: v0.1.0
+    Sites_VirtualNetworkConnection:
+      $exportAs: SitesVirtualNetworkConnection
+      $supportedFrom: v0.1.0
+    Sites_Hybridconnection:
+      $exportAs: SitesHybridConnection
+      $supportedFrom: v0.1.0
+    # The rest of a site's children, and a slot's (docs/plan.md f40,
+    # 2026-11-23): sidecar containers, functions, premier add-ons, private
+    # access; on a slot (our SitesSlot) the same, and the children a site
+    # has had since c4b and f36. Not the Relay connections under
+    # hybridConnectionNamespaces/{namespace}: that segment is no resource,
+    # so the generator gives them a resource group as owner.
+    Sites_Sitecontainer:
+      $exportAs: SitesSitecontainer
+      $supportedFrom: v0.1.0
+    Sites_Function:
+      $exportAs: SitesFunction
+      $supportedFrom: v0.1.0
+    Sites_Premieraddon:
+      $exportAs: SitesPremieraddon
+      $supportedFrom: v0.1.0
+    Sites_PrivateAccess_VirtualNetwork:
+      $exportAs: SitesPrivateAccess
+      $supportedFrom: v0.1.0
+    Sites_Slots_Sitecontainer:
+      $exportAs: SitesSlotsSitecontainer
+      $supportedFrom: v0.1.0
+    Sites_Slots_Function:
+      $exportAs: SitesSlotsFunction
+      $supportedFrom: v0.1.0
+    Sites_Slots_Premieraddon:
+      $exportAs: SitesSlotsPremieraddon
+      $supportedFrom: v0.1.0
+    Sites_Slots_PrivateAccess_VirtualNetwork:
+      $exportAs: SitesSlotsPrivateAccess
+      $supportedFrom: v0.1.0
+    Sites_Slots_Config_AuthsettingsV2:
+      $exportAs: SitesSlotsConfigAuthSettingsV2
+      $supportedFrom: v0.1.0
+    Sites_Slots_Config_Log:
+      $exportAs: SitesSlotsConfigLogs
+      $supportedFrom: v0.1.0
+    Sites_Slots_BasicPublishingCredentialsPolicies_Ftp:
+      $exportAs: SitesSlotsBasicPublishingCredentialsPolicyFtp
+      $supportedFrom: v0.1.0
+    Sites_Slots_BasicPublishingCredentialsPolicies_Scm:
+      $exportAs: SitesSlotsBasicPublishingCredentialsPolicyScm
+      $supportedFrom: v0.1.0
+    Sites_Slots_DomainOwnershipIdentifier:
+      $exportAs: SitesSlotsDomainOwnershipIdentifier
+      $supportedFrom: v0.1.0
+    Sites_Slots_PrivateEndpointConnection:
+      $exportAs: SitesSlotsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    Sites_Slots_PublicCertificate:
+      $exportAs: SitesSlotsPublicCertificate
+      $supportedFrom: v0.1.0
+    Sites_Slots_VirtualNetworkConnection:
+      $exportAs: SitesSlotsVirtualNetworkConnection
+      $supportedFrom: v0.1.0
+    Sites_Slots_Hybridconnection:
+      $exportAs: SitesSlotsHybridConnection
+      $supportedFrom: v0.1.0
+    # App Service Environment v3 (docs/plan.md f41, 2026-11-23): the
+    # environment, its networking and custom DNS suffix configurations
+    # (fixed names) and its private endpoint connections. Not its multi-role
+    # and worker pools, which only the retired v1 and v2 environments use.
+    HostingEnvironment:
+      $exportAs: HostingEnvironment
+      $supportedFrom: v0.1.0
+    # docs/plan.md f53: certificates of an app and of a slot (the PFX and
+    # its password from Secrets, as Certificate's), a slot's source control
+    # (sourcecontrols/web, as ASO's SitesSourcecontrol for an app), the
+    # gateway of an app's or slot's gateway-required virtual network
+    # integration (no DELETE: detach-on-delete), a static web app's basic
+    # authentication (basicAuth/default, no DELETE), App Service AI gateways
+    # and Kubernetes environments (App Service on Azure Arc). Not a plan's
+    # virtual network gateways and routes: serverfarms/{name}/
+    # virtualNetworkConnections/{vnet} is no resource.
+    Sites_Certificate:
+      $exportAs: SitesCertificate
+      $supportedFrom: v0.1.0
+    Sites_Slots_Certificate:
+      $exportAs: SitesSlotsCertificate
+      $supportedFrom: v0.1.0
+    Sites_Slots_Sourcecontrol:
+      $exportAs: SitesSlotsSourcecontrol
+      $supportedFrom: v0.1.0
+    Sites_VirtualNetworkConnections_Gateway:
+      $exportAs: SitesVirtualNetworkConnectionsGateway
+      $supportedFrom: v0.1.0
+    Sites_Slots_VirtualNetworkConnections_Gateway:
+      $exportAs: SitesSlotsVirtualNetworkConnectionsGateway
+      $supportedFrom: v0.1.0
+    StaticSites_BasicAuth:
+      $exportAs: StaticSitesBasicAuth
+      $supportedFrom: v0.1.0
+    AiGateway:
+      $exportAs: AiGateway
+      $supportedFrom: v0.1.0
+    KubeEnvironment:
+      $exportAs: KubeEnvironment
+      $supportedFrom: v0.1.0
+    HostingEnvironments_Configurations_Networking:
+      $exportAs: HostingEnvironmentsConfigurationNetworking
+      $supportedFrom: v0.1.0
+    HostingEnvironments_Configurations_Customdnssuffix:
+      $exportAs: HostingEnvironmentsConfigurationCustomDnsSuffix
+      $supportedFrom: v0.1.0
+    HostingEnvironments_PrivateEndpointConnection:
+      $exportAs: HostingEnvironmentsPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    SiteContainerProperties:
+      PasswordSecret:
+        $importSecretMode: required # the registry password of a sidecar's image: from a Secret
+    RelayServiceConnectionEntityProperties:
+      EntityConnectionString:
+        $importSecretMode: required # a Relay connection string with its SAS key: from a Secret
+      ResourceConnectionString:
+        $importSecretMode: required # the same, for the Relay resource: from a Secret
     # Reference and resource labels, as ASO's web.yaml has them for 2026-07-15
     ApiManagementConfig:
       Id:
@@ -92,3 +274,69 @@ groupModelConfiguration:
     AzureTableStorageApplicationLogsConfig:
       SasUrl:
         $importSecretMode: required
+    DatabaseConnectionProperties:
+      ConnectionString:
+        $importSecretMode: required # a database connection string carries its credential: from a Secret
+      ResourceId:
+        $referenceType: arm # the database (a Cosmos DB account, SQL server or the like) (autolabel, reviewed)
+      ConnectionIdentity:
+        $referenceType: simple # SystemAssigned or a user-assigned identity's ID, as Azure takes it (autolabel, reviewed)
+    StaticSiteUserProvidedFunctionAppARMResourceProperties:
+      FunctionAppResourceId:
+        $referenceType: arm # the function app: ASO's Site or an ARM ID (autolabel, reviewed)
+    VnetInfo:
+      VnetResourceId:
+        $referenceType: arm # the virtual network or subnet (autolabel, reviewed)
+    IdentifierProperties:
+      Id:
+        $referenceType: simple # the identifier's value (a domain verification ID), not an ARM ID (autolabel wrote arm; reviewed)
+    StaticSiteLinkedBackendARMResourceProperties:
+      BackendResourceId:
+        $referenceType: arm # the backend (a function app, container app or API Management service) (autolabel, reviewed)
+    StaticSiteCustomDomainOverviewARMResourceProperties:
+      ValidationToken:
+        $importSecretMode: never # the token Azure makes for a custom domain's TXT record, published in DNS: not a secret, and the status must show it (autolabel wrote required; reviewed)
+    PrivateAccessVirtualNetwork:
+      ResourceId:
+        $referenceType: arm # the virtual network's ARM ID (autolabel, reviewed)
+    VirtualNetworkProfile:
+      Id:
+        $referenceType: arm # the virtual network, or the subnet, the environment is injected into (autolabel, reviewed)
+    KubeEnvironmentProperties:
+      AksResourceID:
+        $referenceType: arm # the AKS cluster of an App Service on Azure Arc environment
+    ContainerAppsConfiguration:
+      ControlPlaneSubnetResourceId:
+        $referenceType: arm # a subnet (autolabel, reviewed)
+      AppSubnetResourceId:
+        $referenceType: arm # a subnet (autolabel, reviewed)
+    StaticSiteBasicAuthPropertiesARMResourceProperties:
+      Password:
+        $importSecretMode: required # the static web app's basic authentication password: from a Secret
+  # Logic Apps API connections, custom APIs (custom connectors) and on-premises
+  # data gateways (logicAppsManagementClient.json, 2016-06-01, their only
+  # version; docs/plan.md f56). In a resource group.
+  2016-06-01:
+    Connection:
+      $exportAs: ApiConnection
+      $supportedFrom: v0.1.0
+    CustomApi:
+      $exportAs: CustomApi
+      $supportedFrom: v0.1.0
+    ConnectionGateway:
+      $exportAs: ConnectionGateway
+      $supportedFrom: v0.1.0
+    Connection_Properties_Spec:
+      ParameterValues:
+        $importSecretMode: required # the connection's credentials (a connection string, a key, a password): each value from a Secret
+      CustomParameterValues:
+        $importSecretMode: required # a custom connector's parameter values, as secret as the others
+    ApiOAuthSettings:
+      ClientSecret:
+        $importSecretMode: required # a custom API's OAuth client secret: from a Secret
+    ApiReference:
+      Id:
+        $referenceType: arm # the API a connection uses: a managed API (/subscriptions/{s}/providers/Microsoft.Web/locations/{l}/managedApis/{api}) by ARM ID, or our CustomApi
+    ConnectionGatewayReference:
+      Id:
+        $referenceType: arm # the gateway installation (/subscriptions/{s}/providers/Microsoft.Web/locations/{l}/connectionGatewayInstallations/{id}), registered by installing the gateway on a machine

@@ -337,25 +337,85 @@ Generated; these cannot drift from the data.
 
 **Denominator.** 414 spec sets (303 with a stable version, 111 preview-only) were read through 1932 files: 2,424 resources in 280 services, 43,369 attributes. 330 of the resources are at a preview version only (no stable version of that file exists); 41 have no request body and so no attributes.
 
-**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 3,561 (8.2%) in 268 further resources; uncovered 32,688 (75.4%).
+**Result.** Official 7,120 attributes (16.4%) in 299 resources; ours beyond official 9,032 (20.8%) in 661 further resources; uncovered 27,217 (62.8%).
 
 **ASO.** 299 kinds in 47 API groups, read from their API types (the Go types the CRDs are generated from) and ARM wire types, one per ARM type, at the newest stable version ASO has. 299 are resources in the denominator; **unmapped: 0** (an ASO kind whose ARM type no spec read here has). In 166 of the 299 matched resources ASO's API version is not the version of the denominator (it lags, or in a few cases leads); for those the attributes are compared with the ASO version's own, so what only the newer version added counts as uncovered.
 
 **Older spec versions.** 0 resource types that ASO or we cover are not in the latest version of their spec file and were read from an older one (`not-in-latest-spec-version` in `notes`).
 
-**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 23.6% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 18.6% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 0.8% more by ours.
+**Tiers.** tier 1 has 17 services, 7,793 attributes, 43.0% covered by official and 33.2% more by ours; tier 2 has 18 services, 8,108 attributes, 26.5% covered by official and 46.5% more by ours; tier 3 has 245 services, 27,468 attributes, 5.9% covered by official and 9.8% more by ours.
 
-**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 35.7% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 47.0% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 8.0% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 1.0% more by ours.
+**Categories.** platform-foundation has 18 services, 246 resources, 4,675 attributes, 43.2% covered by official and 39.3% more by ours; security-adjacent has 7 services, 93 resources, 1,049 attributes, 8.6% covered by official and 60.3% more by ours; application has 35 services, 823 resources, 14,821 attributes, 33.1% covered by official and 40.8% more by ours; other has 230 services, 1262 resources, 22,824 attributes, 0.5% covered by official and 2.3% more by ours.
 
 **Ours.**
 
 | Kind | Resource | How mapped |
 | --- | --- | --- |
+| `alertsmanagement.azure.hfl.dev/ActionRule` | `Microsoft.AlertsManagement/actionRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiOperation` | `Microsoft.ApiManagement/service/apis/operations` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiOperationPolicy` | `Microsoft.ApiManagement/service/apis/operations/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiOperationTag` | `Microsoft.ApiManagement/service/apis/operations/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiRelease` | `Microsoft.ApiManagement/service/apis/releases` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiResolver` | `Microsoft.ApiManagement/service/apis/resolvers` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiResolverPolicy` | `Microsoft.ApiManagement/service/apis/resolvers/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiSchema` | `Microsoft.ApiManagement/service/apis/schemas` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiTag` | `Microsoft.ApiManagement/service/apis/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiTagDescription` | `Microsoft.ApiManagement/service/apis/tagDescriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ApiWiki` | `Microsoft.ApiManagement/service/apis/wikis` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/AuthorizationServer` | `Microsoft.ApiManagement/service/authorizationServers` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Cache` | `Microsoft.ApiManagement/service/caches` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Documentation` | `Microsoft.ApiManagement/service/documentations` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Gateway` | `Microsoft.ApiManagement/gateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/GatewayConfigConnection` | `Microsoft.ApiManagement/gateways/configConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/GlobalSchema` | `Microsoft.ApiManagement/service/schemas` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/IdentityProvider` | `Microsoft.ApiManagement/service/identityProviders` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/OpenIdConnectProvider` | `Microsoft.ApiManagement/service/openidConnectProviders` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/PolicyRestriction` | `Microsoft.ApiManagement/service/policyRestrictions` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/PrivateEndpointConnection` | `Microsoft.ApiManagement/service/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ProductApiLink` | `Microsoft.ApiManagement/service/products/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ProductGroupLink` | `Microsoft.ApiManagement/service/products/groupLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ProductTag` | `Microsoft.ApiManagement/service/products/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/ProductWiki` | `Microsoft.ApiManagement/service/products/wikis` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Tag` | `Microsoft.ApiManagement/service/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/TagApiLink` | `Microsoft.ApiManagement/service/tags/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/TagOperationLink` | `Microsoft.ApiManagement/service/tags/operationLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/TagProductLink` | `Microsoft.ApiManagement/service/tags/productLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/Workspace` | `Microsoft.ApiManagement/service/workspaces` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApi` | `Microsoft.ApiManagement/service/workspaces/apis` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiDiagnostic` | `Microsoft.ApiManagement/service/workspaces/apis/diagnostics` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiOperation` | `Microsoft.ApiManagement/service/workspaces/apis/operations` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiOperationPolicy` | `Microsoft.ApiManagement/service/workspaces/apis/operations/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiPolicy` | `Microsoft.ApiManagement/service/workspaces/apis/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiRelease` | `Microsoft.ApiManagement/service/workspaces/apis/releases` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiSchema` | `Microsoft.ApiManagement/service/workspaces/apis/schemas` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceApiVersionSet` | `Microsoft.ApiManagement/service/workspaces/apiVersionSets` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceBackend` | `Microsoft.ApiManagement/service/workspaces/backends` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceCertificate` | `Microsoft.ApiManagement/service/workspaces/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceDiagnostic` | `Microsoft.ApiManagement/service/workspaces/diagnostics` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceGroup` | `Microsoft.ApiManagement/service/workspaces/groups` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceGroupUser` | `Microsoft.ApiManagement/service/workspaces/groups/users` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceLogger` | `Microsoft.ApiManagement/service/workspaces/loggers` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceNamedValue` | `Microsoft.ApiManagement/service/workspaces/namedValues` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspacePolicy` | `Microsoft.ApiManagement/service/workspaces/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspacePolicyFragment` | `Microsoft.ApiManagement/service/workspaces/policyFragments` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProduct` | `Microsoft.ApiManagement/service/workspaces/products` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProductApiLink` | `Microsoft.ApiManagement/service/workspaces/products/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProductGroupLink` | `Microsoft.ApiManagement/service/workspaces/products/groupLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceProductPolicy` | `Microsoft.ApiManagement/service/workspaces/products/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceSchema` | `Microsoft.ApiManagement/service/workspaces/schemas` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceSubscription` | `Microsoft.ApiManagement/service/workspaces/subscriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTag` | `Microsoft.ApiManagement/service/workspaces/tags` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTagApiLink` | `Microsoft.ApiManagement/service/workspaces/tags/apiLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTagOperationLink` | `Microsoft.ApiManagement/service/workspaces/tags/operationLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `apimanagement.azure.hfl.dev/WorkspaceTagProductLink` | `Microsoft.ApiManagement/service/workspaces/tags/productLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/Agent` | `Microsoft.App/agents` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/AgentsConnector` | `Microsoft.App/agents/connectors` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironment` | `Microsoft.App/connectedEnvironments` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironmentsCertificate` | `Microsoft.App/connectedEnvironments/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironmentsDaprComponent` | `Microsoft.App/connectedEnvironments/daprComponents` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ConnectedEnvironmentsStorage` | `Microsoft.App/connectedEnvironments/storages` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ContainerApp` | `Microsoft.App/containerApps` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/ContainerAppsPrivateEndpointConnection` | `Microsoft.App/containerApps/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ContainerAppsSourceControl` | `Microsoft.App/containerApps/sourcecontrols` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironment` | `Microsoft.App/managedEnvironments` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironmentsCertificate` | `Microsoft.App/managedEnvironments/certificates` | ARM wire type of the generated kind (`apis/arm`) |
@@ -368,7 +428,13 @@ Generated; these cannot drift from the data.
 | `app.azure.hfl.dev/ManagedEnvironmentsManagedCertificate` | `Microsoft.App/managedEnvironments/managedCertificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironmentsPrivateEndpointConnection` | `Microsoft.App/managedEnvironments/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/ManagedEnvironmentsStorage` | `Microsoft.App/managedEnvironments/storages` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/SandboxGroup` | `Microsoft.App/sandboxGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `app.azure.hfl.dev/SandboxGroupsVnetConnection` | `Microsoft.App/sandboxGroups/vnetConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `app.azure.hfl.dev/SessionPool` | `Microsoft.App/sessionPools` | ARM wire type of the generated kind (`apis/arm`) |
+| `appconfiguration.azure.hfl.dev/ConfigurationStoresPrivateEndpointConnection` | `Microsoft.AppConfiguration/configurationStores/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/AccessReviewHistoryDefinition` | `Microsoft.Authorization/accessReviewHistoryDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/AccessReviewScheduleDefinition` | `Microsoft.Authorization/accessReviewScheduleDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
+| `authorization.azure.hfl.dev/AccessReviewScheduleSetting` | `Microsoft.Authorization/accessReviewScheduleSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/ManagementLock` | `Microsoft.Authorization/locks` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicyAssignment` | `Microsoft.Authorization/policyAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `authorization.azure.hfl.dev/PolicyDefinition` | `Microsoft.Authorization/policyDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
@@ -402,23 +468,55 @@ Generated; these cannot drift from the data.
 | `automation.azure.hfl.dev/AutomationAccountsVariable` | `Microsoft.Automation/automationAccounts/variables` | ARM wire type of the generated kind (`apis/arm`) |
 | `automation.azure.hfl.dev/AutomationAccountsWatcher` | `Microsoft.Automation/automationAccounts/watchers` | ARM wire type of the generated kind (`apis/arm`) |
 | `automation.azure.hfl.dev/AutomationAccountsWebhook` | `Microsoft.Automation/automationAccounts/webhooks` | ARM wire type of the generated kind (`apis/arm`) |
+| `batch.azure.hfl.dev/BatchAccountsApplication` | `Microsoft.Batch/batchAccounts/applications` | ARM wire type of the generated kind (`apis/arm`) |
+| `batch.azure.hfl.dev/BatchAccountsPool` | `Microsoft.Batch/batchAccounts/pools` | ARM wire type of the generated kind (`apis/arm`) |
+| `cache.azure.hfl.dev/RedisEnterprisePrivateEndpointConnection` | `Microsoft.Cache/redisEnterprise/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `cache.azure.hfl.dev/RedisPrivateEndpointConnection` | `Microsoft.Cache/redis/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `cdn.azure.hfl.dev/CdnWebApplicationFirewallPolicy` | `Microsoft.Cdn/cdnWebApplicationFirewallPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsCapabilityHost` | `Microsoft.CognitiveServices/accounts/capabilityHosts` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsCommitmentPlan` | `Microsoft.CognitiveServices/accounts/commitmentPlans` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsConnection` | `Microsoft.CognitiveServices/accounts/connections` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsDefenderForAISetting` | `Microsoft.CognitiveServices/accounts/defenderForAISettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsEncryptionScope` | `Microsoft.CognitiveServices/accounts/encryptionScopes` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsManagedNetwork` | `Microsoft.CognitiveServices/accounts/managedNetworks` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsManagedNetworksOutboundRule` | `Microsoft.CognitiveServices/accounts/managedNetworks/outboundRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsPrivateEndpointConnection` | `Microsoft.CognitiveServices/accounts/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsProjectsApplication` | `Microsoft.CognitiveServices/accounts/projects/applications` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsProjectsApplicationsAgentDeployment` | `Microsoft.CognitiveServices/accounts/projects/applications/agentDeployments` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsProjectsCapabilityHost` | `Microsoft.CognitiveServices/accounts/projects/capabilityHosts` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsProjectsConnection` | `Microsoft.CognitiveServices/accounts/projects/connections` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsRaiBlocklist` | `Microsoft.CognitiveServices/accounts/raiBlocklists` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsRaiBlocklistsRaiBlocklistItem` | `Microsoft.CognitiveServices/accounts/raiBlocklists/raiBlocklistItems` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/AccountsRaiPolicy` | `Microsoft.CognitiveServices/accounts/raiPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsRaiToolLabel` | `Microsoft.CognitiveServices/accounts/raiToolLabels` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/AccountsRaiTopic` | `Microsoft.CognitiveServices/accounts/raitopics` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/CommitmentPlan` | `Microsoft.CognitiveServices/commitmentPlans` | ARM wire type of the generated kind (`apis/arm`) |
 | `cognitiveservices.azure.hfl.dev/CommitmentPlansAccountAssociation` | `Microsoft.CognitiveServices/commitmentPlans/accountAssociations` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/RaiExternalSafetyProvider` | `Microsoft.CognitiveServices/raiExternalSafetyProviders` | ARM wire type of the generated kind (`apis/arm`) |
+| `cognitiveservices.azure.hfl.dev/RaiPolicy` | `Microsoft.CognitiveServices/raiPolicy` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/DiskAccessesPrivateEndpointConnection` | `Microsoft.Compute/diskAccesses/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesApplication` | `Microsoft.Compute/galleries/applications` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesApplicationsVersion` | `Microsoft.Compute/galleries/applications/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesImage` | `Microsoft.Compute/galleries/images` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesImagesVersion` | `Microsoft.Compute/galleries/images/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesInVMAccessControlProfile` | `Microsoft.Compute/galleries/inVMAccessControlProfiles` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesInVMAccessControlProfilesVersion` | `Microsoft.Compute/galleries/inVMAccessControlProfiles/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesScript` | `Microsoft.Compute/galleries/scripts` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/GalleriesScriptsVersion` | `Microsoft.Compute/galleries/scripts/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/Gallery` | `Microsoft.Compute/galleries` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/HostGroup` | `Microsoft.Compute/hostGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/HostGroupsHost` | `Microsoft.Compute/hostGroups/hosts` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/ProximityPlacementGroup` | `Microsoft.Compute/proximityPlacementGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/RestorePointCollection` | `Microsoft.Compute/restorePointCollections` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/RestorePointCollectionsRestorePoint` | `Microsoft.Compute/restorePointCollections/restorePoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/SshPublicKey` | `Microsoft.Compute/sshPublicKeys` | ARM wire type of the generated kind (`apis/arm`) |
 | `compute.azure.hfl.dev/VirtualMachine` | `Microsoft.Compute/virtualMachines` | ARM wire type of the generated kind (`apis/arm`) |
+| `compute.azure.hfl.dev/VirtualMachinesDiagnosticRunCommand` | `Microsoft.Compute/virtualMachines/diagnosticRunCommands` | ARM wire type of the generated kind (`apis/arm`) |
 | `compute.azure.hfl.dev/VirtualMachinesRunCommand` | `Microsoft.Compute/virtualMachines/runCommands` | ARM wire type of the generated kind (`apis/arm`) |
 | `consumption.azure.hfl.dev/Budget` | `Microsoft.Consumption/budgets` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerinstance.azure.hfl.dev/ContainerGroupProfile` | `Microsoft.ContainerInstance/containerGroupProfiles` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerinstance.azure.hfl.dev/NGroup` | `Microsoft.ContainerInstance/ngroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `containerinstance.azure.hfl.dev/SandboxGroup` | `Microsoft.ContainerInstance/sandboxGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesConnectedRegistry` | `Microsoft.ContainerRegistry/registries/connectedRegistries` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesCredentialSet` | `Microsoft.ContainerRegistry/registries/credentialSets` | ARM wire type of the generated kind (`apis/arm`) |
 | `containerregistry.azure.hfl.dev/RegistriesPrivateEndpointConnection` | `Microsoft.ContainerRegistry/registries/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
@@ -434,27 +532,129 @@ Generated; these cannot drift from the data.
 | `costmanagement.azure.hfl.dev/Budget` | `Microsoft.CostManagement/budgets` | ARM wire type of the generated kind (`apis/arm`) |
 | `costmanagement.azure.hfl.dev/Export` | `Microsoft.CostManagement/exports` | ARM wire type of the generated kind (`apis/arm`) |
 | `costmanagement.azure.hfl.dev/ScheduledAction` | `Microsoft.CostManagement/scheduledActions` | ARM wire type of the generated kind (`apis/arm`) |
+| `costmanagement.azure.hfl.dev/Setting` | `Microsoft.CostManagement/settings` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesAdfcdc` | `Microsoft.DataFactory/factories/adfcdcs` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesCredential` | `Microsoft.DataFactory/factories/credentials` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDataflow` | `Microsoft.DataFactory/factories/dataflows` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetAvro` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetAzureDatabricksDeltaLakeDataset` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlDWTable` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetAzureSqlTable` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetBinary` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetCosmosDbSqlApiCollection` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetDelimitedText` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetExcel` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetHttpFile` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetJson` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetOrc` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetParquet` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetRestResource` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesDatasetXml` | `Microsoft.DataFactory/factories/datasets` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesGlobalParameter` | `Microsoft.DataFactory/factories/globalParameters` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesIntegrationRuntime` | `Microsoft.DataFactory/factories/integrationRuntimes` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobFS` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureBlobStorage` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureDatabricks` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureKeyVault` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSqlDW` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSqlDatabase` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceAzureSynapseArtifacts` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceCosmosDb` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceHttpServer` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesLinkedServiceRestService` | `Microsoft.DataFactory/factories/linkedservices` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesManagedVirtualNetwork` | `Microsoft.DataFactory/factories/managedVirtualNetworks` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesManagedVirtualNetworksManagedPrivateEndpoint` | `Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesPipeline` | `Microsoft.DataFactory/factories/pipelines` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesPrivateEndpointConnection` | `Microsoft.DataFactory/factories/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `datafactory.azure.hfl.dev/FactoriesTrigger` | `Microsoft.DataFactory/factories/triggers` | ARM wire type of the generated kind (`apis/arm`) |
+| `dataprotection.azure.hfl.dev/BackupVaultsBackupResourceGuardProxy` | `Microsoft.DataProtection/backupVaults/backupResourceGuardProxies` | ARM wire type of the generated kind (`apis/arm`) |
+| `dataprotection.azure.hfl.dev/ResourceGuard` | `Microsoft.DataProtection/resourceGuards` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbformysql.azure.hfl.dev/FlexibleServersAdvancedThreatProtectionSetting` | `Microsoft.DBforMySQL/flexibleServers/advancedThreatProtectionSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbformysql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection` | `Microsoft.DBforMySQL/flexibleServers/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbforpostgresql.azure.hfl.dev/FlexibleServersPrivateEndpointConnection` | `Microsoft.DBforPostgreSQL/flexibleServers/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbforpostgresql.azure.hfl.dev/ServerGroupsv2` | `Microsoft.DBforPostgreSQL/serverGroupsv2` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbforpostgresql.azure.hfl.dev/ServerGroupsv2CoordinatorConfiguration` | `Microsoft.DBforPostgreSQL/serverGroupsv2/coordinatorConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbforpostgresql.azure.hfl.dev/ServerGroupsv2FirewallRule` | `Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbforpostgresql.azure.hfl.dev/ServerGroupsv2NodeConfiguration` | `Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbforpostgresql.azure.hfl.dev/ServerGroupsv2PrivateEndpointConnection` | `Microsoft.DBforPostgreSQL/serverGroupsv2/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `dbforpostgresql.azure.hfl.dev/ServerGroupsv2Role` | `Microsoft.DBforPostgreSQL/serverGroupsv2/roles` | ARM wire type of the generated kind (`apis/arm`) |
 | `dbforpostgresql.azure.hfl.dev/User` | `Microsoft.DBforPostgreSQL/flexibleServers/users` | outside the denominator, not in any percentage |
+| `devices.azure.hfl.dev/IotHubsCertificate` | `Microsoft.Devices/IotHubs/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `devices.azure.hfl.dev/IotHubsPrivateEndpointConnection` | `Microsoft.Devices/iotHubs/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `devices.azure.hfl.dev/ProvisioningService` | `Microsoft.Devices/provisioningServices` | ARM wire type of the generated kind (`apis/arm`) |
+| `devices.azure.hfl.dev/ProvisioningServicesCertificate` | `Microsoft.Devices/provisioningServices/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `devices.azure.hfl.dev/ProvisioningServicesPrivateEndpointConnection` | `Microsoft.Devices/provisioningServices/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/Lab` | `Microsoft.DevTestLab/labs` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsArtifactSource` | `Microsoft.DevTestLab/labs/artifactsources` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsCost` | `Microsoft.DevTestLab/labs/costs` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsCustomImage` | `Microsoft.DevTestLab/labs/customimages` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsFormula` | `Microsoft.DevTestLab/labs/formulas` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsNotificationChannel` | `Microsoft.DevTestLab/labs/notificationchannels` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsSchedule` | `Microsoft.DevTestLab/labs/schedules` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsServiceRunner` | `Microsoft.DevTestLab/labs/servicerunners` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsUser` | `Microsoft.DevTestLab/labs/users` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsUsersDisk` | `Microsoft.DevTestLab/labs/users/disks` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsUsersEnvironment` | `Microsoft.DevTestLab/labs/users/environments` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsUsersSecret` | `Microsoft.DevTestLab/labs/users/secrets` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsUsersServiceFabric` | `Microsoft.DevTestLab/labs/users/servicefabrics` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsUsersServicefabricsSchedule` | `Microsoft.DevTestLab/labs/users/servicefabrics/schedules` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsVirtualMachine` | `Microsoft.DevTestLab/labs/virtualmachines` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsVirtualNetwork` | `Microsoft.DevTestLab/labs/virtualnetworks` | ARM wire type of the generated kind (`apis/arm`) |
+| `devtestlab.azure.hfl.dev/LabsVirtualmachinesSchedule` | `Microsoft.DevTestLab/labs/virtualmachines/schedules` | ARM wire type of the generated kind (`apis/arm`) |
 | `devtestlab.azure.hfl.dev/Schedule` | `Microsoft.DevTestLab/schedules` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspace` | `Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTable` | `Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesTablesThroughputSetting` | `Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/tables/throughputSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsCassandraKeyspacesThroughputSetting` | `Microsoft.DocumentDB/databaseAccounts/cassandraKeyspaces/throughputSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsCassandraRoleAssignment` | `Microsoft.DocumentDB/databaseAccounts/cassandraRoleAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsCassandraRoleDefinition` | `Microsoft.DocumentDB/databaseAccounts/cassandraRoleDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabase` | `Microsoft.DocumentDB/databaseAccounts/gremlinDatabases` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraph` | `Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesGraphsThroughputSetting` | `Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/graphs/throughputSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsGremlinDatabasesThroughputSetting` | `Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsGremlinRoleAssignment` | `Microsoft.DocumentDB/databaseAccounts/gremlinRoleAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsGremlinRoleDefinition` | `Microsoft.DocumentDB/databaseAccounts/gremlinRoleDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsMongoMIRoleAssignment` | `Microsoft.DocumentDB/databaseAccounts/mongoMIRoleAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsMongoMIRoleDefinition` | `Microsoft.DocumentDB/databaseAccounts/mongoMIRoleDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsPrivateEndpointConnection` | `Microsoft.DocumentDB/databaseAccounts/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsService` | `Microsoft.DocumentDB/databaseAccounts/services` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsSqlDatabasesClientEncryptionKey` | `Microsoft.DocumentDB/databaseAccounts/sqlDatabases/clientEncryptionKeys` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsSqlRoleDefinition` | `Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsTable` | `Microsoft.DocumentDB/databaseAccounts/tables` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsTableRoleAssignment` | `Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/DatabaseAccountsTableRoleDefinition` | `Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
 | `documentdb.azure.hfl.dev/DatabaseAccountsTablesThroughputSetting` | `Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/Fleet` | `Microsoft.DocumentDB/fleets` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/FleetsFleetspace` | `Microsoft.DocumentDB/fleets/fleetspaces` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/FleetsFleetspacesFleetspaceAccount` | `Microsoft.DocumentDB/fleets/fleetspaces/fleetspaceAccounts` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/MongoClustersPrivateEndpointConnection` | `Microsoft.DocumentDB/mongoClusters/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `documentdb.azure.hfl.dev/MongoClustersUser` | `Microsoft.DocumentDB/mongoClusters/users` | ARM wire type of the generated kind (`apis/arm`) |
 | `entra.azure.hfl.dev/DirectoryRoleAssignment` | `Microsoft Graph roleManagement/directory/roleAssignments` | outside the denominator, not in any percentage |
+| `eventgrid.azure.hfl.dev/NamespacesCaCertificate` | `Microsoft.EventGrid/namespaces/caCertificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/NamespacesClient` | `Microsoft.EventGrid/namespaces/clients` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/NamespacesClientGroup` | `Microsoft.EventGrid/namespaces/clientGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/NamespacesPermissionBinding` | `Microsoft.EventGrid/namespaces/permissionBindings` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/NamespacesTopicSpace` | `Microsoft.EventGrid/namespaces/topicSpaces` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/NamespacesTopicsEventSubscription` | `Microsoft.EventGrid/namespaces/topics/eventSubscriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/PartnerConfiguration` | `Microsoft.EventGrid/partnerConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/PartnerNamespace` | `Microsoft.EventGrid/partnerNamespaces` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/PartnerNamespacesChannel` | `Microsoft.EventGrid/partnerNamespaces/channels` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/PartnerRegistration` | `Microsoft.EventGrid/partnerRegistrations` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/PartnerTopic` | `Microsoft.EventGrid/partnerTopics` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/PartnerTopicsEventSubscription` | `Microsoft.EventGrid/partnerTopics/eventSubscriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/SystemTopic` | `Microsoft.EventGrid/systemTopics` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventgrid.azure.hfl.dev/SystemTopicsEventSubscription` | `Microsoft.EventGrid/systemTopics/eventSubscriptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventhub.azure.hfl.dev/Cluster` | `Microsoft.EventHub/clusters` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventhub.azure.hfl.dev/NamespacesApplicationGroup` | `Microsoft.EventHub/namespaces/applicationGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventhub.azure.hfl.dev/NamespacesDisasterRecoveryConfig` | `Microsoft.EventHub/namespaces/disasterRecoveryConfigs` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventhub.azure.hfl.dev/NamespacesNetworkRuleSet` | `Microsoft.EventHub/namespaces/networkRuleSets` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventhub.azure.hfl.dev/NamespacesPrivateEndpointConnection` | `Microsoft.EventHub/namespaces/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `eventhub.azure.hfl.dev/NamespacesSchemaGroup` | `Microsoft.EventHub/namespaces/schemagroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `hardwaresecuritymodules.azure.hfl.dev/CloudHsmCluster` | `Microsoft.HardwareSecurityModules/cloudHsmClusters` | ARM wire type of the generated kind (`apis/arm`) |
 | `hardwaresecuritymodules.azure.hfl.dev/CloudHsmClustersPrivateEndpointConnection` | `Microsoft.HardwareSecurityModules/cloudHsmClusters/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `hardwaresecuritymodules.azure.hfl.dev/DedicatedHsm` | `Microsoft.HardwareSecurityModules/dedicatedHSMs` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/ComponentsLinkedStorageAccount` | `Microsoft.Insights/components/linkedStorageAccounts` | ARM wire type of the generated kind (`apis/arm`) |
+| `insights.azure.hfl.dev/ComponentsProactiveDetectionConfig` | `Microsoft.Insights/components/ProactiveDetectionConfigs` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/GuestDiagnosticSetting` | `microsoft.insights/guestDiagnosticSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/GuestDiagnosticSettingsAssociation` | `microsoft.insights/guestDiagnosticSettingsAssociation` | ARM wire type of the generated kind (`apis/arm`) |
 | `insights.azure.hfl.dev/LogProfile` | `Microsoft.Insights/logprofiles` | ARM wire type of the generated kind (`apis/arm`) |
@@ -473,6 +673,56 @@ Generated; these cannot drift from the data.
 | `kubernetesconfiguration.azure.hfl.dev/PrivateLinkScope` | `Microsoft.KubernetesConfiguration/privateLinkScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `kubernetesconfiguration.azure.hfl.dev/PrivateLinkScopesPrivateEndpointConnection` | `Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `kubernetesconfiguration.azure.hfl.dev/SourceControlConfiguration` | `Microsoft.KubernetesConfiguration/sourceControlConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `kusto.azure.hfl.dev/ClustersAttachedDatabaseConfiguration` | `Microsoft.Kusto/clusters/attachedDatabaseConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `kusto.azure.hfl.dev/ClustersDatabasesScript` | `Microsoft.Kusto/clusters/databases/scripts` | ARM wire type of the generated kind (`apis/arm`) |
+| `kusto.azure.hfl.dev/ClustersManagedPrivateEndpoint` | `Microsoft.Kusto/clusters/managedPrivateEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `kusto.azure.hfl.dev/ClustersPrivateEndpointConnection` | `Microsoft.Kusto/clusters/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `kusto.azure.hfl.dev/ClustersSandboxCustomImage` | `Microsoft.Kusto/clusters/sandboxCustomImages` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccount` | `Microsoft.Logic/integrationAccounts` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsAgreement` | `Microsoft.Logic/integrationAccounts/agreements` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsAssembly` | `Microsoft.Logic/integrationAccounts/assemblies` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsBatchConfiguration` | `Microsoft.Logic/integrationAccounts/batchConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsCertificate` | `Microsoft.Logic/integrationAccounts/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsMap` | `Microsoft.Logic/integrationAccounts/maps` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsPartner` | `Microsoft.Logic/integrationAccounts/partners` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsSchema` | `Microsoft.Logic/integrationAccounts/schemas` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/IntegrationAccountsSession` | `Microsoft.Logic/integrationAccounts/sessions` | ARM wire type of the generated kind (`apis/arm`) |
+| `logic.azure.hfl.dev/Workflow` | `Microsoft.Logic/workflows` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesCode` | `Microsoft.MachineLearningServices/registries/codes` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesCodesVersion` | `Microsoft.MachineLearningServices/registries/codes/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesComponent` | `Microsoft.MachineLearningServices/registries/components` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesComponentsVersion` | `Microsoft.MachineLearningServices/registries/components/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesData` | `Microsoft.MachineLearningServices/registries/data` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesDataVersion` | `Microsoft.MachineLearningServices/registries/data/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesEnvironment` | `Microsoft.MachineLearningServices/registries/environments` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesEnvironmentsVersion` | `Microsoft.MachineLearningServices/registries/environments/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesModel` | `Microsoft.MachineLearningServices/registries/models` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/RegistriesModelsVersion` | `Microsoft.MachineLearningServices/registries/models/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpoint` | `Microsoft.MachineLearningServices/workspaces/batchEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesBatchEndpointsDeployment` | `Microsoft.MachineLearningServices/workspaces/batchEndpoints/deployments` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesCapabilityHost` | `Microsoft.MachineLearningServices/workspaces/capabilityHosts` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesCode` | `Microsoft.MachineLearningServices/workspaces/codes` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesCodesVersion` | `Microsoft.MachineLearningServices/workspaces/codes/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesComponent` | `Microsoft.MachineLearningServices/workspaces/components` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesComponentsVersion` | `Microsoft.MachineLearningServices/workspaces/components/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesData` | `Microsoft.MachineLearningServices/workspaces/data` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesDataVersion` | `Microsoft.MachineLearningServices/workspaces/data/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesDatastore` | `Microsoft.MachineLearningServices/workspaces/datastores` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesEnvironment` | `Microsoft.MachineLearningServices/workspaces/environments` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesEnvironmentsVersion` | `Microsoft.MachineLearningServices/workspaces/environments/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeatureset` | `Microsoft.MachineLearningServices/workspaces/featuresets` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeaturesetsVersion` | `Microsoft.MachineLearningServices/workspaces/featuresets/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntitiesVersion` | `Microsoft.MachineLearningServices/workspaces/featurestoreEntities/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesFeaturestoreEntity` | `Microsoft.MachineLearningServices/workspaces/featurestoreEntities` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesJob` | `Microsoft.MachineLearningServices/workspaces/jobs` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesModel` | `Microsoft.MachineLearningServices/workspaces/models` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesModelsVersion` | `Microsoft.MachineLearningServices/workspaces/models/versions` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpoint` | `Microsoft.MachineLearningServices/workspaces/onlineEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesOnlineEndpointsDeployment` | `Microsoft.MachineLearningServices/workspaces/onlineEndpoints/deployments` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesOutboundRule` | `Microsoft.MachineLearningServices/workspaces/outboundRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesPrivateEndpointConnection` | `Microsoft.MachineLearningServices/workspaces/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesSchedule` | `Microsoft.MachineLearningServices/workspaces/schedules` | ARM wire type of the generated kind (`apis/arm`) |
+| `machinelearningservices.azure.hfl.dev/WorkspacesServerlessEndpoint` | `Microsoft.MachineLearningServices/workspaces/serverlessEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/ConfigurationAssignment` | `Microsoft.Maintenance/configurationAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `maintenance.azure.hfl.dev/MaintenanceConfiguration` | `Microsoft.Maintenance/maintenanceConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `managedidentity.azure.hfl.dev/UserAssignedIdentity` | `Microsoft.ManagedIdentity/userAssignedIdentities` | ARM wire type of the generated kind (`apis/arm`) |
@@ -480,7 +730,9 @@ Generated; these cannot drift from the data.
 | `management.azure.hfl.dev/ManagementGroupsSetting` | `Microsoft.Management/managementGroups/settings` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ManagementGroupsSubscription` | `Microsoft.Management/managementGroups/subscriptions` | ARM wire type of the generated kind (`apis/arm`) |
 | `management.azure.hfl.dev/ServiceGroup` | `Microsoft.Management/serviceGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `monitor.azure.hfl.dev/PipelineGroup` | `Microsoft.Monitor/pipelineGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/ApplicationGateway` | `Microsoft.Network/applicationGateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/ApplicationSecurityGroupsAddressPrefixSet` | `Microsoft.Network/applicationSecurityGroups/addressPrefixSets` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/DdosCustomPolicy` | `Microsoft.Network/ddosCustomPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/DnsResolverDomainList` | `Microsoft.Network/dnsResolverDomainLists` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/DnsResolverPoliciesDnsSecurityRule` | `Microsoft.Network/dnsResolverPolicies/dnsSecurityRules` | ARM wire type of the generated kind (`apis/arm`) |
@@ -499,9 +751,11 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/ExpressRoutePortsAuthorization` | `Microsoft.Network/expressRoutePorts/authorizations` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/FirewallPoliciesFirewallPolicyDraft` | `Microsoft.Network/firewallPolicies/firewallPolicyDrafts` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/FirewallPoliciesKubeSelectorGroup` | `Microsoft.Network/firewallPolicies/kubeSelectorGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/FirewallPoliciesRuleCollectionGroupDraft` | `Microsoft.Network/firewallPolicies/ruleCollectionGroups/ruleCollectionGroupDrafts` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/FirewallPoliciesSignatureOverride` | `Microsoft.Network/firewallPolicies/signatureOverrides` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/IpGroup` | `Microsoft.Network/ipGroups` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/LocalNetworkGateway` | `Microsoft.Network/localNetworkGateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/NetworkInterfacesTapConfiguration` | `Microsoft.Network/networkInterfaces/tapConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkManager` | `Microsoft.Network/networkManagers` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkManagerConnection` | `Microsoft.Network/networkManagerConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkManagersCommit` | `Microsoft.Network/networkManagers/commits` | ARM wire type of the generated kind (`apis/arm`) |
@@ -533,6 +787,7 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/NetworkVirtualAppliancesConnection` | `Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkVirtualAppliancesInboundSecurityRule` | `Microsoft.Network/networkVirtualAppliances/inboundSecurityRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/NetworkVirtualAppliancesVirtualApplianceSite` | `Microsoft.Network/networkVirtualAppliances/virtualApplianceSites` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/NetworkWatchersConnectionMonitor` | `Microsoft.Network/networkWatchers/connectionMonitors` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/P2sVpnGateway` | `Microsoft.Network/p2svpnGateways` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/PrivateDnsZonesSOARecord` | `Microsoft.Network/privateDnsZones/SOA` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/RouteFilter` | `Microsoft.Network/routeFilters` | ARM wire type of the generated kind (`apis/arm`) |
@@ -550,6 +805,7 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/VirtualHubsRouteTable` | `Microsoft.Network/virtualHubs/routeTables` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualHubsRoutingIntent` | `Microsoft.Network/virtualHubs/routingIntent` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualNetworkGatewayConnection` | `Microsoft.Network/connections` | ARM wire type of the generated kind (`apis/arm`) |
+| `network.azure.hfl.dev/VirtualNetworkTap` | `Microsoft.Network/virtualNetworkTaps` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualRouter` | `Microsoft.Network/virtualRouters` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualRoutersPeering` | `Microsoft.Network/virtualRouters/peerings` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VirtualWan` | `Microsoft.Network/virtualWans` | ARM wire type of the generated kind (`apis/arm`) |
@@ -558,6 +814,7 @@ Generated; these cannot drift from the data.
 | `network.azure.hfl.dev/VpnGatewaysVpnConnection` | `Microsoft.Network/vpnGateways/vpnConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VpnServerConfiguration` | `Microsoft.Network/vpnServerConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `network.azure.hfl.dev/VpnSite` | `Microsoft.Network/vpnSites` | ARM wire type of the generated kind (`apis/arm`) |
+| `notificationhubs.azure.hfl.dev/NamespacesPrivateEndpointConnection` | `Microsoft.NotificationHubs/namespaces/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/Cluster` | `Microsoft.OperationalInsights/clusters` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/QueryPack` | `Microsoft.OperationalInsights/queryPacks` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/QueryPacksQuery` | `Microsoft.OperationalInsights/queryPacks/queries` | ARM wire type of the generated kind (`apis/arm`) |
@@ -567,6 +824,7 @@ Generated; these cannot drift from the data.
 | `operationalinsights.azure.hfl.dev/WorkspacesLinkedStorageAccount` | `Microsoft.OperationalInsights/workspaces/linkedStorageAccounts` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesSavedSearch` | `Microsoft.OperationalInsights/workspaces/savedSearches` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesStorageInsightConfig` | `Microsoft.OperationalInsights/workspaces/storageInsightConfigs` | ARM wire type of the generated kind (`apis/arm`) |
+| `operationalinsights.azure.hfl.dev/WorkspacesSummaryLog` | `Microsoft.OperationalInsights/workspaces/summaryLogs` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationalinsights.azure.hfl.dev/WorkspacesTable` | `Microsoft.OperationalInsights/workspaces/tables` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationsmanagement.azure.hfl.dev/ManagementAssociation` | `Microsoft.OperationsManagement/ManagementAssociations` | ARM wire type of the generated kind (`apis/arm`) |
 | `operationsmanagement.azure.hfl.dev/ManagementConfiguration` | `Microsoft.OperationsManagement/ManagementConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
@@ -577,21 +835,43 @@ Generated; these cannot drift from the data.
 | `purview.azure.hfl.dev/AccountsKafkaConfiguration` | `Microsoft.Purview/accounts/kafkaConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
 | `purview.azure.hfl.dev/AccountsPrivateEndpointConnection` | `Microsoft.Purview/accounts/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/Vault` | `Microsoft.RecoveryServices/vaults` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsBackupConfig` | `Microsoft.RecoveryServices/vaults/backupconfig` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsBackupEncryptionConfig` | `Microsoft.RecoveryServices/vaults/backupEncryptionConfigs` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsBackupPolicy` | `Microsoft.RecoveryServices/vaults/backupPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsBackupResourceGuardProxy` | `Microsoft.RecoveryServices/vaults/backupResourceGuardProxies` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsBackupStorageConfig` | `Microsoft.RecoveryServices/vaults/backupstorageconfig` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsPrivateEndpointConnection` | `Microsoft.RecoveryServices/vaults/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `recoveryservices.azure.hfl.dev/VaultsProtectedItem` | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationAlertSetting` | `Microsoft.RecoveryServices/vaults/replicationAlertSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationFabric` | `Microsoft.RecoveryServices/vaults/replicationFabrics` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationMigrationItem` | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationMigrationItems` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationPolicy` | `Microsoft.RecoveryServices/vaults/replicationPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationProtectedItem` | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectedItems` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationProtectionCluster` | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionClusters` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainer` | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationProtectionContainerMapping` | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationProtectionContainers/replicationProtectionContainerMappings` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationProtectionIntent` | `Microsoft.RecoveryServices/vaults/replicationProtectionIntents` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryPlan` | `Microsoft.RecoveryServices/vaults/replicationRecoveryPlans` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationRecoveryServicesProvider` | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationRecoveryServicesProviders` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationVaultSetting` | `Microsoft.RecoveryServices/vaults/replicationVaultSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `recoveryservices.azure.hfl.dev/VaultsReplicationvCenter` | `Microsoft.RecoveryServices/vaults/replicationFabrics/replicationvCenters` | ARM wire type of the generated kind (`apis/arm`) |
 | `resources.azure.hfl.dev/DeploymentScript` | `Microsoft.Resources/deploymentScripts` | ARM wire type of the generated kind (`apis/arm`) |
 | `resources.azure.hfl.dev/DeploymentStack` | `Microsoft.Resources/deploymentStacks` | ARM wire type of the generated kind (`apis/arm`) |
 | `resources.azure.hfl.dev/TagSet` | `Microsoft.Resources/tags` | ARM wire type of the generated kind (`apis/arm`) |
 | `resources.azure.hfl.dev/TemplateSpec` | `Microsoft.Resources/templateSpecs` | ARM wire type of the generated kind (`apis/arm`) |
 | `resources.azure.hfl.dev/TemplateSpecsVersion` | `Microsoft.Resources/templateSpecs/versions` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/AdvancedThreatProtectionSetting` | `Microsoft.Security/advancedThreatProtectionSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/AlertsSuppressionRule` | `Microsoft.Security/alertsSuppressionRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/Assessment` | `Microsoft.Security/assessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/AssessmentMetadata` | `Microsoft.Security/assessmentMetadata` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/AutoProvisioningSetting` | `Microsoft.Security/autoProvisioningSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/Automation` | `Microsoft.Security/automations` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/CustomRecommendation` | `Microsoft.Security/customRecommendations` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/DefenderForStorageSetting` | `Microsoft.Security/defenderForStorageSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/GovernanceRule` | `Microsoft.Security/governanceRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/Pricing` | `Microsoft.Security/pricings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/PrivateLink` | `Microsoft.Security/privateLinks` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/PrivateLinksPrivateEndpointConnection` | `Microsoft.Security/privateLinks/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/SecurityConnector` | `Microsoft.Security/securityConnectors` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsOrg` | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/SecurityConnectorsDevOpsAzureDevOpsProject` | `Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects` | ARM wire type of the generated kind (`apis/arm`) |
@@ -601,36 +881,177 @@ Generated; these cannot drift from the data.
 | `security.azure.hfl.dev/SecurityStandard` | `Microsoft.Security/securityStandards` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/ServerVulnerabilityAssessmentsSetting` | `Microsoft.Security/serverVulnerabilityAssessmentsSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/Setting` | `Microsoft.Security/settings` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/SqlVulnerabilityAssessment` | `Microsoft.Security/sqlVulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `security.azure.hfl.dev/SqlVulnerabilityAssessmentsBaselineRule` | `Microsoft.Security/sqlVulnerabilityAssessments/baselineRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/StandardAssignment` | `Microsoft.Security/standardAssignments` | ARM wire type of the generated kind (`apis/arm`) |
 | `security.azure.hfl.dev/WorkspaceSetting` | `Microsoft.Security/workspaceSettings` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/AlertRule` | `Microsoft.SecurityInsights/alertRules` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/AlertRulesAction` | `Microsoft.SecurityInsights/alertRules/actions` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/AutomationRule` | `Microsoft.SecurityInsights/automationRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/ContentMetadata` | `Microsoft.SecurityInsights/metadata` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/ContentPackage` | `Microsoft.SecurityInsights/contentPackages` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/ContentTemplate` | `Microsoft.SecurityInsights/contentTemplates` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/DataConnector` | `Microsoft.SecurityInsights/dataConnectors` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/DataConnectorDefinition` | `Microsoft.SecurityInsights/dataConnectorDefinitions` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/OnboardingState` | `Microsoft.SecurityInsights/onboardingStates` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/SecurityMLAnalyticsSetting` | `Microsoft.SecurityInsights/securityMLAnalyticsSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/Setting` | `Microsoft.SecurityInsights/settings` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/SourceControl` | `Microsoft.SecurityInsights/sourcecontrols` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/Watchlist` | `Microsoft.SecurityInsights/watchlists` | ARM wire type of the generated kind (`apis/arm`) |
 | `securityinsights.azure.hfl.dev/WatchlistsWatchlistItem` | `Microsoft.SecurityInsights/watchlists/watchlistItems` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/WorkspaceManagerAssignment` | `Microsoft.SecurityInsights/workspaceManagerAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/WorkspaceManagerConfiguration` | `Microsoft.SecurityInsights/workspaceManagerConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/WorkspaceManagerGroup` | `Microsoft.SecurityInsights/workspaceManagerGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `securityinsights.azure.hfl.dev/WorkspaceManagerMember` | `Microsoft.SecurityInsights/workspaceManagerMembers` | ARM wire type of the generated kind (`apis/arm`) |
+| `servicebus.azure.hfl.dev/NamespacesDisasterRecoveryConfig` | `Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs` | ARM wire type of the generated kind (`apis/arm`) |
+| `servicebus.azure.hfl.dev/NamespacesNetworkRuleSet` | `Microsoft.ServiceBus/namespaces/networkRuleSets` | ARM wire type of the generated kind (`apis/arm`) |
+| `servicebus.azure.hfl.dev/NamespacesPrivateEndpointConnection` | `Microsoft.ServiceBus/namespaces/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/SignalRPrivateEndpointConnection` | `Microsoft.SignalRService/signalR/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/SignalRReplicasSharedPrivateLinkResource` | `Microsoft.SignalRService/signalR/replicas/sharedPrivateLinkResources` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/SignalRSharedPrivateLinkResource` | `Microsoft.SignalRService/signalR/sharedPrivateLinkResources` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSub` | `Microsoft.SignalRService/webPubSub` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSubCustomCertificate` | `Microsoft.SignalRService/webPubSub/customCertificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSubCustomDomain` | `Microsoft.SignalRService/webPubSub/customDomains` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSubHub` | `Microsoft.SignalRService/webPubSub/hubs` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSubPrivateEndpointConnection` | `Microsoft.SignalRService/webPubSub/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSubReplica` | `Microsoft.SignalRService/webPubSub/replicas` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSubReplicasSharedPrivateLinkResource` | `Microsoft.SignalRService/webPubSub/replicas/sharedPrivateLinkResources` | ARM wire type of the generated kind (`apis/arm`) |
+| `signalrservice.azure.hfl.dev/WebPubSubSharedPrivateLinkResource` | `Microsoft.SignalRService/webPubSub/sharedPrivateLinkResources` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/InstancePool` | `Microsoft.Sql/instancePools` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesAdministrator` | `Microsoft.Sql/managedInstances/administrators` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesAdvancedThreatProtectionSetting` | `Microsoft.Sql/managedInstances/advancedThreatProtectionSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesAzureADOnlyAuthentication` | `Microsoft.Sql/managedInstances/azureADOnlyAuthentications` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDatabasesAdvancedThreatProtectionSetting` | `Microsoft.Sql/managedInstances/databases/advancedThreatProtectionSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDatabasesBackupLongTermRetentionPolicy` | `Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDatabasesBackupShortTermRetentionPolicy` | `Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDatabasesLedgerDigestUpload` | `Microsoft.Sql/managedInstances/databases/ledgerDigestUploads` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDatabasesSecurityAlertPolicy` | `Microsoft.Sql/managedInstances/databases/securityAlertPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDatabasesVulnerabilityAssessment` | `Microsoft.Sql/managedInstances/databases/vulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDistributedAvailabilityGroup` | `Microsoft.Sql/managedInstances/distributedAvailabilityGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDnsAlias` | `Microsoft.Sql/managedInstances/dnsAliases` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesDtc` | `Microsoft.Sql/managedInstances/dtc` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesEncryptionProtector` | `Microsoft.Sql/managedInstances/encryptionProtector` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesKey` | `Microsoft.Sql/managedInstances/keys` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesPrivateEndpointConnection` | `Microsoft.Sql/managedInstances/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesSecurityAlertPolicy` | `Microsoft.Sql/managedInstances/securityAlertPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesServerConfigurationOption` | `Microsoft.Sql/managedInstances/serverConfigurationOptions` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesServerTrustCertificate` | `Microsoft.Sql/managedInstances/serverTrustCertificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesSqlAgent` | `Microsoft.Sql/managedInstances/sqlAgent` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesStartStopSchedule` | `Microsoft.Sql/managedInstances/startStopSchedules` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ManagedInstancesVulnerabilityAssessment` | `Microsoft.Sql/managedInstances/vulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDatabasesDataMaskingPolicy` | `Microsoft.Sql/servers/databases/dataMaskingPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `sql.azure.hfl.dev/ServersDatabasesGeoBackupPolicy` | `Microsoft.Sql/servers/databases/geoBackupPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDatabasesLedgerDigestUpload` | `Microsoft.Sql/servers/databases/ledgerDigestUploads` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDatabasesMaintenanceWindow` | `Microsoft.Sql/servers/databases/maintenanceWindows` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDatabasesWorkloadGroup` | `Microsoft.Sql/servers/databases/workloadGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDatabasesWorkloadGroupsWorkloadClassifier` | `Microsoft.Sql/servers/databases/workloadGroups/workloadClassifiers` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDevOpsAuditingSetting` | `Microsoft.Sql/servers/devOpsAuditingSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersDnsAlias` | `Microsoft.Sql/servers/dnsAliases` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersJobAgent` | `Microsoft.Sql/servers/jobAgents` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersJobAgentsCredential` | `Microsoft.Sql/servers/jobAgents/credentials` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersJobAgentsJob` | `Microsoft.Sql/servers/jobAgents/jobs` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersJobAgentsJobsStep` | `Microsoft.Sql/servers/jobAgents/jobs/steps` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersJobAgentsPrivateEndpoint` | `Microsoft.Sql/servers/jobAgents/privateEndpoints` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersJobAgentsTargetGroup` | `Microsoft.Sql/servers/jobAgents/targetGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersPrivateEndpointConnection` | `Microsoft.Sql/servers/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `sql.azure.hfl.dev/ServersSqlVulnerabilityAssessment` | `Microsoft.Sql/servers/sqlVulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaseline` | `Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines` | ARM wire type of the generated kind (`apis/arm`) |
+| `sql.azure.hfl.dev/ServersSqlVulnerabilityAssessmentsBaselinesRule` | `Microsoft.Sql/servers/sqlVulnerabilityAssessments/baselines/rules` | ARM wire type of the generated kind (`apis/arm`) |
 | `sql.azure.hfl.dev/User` | `Microsoft.Sql/servers/databases/users` | outside the denominator, not in any percentage |
+| `storage.azure.hfl.dev/ContextCache` | `Microsoft.Storage/contextCaches` | ARM wire type of the generated kind (`apis/arm`) |
+| `storage.azure.hfl.dev/ContextCachesContextCacheContainer` | `Microsoft.Storage/contextCaches/contextCacheContainers` | ARM wire type of the generated kind (`apis/arm`) |
+| `storage.azure.hfl.dev/StorageAccountsAdvancedPlatformMetric` | `Microsoft.Storage/storageAccounts/advancedPlatformMetrics` | ARM wire type of the generated kind (`apis/arm`) |
+| `storage.azure.hfl.dev/StorageAccountsBlobAccessPointConfiguration` | `Microsoft.Storage/storageAccounts/blobAccessPointConfigurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `storage.azure.hfl.dev/StorageAccountsConnector` | `Microsoft.Storage/storageAccounts/connectors` | ARM wire type of the generated kind (`apis/arm`) |
+| `storage.azure.hfl.dev/StorageAccountsDataShare` | `Microsoft.Storage/storageAccounts/dataShares` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsEncryptionScope` | `Microsoft.Storage/storageAccounts/encryptionScopes` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsInventoryPolicy` | `Microsoft.Storage/storageAccounts/inventoryPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsLocalUser` | `Microsoft.Storage/storageAccounts/localUsers` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsObjectReplicationPolicy` | `Microsoft.Storage/storageAccounts/objectReplicationPolicies` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsPrivateEndpointConnection` | `Microsoft.Storage/storageAccounts/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
 | `storage.azure.hfl.dev/StorageAccountsStorageTaskAssignment` | `Microsoft.Storage/storageAccounts/storageTaskAssignments` | ARM wire type of the generated kind (`apis/arm`) |
+| `subscription.azure.hfl.dev/SubscriptionTenantPolicy` | `Microsoft.Subscription/policies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/PrivateLinkHub` | `Microsoft.Synapse/privateLinkHubs` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesAdministrator` | `Microsoft.Synapse/workspaces/administrators` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesAuditingSetting` | `Microsoft.Synapse/workspaces/auditingSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesAzureADOnlyAuthentication` | `Microsoft.Synapse/workspaces/azureADOnlyAuthentications` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesDedicatedSQLMinimalTlsSetting` | `Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesEncryptionProtector` | `Microsoft.Synapse/workspaces/encryptionProtector` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesExtendedAuditingSetting` | `Microsoft.Synapse/workspaces/extendedAuditingSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesFirewallRule` | `Microsoft.Synapse/workspaces/firewallRules` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesIntegrationRuntime` | `Microsoft.Synapse/workspaces/integrationRuntimes` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesKey` | `Microsoft.Synapse/workspaces/keys` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesManagedIdentitySqlControlSetting` | `Microsoft.Synapse/workspaces/managedIdentitySqlControlSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesPrivateEndpointConnection` | `Microsoft.Synapse/workspaces/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSecurityAlertPolicy` | `Microsoft.Synapse/workspaces/securityAlertPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlAdministrator` | `Microsoft.Synapse/workspaces/sqlAdministrators` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPool` | `Microsoft.Synapse/workspaces/sqlPools` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsAuditingSetting` | `Microsoft.Synapse/workspaces/sqlPools/auditingSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicy` | `Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsDataMaskingPolicyRule` | `Microsoft.Synapse/workspaces/sqlPools/dataMaskingPolicies/rules` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsExtendedAuditingSetting` | `Microsoft.Synapse/workspaces/sqlPools/extendedAuditingSettings` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsGeoBackupPolicy` | `Microsoft.Synapse/workspaces/sqlPools/geoBackupPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsMaintenanceWindow` | `Microsoft.Synapse/workspaces/sqlPools/maintenancewindows` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsSecurityAlertPolicy` | `Microsoft.Synapse/workspaces/sqlPools/securityAlertPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsTransparentDataEncryption` | `Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsVulnerabilityAssessment` | `Microsoft.Synapse/workspaces/sqlPools/vulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroup` | `Microsoft.Synapse/workspaces/sqlPools/workloadGroups` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesSqlPoolsWorkloadGroupClassifier` | `Microsoft.Synapse/workspaces/sqlPools/workloadGroups/workloadClassifiers` | ARM wire type of the generated kind (`apis/arm`) |
+| `synapse.azure.hfl.dev/WorkspacesVulnerabilityAssessment` | `Microsoft.Synapse/workspaces/vulnerabilityAssessments` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/AiGateway` | `Microsoft.Web/aigateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/ApiConnection` | `Microsoft.Web/connections` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/Certificate` | `Microsoft.Web/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/ConnectionGateway` | `Microsoft.Web/connectionGateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/CustomApi` | `Microsoft.Web/customApis` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/HostingEnvironment` | `Microsoft.Web/hostingEnvironments` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/HostingEnvironmentsConfigurationCustomDnsSuffix` | `Microsoft.Web/hostingEnvironments/configurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/HostingEnvironmentsConfigurationNetworking` | `Microsoft.Web/hostingEnvironments/configurations` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/HostingEnvironmentsPrivateEndpointConnection` | `Microsoft.Web/hostingEnvironments/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/KubeEnvironment` | `Microsoft.Web/kubeEnvironments` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyFtp` | `Microsoft.Web/sites/basicPublishingCredentialsPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesBasicPublishingCredentialsPolicyScm` | `Microsoft.Web/sites/basicPublishingCredentialsPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesCertificate` | `Microsoft.Web/sites/certificates` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesConfigAppSettings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
 | `web.azure.hfl.dev/SitesConfigAuthSettingsV2` | `Microsoft.Web/sites/config` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesConfigConnectionStrings` | `Microsoft.Web/sites/config` | by hand, `hack/coverage/ours.yaml` (CRD spec path to ARM attribute) |
+| `web.azure.hfl.dev/SitesConfigLogs` | `Microsoft.Web/sites/config` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesConfigSlotConfigNames` | `Microsoft.Web/sites/config` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesDomainOwnershipIdentifier` | `Microsoft.Web/sites/domainOwnershipIdentifiers` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesFunction` | `Microsoft.Web/sites/functions` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesHostNameBinding` | `Microsoft.Web/sites/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesHybridConnection` | `Microsoft.Web/sites/hybridconnection` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesPremieraddon` | `Microsoft.Web/sites/premieraddons` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesPrivateAccess` | `Microsoft.Web/sites/privateAccess` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesPrivateEndpointConnection` | `Microsoft.Web/sites/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesPublicCertificate` | `Microsoft.Web/sites/publicCertificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSitecontainer` | `Microsoft.Web/sites/sitecontainers` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlot` | `Microsoft.Web/sites/slots` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyFtp` | `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsBasicPublishingCredentialsPolicyScm` | `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsCertificate` | `Microsoft.Web/sites/slots/certificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsConfigAuthSettingsV2` | `Microsoft.Web/sites/slots/config` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsConfigLogs` | `Microsoft.Web/sites/slots/config` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsDomainOwnershipIdentifier` | `Microsoft.Web/sites/slots/domainOwnershipIdentifiers` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsFunction` | `Microsoft.Web/sites/slots/functions` | ARM wire type of the generated kind (`apis/arm`) |
 | `web.azure.hfl.dev/SitesSlotsHostNameBinding` | `Microsoft.Web/sites/slots/hostNameBindings` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsHybridConnection` | `Microsoft.Web/sites/slots/hybridconnection` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsPremieraddon` | `Microsoft.Web/sites/slots/premieraddons` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsPrivateAccess` | `Microsoft.Web/sites/slots/privateAccess` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsPrivateEndpointConnection` | `Microsoft.Web/sites/slots/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsPublicCertificate` | `Microsoft.Web/sites/slots/publicCertificates` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsSitecontainer` | `Microsoft.Web/sites/slots/sitecontainers` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsSourcecontrol` | `Microsoft.Web/sites/slots/sourcecontrols` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsVirtualNetworkConnection` | `Microsoft.Web/sites/slots/virtualNetworkConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesSlotsVirtualNetworkConnectionsGateway` | `Microsoft.Web/sites/slots/virtualNetworkConnections/gateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesVirtualNetworkConnection` | `Microsoft.Web/sites/virtualNetworkConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/SitesVirtualNetworkConnectionsGateway` | `Microsoft.Web/sites/virtualNetworkConnections/gateways` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSite` | `Microsoft.Web/staticSites` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesBasicAuth` | `Microsoft.Web/staticSites/basicAuth` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesCustomDomain` | `Microsoft.Web/staticSites/customDomains` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesDatabaseConnection` | `Microsoft.Web/staticSites/databaseConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesLinkedBackend` | `Microsoft.Web/staticSites/linkedBackends` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesPrivateEndpointConnection` | `Microsoft.Web/staticSites/privateEndpointConnections` | ARM wire type of the generated kind (`apis/arm`) |
+| `web.azure.hfl.dev/StaticSitesUserProvidedFunctionApp` | `Microsoft.Web/staticSites/userProvidedFunctionApps` | ARM wire type of the generated kind (`apis/arm`) |
 
 **Outside the denominator.** 5 rows in `resources.csv` carry `notes=outside-denominator` and are in none of the percentages: our data-plane and database kinds above, and the 0 ASO kinds that are unmapped.
 
@@ -640,3 +1061,89 @@ Version differences: redhatopenshift/hcpopenshiftcluster docs v20260901preview w
 
 **Terraform** (`azurerm`, catalog `13064af34996`, 2026-11-09, vendored 2026-11-10; an estimate): 3,566 of the catalog's 43,408 attributes (8.2%) by the lenient rule (L2), 3,136 (7.2%) by the strict rule (L1). The catalog counted the denominator at an earlier commit of this repository, so its totals can differ slightly from the ones above. Services here without a Terraform row: 0; Terraform rows for services not here: 0.
 <!-- numbers:end -->
+
+## Upjet
+
+Crossplane's provider-upjet-azure carries facts the ARM specs do not:
+which fields name other resources, which values Terraform keeps secret, how
+each ID is formed, which lists merge as maps, which resources its
+maintainers never tested, and hand-written examples. The factory reads them
+from a release as data (never running the provider, never copying its
+files, never taking values from Terraform's documentation; factory's
+`upjet/README.md`) and folds them onto our resources: the slice
+[`hack/upjet/provider-upjet-azure.json`](../../hack/upjet/), which nothing
+here edits. `hack/coverage/upjet.go` reads it against our kinds as they are
+now, by the stricter rule with provenance (factory `docs/design.md` 5.4):
+every fact cites its line in the slice and its file and line upstream, and
+where Upjet and we disagree it is listed, then fixed or kept with the
+reason in [`hack/coverage/upjet.yaml`](../../hack/coverage/upjet.yaml),
+never overridden silently.
+
+| File | One row per |
+| --- | --- |
+| `upjet-references.csv` | Upjet reference on a kind of ours: `class` is `reference` (a Kubernetes reference here), `owner` (the resource group or a parent, which ASO's `owner` names), `string` (a field of ours that holds an ARM ID as a string: a gap until labelled `$referenceType: arm` in `generator/azure-arm/` or kept in `upjet.yaml`), `kept`, `name` (Upjet names the target by name; ARM takes a name, no ID, there) or `missing` (no field of ours matches) |
+| `upjet-checks.csv` | check of an ID template (against our ARM type), a `Sensitive` override (against a Secret reference here), a late-init ignore (ASO never fills a spec from Azure, so each holds) and a list map key (our lists are atomic) |
+| `upjet-examples.csv`, `upjet-examples.json` | hand example of a kind of ours; each whose values map onto our CRD (field names and types, enums, patterns and bounds checked) is in the JSON, which `TestUpjetExamplesOnFake` (`test/e2e/arm_upjet_examples_test.go`) runs on the fake cloud in `task check`; what did not map is listed as dropped |
+| `upjet-ledger.csv` | kind of ours, the per-kind ledger (HFL-701): where it is tested here (`conformance`: every generated kind on the fake; `kind test` for a hand-written one), beside Upjet's resource, its `tested` flag, its references by class, its examples and how many run on the fake |
+| `upjet-gaps.csv` | resource Upjet serves and neither ASO nor we do, ranked (the top is in `foundation.md`) |
+
+**Before and after (2026-11-27, HFL-699, HFL-700, HFL-701).** Before,
+nothing here read the slice: no Upjet fact was checked against a kind, no
+Upjet example ran, and no kind's "tested where" stood beside Upjet's flag.
+After, every fact in the table below is checked on each
+`hack/coverage/run.sh --check`, 69 hand examples run on the fake cloud in
+`task check`, and the per-kind ledger is `upjet-ledger.csv`. What the
+checks found:
+
+- **References.** Every Upjet reference that lands on an ARM-ID field of
+  ours is already a Kubernetes reference here (ASO's generator refuses to
+  generate a kind until each field that looks like an ARM ID is labelled,
+  and those labels were reviewed), so no `$referenceType` label had to
+  change; Upjet corroborates them. Two fields Upjet calls references stay
+  strings on purpose (an API Management subscription's `scope`, which
+  takes `/apis` and `/products/{id}` too). Ten references needed a match
+  by hand (`upjet.yaml`).
+- **Identifiers.** 38 ID templates name another ARM type than the
+  resource the catalog's Terraform mapping joins them to (API Management
+  workspace kinds joined to service-level Terraform resources, the
+  virtual WAN joined to hubs and gateways, partner topics to system
+  topics): those entries' references and examples are not applied to our
+  kinds (the stricter rule) and the mapping is the catalog's to fix.
+- **Secrets.** Upjet hides a container app secret's `name`; we keep it in
+  plain text, as Azure returns it (the value is a Secret reference here).
+- **Late-init and list map keys.** ASO never fills a spec from Azure, so
+  each late-init ignore holds; the application gateway's two IP
+  configuration lists are atomic here where Upjet merges them by name (a
+  server-side apply replaces the list whole), which only ASO's generator
+  could change.
+- **Examples.** Running them found Terraform interpolations in example
+  values (now dropped), a dev test lab schedule example the fake refuses
+  as Azure documents (`taskType: Unknown`, for a live run to settle), and
+  that a tenant resource's examples need names of their own.
+
+<!-- upjet:start -->
+| What | Count |
+| --- | ---: |
+| Kinds of ours (in the denominator) | 696 |
+| ... with an Upjet resource | 198 |
+| ... of which Upjet's maintainers have not tested (`externalnamenottested.go`) | 36 |
+| ... with none (`noUpjet` and unmatched) | 498 |
+| Upjet references on our kinds | 466 |
+| ... a Kubernetes reference here | 53 |
+| ... of which labelled from Upjet (`hack/coverage/upjet.yaml`) | 0 |
+| ... the owner (a parent or resource group) | 229 |
+| ... a string field here, undecided (a gap) | 0 |
+| ... a string here on purpose (`hack/coverage/upjet.yaml`, with the reason) | 2 |
+| ... by name, where ARM takes a name | 27 |
+| ... another value of the target (a URI, an endpoint), which no ARM reference holds | 24 |
+| ... no field of ours matches | 47 |
+| ... on an Upjet resource of another ARM type (its ID template differs; not applied) | 84 |
+| Kinds with at least one Upjet reference that is a reference here | 36 |
+| ID templates checked against our ARM type | 227 (agree 97, differ 38; 92 name no provider path) |
+| Sensitive overrides checked | 1 (we take in plain text, undecided: 0) |
+| Late-init ignores checked (hold: ASO never late-initializes) | 10 |
+| List map keys checked | 2 (differ 2) |
+| Hand examples of our kinds | 327 |
+| ... run on the fake cloud (`TestUpjetExamplesOnFake`) | 69, of 57 kinds |
+| Resources Upjet has and neither ASO nor we serve (`upjet-gaps.csv`) | 164 |
+<!-- upjet:end -->

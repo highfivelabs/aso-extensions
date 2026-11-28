@@ -1,0 +1,1233 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: factoriesdatasetexcels.datafactory.azure.hfl.dev
+spec:
+  group: datafactory.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - datafactory
+    kind: FactoriesDatasetExcel
+    listKind: FactoriesDatasetExcelList
+    plural: factoriesdatasetexcels
+    singular: factoriesdatasetexcel
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20180601
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/openapi.json
+          - ARM URI: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/datasets/{datasetName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                maxLength: 260
+                minLength: 1
+                pattern: ^[A-Za-z0-9_][^<>*#.%&:\\+?/]*$
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. Owner is expected to be a
+                  reference to a datafactory.azure.com/Factory resource
+                properties:
+                  armId:
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set exactly one of name and armId
+                  rule: has(self.name) != has(self.armId)
+              properties:
+                description: 'Properties: Dataset properties.'
+                properties:
+                  additionalProperties:
+                    additionalProperties:
+                      x-kubernetes-preserve-unknown-fields: true
+                    type: object
+                  annotations:
+                    description: 'Annotations: List of tags that can be used for describing
+                      the Dataset.'
+                    items:
+                      x-kubernetes-preserve-unknown-fields: true
+                    type: array
+                  compression:
+                    description: 'Compression: The data compression method used for
+                      the json dataset.'
+                    properties:
+                      additionalProperties:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      level:
+                        description: 'Level: The dataset compression level. Type:
+                          string (or Expression with resultType string).'
+                        x-kubernetes-preserve-unknown-fields: true
+                      type:
+                        description: 'Type: Type of dataset compression. Type: string
+                          (or Expression with resultType string).'
+                        x-kubernetes-preserve-unknown-fields: true
+                    required:
+                    - type
+                    type: object
+                  description:
+                    description: 'Description: Dataset description.'
+                    type: string
+                  firstRowAsHeader:
+                    description: |-
+                      FirstRowAsHeader: When used as input, treat the first row of data as headers. When used as output,write the headers into
+                      the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean).
+                    x-kubernetes-preserve-unknown-fields: true
+                  folder:
+                    description: 'Folder: The folder that this Dataset is in. If not
+                      specified, Dataset will appear at the root level.'
+                    properties:
+                      name:
+                        description: 'Name: The name of the folder that this Dataset
+                          is in.'
+                        type: string
+                    type: object
+                  linkedServiceName:
+                    description: 'LinkedServiceName: Linked service reference.'
+                    properties:
+                      parameters:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      referenceName:
+                        type: string
+                      type:
+                        enum:
+                        - LinkedServiceReference
+                        type: string
+                    required:
+                    - referenceName
+                    - type
+                    type: object
+                  location:
+                    description: 'Location: The location of the excel storage.'
+                    properties:
+                      amazonS3CompatibleLocation:
+                        description: 'AmazonS3Compatible: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of Amazon
+                              S3 Compatible. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - AmazonS3CompatibleLocation
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of Amazon S3
+                              Compatible. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        required:
+                        - type
+                        type: object
+                      amazonS3Location:
+                        description: 'AmazonS3: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of amazon
+                              S3. Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - AmazonS3Location
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of amazon S3.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        required:
+                        - type
+                        type: object
+                      azureBlobFSLocation:
+                        description: 'AzureBlobFS: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileSystem:
+                            description: 'FileSystem: Specify the fileSystem of azure
+                              blobFS. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - AzureBlobFSLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      azureBlobStorageLocation:
+                        description: 'AzureBlobStorage: Mutually exclusive with all
+                          other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          container:
+                            description: 'Container: Specify the container of azure
+                              blob. Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - AzureBlobStorageLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      azureDataLakeStoreLocation:
+                        description: 'AzureDataLakeStore: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - AzureDataLakeStoreLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      azureFileStorageLocation:
+                        description: 'AzureFileStorage: Mutually exclusive with all
+                          other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - AzureFileStorageLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      fileServerLocation:
+                        description: 'FileServer: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - FileServerLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      ftpServerLocation:
+                        description: 'FtpServer: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - FtpServerLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      googleCloudStorageLocation:
+                        description: 'GoogleCloudStorage: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of Google
+                              Cloud Storage. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - GoogleCloudStorageLocation
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of Google Cloud
+                              Storage. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        required:
+                        - type
+                        type: object
+                      hdfsLocation:
+                        description: 'Hdfs: Mutually exclusive with all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - HdfsLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      httpServerLocation:
+                        description: 'HttpServer: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          relativeUrl:
+                            description: 'RelativeUrl: Specify the relativeUrl of
+                              http server. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - HttpServerLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      lakeHouseLocation:
+                        description: 'LakeHouse: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - LakeHouseLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                      oracleCloudStorageLocation:
+                        description: 'OracleCloudStorage: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of Oracle
+                              Cloud Storage. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - OracleCloudStorageLocation
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of Oracle Cloud
+                              Storage. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        required:
+                        - type
+                        type: object
+                      sftpLocation:
+                        description: 'Sftp: Mutually exclusive with all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            enum:
+                            - SftpLocation
+                            type: string
+                        required:
+                        - type
+                        type: object
+                    type: object
+                  nullValue:
+                    description: 'NullValue: The null value string. Type: string (or
+                      Expression with resultType string).'
+                    x-kubernetes-preserve-unknown-fields: true
+                  parameters:
+                    additionalProperties:
+                      properties:
+                        defaultValue:
+                          x-kubernetes-preserve-unknown-fields: true
+                        type:
+                          enum:
+                          - Array
+                          - Bool
+                          - Float
+                          - Int
+                          - Object
+                          - SecureString
+                          - String
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    description: 'Parameters: Parameters for dataset.'
+                    type: object
+                  range:
+                    description: 'Range: The partial data of one sheet. Type: string
+                      (or Expression with resultType string).'
+                    x-kubernetes-preserve-unknown-fields: true
+                  schema:
+                    description: |-
+                      Schema: Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array),
+                      itemType: DatasetSchemaDataElement.
+                    x-kubernetes-preserve-unknown-fields: true
+                  sheetIndex:
+                    description: 'SheetIndex: The sheet index of excel file and default
+                      value is 0. Type: integer (or Expression with resultType integer)'
+                    x-kubernetes-preserve-unknown-fields: true
+                  sheetName:
+                    description: 'SheetName: The sheet name of excel file. Type: string
+                      (or Expression with resultType string).'
+                    x-kubernetes-preserve-unknown-fields: true
+                  structure:
+                    description: |-
+                      Structure: Columns that define the structure of the dataset. Type: array (or Expression with resultType array),
+                      itemType: DatasetDataElement.
+                    x-kubernetes-preserve-unknown-fields: true
+                  type:
+                    description: 'Type: Type of dataset.'
+                    enum:
+                    - Excel
+                    type: string
+                required:
+                - linkedServiceName
+                - location
+                - type
+                type: object
+            required:
+            - owner
+            - properties
+            type: object
+          status:
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              etag:
+                description: |-
+                  Etag: "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.
+                  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in
+                  the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header
+                  fields.")
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. E.g.
+                  "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              properties:
+                description: 'Properties: Dataset properties.'
+                properties:
+                  additionalProperties:
+                    additionalProperties:
+                      x-kubernetes-preserve-unknown-fields: true
+                    type: object
+                  annotations:
+                    description: 'Annotations: List of tags that can be used for describing
+                      the Dataset.'
+                    items:
+                      x-kubernetes-preserve-unknown-fields: true
+                    type: array
+                  compression:
+                    description: 'Compression: The data compression method used for
+                      the json dataset.'
+                    properties:
+                      additionalProperties:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      level:
+                        description: 'Level: The dataset compression level. Type:
+                          string (or Expression with resultType string).'
+                        x-kubernetes-preserve-unknown-fields: true
+                      type:
+                        description: 'Type: Type of dataset compression. Type: string
+                          (or Expression with resultType string).'
+                        x-kubernetes-preserve-unknown-fields: true
+                    type: object
+                  description:
+                    description: 'Description: Dataset description.'
+                    type: string
+                  firstRowAsHeader:
+                    description: |-
+                      FirstRowAsHeader: When used as input, treat the first row of data as headers. When used as output,write the headers into
+                      the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean).
+                    x-kubernetes-preserve-unknown-fields: true
+                  folder:
+                    description: 'Folder: The folder that this Dataset is in. If not
+                      specified, Dataset will appear at the root level.'
+                    properties:
+                      name:
+                        description: 'Name: The name of the folder that this Dataset
+                          is in.'
+                        type: string
+                    type: object
+                  linkedServiceName:
+                    description: 'LinkedServiceName: Linked service reference.'
+                    properties:
+                      parameters:
+                        additionalProperties:
+                          x-kubernetes-preserve-unknown-fields: true
+                        description: 'Parameters: Arguments for LinkedService.'
+                        type: object
+                      referenceName:
+                        description: 'ReferenceName: Reference LinkedService name.'
+                        type: string
+                      type:
+                        description: 'Type: Linked service reference type.'
+                        type: string
+                    type: object
+                  location:
+                    description: 'Location: The location of the excel storage.'
+                    properties:
+                      amazonS3CompatibleLocation:
+                        description: 'AmazonS3Compatible: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of Amazon
+                              S3 Compatible. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of Amazon S3
+                              Compatible. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      amazonS3Location:
+                        description: 'AmazonS3: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of amazon
+                              S3. Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of amazon S3.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      azureBlobFSLocation:
+                        description: 'AzureBlobFS: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileSystem:
+                            description: 'FileSystem: Specify the fileSystem of azure
+                              blobFS. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      azureBlobStorageLocation:
+                        description: 'AzureBlobStorage: Mutually exclusive with all
+                          other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          container:
+                            description: 'Container: Specify the container of azure
+                              blob. Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      azureDataLakeStoreLocation:
+                        description: 'AzureDataLakeStore: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      azureFileStorageLocation:
+                        description: 'AzureFileStorage: Mutually exclusive with all
+                          other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      fileServerLocation:
+                        description: 'FileServer: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      ftpServerLocation:
+                        description: 'FtpServer: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      googleCloudStorageLocation:
+                        description: 'GoogleCloudStorage: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of Google
+                              Cloud Storage. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of Google Cloud
+                              Storage. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      hdfsLocation:
+                        description: 'Hdfs: Mutually exclusive with all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      httpServerLocation:
+                        description: 'HttpServer: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          relativeUrl:
+                            description: 'RelativeUrl: Specify the relativeUrl of
+                              http server. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      lakeHouseLocation:
+                        description: 'LakeHouse: Mutually exclusive with all other
+                          properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                      oracleCloudStorageLocation:
+                        description: 'OracleCloudStorage: Mutually exclusive with
+                          all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          bucketName:
+                            description: 'BucketName: Specify the bucketName of Oracle
+                              Cloud Storage. Type: string (or Expression with resultType
+                              string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                          version:
+                            description: 'Version: Specify the version of Oracle Cloud
+                              Storage. Type: string (or Expression with resultType
+                              string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                        type: object
+                      sftpLocation:
+                        description: 'Sftp: Mutually exclusive with all other properties'
+                        properties:
+                          additionalProperties:
+                            additionalProperties:
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: object
+                          fileName:
+                            description: 'FileName: Specify the file name of dataset.
+                              Type: string (or Expression with resultType string).'
+                            x-kubernetes-preserve-unknown-fields: true
+                          folderPath:
+                            description: 'FolderPath: Specify the folder path of dataset.
+                              Type: string (or Expression with resultType string)'
+                            x-kubernetes-preserve-unknown-fields: true
+                          type:
+                            description: 'Type: Type of dataset storage location.'
+                            type: string
+                        type: object
+                    type: object
+                  nullValue:
+                    description: 'NullValue: The null value string. Type: string (or
+                      Expression with resultType string).'
+                    x-kubernetes-preserve-unknown-fields: true
+                  parameters:
+                    additionalProperties:
+                      properties:
+                        defaultValue:
+                          x-kubernetes-preserve-unknown-fields: true
+                        type:
+                          type: string
+                      type: object
+                    description: 'Parameters: Parameters for dataset.'
+                    type: object
+                  range:
+                    description: 'Range: The partial data of one sheet. Type: string
+                      (or Expression with resultType string).'
+                    x-kubernetes-preserve-unknown-fields: true
+                  schema:
+                    description: |-
+                      Schema: Columns that define the physical type schema of the dataset. Type: array (or Expression with resultType array),
+                      itemType: DatasetSchemaDataElement.
+                    x-kubernetes-preserve-unknown-fields: true
+                  sheetIndex:
+                    description: 'SheetIndex: The sheet index of excel file and default
+                      value is 0. Type: integer (or Expression with resultType integer)'
+                    x-kubernetes-preserve-unknown-fields: true
+                  sheetName:
+                    description: 'SheetName: The sheet name of excel file. Type: string
+                      (or Expression with resultType string).'
+                    x-kubernetes-preserve-unknown-fields: true
+                  structure:
+                    description: |-
+                      Structure: Columns that define the structure of the dataset. Type: array (or Expression with resultType array),
+                      itemType: DatasetDataElement.
+                    x-kubernetes-preserve-unknown-fields: true
+                  type:
+                    description: 'Type: Type of dataset.'
+                    type: string
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    type: string
+                  createdBy:
+                    type: string
+                  createdByType:
+                    type: string
+                  lastModifiedAt:
+                    type: string
+                  lastModifiedBy:
+                    type: string
+                  lastModifiedByType:
+                    type: string
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

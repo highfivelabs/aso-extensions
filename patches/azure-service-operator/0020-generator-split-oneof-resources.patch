@@ -1,0 +1,450 @@
+diff --git a/v2/tools/generator/internal/codegen/code_generator.go b/v2/tools/generator/internal/codegen/code_generator.go
+index effcc64..7578cf3 100644
+--- a/v2/tools/generator/internal/codegen/code_generator.go
++++ b/v2/tools/generator/internal/codegen/code_generator.go
+@@ -150,6 +150,11 @@ func createAllPipelineStages(
+ 
+ 		pipeline.RemoveEmbeddedResources(configuration, log).UsedFor(pipeline.ARMTarget),
+ 
++		// Modified by High Five Labs: one resource per member of a listed
++		// OneOf (ASO_GENERATOR_SPLIT_ONEOF), before resources are catalogued
++		// and exported.
++		pipeline.SplitOneOfResources().UsedFor(pipeline.ARMTarget),
++
+ 		pipeline.CatalogKnownResources(),
+ 
+ 		// Apply export filters before generating
+diff --git a/v2/tools/generator/internal/codegen/pipeline/split_oneof_resources.go b/v2/tools/generator/internal/codegen/pipeline/split_oneof_resources.go
+new file mode 100644
+index 0000000..398d555
+--- /dev/null
++++ b/v2/tools/generator/internal/codegen/pipeline/split_oneof_resources.go
+@@ -0,0 +1,277 @@
++/*
++ * Copyright (c) Microsoft Corporation.
++ * Licensed under the MIT license.
++ */
++
++// Modified by High Five Labs: a new stage. A resource whose spec holds a
++// polymorphic union (a OneOf) that is too large for one CRD is split into
++// one resource per member of the union, each a resource of the same ARM
++// type and path whose spec and status hold that member only.
++
++package pipeline
++
++import (
++	"context"
++	"os"
++	"sort"
++	"strings"
++
++	"github.com/rotisserie/eris"
++
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/astmodel"
++)
++
++// SplitOneOfResourcesStageID is the unique identifier of this stage.
++const SplitOneOfResourcesStageID = "splitOneOfResources"
++
++// splitOneOfEnv names the resources to split (Modified by High Five Labs):
++// comma separated entries "group/Resource.Property", such as
++// "datafactory/Factories_LinkedService.Properties". The property named is a
++// property of the resource's spec (and status) whose type is a OneOf.
++const splitOneOfEnv = "ASO_GENERATOR_SPLIT_ONEOF"
++
++// SplitOneOfResources creates, for each resource listed in
++// ASO_GENERATOR_SPLIT_ONEOF, one resource per member of the union its
++// property holds. A member called AzureBlobStorage of the resource
++// Factories_LinkedService becomes Factories_LinkedService_AzureBlobStorage,
++// whose spec is Factories_LinkedService_AzureBlobStorage_Spec: the spec of
++// Factories_LinkedService with the property's type replaced by the member's
++// type (AzureBlobStorageLinkedService), and likewise its status. The ARM
++// type, URI, owner, scope and API version are the original resource's. The
++// original resource is kept; like the new ones, it is generated only if the
++// configuration exports it ($exportAs), so a configuration exports the
++// members it wants by their new names. Nothing changes unless the variable
++// is set.
++func SplitOneOfResources() *Stage {
++	return NewStage(
++		SplitOneOfResourcesStageID,
++		"Split resources whose spec holds a listed OneOf into one resource per member",
++		func(ctx context.Context, state *State) (*State, error) {
++			targets := splitOneOfTargets(os.Getenv(splitOneOfEnv))
++			if len(targets) == 0 {
++				return state, nil
++			}
++
++			defs := state.Definitions()
++			added := make(astmodel.TypeDefinitionSet)
++			found := make(map[string]bool, len(targets))
++			for name, def := range defs.AllResources() {
++				key := strings.ToLower(name.InternalPackageReference().Group() + "/" + name.Name())
++				property, ok := targets[key]
++				if !ok {
++					continue
++				}
++
++				found[key] = true
++				newDefs, err := splitOneOfResource(def, property, defs)
++				if err != nil {
++					return nil, eris.Wrapf(err, "splitting %s by %s", name, property)
++				}
++
++				err = added.AddTypesAllowDuplicates(newDefs)
++				if err != nil {
++					return nil, eris.Wrapf(err, "splitting %s by %s", name, property)
++				}
++			}
++
++			var missing []string
++			for key := range targets {
++				if !found[key] {
++					missing = append(missing, key)
++				}
++			}
++
++			if len(missing) > 0 {
++				sort.Strings(missing)
++				return nil, eris.Errorf("%s names resources that were not found: %s", splitOneOfEnv, strings.Join(missing, ", "))
++			}
++
++			for name := range added {
++				if defs.Contains(name) {
++					return nil, eris.Errorf("splitting a OneOf resource would replace the existing type %s", name)
++				}
++			}
++
++			return state.WithDefinitions(defs.OverlayWith(added)), nil
++		},
++	)
++}
++
++// splitOneOfTargets parses ASO_GENERATOR_SPLIT_ONEOF into a map from
++// "group/resource" (lower case) to the name of the property to split by.
++func splitOneOfTargets(value string) map[string]astmodel.PropertyName {
++	result := make(map[string]astmodel.PropertyName)
++	for _, entry := range strings.Split(value, ",") {
++		entry = strings.TrimSpace(entry)
++		if entry == "" {
++			continue
++		}
++
++		resource, property, ok := strings.Cut(entry, ".")
++		if !ok || property == "" || !strings.Contains(resource, "/") {
++			continue
++		}
++
++		result[strings.ToLower(resource)] = astmodel.PropertyName(property)
++	}
++
++	return result
++}
++
++// splitOneOfResource returns the resources (and their specs and statuses)
++// made from one resource, one per member of the OneOf its property holds.
++func splitOneOfResource(
++	def astmodel.TypeDefinition,
++	property astmodel.PropertyName,
++	defs astmodel.TypeDefinitionSet,
++) (astmodel.TypeDefinitionSet, error) {
++	resource, ok := astmodel.AsResourceType(def.Type())
++	if !ok {
++		return nil, eris.Errorf("%s is not a resource", def.Name())
++	}
++
++	info, err := defs.ResolveResourceSpecAndStatus(def)
++	if err != nil {
++		return nil, err
++	}
++
++	specRoot, specMembers, err := oneOfMembersOf(info.SpecDef, property, defs)
++	if err != nil {
++		return nil, eris.Wrapf(err, "spec %s", info.SpecDef.Name())
++	}
++
++	var statusRoot astmodel.InternalTypeName
++	var statusMembers map[astmodel.PropertyName]astmodel.InternalTypeName
++	hasStatus := astmodel.IgnoringErrors(resource.StatusType()) != nil
++	if hasStatus {
++		statusRoot, statusMembers, err = oneOfMembersOf(info.StatusDef, property, defs)
++		if err != nil {
++			return nil, eris.Wrapf(err, "status %s", info.StatusDef.Name())
++		}
++	}
++
++	result := make(astmodel.TypeDefinitionSet)
++	for member, specLeaf := range specMembers {
++		resourceName := def.Name().WithName(def.Name().Name() + "_" + string(member))
++
++		specName := renamedFor(info.SpecDef.Name(), def.Name(), resourceName, astmodel.SpecSuffix)
++		specType, err := replaceTypeName(info.SpecDef.Type(), specRoot, specLeaf)
++		if err != nil {
++			return nil, err
++		}
++
++		result.Add(info.SpecDef.WithName(specName).WithType(specType))
++		newResource := resource.WithSpec(specName)
++
++		if hasStatus {
++			statusLeaf, ok := statusMembers[member]
++			if !ok {
++				return nil, eris.Errorf("status %s has no member %s", info.StatusDef.Name(), member)
++			}
++
++			statusName := renamedFor(info.StatusDef.Name(), def.Name(), resourceName, astmodel.StatusSuffix)
++			statusType, err := replaceTypeName(info.StatusDef.Type(), statusRoot, statusLeaf)
++			if err != nil {
++				return nil, err
++			}
++
++			result.Add(info.StatusDef.WithName(statusName).WithType(statusType))
++			newResource = newResource.WithStatus(statusName)
++		}
++
++		result.Add(def.WithName(resourceName).WithType(newResource))
++	}
++
++	return result, nil
++}
++
++// oneOfMembersOf finds the OneOf held by the property of a spec or status
++// and returns its name and its members (property name to member type).
++func oneOfMembersOf(
++	def astmodel.TypeDefinition,
++	property astmodel.PropertyName,
++	defs astmodel.TypeDefinitionSet,
++) (astmodel.InternalTypeName, map[astmodel.PropertyName]astmodel.InternalTypeName, error) {
++	ot, ok := astmodel.AsObjectType(def.Type())
++	if !ok {
++		return astmodel.InternalTypeName{}, nil, eris.Errorf("%s is not an object", def.Name())
++	}
++
++	prop, ok := ot.Property(property)
++	if !ok {
++		return astmodel.InternalTypeName{}, nil, eris.Errorf("%s has no property %s", def.Name(), property)
++	}
++
++	root, ok := astmodel.AsInternalTypeName(prop.PropertyType())
++	if !ok {
++		return astmodel.InternalTypeName{}, nil, eris.Errorf("property %s of %s is not a named type", property, def.Name())
++	}
++
++	rootDef, ok := defs[root]
++	if !ok {
++		return astmodel.InternalTypeName{}, nil, eris.Errorf("no definition of %s", root)
++	}
++
++	if !astmodel.OneOfFlag.IsOn(rootDef.Type()) {
++		return astmodel.InternalTypeName{}, nil, eris.Errorf("property %s of %s is %s, not a OneOf", property, def.Name(), root)
++	}
++
++	rootObject, ok := astmodel.AsObjectType(rootDef.Type())
++	if !ok {
++		return astmodel.InternalTypeName{}, nil, eris.Errorf("OneOf %s is not an object", root)
++	}
++
++	members := make(map[astmodel.PropertyName]astmodel.InternalTypeName)
++	for _, p := range rootObject.Properties().AsSlice() {
++		leaf, ok := astmodel.AsInternalTypeName(p.PropertyType())
++		if !ok {
++			return astmodel.InternalTypeName{}, nil, eris.Errorf(
++				"OneOf %s has property %s that is not a member (a named type); it cannot be split", root, p.PropertyName())
++		}
++
++		if leafDef, ok := defs[leaf]; ok && astmodel.OneOfFlag.IsOn(leafDef.Type()) {
++			return astmodel.InternalTypeName{}, nil, eris.Errorf(
++				"member %s of OneOf %s is itself a OneOf; it cannot be split", p.PropertyName(), root)
++		}
++
++		members[p.PropertyName()] = leaf
++	}
++
++	if len(members) == 0 {
++		return astmodel.InternalTypeName{}, nil, eris.Errorf("OneOf %s has no members", root)
++	}
++
++	return root, members, nil
++}
++
++// renamedFor names the spec or status of a new resource: the old name with
++// the old resource's name replaced by the new one's (Factories_LinkedService_Spec
++// becomes Factories_LinkedService_AzureBlobStorage_Spec), or the new resource's
++// name and the suffix if the old name does not start with the resource's.
++func renamedFor(
++	old astmodel.InternalTypeName,
++	oldResource astmodel.InternalTypeName,
++	newResource astmodel.InternalTypeName,
++	suffix string,
++) astmodel.InternalTypeName {
++	if rest, ok := strings.CutPrefix(old.Name(), oldResource.Name()); ok {
++		return old.WithName(newResource.Name() + rest)
++	}
++
++	return old.WithName(newResource.Name() + suffix)
++}
++
++// replaceTypeName replaces every use of one type name in a type by another.
++func replaceTypeName(t astmodel.Type, from astmodel.InternalTypeName, to astmodel.InternalTypeName) (astmodel.Type, error) {
++	visitor := astmodel.TypeVisitorBuilder[any]{
++		VisitInternalTypeName: func(it astmodel.InternalTypeName) astmodel.Type {
++			if astmodel.TypeEquals(it, from) {
++				return to
++			}
++
++			return it
++		},
++	}.Build()
++
++	return visitor.Visit(t, nil)
++}
+diff --git a/v2/tools/generator/internal/codegen/pipeline/split_oneof_resources_test.go b/v2/tools/generator/internal/codegen/pipeline/split_oneof_resources_test.go
+new file mode 100644
+index 0000000..825727b
+--- /dev/null
++++ b/v2/tools/generator/internal/codegen/pipeline/split_oneof_resources_test.go
+@@ -0,0 +1,121 @@
++/*
++ * Copyright (c) Microsoft Corporation.
++ * Licensed under the MIT license.
++ */
++
++// Modified by High Five Labs: a new test of the stage that splits a
++// resource into one resource per member of a OneOf (ASO_GENERATOR_SPLIT_ONEOF).
++
++package pipeline
++
++import (
++	"context"
++	"strings"
++	"testing"
++
++	. "github.com/onsi/gomega"
++
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/astmodel"
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/test"
++)
++
++// A resource Person whose spec and status hold a Pet, a OneOf of Cat and Dog.
++func splitOneOfDefinitions() (astmodel.TypeDefinitionSet, astmodel.TypeDefinition) {
++	name := func(n string) astmodel.InternalTypeName { return astmodel.MakeInternalTypeName(placeholderPackage, n) }
++	object := func(n string, props ...*astmodel.PropertyDefinition) astmodel.TypeDefinition {
++		return astmodel.MakeTypeDefinition(name(n), astmodel.NewObjectType().WithProperties(props...))
++	}
++	oneOf := func(n string, members ...string) astmodel.TypeDefinition {
++		ot := astmodel.NewObjectType()
++		for _, m := range members {
++			ot = ot.WithProperties(astmodel.NewPropertyDefinition(astmodel.PropertyName(m), m, astmodel.NewOptionalType(name(m+suffixOf(n)))))
++		}
++
++		return astmodel.MakeTypeDefinition(name(n), astmodel.OneOfFlag.ApplyTo(ot))
++	}
++	kind := astmodel.NewPropertyDefinition("Kind", "kind", astmodel.StringType)
++	defs := make(astmodel.TypeDefinitionSet)
++	spec := object("Person_Spec",
++		astmodel.NewPropertyDefinition("Name", "name", astmodel.StringType),
++		astmodel.NewPropertyDefinition("Properties", "properties", astmodel.NewOptionalType(name("Pet"))))
++	status := object("Person_STATUS",
++		astmodel.NewPropertyDefinition("Properties", "properties", astmodel.NewOptionalType(name("Pet_STATUS"))))
++	defs.AddAll(spec, status,
++		oneOf("Pet", "Cat", "Dog"), oneOf("Pet_STATUS", "Cat", "Dog"),
++		object("Cat", kind), object("Dog", kind), object("Cat_STATUS", kind), object("Dog_STATUS", kind))
++	resource := test.CreateResource(placeholderPackage, "Person", spec, status)
++	resource = resource.WithType(astmodel.MustBeResourceType(resource.Type()).WithARMType("Microsoft.Pets/people"))
++	defs.Add(resource)
++
++	return defs, resource
++}
++
++// suffixOf is the suffix of a status type's name ("_STATUS"), or "".
++func suffixOf(n string) string {
++	if strings.HasSuffix(n, astmodel.StatusSuffix) {
++		return astmodel.StatusSuffix
++	}
++
++	return ""
++}
++
++func TestSplitOneOfResources_OneResourcePerMember(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_SPLIT_ONEOF", "group/Person.Properties")
++	g := NewGomegaWithT(t)
++	defs, original := splitOneOfDefinitions()
++
++	state, err := SplitOneOfResources().Run(context.TODO(), NewState(defs))
++	g.Expect(err).ToNot(HaveOccurred())
++	out := state.Definitions()
++
++	g.Expect(out.Contains(original.Name())).To(BeTrue(), "the original resource is kept")
++	for _, member := range []string{"Cat", "Dog"} {
++		name := astmodel.MakeInternalTypeName(placeholderPackage, "Person_"+member)
++		def, ok := out[name]
++		g.Expect(ok).To(BeTrue(), "resource %s", name)
++		rsrc := astmodel.MustBeResourceType(def.Type())
++		g.Expect(rsrc.ARMType()).To(Equal("Microsoft.Pets/people"))
++
++		info, err := out.ResolveResourceSpecAndStatus(def)
++		g.Expect(err).ToNot(HaveOccurred())
++		g.Expect(info.SpecDef.Name().Name()).To(Equal("Person_" + member + "_Spec"))
++		g.Expect(info.StatusDef.Name().Name()).To(Equal("Person_" + member + "_STATUS"))
++
++		prop, ok := info.SpecType.Property("Properties")
++		g.Expect(ok).To(BeTrue())
++		tn, ok := astmodel.AsInternalTypeName(prop.PropertyType())
++		g.Expect(ok).To(BeTrue())
++		g.Expect(tn.Name()).To(Equal(member))
++		_, ok = info.SpecType.Property("Name")
++		g.Expect(ok).To(BeTrue(), "the other properties of the spec are kept")
++
++		prop, ok = info.StatusType.Property("Properties")
++		g.Expect(ok).To(BeTrue())
++		tn, ok = astmodel.AsInternalTypeName(prop.PropertyType())
++		g.Expect(ok).To(BeTrue())
++		g.Expect(tn.Name()).To(Equal(member + "_STATUS"))
++	}
++}
++
++func TestSplitOneOfResources_UnsetChangesNothing(t *testing.T) {
++	t.Setenv("ASO_GENERATOR_SPLIT_ONEOF", "")
++	g := NewGomegaWithT(t)
++	defs, _ := splitOneOfDefinitions()
++
++	state, err := SplitOneOfResources().Run(context.TODO(), NewState(defs))
++	g.Expect(err).ToNot(HaveOccurred())
++	g.Expect(state.Definitions()).To(HaveLen(len(defs)))
++}
++
++func TestSplitOneOfResources_RefusesWhatItCannotSplit(t *testing.T) {
++	g := NewGomegaWithT(t)
++	defs, _ := splitOneOfDefinitions()
++
++	t.Setenv("ASO_GENERATOR_SPLIT_ONEOF", "group/Pet.Properties")
++	_, err := SplitOneOfResources().Run(context.TODO(), NewState(defs))
++	g.Expect(err).To(MatchError(ContainSubstring("not found")))
++
++	t.Setenv("ASO_GENERATOR_SPLIT_ONEOF", "group/Person.Name")
++	_, err = SplitOneOfResources().Run(context.TODO(), NewState(defs))
++	g.Expect(err).To(MatchError(ContainSubstring("not a named type")))
++}
+diff --git a/v2/tools/generator/internal/codegen/testdata/TestGolden_NewARMCodeGeneratorFromConfigCreatesRightPipeline.golden b/v2/tools/generator/internal/codegen/testdata/TestGolden_NewARMCodeGeneratorFromConfigCreatesRightPipeline.golden
+index 604ccd1..85b46c8 100644
+--- a/v2/tools/generator/internal/codegen/testdata/TestGolden_NewARMCodeGeneratorFromConfigCreatesRightPipeline.golden
++++ b/v2/tools/generator/internal/codegen/testdata/TestGolden_NewARMCodeGeneratorFromConfigCreatesRightPipeline.golden
+@@ -19,6 +19,7 @@ collapseCrossGroupReferences                                 Find and remove cro
+ stripUnreferenced                                            Strip unreferenced types
+ assertTypesStructureValid                                    Verify that all local TypeNames refer to a type
+ removeEmbeddedResources                           azure      Remove properties that point to embedded resources
++splitOneOfResources                               azure      Split resources whose spec holds a listed OneOf into one resource per member
+ catalogKnownResources                                        Catalog known resources
+ filterTypes                                                  Apply export filters to reduce the number of generated types
+ promoteRootOneOfProperties                                   Promote selected properties on OneOf objects directly referenced by resources
+diff --git a/v2/tools/generator/internal/codegen/testdata/TestGolden_NewTestCodeGeneratorCreatesRightPipeline.golden b/v2/tools/generator/internal/codegen/testdata/TestGolden_NewTestCodeGeneratorCreatesRightPipeline.golden
+index 8a5f307..87462bd 100644
+--- a/v2/tools/generator/internal/codegen/testdata/TestGolden_NewTestCodeGeneratorCreatesRightPipeline.golden
++++ b/v2/tools/generator/internal/codegen/testdata/TestGolden_NewTestCodeGeneratorCreatesRightPipeline.golden
+@@ -17,6 +17,7 @@ determineResourceOwnership                            Determine ARM resource rel
+ removeAliases                                         Remove type aliases
+ stripUnused                                           Strip unused types for test
+ assertTypesStructureValid                             Verify that all local TypeNames refer to a type
++splitOneOfResources                        azure      Split resources whose spec holds a listed OneOf into one resource per member
+ catalogKnownResources                                 Catalog known resources
+ promoteRootOneOfProperties                            Promote selected properties on OneOf objects directly referenced by resources
+ add-api-version-enums                                 Add enums for API Versions in each package

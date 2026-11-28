@@ -40,11 +40,21 @@ export ASO_GENERATOR_SUBSCRIPTION_EXTENSION=1
 export ASO_GENERATOR_MORE_EXTENSION_SCOPES=1
 export ASO_GENERATOR_RAPID_ONEOF_RELATED=1
 export ASO_GENERATOR_EXTENSION_CHILDREN=1
+# A PUT body when the path declares its own parameters (patch 0017).
+export ASO_GENERATOR_PATH_PARAMETERS=1
+# A property marked flatten whose type has no definition (patch 0018).
+export ASO_GENERATOR_FLATTEN_EXTERNAL=1
+# A spec and status pair visited once by the spec initialization scanner (patch 0019).
+export ASO_GENERATOR_SPEC_INIT_CYCLES=1
 # CEL rules for what ASO's webhooks would check on update (patch 0016):
 # spec.owner and a set spec.azureName cannot change.
 export ASO_GENERATOR_CEL_VALIDATIONS=1
 # Fixed-name child resources (patch 0014; generator/fixed-names.txt).
 export ASO_GENERATOR_FIXED_NAMES="$(sed -e 's/#.*//' -e 's/[[:space:]]//g' generator/fixed-names.txt | grep . | paste -sd, -)"
+# A type transformer's named target from a property of no named type (patch 0021).
+export ASO_GENERATOR_NAMED_TARGET_FROM_ANY=1
+# One resource per member of a listed union (patch 0020; generator/split-oneof.txt).
+export ASO_GENERATOR_SPLIT_ONEOF="$(sed -e 's/#.*//' -e 's/[[:space:]]//g' generator/split-oneof.txt | grep . | paste -sd, -)"
 
 rm -rf apis/arm pkg/controllers/arm_resources_gen.go generator/reports
 mkdir -p generator/reports/fragments

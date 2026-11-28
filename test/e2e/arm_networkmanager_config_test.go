@@ -194,11 +194,9 @@ func TestNetworkManagerConfigurations(t *testing.T) {
 	})
 
 	// The custom rule changed: PUT again, still a Custom rule.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(custom), custom); err != nil {
-		t.Fatal(err)
-	}
-	custom.Spec.AdminRule.Priority = ptr(20)
-	if err := k8s.Update(ctx, custom); err != nil {
+	if err := change(t, custom, func(custom *network.NetworkManagersSecurityAdminRule) {
+		custom.Spec.AdminRule.Priority = ptr(20)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, customID, func(r map[string]any) error {

@@ -1,0 +1,25 @@
+# Alert processing rules (Microsoft.AlertsManagement/actionRules,
+# AlertProcessingRules.json 2021-08-08, the newest and only stable version;
+# docs/plan.md f58): rules that add action groups to, or suppress the
+# notifications of, the alerts fired on their scopes, filtered by
+# conditions and on a schedule. In a resource group. ASO's alertsmanagement
+# group exports PrometheusRuleGroup and SmartDetectorAlertRule only.
+typeFilters:
+  - action: include
+    group: alertsmanagement
+    version: v20210808
+    because: the newest stable version of the alert processing rules
+  - action: prune
+    group: alertsmanagement
+    because: every other version is left alone (ASO has the Prometheus rule groups and smart detector alert rules)
+groupModelConfiguration:
+  2021-08-08:
+    ActionRule:
+      $exportAs: ActionRule
+      $supportedFrom: v0.1.0
+    AlertProcessingRuleProperties:
+      Scopes:
+        $referenceType: arm # the subscriptions, resource groups or resources whose alerts the rule processes, as ASO's alert rules take them
+    AddActionGroups:
+      ActionGroupIds:
+        $referenceType: arm # ASO's ActionGroup by object, or an action group's ARM ID

@@ -1,0 +1,153 @@
+diff --git a/v2/tools/generator/internal/config/named_target_from_any_test.go b/v2/tools/generator/internal/config/named_target_from_any_test.go
+new file mode 100644
+index 0000000..6b325e3
+--- /dev/null
++++ b/v2/tools/generator/internal/config/named_target_from_any_test.go
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (c) Microsoft Corporation.
++ * Licensed under the MIT license.
++ */
++
++// Modified by High Five Labs: a new test of a named target from a property
++// of no named type (ASO_GENERATOR_NAMED_TARGET_FROM_ANY).
++
++package config_test
++
++import (
++	"testing"
++
++	. "github.com/onsi/gomega"
++
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/astmodel"
++	"github.com/Azure/azure-service-operator/v2/tools/generator/internal/config"
++)
++
++// A property of type any (Data Factory's connection string) given a named
++// target (SecretBase) becomes that type in the package of the type holding
++// the property; a primitive target is still a primitive.
++func TestTransformDefinition_NamedTargetFromAny(t *testing.T) {
++	g := NewGomegaWithT(t)
++	holder := student2019
++	def := astmodel.MakeTypeDefinition(holder, astmodel.NewObjectType().WithProperties(
++		astmodel.NewPropertyDefinition("ConnectionString", "connectionString", astmodel.NewOptionalType(astmodel.AnyType))))
++	transformer := func(target string) config.TypeTransformer {
++		return config.TypeTransformer{
++			TypeMatcher: config.TypeMatcher{Name: config.NewFieldMatcher("student")},
++			Property:    config.NewFieldMatcher("ConnectionString"),
++			Target:      &config.TransformResult{Name: config.NewFieldMatcher(target), Optional: true},
++		}
++	}
++	propertyType := func(d astmodel.TypeDefinition) astmodel.Type {
++		ot, ok := astmodel.AsObjectType(d.Type())
++		g.Expect(ok).To(BeTrue())
++		prop, ok := ot.Property("ConnectionString")
++		g.Expect(ok).To(BeTrue())
++		return prop.PropertyType()
++	}
++
++	// Upstream refuses it.
++	t.Setenv("ASO_GENERATOR_NAMED_TARGET_FROM_ANY", "")
++	tr := transformer("SecretBase")
++	_, err := tr.TransformDefinition(def)
++	g.Expect(err).To(MatchError(ContainSubstring("expected InternalTypeName")))
++
++	t.Setenv("ASO_GENERATOR_NAMED_TARGET_FROM_ANY", "1")
++	tr = transformer("SecretBase")
++	result, err := tr.TransformDefinition(def)
++	g.Expect(err).ToNot(HaveOccurred())
++	g.Expect(propertyType(result)).To(Equal(astmodel.NewOptionalType(holder.WithName("SecretBase"))))
++
++	tr = transformer("string")
++	result, err = tr.TransformDefinition(def)
++	g.Expect(err).ToNot(HaveOccurred())
++	g.Expect(propertyType(result)).To(Equal(astmodel.OptionalStringType))
++}
+diff --git a/v2/tools/generator/internal/config/transform_result.go b/v2/tools/generator/internal/config/transform_result.go
+index 9d4230c..9b87b4f 100644
+--- a/v2/tools/generator/internal/config/transform_result.go
++++ b/v2/tools/generator/internal/config/transform_result.go
+@@ -7,6 +7,7 @@ package config
+ 
+ import (
+ 	"fmt"
++	"os"
+ 
+ 	"github.com/rotisserie/eris"
+ 	"golang.org/x/text/cases"
+@@ -103,6 +104,32 @@ func (tr *TransformResult) produceTargetType(
+ 	return resultType, nil
+ }
+ 
++// namedTargetOriginal returns the type a property's transformation starts from
++// (Modified by High Five Labs). With ASO_GENERATOR_NAMED_TARGET_FROM_ANY set,
++// a target naming a type (not a primitive) from a property whose type is not
++// a named type (such as any, a Data Factory property that takes a string, an
++// expression or a secret) is the type of that name in the package of the
++// type holding the property, or in the group and version the target gives;
++// upstream refuses it ("expected InternalTypeName"). Otherwise the property's
++// own type, as upstream.
++func (tr *TransformResult) namedTargetOriginal(holder astmodel.InternalTypeName, original astmodel.Type) astmodel.Type {
++	if os.Getenv("ASO_GENERATOR_NAMED_TARGET_FROM_ANY") == "" || tr == nil || !tr.Name.IsRestrictive() {
++		return original
++	}
++
++	if _, ok := astmodel.AsInternalTypeName(original); ok {
++		return original
++	}
++
++	if !tr.Group.IsRestrictive() && !tr.Version.IsRestrictive() {
++		if _, err := tr.asPrimitiveType(tr.Name.String()); err == nil {
++			return original
++		}
++	}
++
++	return holder
++}
++
+ func (tr *TransformResult) produceTargetNamedType(original astmodel.Type) (astmodel.Type, error) {
+ 	// Transform to name, ensure we have no other transformation
+ 	if tr.Map != nil {
+diff --git a/v2/tools/generator/internal/config/type_transformer.go b/v2/tools/generator/internal/config/type_transformer.go
+index fe3b44a..4a9d0d0 100644
+--- a/v2/tools/generator/internal/config/type_transformer.go
++++ b/v2/tools/generator/internal/config/type_transformer.go
+@@ -96,7 +96,7 @@ func (transformer *TypeTransformer) TransformDefinition(def astmodel.TypeDefinit
+ 			VisitObjectType: func(
+ 				it *astmodel.ObjectType,
+ 			) (astmodel.Type, error) {
+-				return transformer.transformProperties(it)
++				return transformer.transformProperties(def.Name(), it) // Modified by High Five Labs: the type's name
+ 			},
+ 		}.Build()
+ 
+@@ -262,7 +262,9 @@ func (transformer *TypeTransformer) TransformProperty(
+ 			propName = prop.PropertyName()
+ 
+ 			if transformer.Target != nil {
+-				propertyType, err := transformer.Target.produceTargetType(string(propName), prop.PropertyType())
++				propertyType, err := transformer.Target.produceTargetType(
++					string(propName),
++					transformer.Target.namedTargetOriginal(name, prop.PropertyType())) // Modified by High Five Labs
+ 				if err != nil {
+ 					return nil, eris.Wrapf(err, "transforming property %s", propName)
+ 				}
+@@ -305,6 +307,7 @@ func (transformer *TypeTransformer) TransformProperty(
+ 
+ // TransformProperty transforms the property on the given object type
+ func (transformer *TypeTransformer) transformProperties(
++	name astmodel.InternalTypeName, // Modified by High Five Labs: the name of the type holding the properties
+ 	objectType *astmodel.ObjectType,
+ ) (*astmodel.ObjectType, error) {
+ 	for _, prop := range objectType.Properties().AsSlice() {
+@@ -322,7 +325,9 @@ func (transformer *TypeTransformer) transformProperties(
+ 		if transformer.Remove {
+ 			objectType = objectType.WithoutProperty(prop.PropertyName())
+ 		} else if transformer.Target != nil {
+-			propertyType, err := transformer.Target.produceTargetType(propertyName, prop.PropertyType())
++			propertyType, err := transformer.Target.produceTargetType(
++				propertyName,
++				transformer.Target.namedTargetOriginal(name, prop.PropertyType()))
+ 			if err != nil {
+ 				return nil, eris.Wrapf(err, "transforming property %s", propertyName)
+ 			}

@@ -1,0 +1,854 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.19.0
+  name: raipolicies.cognitiveservices.azure.hfl.dev
+spec:
+  group: cognitiveservices.azure.hfl.dev
+  names:
+    categories:
+    - azure
+    - cognitiveservices
+    kind: RaiPolicy
+    listKind: RaiPolicyList
+    plural: raipolicies
+    singular: raipolicy
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].severity
+      name: Severity
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].message
+      name: Message
+      type: string
+    name: v20260901
+    schema:
+      openAPIV3Schema:
+        description: |-
+          Generator information:
+          - Generated from: /cognitiveservices/resource-manager/Microsoft.CognitiveServices/CognitiveServices/stable/2026-09-01/cognitiveservices.json
+          - ARM URI: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/raiPolicy/{raiPolicyName}
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            properties:
+              azureName:
+                description: |-
+                  AzureName: The name of the resource in Azure. This is often the same as the name of the resource in Kubernetes but it
+                  doesn't have to be.
+                pattern: ^[a-zA-Z0-9][a-zA-Z0-9_.-]*$
+                type: string
+              operatorSpec:
+                description: |-
+                  OperatorSpec: The specification for configuring operator behavior. This field is interpreted by the operator and not
+                  passed directly to Azure
+                properties:
+                  configMapExpressions:
+                    description: 'ConfigMapExpressions: configures where to place
+                      operator written dynamic ConfigMaps (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                  secretExpressions:
+                    description: 'SecretExpressions: configures where to place operator
+                      written dynamic secrets (created with CEL expressions).'
+                    items:
+                      description: |-
+                        DestinationExpression is a CEL expression and a destination to store the result in. The destination may
+                        be a secret or a configmap. The value of the expression is stored at the specified location in
+                        the destination.
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: Annotations is an optional set of annotations
+                            to apply to the destination resource.
+                          type: object
+                        key:
+                          description: |-
+                            Key is the key in the ConfigMap or Secret being written to. If the CEL expression in Value returns a string
+                            this is required to identify what key to write to. If the CEL expression in Value returns a map[string]string
+                            Key must not be set, instead the keys written will be determined dynamically based on the keys of the resulting
+                            map[string]string.
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: Labels is an optional set of labels to apply
+                            to the destination resource.
+                          type: object
+                        name:
+                          description: |-
+                            Name is the name of the Kubernetes configmap or secret to write to.
+                            The configmap or secret will be created in the same namespace as the resource.
+                          type: string
+                        value:
+                          description: |-
+                            Value is a CEL expression. The CEL expression may return a string or a map[string]string. For more information
+                            on CEL in ASO see https://azure.github.io/azure-service-operator/guide/expressions/
+                          type: string
+                      required:
+                      - name
+                      - value
+                      type: object
+                    type: array
+                type: object
+              owner:
+                description: |-
+                  Owner: The owner of the resource. The owner controls where the resource goes when it is deployed. The owner also
+                  controls the resources lifecycle. When the owner is deleted the resource will also be deleted. This resource is an
+                  extension resource, which means that any other Azure resource can be its owner.
+                properties:
+                  armId:
+                    description: Ownership across namespaces is not supported.
+                    pattern: (?i)(^(/subscriptions/([^/]+)(/resourcegroups/([^/]+))?)?/providers/([^/]+)/([^/]+/[^/]+)(/([^/]+/[^/]+))*$|^/subscriptions/([^/]+)(/resourcegroups/([^/]+))?$)
+                    type: string
+                  group:
+                    description: Group is the Kubernetes group of the resource.
+                    type: string
+                  kind:
+                    description: Kind is the Kubernetes kind of the resource.
+                    type: string
+                  name:
+                    description: This is the name of the Kubernetes resource to reference.
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: set armId alone, or group, kind and name together
+                  rule: 'has(self.armId) ? !(has(self.group) || has(self.kind) ||
+                    has(self.name)) : (has(self.group) && has(self.kind) && has(self.name))'
+              properties:
+                description: 'Properties: Properties of Cognitive Services RaiPolicy.'
+                properties:
+                  basePolicyName:
+                    description: 'BasePolicyName: Name of Rai policy.'
+                    type: string
+                  contentFilters:
+                    description: 'ContentFilters: The list of Content Filters.'
+                    items:
+                      description: Azure OpenAI Content Filter.
+                      properties:
+                        action:
+                          description: 'Action: The action types to apply to the content
+                            filters'
+                          enum:
+                          - ANNOTATING
+                          - BLOCKING
+                          - HITL
+                          - None
+                          - RETRY
+                          type: string
+                        blocking:
+                          description: 'Blocking: If blocking would occur.'
+                          type: boolean
+                        enabled:
+                          description: 'Enabled: If the ContentFilter is enabled.'
+                          type: boolean
+                        name:
+                          description: 'Name: Name of ContentFilter.'
+                          type: string
+                        severityThreshold:
+                          description: 'SeverityThreshold: Level at which content
+                            is filtered.'
+                          enum:
+                          - High
+                          - Low
+                          - Medium
+                          type: string
+                        source:
+                          description: 'Source: Content source to apply the Content
+                            Filters.'
+                          enum:
+                          - Completion
+                          - PostRun
+                          - PostToolCall
+                          - PreRun
+                          - PreToolCall
+                          - Prompt
+                          type: string
+                      type: object
+                    type: array
+                  customBlocklists:
+                    description: 'CustomBlocklists: The list of custom Blocklist.'
+                    items:
+                      description: Gets or sets the source to which filter applies.
+                      properties:
+                        blocking:
+                          description: 'Blocking: If blocking would occur.'
+                          type: boolean
+                        blocklistName:
+                          description: 'BlocklistName: Name of ContentFilter.'
+                          type: string
+                        source:
+                          description: 'Source: Content source to apply the Content
+                            Filters.'
+                          enum:
+                          - Completion
+                          - PostRun
+                          - PostToolCall
+                          - PreRun
+                          - PreToolCall
+                          - Prompt
+                          type: string
+                      type: object
+                    type: array
+                  egressPolicy:
+                    description: |-
+                      EgressPolicy: Egress (outbound network) policy controlling which external endpoints sandboxed
+                      agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
+                    properties:
+                      defaultAction:
+                        description: |-
+                          DefaultAction: The default action when no user-defined rules match.
+                          Deny blocks unmatched traffic; Allow permits it. Transform and Rewrite rules
+                          are always applied to their matched traffic regardless of this setting —
+                          defaultAction only governs traffic that does not match any rule.
+                          If omitted on create, the server defaults to Deny (fail-closed). On subsequent
+                          GET requests, the server always returns the effective value.
+                        enum:
+                        - Allow
+                        - Deny
+                        type: string
+                      description:
+                        description: 'Description: Description of the egress policy.'
+                        type: string
+                      mode:
+                        description: |-
+                          Mode: The enforcement mode for egress rules.
+                          If omitted on create, the server defaults to Enforced. On subsequent GET
+                          requests, the server always returns the effective mode.
+                        enum:
+                        - Audit
+                        - Enforced
+                        type: string
+                      rules:
+                        description: |-
+                          Rules: Ordered list of egress rules. First matching rule wins.
+                          Rules are evaluated in declaration order; the first rule whose match criteria
+                          are satisfied determines the action taken on the request.
+                        items:
+                          description: A single egress rule. Rules are evaluated in
+                            order; first match wins.
+                          properties:
+                            action:
+                              description: |-
+                                Action: The action to take when this rule matches, including the action type and any
+                                type-specific configuration (headers for Transform, rewrite target for Rewrite).
+                              properties:
+                                actionType:
+                                  description: 'ActionType: The kind of action.'
+                                  enum:
+                                  - Allow
+                                  - Deny
+                                  - Rewrite
+                                  - Transform
+                                  type: string
+                                headers:
+                                  description: |-
+                                    Headers: Header transforms to apply. Required for Transform; optional for Rewrite;
+                                    not allowed for Allow or Deny.
+                                  items:
+                                    description: |-
+                                      A header transformation applied to matched traffic.
+                                      For Set or Insert operations, exactly one of value or valueRef must
+                                      be provided.
+                                      For Remove operations, neither value nor valueRef should be set.
+                                    properties:
+                                      name:
+                                        description: 'Name: The HTTP header name (e.g.,
+                                          "Authorization", "X-Custom-Auth").'
+                                        type: string
+                                      operation:
+                                        description: 'Operation: The operation to
+                                          perform on this header.'
+                                        enum:
+                                        - Insert
+                                        - Remove
+                                        - Set
+                                        type: string
+                                      value:
+                                        description: |-
+                                          Value: A static header value. Write-only: accepted on create/update, never returned on read.
+                                          If omitted on update, the existing value is preserved. Use this for non-sensitive values;
+                                          for credentials, use valueRef instead.
+                                        properties:
+                                          key:
+                                            description: Key is the key in the Kubernetes
+                                              secret being referenced
+                                            type: string
+                                          name:
+                                            description: |-
+                                              Name is the name of the Kubernetes secret being referenced.
+                                              The secret must be in the same namespace as the resource
+                                            type: string
+                                        required:
+                                        - key
+                                        - name
+                                        type: object
+                                      valueRef:
+                                        description: 'ValueRef: A dynamic header value
+                                          resolved at request time from a secret or
+                                          managed identity.'
+                                        properties:
+                                          managedIdentityRef:
+                                            description: 'ManagedIdentityRef: Resolve
+                                              the value from a managed-identity token.'
+                                            properties:
+                                              format:
+                                                description: 'Format: Optional format
+                                                  for the resolved token; "{value}"
+                                                  is the placeholder, e.g. "Bearer
+                                                  {value}".'
+                                                type: string
+                                              resource:
+                                                description: 'Resource: The resource/audience
+                                                  the token is requested for.'
+                                                type: string
+                                            required:
+                                            - resource
+                                            type: object
+                                          secretRef:
+                                            description: 'SecretRef: Resolve the value
+                                              from a stored secret.'
+                                            properties:
+                                              format:
+                                                description: 'Format: Optional format
+                                                  for the resolved value; "{value}"
+                                                  is the placeholder, e.g. "Bearer
+                                                  {value}".'
+                                                type: string
+                                              secretId:
+                                                description: 'SecretId: Identifier
+                                                  of the secret to inject.'
+                                                type: string
+                                              secretKey:
+                                                description: 'SecretKey: Optional
+                                                  key within the secret.'
+                                                properties:
+                                                  key:
+                                                    description: Key is the key in
+                                                      the Kubernetes secret being
+                                                      referenced
+                                                    type: string
+                                                  name:
+                                                    description: |-
+                                                      Name is the name of the Kubernetes secret being referenced.
+                                                      The secret must be in the same namespace as the resource
+                                                    type: string
+                                                required:
+                                                - key
+                                                - name
+                                                type: object
+                                            required:
+                                            - secretId
+                                            type: object
+                                        type: object
+                                    required:
+                                    - name
+                                    - operation
+                                    type: object
+                                  type: array
+                                rewrite:
+                                  description: 'Rewrite: Destination override. Required
+                                    for Rewrite; not allowed otherwise.'
+                                  properties:
+                                    host:
+                                      description: 'Host: Target host. Original host
+                                        is kept if omitted.'
+                                      type: string
+                                    path:
+                                      description: 'Path: Target path (literal string).
+                                        Original path (and query) is kept if omitted.'
+                                      type: string
+                                    scheme:
+                                      description: 'Scheme: Target scheme. Original
+                                        scheme is kept if omitted.'
+                                      enum:
+                                      - http
+                                      - https
+                                      type: string
+                                  type: object
+                              required:
+                              - actionType
+                              type: object
+                            description:
+                              description: 'Description: Description of the rule.'
+                              type: string
+                            match:
+                              description: 'Match: The match criteria for this rule.'
+                              properties:
+                                host:
+                                  description: |-
+                                    Host: Host pattern to match using DNS wildcard syntax (e.g., "\*.openai.com").
+                                    A leading "\*." matches any subdomain. Omit to match all hosts.
+                                  type: string
+                                path:
+                                  description: |-
+                                    Path: Path pattern to match using URI prefix matching.
+                                    An asterisk serves as a single-segment wildcard.
+                                    For example, "/v1/\*" matches "/v1/chat". Omit to match all paths.
+                                  type: string
+                              type: object
+                            name:
+                              description: 'Name: Name of the rule. Must be unique
+                                within the policy.'
+                              type: string
+                            ruleType:
+                              description: 'RuleType: The type of rule (e.g., Fqdn).
+                                Determines how match criteria are interpreted.'
+                              enum:
+                              - Fqdn
+                              type: string
+                          required:
+                          - action
+                          - name
+                          - ruleType
+                          type: object
+                        type: array
+                    type: object
+                  mode:
+                    description: |-
+                      Mode: Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3.
+                      Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version.
+                    enum:
+                    - Asynchronous_filter
+                    - Blocking
+                    - Default
+                    - Deferred
+                    type: string
+                  safetyProviders:
+                    description: 'SafetyProviders: The list of Safety Providers.'
+                    items:
+                      description: Gets or sets the source to which safety providers
+                        applies.
+                      properties:
+                        blocking:
+                          description: 'Blocking: If blocking would occur.'
+                          type: boolean
+                        safetyProviderName:
+                          description: 'SafetyProviderName: Name of RAI Safety Provider.'
+                          type: string
+                        source:
+                          description: 'Source: Content source to apply the Content
+                            Filters.'
+                          enum:
+                          - Completion
+                          - PostRun
+                          - PostToolCall
+                          - PreRun
+                          - PreToolCall
+                          - Prompt
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+            required:
+            - owner
+            type: object
+          status:
+            description: Cognitive Services RaiPolicy.
+            properties:
+              conditions:
+                description: 'Conditions: The observed state of the resource'
+                items:
+                  description: Condition defines an extension to status (an observation)
+                    of a resource
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time the condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: Message is a human readable message indicating
+                        details about the transition. This field may be empty.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration is the .metadata.generation that the condition was set based upon. For instance, if
+                        .metadata.generation is currently 12, but the .status.condition[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: |-
+                        Reason for the condition's last transition.
+                        Reasons are upper CamelCase (PascalCase) with no spaces. A reason is always provided, this field will not be empty.
+                      type: string
+                    severity:
+                      description: |-
+                        Severity with which to treat failures of this type of condition.
+                        For conditions which have positive polarity (Status == True is their normal/healthy state), this will be omitted when Status == True
+                        For conditions which have negative polarity (Status == False is their normal/healthy state), this will be omitted when Status == False.
+                        This is omitted in all cases when Status == Unknown
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, or
+                        Unknown.
+                      type: string
+                    type:
+                      description: Type of condition.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              etag:
+                description: 'Etag: Resource Etag.'
+                type: string
+              id:
+                description: |-
+                  Id: Fully qualified resource ID for the resource. Ex -
+                  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+                type: string
+              name:
+                description: 'Name: The name of the resource'
+                type: string
+              properties:
+                description: 'Properties: Properties of Cognitive Services RaiPolicy.'
+                properties:
+                  basePolicyName:
+                    description: 'BasePolicyName: Name of Rai policy.'
+                    type: string
+                  contentFilters:
+                    description: 'ContentFilters: The list of Content Filters.'
+                    items:
+                      description: Azure OpenAI Content Filter.
+                      properties:
+                        action:
+                          description: 'Action: The action types to apply to the content
+                            filters'
+                          type: string
+                        blocking:
+                          description: 'Blocking: If blocking would occur.'
+                          type: boolean
+                        enabled:
+                          description: 'Enabled: If the ContentFilter is enabled.'
+                          type: boolean
+                        name:
+                          description: 'Name: Name of ContentFilter.'
+                          type: string
+                        severityThreshold:
+                          description: 'SeverityThreshold: Level at which content
+                            is filtered.'
+                          type: string
+                        source:
+                          description: 'Source: Content source to apply the Content
+                            Filters.'
+                          type: string
+                      type: object
+                    type: array
+                  customBlocklists:
+                    description: 'CustomBlocklists: The list of custom Blocklist.'
+                    items:
+                      description: Gets or sets the source to which filter applies.
+                      properties:
+                        blocking:
+                          description: 'Blocking: If blocking would occur.'
+                          type: boolean
+                        blocklistName:
+                          description: 'BlocklistName: Name of ContentFilter.'
+                          type: string
+                        source:
+                          description: 'Source: Content source to apply the Content
+                            Filters.'
+                          type: string
+                      type: object
+                    type: array
+                  egressPolicy:
+                    description: |-
+                      EgressPolicy: Egress (outbound network) policy controlling which external endpoints sandboxed
+                      agents can reach. Includes rules with Allow/Deny/Transform/Rewrite actions.
+                    properties:
+                      defaultAction:
+                        description: |-
+                          DefaultAction: The default action when no user-defined rules match.
+                          Deny blocks unmatched traffic; Allow permits it. Transform and Rewrite rules
+                          are always applied to their matched traffic regardless of this setting —
+                          defaultAction only governs traffic that does not match any rule.
+                          If omitted on create, the server defaults to Deny (fail-closed). On subsequent
+                          GET requests, the server always returns the effective value.
+                        type: string
+                      description:
+                        description: 'Description: Description of the egress policy.'
+                        type: string
+                      mode:
+                        description: |-
+                          Mode: The enforcement mode for egress rules.
+                          If omitted on create, the server defaults to Enforced. On subsequent GET
+                          requests, the server always returns the effective mode.
+                        type: string
+                      rules:
+                        description: |-
+                          Rules: Ordered list of egress rules. First matching rule wins.
+                          Rules are evaluated in declaration order; the first rule whose match criteria
+                          are satisfied determines the action taken on the request.
+                        items:
+                          description: A single egress rule. Rules are evaluated in
+                            order; first match wins.
+                          properties:
+                            action:
+                              description: |-
+                                Action: The action to take when this rule matches, including the action type and any
+                                type-specific configuration (headers for Transform, rewrite target for Rewrite).
+                              properties:
+                                actionType:
+                                  description: 'ActionType: The kind of action.'
+                                  type: string
+                                headers:
+                                  description: |-
+                                    Headers: Header transforms to apply. Required for Transform; optional for Rewrite;
+                                    not allowed for Allow or Deny.
+                                  items:
+                                    description: |-
+                                      A header transformation applied to matched traffic.
+                                      For Set or Insert operations, exactly one of value or valueRef must
+                                      be provided.
+                                      For Remove operations, neither value nor valueRef should be set.
+                                    properties:
+                                      name:
+                                        description: 'Name: The HTTP header name (e.g.,
+                                          "Authorization", "X-Custom-Auth").'
+                                        type: string
+                                      operation:
+                                        description: 'Operation: The operation to
+                                          perform on this header.'
+                                        type: string
+                                      valueRef:
+                                        description: 'ValueRef: A dynamic header value
+                                          resolved at request time from a secret or
+                                          managed identity.'
+                                        properties:
+                                          managedIdentityRef:
+                                            description: 'ManagedIdentityRef: Resolve
+                                              the value from a managed-identity token.'
+                                            properties:
+                                              format:
+                                                description: 'Format: Optional format
+                                                  for the resolved token; "{value}"
+                                                  is the placeholder, e.g. "Bearer
+                                                  {value}".'
+                                                type: string
+                                              resource:
+                                                description: 'Resource: The resource/audience
+                                                  the token is requested for.'
+                                                type: string
+                                            type: object
+                                          secretRef:
+                                            description: 'SecretRef: Resolve the value
+                                              from a stored secret.'
+                                            properties:
+                                              format:
+                                                description: 'Format: Optional format
+                                                  for the resolved value; "{value}"
+                                                  is the placeholder, e.g. "Bearer
+                                                  {value}".'
+                                                type: string
+                                              secretId:
+                                                description: 'SecretId: Identifier
+                                                  of the secret to inject.'
+                                                type: string
+                                            type: object
+                                        type: object
+                                    type: object
+                                  type: array
+                                rewrite:
+                                  description: 'Rewrite: Destination override. Required
+                                    for Rewrite; not allowed otherwise.'
+                                  properties:
+                                    host:
+                                      description: 'Host: Target host. Original host
+                                        is kept if omitted.'
+                                      type: string
+                                    path:
+                                      description: 'Path: Target path (literal string).
+                                        Original path (and query) is kept if omitted.'
+                                      type: string
+                                    scheme:
+                                      description: 'Scheme: Target scheme. Original
+                                        scheme is kept if omitted.'
+                                      type: string
+                                  type: object
+                              type: object
+                            description:
+                              description: 'Description: Description of the rule.'
+                              type: string
+                            match:
+                              description: 'Match: The match criteria for this rule.'
+                              properties:
+                                host:
+                                  description: |-
+                                    Host: Host pattern to match using DNS wildcard syntax (e.g., "\*.openai.com").
+                                    A leading "\*." matches any subdomain. Omit to match all hosts.
+                                  type: string
+                                path:
+                                  description: |-
+                                    Path: Path pattern to match using URI prefix matching.
+                                    An asterisk serves as a single-segment wildcard.
+                                    For example, "/v1/\*" matches "/v1/chat". Omit to match all paths.
+                                  type: string
+                              type: object
+                            name:
+                              description: 'Name: Name of the rule. Must be unique
+                                within the policy.'
+                              type: string
+                            ruleType:
+                              description: 'RuleType: The type of rule (e.g., Fqdn).
+                                Determines how match criteria are interpreted.'
+                              type: string
+                          type: object
+                        type: array
+                    type: object
+                  mode:
+                    description: |-
+                      Mode: Rai policy mode. The enum value mapping is as below: Default = 0, Deferred=1, Blocking=2, Asynchronous_filter =3.
+                      Please use 'Asynchronous_filter' after 2025-06-01. It is the same as 'Deferred' in previous version.
+                    type: string
+                  safetyProviders:
+                    description: 'SafetyProviders: The list of Safety Providers.'
+                    items:
+                      description: Gets or sets the source to which safety providers
+                        applies.
+                      properties:
+                        blocking:
+                          description: 'Blocking: If blocking would occur.'
+                          type: boolean
+                        safetyProviderName:
+                          description: 'SafetyProviderName: Name of RAI Safety Provider.'
+                          type: string
+                        source:
+                          description: 'Source: Content source to apply the Content
+                            Filters.'
+                          type: string
+                      type: object
+                    type: array
+                  type:
+                    description: 'Type: Content Filters policy type.'
+                    type: string
+                type: object
+              systemData:
+                description: 'SystemData: Azure Resource Manager metadata containing
+                  createdBy and modifiedBy information.'
+                properties:
+                  createdAt:
+                    description: 'CreatedAt: The timestamp of resource creation (UTC).'
+                    type: string
+                  createdBy:
+                    description: 'CreatedBy: The identity that created the resource.'
+                    type: string
+                  createdByType:
+                    description: 'CreatedByType: The type of identity that created
+                      the resource.'
+                    type: string
+                  lastModifiedAt:
+                    description: 'LastModifiedAt: The timestamp of resource last modification
+                      (UTC)'
+                    type: string
+                  lastModifiedBy:
+                    description: 'LastModifiedBy: The identity that last modified
+                      the resource.'
+                    type: string
+                  lastModifiedByType:
+                    description: 'LastModifiedByType: The type of identity that last
+                      modified the resource.'
+                    type: string
+                type: object
+              tags:
+                additionalProperties:
+                  type: string
+                description: 'Tags: Resource tags.'
+                type: object
+              type:
+                description: 'Type: The type of the resource. E.g. "Microsoft.Compute/virtualMachines"
+                  or "Microsoft.Storage/storageAccounts"'
+                type: string
+            type: object
+        type: object
+        x-kubernetes-validations:
+        - fieldPath: .spec.owner
+          message: spec.owner cannot be changed or removed; delete the object and
+            create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.owner) || (has(self.spec)
+            && has(self.spec.owner) && self.spec.owner == oldSelf.spec.owner)'
+        - fieldPath: .spec.azureName
+          message: spec.azureName cannot be changed or removed once set; delete the
+            object and create it again
+          reason: FieldValueForbidden
+          rule: '!has(oldSelf.spec) || !has(oldSelf.spec.azureName) || size(oldSelf.spec.azureName)
+            == 0 || (has(self.spec) && has(self.spec.azureName) && self.spec.azureName
+            == oldSelf.spec.azureName)'
+    served: true
+    storage: true
+    subresources:
+      status: {}

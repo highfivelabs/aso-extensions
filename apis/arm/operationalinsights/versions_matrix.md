@@ -51,6 +51,7 @@
 | ManagedServiceIdentityType_STATUS                  | v20250701 |
 | ManagedServiceIdentity_STATUS                      | v20250701 |
 | OperationalInsightsTableProvisioningState_STATUS   | v20250701 |
+| ProvisioningStateEnum_STATUS                       | v20250701 |
 | QueryPack                                          | v20250701 |
 | QueryPack_STATUS                                   | v20250701 |
 | QueryPack_Spec                                     | v20250701 |
@@ -60,6 +61,10 @@
 | RestoredLogs                                       | v20250701 |
 | RestoredLogs_STATUS                                | v20250701 |
 | ResultStatistics_STATUS                            | v20250701 |
+| RuleDefinition                                     | v20250701 |
+| RuleDefinition_STATUS                              | v20250701 |
+| RuleTypeEnum                                       | v20250701 |
+| RuleTypeEnum_STATUS                                | v20250701 |
 | SavedSearchProperties                              | v20250701 |
 | SavedSearchProperties_STATUS                       | v20250701 |
 | Schema                                             | v20250701 |
@@ -67,12 +72,15 @@
 | SearchResults                                      | v20250701 |
 | SearchResults_STATUS                               | v20250701 |
 | SourceEnum_STATUS                                  | v20250701 |
+| StatusCodeEnum_STATUS                              | v20250701 |
 | StorageAccount                                     | v20250701 |
 | StorageAccount_STATUS                              | v20250701 |
 | StorageInsightProperties                           | v20250701 |
 | StorageInsightProperties_STATUS                    | v20250701 |
 | StorageInsightState_STATUS                         | v20250701 |
 | StorageInsightStatus_STATUS                        | v20250701 |
+| SummaryLogsProperties                              | v20250701 |
+| SummaryLogsProperties_STATUS                       | v20250701 |
 | SystemData_CreatedByType_STATUS                    | v20250701 |
 | SystemData_LastModifiedByType_STATUS               | v20250701 |
 | SystemData_STATUS                                  | v20250701 |
@@ -84,6 +92,8 @@
 | TableTypeEnum_STATUS                               | v20250701 |
 | Tag                                                | v20250701 |
 | Tag_STATUS                                         | v20250701 |
+| TimeSelectorEnum                                   | v20250701 |
+| TimeSelectorEnum_STATUS                            | v20250701 |
 | Type_STATUS                                        | v20250701 |
 | UserAssignedIdentityDetails                        | v20250701 |
 | UserAssignedIdentity_STATUS                        | v20250701 |
@@ -105,6 +115,9 @@
 | WorkspacesStorageInsightConfig                     | v20250701 |
 | WorkspacesStorageInsightConfig_STATUS              | v20250701 |
 | WorkspacesStorageInsightConfig_Spec                | v20250701 |
+| WorkspacesSummaryLog                               | v20250701 |
+| WorkspacesSummaryLog_STATUS                        | v20250701 |
+| WorkspacesSummaryLog_Spec                          | v20250701 |
 | WorkspacesTable                                    | v20250701 |
 | WorkspacesTable_STATUS                             | v20250701 |
 | WorkspacesTable_Spec                               | v20250701 |

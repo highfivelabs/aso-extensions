@@ -1,0 +1,127 @@
+# Logic Apps kinds ASO does not export (Microsoft.Logic, 2019-05-01, the
+# newest stable version; ASO has no logic group; docs/plan.md f74, tier 3
+# row t15 of docs/coverage/foundation.md): Consumption workflows, and
+# integration accounts (the B2B artifacts Logic Apps' enterprise
+# integration uses) with their assemblies, batch configurations, schemas,
+# maps, partners, agreements, certificates and sessions. Workflows and
+# integration accounts are in a resource group; the account's children are
+# owned by our IntegrationAccount. The API connections a workflow's
+# $connections parameter names are our web group's ApiConnection.
+#
+# Not exported: integration service environments and their managed APIs
+# (retired 2024-08-31; the workflow's and account's references to one are
+# removed); the Standard (single-tenant) workflows, which are an App
+# Service app's content, not resources.
+typeFilters:
+  - action: include
+    group: logic
+    version: v20190501
+    because: the newest stable version
+  - action: prune
+    group: logic
+    because: every other version is left alone
+  - action: prune
+    group: logic
+    name: IntegrationServiceEnvironment*
+    because: integration service environments were retired on 2024-08-31
+typeTransformers:
+  - group: logic
+    version: v20190501
+    name: WorkflowProperties
+    property: IntegrationServiceEnvironment
+    remove: true
+    because: integration service environments were retired on 2024-08-31
+  - group: logic
+    version: v20190501
+    name: IntegrationAccountProperties
+    property: IntegrationServiceEnvironment
+    remove: true
+    because: integration service environments were retired on 2024-08-31
+  - group: logic
+    version: v20190501
+    name: EdifactEnvelopeOverride_STATUS
+    property: ApplicationPassword
+    remove: true
+    because: a password the EDIFACT interchange header carries; a Secret in the spec, not shown in the status
+  - group: logic
+    version: v20190501
+    name: X12SecuritySettings_STATUS
+    property: PasswordValue
+    remove: true
+    because: the X12 interchange's security information (ISA04); a Secret in the spec, not shown in the status
+  - group: logic
+    version: v20190501
+    name: EdifactEnvelopeSettings_STATUS
+    property: RecipientReferencePasswordValue
+    remove: true
+    because: a Secret in the spec, not shown in the status
+  - group: logic
+    version: v20190501
+    name: EdifactEnvelopeSettings_STATUS
+    property: GroupApplicationPassword
+    remove: true
+    because: a Secret in the spec, not shown in the status
+  - group: logic
+    version: v20190501
+    name: WorkflowParameter;WorkflowParameter_STATUS
+    property: Value
+    target:
+      name: any
+    because: >-
+      A workflow parameter's value is any JSON (a string, a number, an
+      object such as $connections); the spec types it object, which would
+      refuse a string or a number.
+groupModelConfiguration:
+  2019-05-01:
+    Workflow:
+      $exportAs: Workflow
+      $supportedFrom: v0.1.0
+    IntegrationAccount:
+      $exportAs: IntegrationAccount
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_Assembly:
+      $exportAs: IntegrationAccountsAssembly
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_BatchConfiguration:
+      $exportAs: IntegrationAccountsBatchConfiguration
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_Schema:
+      $exportAs: IntegrationAccountsSchema
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_Map:
+      $exportAs: IntegrationAccountsMap
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_Partner:
+      $exportAs: IntegrationAccountsPartner
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_Agreement:
+      $exportAs: IntegrationAccountsAgreement
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_Certificate:
+      $exportAs: IntegrationAccountsCertificate
+      $supportedFrom: v0.1.0
+    IntegrationAccounts_Session:
+      $exportAs: IntegrationAccountsSession
+      $supportedFrom: v0.1.0
+    ResourceReference:
+      Id:
+        $referenceType: arm # a workflow's integration account, a certificate's Key Vault
+    KeyVaultKeyReference_KeyVault:
+      Id:
+        $referenceType: arm # the Key Vault holding a certificate's private key
+    EdifactEnvelopeSettings:
+      RecipientReferencePasswordQualifier:
+        $importSecretMode: never # a code naming the kind of reference, not a password
+      RecipientReferencePasswordValue:
+        $importSecretMode: required # the recipient's reference or password in an EDIFACT header
+      GroupApplicationPassword:
+        $importSecretMode: required # the application password of an EDIFACT functional group header
+    EdifactEnvelopeOverride:
+      ApplicationPassword:
+        $importSecretMode: required # the application password of an EDIFACT interchange's header
+    X12SecuritySettings:
+      PasswordValue:
+        $importSecretMode: required # an X12 interchange's security information
+    AssemblyProperties:
+      AssemblyPublicKeyToken:
+        $importSecretMode: never # the public key token of a strong-named assembly, public by design

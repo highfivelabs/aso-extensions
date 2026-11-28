@@ -4,6 +4,39 @@ github.com/highfivelabs/aso-extensions/apis/arm/web/v20260715/storage
 APIVersion: Enum (1 value)
 └── "2026-07-15"
 
+AiGateway: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Tags: map[string]string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Properties: *Object (2 properties)
+    │   ├── AiGatewayId: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
 Certificate: Resource
 ├── Owner: resources/vv20191001.ResourceGroup
 ├── Spec: Object (16 properties)
@@ -68,6 +101,305 @@ Certificate: Resource
     ├── Type: *string
     └── Valid: *bool
 
+HostingEnvironment: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (19 properties)
+│   ├── AzureName: string
+│   ├── ClusterSettings: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Value: *string
+│   ├── DedicatedHostCount: *int
+│   ├── DnsSuffix: *string
+│   ├── FrontEndScaleFactor: *int
+│   ├── InternalLoadBalancingMode: *string
+│   ├── IpsslAddressCount: *int
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── MultiSize: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Tags: map[string]string
+│   ├── UpgradePreference: *string
+│   ├── UserWhitelistedIpRanges: string[]
+│   ├── VirtualNetwork: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Reference: *genruntime.ResourceReference
+│   │   └── Subnet: *string
+│   └── ZoneRedundant: *bool
+└── Status: Object (29 properties)
+    ├── ClusterSettings: Object (3 properties)[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Value: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CustomDnsSuffixConfiguration: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── DedicatedHostCount: *int
+    ├── DnsSuffix: *string
+    ├── FrontEndScaleFactor: *int
+    ├── HasLinuxWorkers: *bool
+    ├── Id: *string
+    ├── InternalLoadBalancingMode: *string
+    ├── IpsslAddressCount: *int
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MaximumNumberOfMachines: *int
+    ├── MultiRoleCount: *int
+    ├── MultiSize: *string
+    ├── Name: *string
+    ├── NetworkingConfiguration: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Status: *string
+    ├── Suspended: *bool
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    ├── UpgradeAvailability: *string
+    ├── UpgradePreference: *string
+    ├── UserWhitelistedIpRanges: string[]
+    ├── VirtualNetwork: *Object (5 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Subnet: *string
+    │   └── Type: *string
+    └── ZoneRedundant: *bool
+
+HostingEnvironmentsConfigurationCustomDnsSuffix: Resource
+├── Owner: web/v20260715.HostingEnvironment
+├── Spec: Object (8 properties)
+│   ├── CertificateUrl: *string
+│   ├── DnsSuffix: *string
+│   ├── KeyVaultReferenceIdentity: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── CertificateUrl: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DnsSuffix: *string
+    ├── Id: *string
+    ├── KeyVaultReferenceIdentity: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningDetails: *string
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+HostingEnvironmentsConfigurationNetworking: Resource
+├── Owner: web/v20260715.HostingEnvironment
+├── Spec: Object (9 properties)
+│   ├── AllowNewPrivateEndpointConnections: *bool
+│   ├── FtpEnabled: *bool
+│   ├── InboundIpAddressOverride: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── RemoteDebugEnabled: *bool
+└── Status: Object (15 properties)
+    ├── AllowNewPrivateEndpointConnections: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── ExternalInboundIpAddresses: string[]
+    ├── FtpEnabled: *bool
+    ├── Id: *string
+    ├── InboundIpAddressOverride: *string
+    ├── InternalInboundIpAddresses: string[]
+    ├── Kind: *string
+    ├── LinuxOutboundIpAddresses: string[]
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── RemoteDebugEnabled: *bool
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── WindowsOutboundIpAddresses: string[]
+
+HostingEnvironmentsPrivateEndpointConnection: Resource
+├── Owner: web/v20260715.HostingEnvironment
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Status: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Status: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+KubeEnvironment: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (16 properties)
+│   ├── AksResourceReference: *genruntime.ResourceReference
+│   ├── AppLogsConfiguration: *Object (3 properties)
+│   │   ├── Destination: *string
+│   │   ├── LogAnalyticsConfiguration: *Object (3 properties)
+│   │   │   ├── CustomerId: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SharedKey: *genruntime.SecretReference
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── ArcConfiguration: *Object (8 properties)
+│   │   ├── ArtifactStorageAccessMode: *string
+│   │   ├── ArtifactStorageClassName: *string
+│   │   ├── ArtifactStorageMountPath: *string
+│   │   ├── ArtifactStorageNodeName: *string
+│   │   ├── ArtifactsStorageType: *string
+│   │   ├── FrontEndServiceConfiguration: *Object (2 properties)
+│   │   │   ├── Kind: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── KubeConfig: *genruntime.SecretReference
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── AzureName: string
+│   ├── ContainerAppsConfiguration: *Object (7 properties)
+│   │   ├── AppSubnetResourceReference: *genruntime.ResourceReference
+│   │   ├── ControlPlaneSubnetResourceReference: *genruntime.ResourceReference
+│   │   ├── DaprAIInstrumentationKey: *string
+│   │   ├── DockerBridgeCidr: *string
+│   │   ├── PlatformReservedCidr: *string
+│   │   ├── PlatformReservedDnsIP: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── EnvironmentType: *string
+│   ├── ExtendedLocation: *Object (2 properties)
+│   │   ├── Name: *string
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── InternalLoadBalancerEnabled: *bool
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── StaticIp: *string
+│   └── Tags: map[string]string
+└── Status: Object (20 properties)
+    ├── AksResourceID: *string
+    ├── AppLogsConfiguration: *Object (3 properties)
+    │   ├── Destination: *string
+    │   ├── LogAnalyticsConfiguration: *Object (2 properties)
+    │   │   ├── CustomerId: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── ArcConfiguration: *Object (7 properties)
+    │   ├── ArtifactStorageAccessMode: *string
+    │   ├── ArtifactStorageClassName: *string
+    │   ├── ArtifactStorageMountPath: *string
+    │   ├── ArtifactStorageNodeName: *string
+    │   ├── ArtifactsStorageType: *string
+    │   ├── FrontEndServiceConfiguration: *Object (2 properties)
+    │   │   ├── Kind: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── ContainerAppsConfiguration: *Object (7 properties)
+    │   ├── AppSubnetResourceId: *string
+    │   ├── ControlPlaneSubnetResourceId: *string
+    │   ├── DaprAIInstrumentationKey: *string
+    │   ├── DockerBridgeCidr: *string
+    │   ├── PlatformReservedCidr: *string
+    │   ├── PlatformReservedDnsIP: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── DefaultDomain: *string
+    ├── DeploymentErrors: *string
+    ├── EnvironmentType: *string
+    ├── ExtendedLocation: *Object (3 properties)
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── Id: *string
+    ├── InternalLoadBalancerEnabled: *bool
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── StaticIp: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    └── Type: *string
+
 SitesBasicPublishingCredentialsPolicyFtp: Resource
 ├── Owner: web/v20260715.Site
 ├── Spec: Object (6 properties)
@@ -125,6 +457,70 @@ SitesBasicPublishingCredentialsPolicyScm: Resource
     │   ├── LastModifiedByType: *string
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
+
+SitesCertificate: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (16 properties)
+│   ├── AzureName: string
+│   ├── CanonicalName: *string
+│   ├── DomainValidationMethod: *string
+│   ├── HostNames: string[]
+│   ├── KeyVaultReference: *genruntime.ResourceReference
+│   ├── KeyVaultSecretName: *string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PfxBlob: *genruntime.SecretReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ServerFarmReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (29 properties)
+    ├── CanonicalName: *string
+    ├── CerBlob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DomainValidationMethod: *string
+    ├── ExpirationDate: *string
+    ├── FriendlyName: *string
+    ├── HostNames: string[]
+    ├── HostingEnvironmentProfile: *Object (4 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── Id: *string
+    ├── IssueDate: *string
+    ├── Issuer: *string
+    ├── KeyVaultId: *string
+    ├── KeyVaultSecretName: *string
+    ├── KeyVaultSecretStatus: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Password: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── PublicKeyHash: *string
+    ├── SelfLink: *string
+    ├── ServerFarmId: *string
+    ├── SiteName: *string
+    ├── SubjectName: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Thumbprint: *string
+    ├── Type: *string
+    └── Valid: *bool
 
 SitesConfigAuthSettingsV2: Resource
 ├── Owner: web/v20260715.Site
@@ -614,6 +1010,90 @@ SitesConfigSlotConfigNames: Resource
     │   └── PropertyBag: genruntime.PropertyBag
     └── Type: *string
 
+SitesDomainOwnershipIdentifier: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Id: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertiesId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesFunction: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (19 properties)
+│   ├── AzureName: string
+│   ├── Config: *v1.JSON
+│   ├── Config_Href: *string
+│   ├── Files: map[string]string
+│   ├── Function_App_Id: *string
+│   ├── Href: *string
+│   ├── Invoke_Url_Template: *string
+│   ├── IsDisabled: *bool
+│   ├── Kind: *string
+│   ├── Language: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Script_Href: *string
+│   ├── Script_Root_Path_Href: *string
+│   ├── Secrets_File_Href: *string
+│   ├── Test_Data: *string
+│   └── Test_Data_Href: *string
+└── Status: Object (20 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Config: *v1.JSON
+    ├── Config_Href: *string
+    ├── Files: map[string]string
+    ├── Function_App_Id: *string
+    ├── Href: *string
+    ├── Id: *string
+    ├── Invoke_Url_Template: *string
+    ├── IsDisabled: *bool
+    ├── Kind: *string
+    ├── Language: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Script_Href: *string
+    ├── Script_Root_Path_Href: *string
+    ├── Secrets_File_Href: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Test_Data: *string
+    ├── Test_Data_Href: *string
+    └── Type: *string
+
 SitesHostNameBinding: Resource
 ├── Owner: web/v20260715.Site
 ├── Spec: Object (14 properties)
@@ -658,6 +1138,279 @@ SitesHostNameBinding: Resource
     ├── Thumbprint: *string
     ├── Type: *string
     └── VirtualIP: *string
+
+SitesHybridConnection: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── BiztalkUri: *string
+│   ├── EntityConnectionString: *genruntime.SecretReference
+│   ├── EntityName: *string
+│   ├── Hostname: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Port: *int
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ResourceConnectionString: *genruntime.SecretReference
+│   └── ResourceType: *string
+└── Status: Object (12 properties)
+    ├── BiztalkUri: *string
+    ├── Conditions: conditions.Condition[]
+    ├── EntityName: *string
+    ├── Hostname: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Port: *int
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ResourceType: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesPremieraddon: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── MarketplaceOffer: *string
+│   ├── MarketplacePublisher: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Product: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Sku: *string
+│   ├── Tags: map[string]string
+│   └── Vendor: *string
+└── Status: Object (14 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MarketplaceOffer: *string
+    ├── MarketplacePublisher: *string
+    ├── Name: *string
+    ├── Product: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Sku: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── Vendor: *string
+
+SitesPrivateAccess: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (7 properties)
+│   ├── Enabled: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── VirtualNetworks: Object (5 properties)[]
+│       ├── Key: *int
+│       ├── Name: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── ResourceReference: *genruntime.ResourceReference
+│       └── Subnets: Object (3 properties)[]
+│           ├── Key: *int
+│           ├── Name: *string
+│           └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Enabled: *bool
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── VirtualNetworks: Object (5 properties)[]
+        ├── Key: *int
+        ├── Name: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── ResourceId: *string
+        └── Subnets: Object (3 properties)[]
+            ├── Key: *int
+            ├── Name: *string
+            └── PropertyBag: genruntime.PropertyBag
+
+SitesPrivateEndpointConnection: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Status: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Status: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesPublicCertificate: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Blob: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── PublicCertificateLocation: *string
+└── Status: Object (10 properties)
+    ├── Blob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── PublicCertificateLocation: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Thumbprint: *string
+    └── Type: *string
+
+SitesSitecontainer: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (17 properties)
+│   ├── AuthType: *string
+│   ├── AzureName: string
+│   ├── EnvironmentVariables: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Value: *string
+│   ├── Image: *string
+│   ├── InheritAppSettingsAndConnectionStrings: *bool
+│   ├── IsMain: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PasswordSecret: *genruntime.SecretReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── StartUpCommand: *string
+│   ├── TargetPort: *string
+│   ├── UserManagedIdentityClientId: *string
+│   ├── UserName: *string
+│   └── VolumeMounts: Object (5 properties)[]
+│       ├── ContainerMountPath: *string
+│       ├── Data: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── ReadOnly: *bool
+│       └── VolumeSubPath: *string
+└── Status: Object (19 properties)
+    ├── AuthType: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedTime: *string
+    ├── EnvironmentVariables: Object (3 properties)[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Value: *string
+    ├── Id: *string
+    ├── Image: *string
+    ├── InheritAppSettingsAndConnectionStrings: *bool
+    ├── IsMain: *bool
+    ├── Kind: *string
+    ├── LastModifiedTime: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── StartUpCommand: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TargetPort: *string
+    ├── Type: *string
+    ├── UserManagedIdentityClientId: *string
+    ├── UserName: *string
+    └── VolumeMounts: Object (5 properties)[]
+        ├── ContainerMountPath: *string
+        ├── Data: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── ReadOnly: *bool
+        └── VolumeSubPath: *string
 
 SitesSlot: Resource
 ├── Owner: web/v20260715.Site
@@ -1412,6 +2165,667 @@ SitesSlot: Resource
     ├── VirtualNetworkSubnetId: *string
     └── WorkloadProfileName: *string
 
+SitesSlotsBasicPublishingCredentialsPolicyFtp: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (6 properties)
+│   ├── Allow: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Allow: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsBasicPublishingCredentialsPolicyScm: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (6 properties)
+│   ├── Allow: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Allow: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsCertificate: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (16 properties)
+│   ├── AzureName: string
+│   ├── CanonicalName: *string
+│   ├── DomainValidationMethod: *string
+│   ├── HostNames: string[]
+│   ├── KeyVaultReference: *genruntime.ResourceReference
+│   ├── KeyVaultSecretName: *string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PfxBlob: *genruntime.SecretReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ServerFarmReference: *genruntime.ResourceReference
+│   └── Tags: map[string]string
+└── Status: Object (29 properties)
+    ├── CanonicalName: *string
+    ├── CerBlob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DomainValidationMethod: *string
+    ├── ExpirationDate: *string
+    ├── FriendlyName: *string
+    ├── HostNames: string[]
+    ├── HostingEnvironmentProfile: *Object (4 properties)
+    │   ├── Id: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── Id: *string
+    ├── IssueDate: *string
+    ├── Issuer: *string
+    ├── KeyVaultId: *string
+    ├── KeyVaultSecretName: *string
+    ├── KeyVaultSecretStatus: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── Password: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── PublicKeyHash: *string
+    ├── SelfLink: *string
+    ├── ServerFarmId: *string
+    ├── SiteName: *string
+    ├── SubjectName: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Thumbprint: *string
+    ├── Type: *string
+    └── Valid: *bool
+
+SitesSlotsConfigAuthSettingsV2: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (10 properties)
+│   ├── GlobalValidation: *Object (5 properties)
+│   │   ├── ExcludedPaths: string[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RedirectToProvider: *string
+│   │   ├── RequireAuthentication: *bool
+│   │   └── UnauthenticatedClientAction: *string
+│   ├── HttpSettings: *Object (4 properties)
+│   │   ├── ForwardProxy: *Object (4 properties)
+│   │   │   ├── Convention: *string
+│   │   │   ├── CustomHostHeaderName: *string
+│   │   │   ├── CustomProtoHeaderName: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── RequireHttps: *bool
+│   │   └── Routes: *Object (2 properties)
+│   │       ├── ApiPrefix: *string
+│   │       └── PropertyBag: genruntime.PropertyBag
+│   ├── IdentityProviders: *Object (10 properties)
+│   │   ├── Apple: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (3 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       ├── ClientSecretSettingName: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── AzureActiveDirectory: *Object (6 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── IsAutoProvisioned: *bool
+│   │   │   ├── Login: *Object (3 properties)
+│   │   │   │   ├── DisableWWWAuthenticate: *bool
+│   │   │   │   ├── LoginParameters: string[]
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Registration: *Object (7 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   ├── ClientSecretCertificateIssuer: *string
+│   │   │   │   ├── ClientSecretCertificateSubjectAlternativeName: *string
+│   │   │   │   ├── ClientSecretCertificateThumbprint: *string
+│   │   │   │   ├── ClientSecretSettingName: *string
+│   │   │   │   ├── OpenIdIssuer: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Validation: *Object (4 properties)
+│   │   │       ├── AllowedAudiences: string[]
+│   │   │       ├── DefaultAuthorizationPolicy: *Object (3 properties)
+│   │   │       │   ├── AllowedApplications: string[]
+│   │   │       │   ├── AllowedPrincipals: *Object (3 properties)
+│   │   │       │   │   ├── Groups: string[]
+│   │   │       │   │   ├── Identities: string[]
+│   │   │       │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── JwtClaimChecks: *Object (3 properties)
+│   │   │       │   ├── AllowedClientApplications: string[]
+│   │   │       │   ├── AllowedGroups: string[]
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── AzureStaticWebApps: *Object (3 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (2 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── CustomOpenIdConnectProviders: map[string]Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (3 properties)
+│   │   │   │   ├── NameClaimType: *string
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (4 properties)
+│   │   │       ├── ClientCredential: *Object (3 properties)
+│   │   │       │   ├── ClientSecretSettingName: *string
+│   │   │       │   ├── Method: *string
+│   │   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │   │       ├── ClientId: *string
+│   │   │       ├── OpenIdConnectConfiguration: *Object (6 properties)
+│   │   │       │   ├── AuthorizationEndpoint: *string
+│   │   │       │   ├── CertificationUri: *string
+│   │   │       │   ├── Issuer: *string
+│   │   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │       │   ├── TokenEndpoint: *string
+│   │   │       │   └── WellKnownOpenIdConfiguration: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Facebook: *Object (5 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── GraphApiVersion: *string
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (3 properties)
+│   │   │       ├── AppId: *string
+│   │   │       ├── AppSecretSettingName: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── GitHub: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Registration: *Object (3 properties)
+│   │   │       ├── ClientId: *string
+│   │   │       ├── ClientSecretSettingName: *string
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── Google: *Object (5 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Registration: *Object (3 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   ├── ClientSecretSettingName: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Validation: *Object (2 properties)
+│   │   │       ├── AllowedAudiences: string[]
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── LegacyMicrosoftAccount: *Object (5 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── Login: *Object (2 properties)
+│   │   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   │   └── Scopes: string[]
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Registration: *Object (3 properties)
+│   │   │   │   ├── ClientId: *string
+│   │   │   │   ├── ClientSecretSettingName: *string
+│   │   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   │   └── Validation: *Object (2 properties)
+│   │   │       ├── AllowedAudiences: string[]
+│   │   │       └── PropertyBag: genruntime.PropertyBag
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Twitter: *Object (3 properties)
+│   │       ├── Enabled: *bool
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Registration: *Object (3 properties)
+│   │           ├── ConsumerKey: *string
+│   │           ├── ConsumerSecretSettingName: *string
+│   │           └── PropertyBag: genruntime.PropertyBag
+│   ├── Kind: *string
+│   ├── Login: *Object (7 properties)
+│   │   ├── AllowedExternalRedirectUrls: string[]
+│   │   ├── CookieExpiration: *Object (3 properties)
+│   │   │   ├── Convention: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── TimeToExpiration: *string
+│   │   ├── Nonce: *Object (3 properties)
+│   │   │   ├── NonceExpirationInterval: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── ValidateNonce: *bool
+│   │   ├── PreserveUrlFragmentsForLogins: *bool
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Routes: *Object (2 properties)
+│   │   │   ├── LogoutEndpoint: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── TokenStore: *Object (5 properties)
+│   │       ├── AzureBlobStorage: *Object (2 properties)
+│   │       │   ├── PropertyBag: genruntime.PropertyBag
+│   │       │   └── SasUrlSettingName: *string
+│   │       ├── Enabled: *bool
+│   │       ├── FileSystem: *Object (2 properties)
+│   │       │   ├── Directory: *string
+│   │       │   └── PropertyBag: genruntime.PropertyBag
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── TokenRefreshExtensionHours: *float64
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Platform: *Object (4 properties)
+│   │   ├── ConfigFilePath: *string
+│   │   ├── Enabled: *bool
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── RuntimeVersion: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── GlobalValidation: *Object (5 properties)
+    │   ├── ExcludedPaths: string[]
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RedirectToProvider: *string
+    │   ├── RequireAuthentication: *bool
+    │   └── UnauthenticatedClientAction: *string
+    ├── HttpSettings: *Object (4 properties)
+    │   ├── ForwardProxy: *Object (4 properties)
+    │   │   ├── Convention: *string
+    │   │   ├── CustomHostHeaderName: *string
+    │   │   ├── CustomProtoHeaderName: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RequireHttps: *bool
+    │   └── Routes: *Object (2 properties)
+    │       ├── ApiPrefix: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── IdentityProviders: *Object (10 properties)
+    │   ├── Apple: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (3 properties)
+    │   │       ├── ClientId: *string
+    │   │       ├── ClientSecretSettingName: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── AzureActiveDirectory: *Object (6 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── IsAutoProvisioned: *bool
+    │   │   ├── Login: *Object (3 properties)
+    │   │   │   ├── DisableWWWAuthenticate: *bool
+    │   │   │   ├── LoginParameters: string[]
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Registration: *Object (7 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   ├── ClientSecretCertificateIssuer: *string
+    │   │   │   ├── ClientSecretCertificateSubjectAlternativeName: *string
+    │   │   │   ├── ClientSecretCertificateThumbprint: *string
+    │   │   │   ├── ClientSecretSettingName: *string
+    │   │   │   ├── OpenIdIssuer: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Validation: *Object (4 properties)
+    │   │       ├── AllowedAudiences: string[]
+    │   │       ├── DefaultAuthorizationPolicy: *Object (3 properties)
+    │   │       │   ├── AllowedApplications: string[]
+    │   │       │   ├── AllowedPrincipals: *Object (3 properties)
+    │   │       │   │   ├── Groups: string[]
+    │   │       │   │   ├── Identities: string[]
+    │   │       │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── JwtClaimChecks: *Object (3 properties)
+    │   │       │   ├── AllowedClientApplications: string[]
+    │   │       │   ├── AllowedGroups: string[]
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── AzureStaticWebApps: *Object (3 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (2 properties)
+    │   │       ├── ClientId: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── CustomOpenIdConnectProviders: map[string]Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (3 properties)
+    │   │   │   ├── NameClaimType: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (4 properties)
+    │   │       ├── ClientCredential: *Object (3 properties)
+    │   │       │   ├── ClientSecretSettingName: *string
+    │   │       │   ├── Method: *string
+    │   │       │   └── PropertyBag: genruntime.PropertyBag
+    │   │       ├── ClientId: *string
+    │   │       ├── OpenIdConnectConfiguration: *Object (6 properties)
+    │   │       │   ├── AuthorizationEndpoint: *string
+    │   │       │   ├── CertificationUri: *string
+    │   │       │   ├── Issuer: *string
+    │   │       │   ├── PropertyBag: genruntime.PropertyBag
+    │   │       │   ├── TokenEndpoint: *string
+    │   │       │   └── WellKnownOpenIdConfiguration: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── Facebook: *Object (5 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── GraphApiVersion: *string
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (3 properties)
+    │   │       ├── AppId: *string
+    │   │       ├── AppSecretSettingName: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── GitHub: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Registration: *Object (3 properties)
+    │   │       ├── ClientId: *string
+    │   │       ├── ClientSecretSettingName: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── Google: *Object (5 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Registration: *Object (3 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   ├── ClientSecretSettingName: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Validation: *Object (2 properties)
+    │   │       ├── AllowedAudiences: string[]
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── LegacyMicrosoftAccount: *Object (5 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── Login: *Object (2 properties)
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Scopes: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Registration: *Object (3 properties)
+    │   │   │   ├── ClientId: *string
+    │   │   │   ├── ClientSecretSettingName: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   └── Validation: *Object (2 properties)
+    │   │       ├── AllowedAudiences: string[]
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Twitter: *Object (3 properties)
+    │       ├── Enabled: *bool
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── Registration: *Object (3 properties)
+    │           ├── ConsumerKey: *string
+    │           ├── ConsumerSecretSettingName: *string
+    │           └── PropertyBag: genruntime.PropertyBag
+    ├── Kind: *string
+    ├── Login: *Object (7 properties)
+    │   ├── AllowedExternalRedirectUrls: string[]
+    │   ├── CookieExpiration: *Object (3 properties)
+    │   │   ├── Convention: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── TimeToExpiration: *string
+    │   ├── Nonce: *Object (3 properties)
+    │   │   ├── NonceExpirationInterval: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── ValidateNonce: *bool
+    │   ├── PreserveUrlFragmentsForLogins: *bool
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Routes: *Object (2 properties)
+    │   │   ├── LogoutEndpoint: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── TokenStore: *Object (5 properties)
+    │       ├── AzureBlobStorage: *Object (2 properties)
+    │       │   ├── PropertyBag: genruntime.PropertyBag
+    │       │   └── SasUrlSettingName: *string
+    │       ├── Enabled: *bool
+    │       ├── FileSystem: *Object (2 properties)
+    │       │   ├── Directory: *string
+    │       │   └── PropertyBag: genruntime.PropertyBag
+    │       ├── PropertyBag: genruntime.PropertyBag
+    │       └── TokenRefreshExtensionHours: *float64
+    ├── Name: *string
+    ├── Platform: *Object (4 properties)
+    │   ├── ConfigFilePath: *string
+    │   ├── Enabled: *bool
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── RuntimeVersion: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsConfigLogs: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (9 properties)
+│   ├── ApplicationLogs: *Object (4 properties)
+│   │   ├── AzureBlobStorage: *Object (4 properties)
+│   │   │   ├── Level: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   ├── AzureTableStorage: *Object (3 properties)
+│   │   │   ├── Level: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   ├── FileSystem: *Object (2 properties)
+│   │   │   ├── Level: *string
+│   │   │   └── PropertyBag: genruntime.PropertyBag
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── DetailedErrorMessages: *Object (2 properties)
+│   │   ├── Enabled: *bool
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── FailedRequestsTracing: *Object (2 properties)
+│   │   ├── Enabled: *bool
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── HttpLogs: *Object (3 properties)
+│   │   ├── AzureBlobStorage: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── SasUrl: *genruntime.SecretReference
+│   │   ├── FileSystem: *Object (4 properties)
+│   │   │   ├── Enabled: *bool
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RetentionInDays: *int
+│   │   │   └── RetentionInMb: *int
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── ApplicationLogs: *Object (4 properties)
+    │   ├── AzureBlobStorage: *Object (3 properties)
+    │   │   ├── Level: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── RetentionInDays: *int
+    │   ├── AzureTableStorage: *Object (2 properties)
+    │   │   ├── Level: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   ├── FileSystem: *Object (2 properties)
+    │   │   ├── Level: *string
+    │   │   └── PropertyBag: genruntime.PropertyBag
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Conditions: conditions.Condition[]
+    ├── DetailedErrorMessages: *Object (2 properties)
+    │   ├── Enabled: *bool
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── FailedRequestsTracing: *Object (2 properties)
+    │   ├── Enabled: *bool
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── HttpLogs: *Object (3 properties)
+    │   ├── AzureBlobStorage: *Object (3 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── RetentionInDays: *int
+    │   ├── FileSystem: *Object (4 properties)
+    │   │   ├── Enabled: *bool
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RetentionInDays: *int
+    │   │   └── RetentionInMb: *int
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsDomainOwnershipIdentifier: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Id: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (8 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertiesId: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsFunction: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (19 properties)
+│   ├── AzureName: string
+│   ├── Config: *v1.JSON
+│   ├── Config_Href: *string
+│   ├── Files: map[string]string
+│   ├── Function_App_Id: *string
+│   ├── Href: *string
+│   ├── Invoke_Url_Template: *string
+│   ├── IsDisabled: *bool
+│   ├── Kind: *string
+│   ├── Language: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Script_Href: *string
+│   ├── Script_Root_Path_Href: *string
+│   ├── Secrets_File_Href: *string
+│   ├── Test_Data: *string
+│   └── Test_Data_Href: *string
+└── Status: Object (20 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Config: *v1.JSON
+    ├── Config_Href: *string
+    ├── Files: map[string]string
+    ├── Function_App_Id: *string
+    ├── Href: *string
+    ├── Id: *string
+    ├── Invoke_Url_Template: *string
+    ├── IsDisabled: *bool
+    ├── Kind: *string
+    ├── Language: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Script_Href: *string
+    ├── Script_Root_Path_Href: *string
+    ├── Secrets_File_Href: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Test_Data: *string
+    ├── Test_Data_Href: *string
+    └── Type: *string
+
 SitesSlotsHostNameBinding: Resource
 ├── Owner: web/v20260715.SitesSlot
 ├── Spec: Object (14 properties)
@@ -1456,4 +2870,960 @@ SitesSlotsHostNameBinding: Resource
     ├── Thumbprint: *string
     ├── Type: *string
     └── VirtualIP: *string
+
+SitesSlotsHybridConnection: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── BiztalkUri: *string
+│   ├── EntityConnectionString: *genruntime.SecretReference
+│   ├── EntityName: *string
+│   ├── Hostname: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Port: *int
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── ResourceConnectionString: *genruntime.SecretReference
+│   └── ResourceType: *string
+└── Status: Object (12 properties)
+    ├── BiztalkUri: *string
+    ├── Conditions: conditions.Condition[]
+    ├── EntityName: *string
+    ├── Hostname: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── Port: *int
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ResourceType: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsPremieraddon: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (13 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── MarketplaceOffer: *string
+│   ├── MarketplacePublisher: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Product: *string
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Sku: *string
+│   ├── Tags: map[string]string
+│   └── Vendor: *string
+└── Status: Object (14 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Location: *string
+    ├── MarketplaceOffer: *string
+    ├── MarketplacePublisher: *string
+    ├── Name: *string
+    ├── Product: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Sku: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── Type: *string
+    └── Vendor: *string
+
+SitesSlotsPrivateAccess: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (7 properties)
+│   ├── Enabled: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── VirtualNetworks: Object (5 properties)[]
+│       ├── Key: *int
+│       ├── Name: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── ResourceReference: *genruntime.ResourceReference
+│       └── Subnets: Object (3 properties)[]
+│           ├── Key: *int
+│           ├── Name: *string
+│           └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Enabled: *bool
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── VirtualNetworks: Object (5 properties)[]
+        ├── Key: *int
+        ├── Name: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── ResourceId: *string
+        └── Subnets: Object (3 properties)[]
+            ├── Key: *int
+            ├── Name: *string
+            └── PropertyBag: genruntime.PropertyBag
+
+SitesSlotsPrivateEndpointConnection: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Status: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Status: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsPublicCertificate: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Blob: *string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── PublicCertificateLocation: *string
+└── Status: Object (10 properties)
+    ├── Blob: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── PublicCertificateLocation: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Thumbprint: *string
+    └── Type: *string
+
+SitesSlotsSitecontainer: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (17 properties)
+│   ├── AuthType: *string
+│   ├── AzureName: string
+│   ├── EnvironmentVariables: Object (3 properties)[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Value: *string
+│   ├── Image: *string
+│   ├── InheritAppSettingsAndConnectionStrings: *bool
+│   ├── IsMain: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PasswordSecret: *genruntime.SecretReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── StartUpCommand: *string
+│   ├── TargetPort: *string
+│   ├── UserManagedIdentityClientId: *string
+│   ├── UserName: *string
+│   └── VolumeMounts: Object (5 properties)[]
+│       ├── ContainerMountPath: *string
+│       ├── Data: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── ReadOnly: *bool
+│       └── VolumeSubPath: *string
+└── Status: Object (19 properties)
+    ├── AuthType: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedTime: *string
+    ├── EnvironmentVariables: Object (3 properties)[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Value: *string
+    ├── Id: *string
+    ├── Image: *string
+    ├── InheritAppSettingsAndConnectionStrings: *bool
+    ├── IsMain: *bool
+    ├── Kind: *string
+    ├── LastModifiedTime: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── StartUpCommand: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── TargetPort: *string
+    ├── Type: *string
+    ├── UserManagedIdentityClientId: *string
+    ├── UserName: *string
+    └── VolumeMounts: Object (5 properties)[]
+        ├── ContainerMountPath: *string
+        ├── Data: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        ├── ReadOnly: *bool
+        └── VolumeSubPath: *string
+
+SitesSlotsSourcecontrol: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (12 properties)
+│   ├── Branch: *string
+│   ├── DeploymentRollbackEnabled: *bool
+│   ├── GitHubActionConfiguration: *Object (5 properties)
+│   │   ├── CodeConfiguration: *Object (3 properties)
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── RuntimeStack: *string
+│   │   │   └── RuntimeVersion: *string
+│   │   ├── ContainerConfiguration: *Object (5 properties)
+│   │   │   ├── ImageName: *string
+│   │   │   ├── Password: *genruntime.SecretReference
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── ServerUrl: *string
+│   │   │   └── Username: *string
+│   │   ├── GenerateWorkflowFile: *bool
+│   │   ├── IsLinux: *bool
+│   │   └── PropertyBag: genruntime.PropertyBag
+│   ├── IsGitHubAction: *bool
+│   ├── IsManualIntegration: *bool
+│   ├── IsMercurial: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── RepoUrl: *string
+└── Status: Object (14 properties)
+    ├── Branch: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DeploymentRollbackEnabled: *bool
+    ├── GitHubActionConfiguration: *Object (5 properties)
+    │   ├── CodeConfiguration: *Object (3 properties)
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── RuntimeStack: *string
+    │   │   └── RuntimeVersion: *string
+    │   ├── ContainerConfiguration: *Object (4 properties)
+    │   │   ├── ImageName: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ServerUrl: *string
+    │   │   └── Username: *string
+    │   ├── GenerateWorkflowFile: *bool
+    │   ├── IsLinux: *bool
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Id: *string
+    ├── IsGitHubAction: *bool
+    ├── IsManualIntegration: *bool
+    ├── IsMercurial: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── RepoUrl: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+SitesSlotsVirtualNetworkConnection: Resource
+├── Owner: web/v20260715.SitesSlot
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── CertBlob: *string
+│   ├── DnsServers: *string
+│   ├── IsSwift: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── VnetResourceReference: *genruntime.ResourceReference
+└── Status: Object (14 properties)
+    ├── CertBlob: *string
+    ├── CertThumbprint: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DnsServers: *string
+    ├── Id: *string
+    ├── IsSwift: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ResyncRequired: *bool
+    ├── Routes: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── VnetResourceId: *string
+
+SitesSlotsVirtualNetworkConnectionsGateway: Resource
+├── Owner: web/v20260715.SitesSlotsVirtualNetworkConnection
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── VnetName: *string
+│   └── VpnPackageUri: *string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    ├── VnetName: *string
+    └── VpnPackageUri: *string
+
+SitesVirtualNetworkConnection: Resource
+├── Owner: web/v20260715.Site
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── CertBlob: *string
+│   ├── DnsServers: *string
+│   ├── IsSwift: *bool
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── VnetResourceReference: *genruntime.ResourceReference
+└── Status: Object (14 properties)
+    ├── CertBlob: *string
+    ├── CertThumbprint: *string
+    ├── Conditions: conditions.Condition[]
+    ├── DnsServers: *string
+    ├── Id: *string
+    ├── IsSwift: *bool
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ResyncRequired: *bool
+    ├── Routes: Object (2 properties)[]
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── VnetResourceId: *string
+
+SitesVirtualNetworkConnectionsGateway: Resource
+├── Owner: web/v20260715.SitesVirtualNetworkConnection
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── VnetName: *string
+│   └── VpnPackageUri: *string
+└── Status: Object (9 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    ├── VnetName: *string
+    └── VpnPackageUri: *string
+
+StaticSite: Resource
+├── Owner: resources/vv20191001.ResourceGroup
+├── Spec: Object (20 properties)
+│   ├── AllowConfigFileUpdates: *bool
+│   ├── AzureName: string
+│   ├── Branch: *string
+│   ├── BuildProperties: *Object (9 properties)
+│   │   ├── ApiBuildCommand: *string
+│   │   ├── ApiLocation: *string
+│   │   ├── AppArtifactLocation: *string
+│   │   ├── AppBuildCommand: *string
+│   │   ├── AppLocation: *string
+│   │   ├── GithubActionSecretNameOverride: *string
+│   │   ├── OutputLocation: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SkipGithubActionWorkflowGeneration: *bool
+│   ├── EnterpriseGradeCdnStatus: *string
+│   ├── Identity: *Object (3 properties)
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Type: *string
+│   │   └── UserAssignedIdentities: Object (2 properties)[]
+│   │       ├── PropertyBag: genruntime.PropertyBag
+│   │       └── Reference: genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── Location: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Provider: *string
+│   ├── PublicNetworkAccess: *string
+│   ├── RepositoryToken: *genruntime.SecretReference
+│   ├── RepositoryUrl: *string
+│   ├── Sku: *Object (9 properties)
+│   │   ├── Capabilities: Object (4 properties)[]
+│   │   │   ├── Name: *string
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   ├── Reason: *string
+│   │   │   └── Value: *string
+│   │   ├── Capacity: *int
+│   │   ├── Family: *string
+│   │   ├── Locations: string[]
+│   │   ├── Name: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   ├── Size: *string
+│   │   ├── SkuCapacity: *Object (6 properties)
+│   │   │   ├── Default: *int
+│   │   │   ├── ElasticMaximum: *int
+│   │   │   ├── Maximum: *int
+│   │   │   ├── Minimum: *int
+│   │   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   │   └── ScaleType: *string
+│   │   └── Tier: *string
+│   ├── StagingEnvironmentPolicy: *string
+│   ├── Tags: map[string]string
+│   └── TemplateProperties: *Object (6 properties)
+│       ├── Description: *string
+│       ├── IsPrivate: *bool
+│       ├── Owner: *string
+│       ├── PropertyBag: genruntime.PropertyBag
+│       ├── RepositoryName: *string
+│       └── TemplateRepositoryUrl: *string
+└── Status: Object (28 properties)
+    ├── AllowConfigFileUpdates: *bool
+    ├── Branch: *string
+    ├── BuildProperties: *Object (9 properties)
+    │   ├── ApiBuildCommand: *string
+    │   ├── ApiLocation: *string
+    │   ├── AppArtifactLocation: *string
+    │   ├── AppBuildCommand: *string
+    │   ├── AppLocation: *string
+    │   ├── GithubActionSecretNameOverride: *string
+    │   ├── OutputLocation: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── SkipGithubActionWorkflowGeneration: *bool
+    ├── Conditions: conditions.Condition[]
+    ├── ContentDistributionEndpoint: *string
+    ├── CustomDomains: string[]
+    ├── DatabaseConnections: Object (6 properties)[]
+    │   ├── ConfigurationFiles: Object (4 properties)[]
+    │   │   ├── Contents: *string
+    │   │   ├── FileName: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Type: *string
+    │   ├── ConnectionIdentity: *string
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Region: *string
+    │   └── ResourceId: *string
+    ├── DefaultHostname: *string
+    ├── EnterpriseGradeCdnStatus: *string
+    ├── Id: *string
+    ├── Identity: *Object (5 properties)
+    │   ├── PrincipalId: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── TenantId: *string
+    │   ├── Type: *string
+    │   └── UserAssignedIdentities: map[string]Object (3 properties)
+    │       ├── ClientId: *string
+    │       ├── PrincipalId: *string
+    │       └── PropertyBag: genruntime.PropertyBag
+    ├── KeyVaultReferenceIdentity: *string
+    ├── Kind: *string
+    ├── LinkedBackends: Object (5 properties)[]
+    │   ├── BackendResourceId: *string
+    │   ├── CreatedOn: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── ProvisioningState: *string
+    │   └── Region: *string
+    ├── Location: *string
+    ├── Name: *string
+    ├── PrivateEndpointConnections: Object (13 properties)[]
+    │   ├── Error: *Object (9 properties)
+    │   │   ├── Code: *string
+    │   │   ├── Details: Object (7 properties)[]
+    │   │   │   ├── Code: *string
+    │   │   │   ├── ExtendedCode: *string
+    │   │   │   ├── Message: *string
+    │   │   │   ├── MessageTemplate: *string
+    │   │   │   ├── Parameters: string[]
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Target: *string
+    │   │   ├── ExtendedCode: *string
+    │   │   ├── InnerErrors: Object (7 properties)[]
+    │   │   │   ├── Code: *string
+    │   │   │   ├── ExtendedCode: *string
+    │   │   │   ├── Message: *string
+    │   │   │   ├── MessageTemplate: *string
+    │   │   │   ├── Parameters: string[]
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Target: *string
+    │   │   ├── Message: *string
+    │   │   ├── MessageTemplate: *string
+    │   │   ├── Parameters: string[]
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── Target: *string
+    │   ├── Id: *string
+    │   ├── Identity: *Object (5 properties)
+    │   │   ├── PrincipalId: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── TenantId: *string
+    │   │   ├── Type: *string
+    │   │   └── UserAssignedIdentities: map[string]Object (3 properties)
+    │   │       ├── ClientId: *string
+    │   │       ├── PrincipalId: *string
+    │   │       └── PropertyBag: genruntime.PropertyBag
+    │   ├── Location: *string
+    │   ├── Name: *string
+    │   ├── Plan: *Object (6 properties)
+    │   │   ├── Name: *string
+    │   │   ├── Product: *string
+    │   │   ├── PromotionCode: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Publisher: *string
+    │   │   └── Version: *string
+    │   ├── Properties: *Object (9 properties)
+    │   │   ├── Id: *string
+    │   │   ├── IpAddresses: string[]
+    │   │   ├── Kind: *string
+    │   │   ├── Name: *string
+    │   │   ├── PrivateEndpoint: *Object (2 properties)
+    │   │   │   ├── Id: *string
+    │   │   │   └── PropertyBag: genruntime.PropertyBag
+    │   │   ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+    │   │   │   ├── ActionsRequired: *string
+    │   │   │   ├── Description: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── Status: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── ProvisioningState: *string
+    │   │   └── Type: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Sku: *Object (9 properties)
+    │   │   ├── Capabilities: Object (4 properties)[]
+    │   │   │   ├── Name: *string
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   ├── Reason: *string
+    │   │   │   └── Value: *string
+    │   │   ├── Capacity: *int
+    │   │   ├── Family: *string
+    │   │   ├── Locations: string[]
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Size: *string
+    │   │   ├── SkuCapacity: *Object (6 properties)
+    │   │   │   ├── Default: *int
+    │   │   │   ├── ElasticMaximum: *int
+    │   │   │   ├── Maximum: *int
+    │   │   │   ├── Minimum: *int
+    │   │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   │   └── ScaleType: *string
+    │   │   └── Tier: *string
+    │   ├── Status: *string
+    │   ├── Tags: map[string]string
+    │   ├── Type: *string
+    │   └── Zones: string[]
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Provider: *string
+    ├── PublicNetworkAccess: *string
+    ├── RepositoryUrl: *string
+    ├── Sku: *Object (9 properties)
+    │   ├── Capabilities: Object (4 properties)[]
+    │   │   ├── Name: *string
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   ├── Reason: *string
+    │   │   └── Value: *string
+    │   ├── Capacity: *int
+    │   ├── Family: *string
+    │   ├── Locations: string[]
+    │   ├── Name: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── Size: *string
+    │   ├── SkuCapacity: *Object (6 properties)
+    │   │   ├── Default: *int
+    │   │   ├── ElasticMaximum: *int
+    │   │   ├── Maximum: *int
+    │   │   ├── Minimum: *int
+    │   │   ├── PropertyBag: genruntime.PropertyBag
+    │   │   └── ScaleType: *string
+    │   └── Tier: *string
+    ├── StagingEnvironmentPolicy: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Tags: map[string]string
+    ├── TemplateProperties: *Object (6 properties)
+    │   ├── Description: *string
+    │   ├── IsPrivate: *bool
+    │   ├── Owner: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   ├── RepositoryName: *string
+    │   └── TemplateRepositoryUrl: *string
+    ├── Type: *string
+    └── UserProvidedFunctionApps: Object (8 properties)[]
+        ├── CreatedOn: *string
+        ├── FunctionAppRegion: *string
+        ├── FunctionAppResourceId: *string
+        ├── Id: *string
+        ├── Kind: *string
+        ├── Name: *string
+        ├── PropertyBag: genruntime.PropertyBag
+        └── Type: *string
+
+StaticSitesBasicAuth: Resource
+├── Owner: web/v20260715.StaticSite
+├── Spec: Object (9 properties)
+│   ├── ApplicableEnvironmentsMode: *string
+│   ├── Environments: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── Password: *genruntime.SecretReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── SecretUrl: *string
+└── Status: Object (11 properties)
+    ├── ApplicableEnvironmentsMode: *string
+    ├── Conditions: conditions.Condition[]
+    ├── Environments: string[]
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SecretState: *string
+    ├── SecretUrl: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+StaticSitesCustomDomain: Resource
+├── Owner: web/v20260715.StaticSite
+├── Spec: Object (7 properties)
+│   ├── AzureName: string
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── ValidationMethod: *string
+└── Status: Object (12 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedOn: *string
+    ├── DomainName: *string
+    ├── ErrorMessage: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Status: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── Type: *string
+    └── ValidationToken: *string
+
+StaticSitesDatabaseConnection: Resource
+├── Owner: web/v20260715.StaticSite
+├── Spec: Object (10 properties)
+│   ├── AzureName: string
+│   ├── ConnectionIdentity: *string
+│   ├── ConnectionString: *genruntime.SecretReference
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   ├── Region: *string
+│   └── ResourceReference: *genruntime.ResourceReference
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── ConfigurationFiles: Object (4 properties)[]
+    │   ├── Contents: *string
+    │   ├── FileName: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Type: *string
+    ├── ConnectionIdentity: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── Region: *string
+    ├── ResourceId: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+StaticSitesLinkedBackend: Resource
+├── Owner: web/v20260715.StaticSite
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── BackendResourceReference: *genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PropertyBag: genruntime.PropertyBag
+│   └── Region: *string
+└── Status: Object (11 properties)
+    ├── BackendResourceId: *string
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedOn: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── Region: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+StaticSitesPrivateEndpointConnection: Resource
+├── Owner: web/v20260715.StaticSite
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── IpAddresses: string[]
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+│   │   ├── ActionsRequired: *string
+│   │   ├── Description: *string
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── Status: *string
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (11 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── Id: *string
+    ├── IpAddresses: string[]
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PrivateEndpoint: *Object (2 properties)
+    │   ├── Id: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    ├── PrivateLinkServiceConnectionState: *Object (4 properties)
+    │   ├── ActionsRequired: *string
+    │   ├── Description: *string
+    │   ├── PropertyBag: genruntime.PropertyBag
+    │   └── Status: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── ProvisioningState: *string
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
+
+StaticSitesUserProvidedFunctionApp: Resource
+├── Owner: web/v20260715.StaticSite
+├── Spec: Object (8 properties)
+│   ├── AzureName: string
+│   ├── FunctionAppRegion: *string
+│   ├── FunctionAppResourceReference: *genruntime.ResourceReference
+│   ├── Kind: *string
+│   ├── OperatorSpec: *Object (3 properties)
+│   │   ├── ConfigMapExpressions: *core.DestinationExpression[]
+│   │   ├── PropertyBag: genruntime.PropertyBag
+│   │   └── SecretExpressions: *core.DestinationExpression[]
+│   ├── OriginalVersion: string
+│   ├── Owner: *genruntime.KnownResourceReference
+│   └── PropertyBag: genruntime.PropertyBag
+└── Status: Object (10 properties)
+    ├── Conditions: conditions.Condition[]
+    ├── CreatedOn: *string
+    ├── FunctionAppRegion: *string
+    ├── FunctionAppResourceId: *string
+    ├── Id: *string
+    ├── Kind: *string
+    ├── Name: *string
+    ├── PropertyBag: genruntime.PropertyBag
+    ├── SystemData: *Object (7 properties)
+    │   ├── CreatedAt: *string
+    │   ├── CreatedBy: *string
+    │   ├── CreatedByType: *string
+    │   ├── LastModifiedAt: *string
+    │   ├── LastModifiedBy: *string
+    │   ├── LastModifiedByType: *string
+    │   └── PropertyBag: genruntime.PropertyBag
+    └── Type: *string
 

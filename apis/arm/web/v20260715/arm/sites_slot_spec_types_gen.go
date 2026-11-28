@@ -45,12 +45,6 @@ func (slot *SitesSlot_Spec) GetType() string {
 	return "Microsoft.Web/sites/slots"
 }
 
-// Extended Location.
-type ExtendedLocation struct {
-	// Name: Name of extended location.
-	Name *string `json:"name,omitempty"`
-}
-
 // Managed service identity.
 type ManagedServiceIdentity struct {
 	// Type: Type of managed service identity.
@@ -999,15 +993,6 @@ type McpSettings struct {
 	// Servers: Array of MCP server configurations. This array is replaced in its entirety on update; individual servers cannot
 	// be patched independently. An empty array signals that MCP should be disabled/deleted.
 	Servers []McpServerConfig `json:"servers,omitempty"`
-}
-
-// Name value pair.
-type NameValuePair struct {
-	// Name: Pair name.
-	Name *string `json:"name,omitempty"`
-
-	// Value: Pair value.
-	Value *string `json:"value,omitempty"`
 }
 
 // Push settings for the App.

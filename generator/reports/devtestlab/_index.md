@@ -8,7 +8,24 @@ no_list: true
 
 ### Released
 
-| Resource | ARM Version | CRD Version | Supported From | Sample |
-|----------|-------------|-------------|----------------|--------|
-| Schedule | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| Resource                        | ARM Version | CRD Version | Supported From | Sample |
+|---------------------------------|-------------|-------------|----------------|--------|
+| Lab                             | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsArtifactSource              | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsCost                        | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsCustomImage                 | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsFormula                     | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsNotificationChannel         | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsSchedule                    | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsServiceRunner               | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsUser                        | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsUsersDisk                   | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsUsersEnvironment            | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsUsersSecret                 | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsUsersServiceFabric          | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsUsersServicefabricsSchedule | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsVirtualMachine              | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsVirtualNetwork              | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| LabsVirtualmachinesSchedule     | 2018-09-15  | v20180915   | v0.1.0         | -      |
+| Schedule                        | 2018-09-15  | v20180915   | v0.1.0         | -      |
 

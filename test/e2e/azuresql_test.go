@@ -187,28 +187,23 @@ func TestAzureSQLEntraUser(t *testing.T) {
 	eventually(t, timeout, "a name Entra does not know is refused", notReadyWith(unknown, "could not be found"))
 
 	// Roles follow the spec.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(byName), byName); err != nil {
-		t.Fatal(err)
-	}
-	byName.Spec.Roles = []string{"db_owner"}
-	if err := k8s.Update(ctx, byName); err != nil {
+	if err := change(t, byName, func(byName *sqlv1.User) {
+		byName.Spec.Roles = []string{"db_owner"}
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectSQLUser(t, "app-identity", &azuresql.User{Name: "app-identity", External: true, Roles: []string{"db_owner"}})
 
 	// The alias cannot change, nor the kind of user.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(byAlias), byAlias); err != nil {
-		t.Fatal(err)
-	}
-	changed := byAlias.DeepCopy()
-	changed.Spec.AADUser.Alias = "other"
-	if err := k8s.Update(ctx, changed); err == nil || !strings.Contains(err.Error(), "aadUser.alias is immutable") {
+	if err := change(t, byAlias.DeepCopy(), func(changed *sqlv1.User) {
+		changed.Spec.AADUser.Alias = "other"
+	}); err == nil || !strings.Contains(err.Error(), "aadUser.alias is immutable") {
 		t.Fatalf("changing the alias: %v", err)
 	}
-	changed = byAlias.DeepCopy()
-	changed.Spec.AADUser = nil
-	changed.Spec.LocalUser = &sqlv1.LocalUserSpec{ServerAdminUsername: sqlAdmin, ServerAdminPassword: &genruntime.SecretReference{Name: "admin", Key: "password"}, Password: &genruntime.SecretReference{Name: "app-user", Key: "password"}}
-	if err := k8s.Update(ctx, changed); err == nil || !strings.Contains(err.Error(), "cannot change from aadUser to localUser") {
+	if err := change(t, byAlias.DeepCopy(), func(changed *sqlv1.User) {
+		changed.Spec.AADUser = nil
+		changed.Spec.LocalUser = &sqlv1.LocalUserSpec{ServerAdminUsername: sqlAdmin, ServerAdminPassword: &genruntime.SecretReference{Name: "admin", Key: "password"}, Password: &genruntime.SecretReference{Name: "app-user", Key: "password"}}
+	}); err == nil || !strings.Contains(err.Error(), "cannot change from aadUser to localUser") {
 		t.Fatalf("changing to a local user: %v", err)
 	}
 

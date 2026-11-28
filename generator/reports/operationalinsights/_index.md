@@ -19,5 +19,6 @@ no_list: true
 | WorkspacesLinkedStorageAccount | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesSavedSearch          | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesStorageInsightConfig | 2025-07-01  | v20250701   | v0.1.0         | -      |
+| WorkspacesSummaryLog           | 2025-07-01  | v20250701   | v0.1.0         | -      |
 | WorkspacesTable                | 2025-07-01  | v20250701   | v0.1.0         | -      |
 

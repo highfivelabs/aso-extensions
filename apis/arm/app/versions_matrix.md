@@ -4,13 +4,35 @@
 | AccessMode                                                                       |           |                  | v20260101 |                  |           |
 | AccessMode_STATUS                                                                |           |                  | v20260101 |                  |           |
 | Action                                                                           |           |                  |           |                  | v20260701 |
+| ActionConfiguration                                                              |           |                  |           |                  | v20260701 |
+| ActionConfiguration_STATUS                                                       |           |                  |           |                  | v20260701 |
 | Action_STATUS                                                                    |           |                  |           |                  | v20260701 |
 | Affinity                                                                         |           |                  |           |                  | v20260701 |
 | Affinity_STATUS                                                                  |           |                  |           |                  | v20260701 |
+| Agent                                                                            |           |                  |           |                  | v20260701 |
+| AgentAccessLevel                                                                 |           |                  |           |                  | v20260701 |
+| AgentAccessLevel_STATUS                                                          |           |                  |           |                  | v20260701 |
+| AgentConnectorProperties                                                         |           |                  |           |                  | v20260701 |
+| AgentConnectorProperties_STATUS                                                  |           |                  |           |                  | v20260701 |
+| AgentIdentity                                                                    |           |                  |           |                  | v20260701 |
+| AgentIdentity_STATUS                                                             |           |                  |           |                  | v20260701 |
+| AgentMode                                                                        |           |                  |           |                  | v20260701 |
+| AgentMode_STATUS                                                                 |           |                  |           |                  | v20260701 |
+| AgentPowerState_STATUS                                                           |           |                  |           |                  | v20260701 |
+| AgentProperties                                                                  |           |                  |           |                  | v20260701 |
+| AgentProperties_STATUS                                                           |           |                  |           |                  | v20260701 |
+| AgentProvisioningState_STATUS                                                    |           |                  |           |                  | v20260701 |
+| Agent_STATUS                                                                     |           |                  |           |                  | v20260701 |
+| Agent_Spec                                                                       |           |                  |           |                  | v20260701 |
+| AgentsConnector                                                                  |           |                  |           |                  | v20260701 |
+| AgentsConnector_STATUS                                                           |           |                  |           |                  | v20260701 |
+| AgentsConnector_Spec                                                             |           |                  |           |                  | v20260701 |
 | AppInsightsConfiguration                                                         |           | v20251002preview |           |                  |           |
 | AppInsightsConfiguration_STATUS                                                  |           | v20251002preview |           |                  |           |
 | AppLogsConfiguration                                                             |           | v20251002preview |           |                  |           |
 | AppLogsConfiguration_STATUS                                                      |           | v20251002preview |           |                  |           |
+| ApplicationInsightsConfiguration                                                 |           |                  |           |                  | v20260701 |
+| ApplicationInsightsConfiguration_STATUS                                          |           |                  |           |                  | v20260701 |
 | AzureCredentials                                                                 |           |                  | v20260101 |                  |           |
 | AzureCredentials_STATUS                                                          |           |                  | v20260101 |                  |           |
 | AzureFileProperties                                                              |           |                  | v20260101 |                  |           |
@@ -46,6 +68,7 @@
 | ConnectedEnvironmentsStorage                                                     |           |                  | v20260101 |                  |           |
 | ConnectedEnvironmentsStorage_STATUS                                              |           |                  | v20260101 |                  |           |
 | ConnectedEnvironmentsStorage_Spec                                                |           |                  | v20260101 |                  |           |
+| ConnectorProvisioningState_STATUS                                                |           |                  |           |                  | v20260701 |
 | Container                                                                        |           |                  |           |                  | v20260701 |
 | ContainerApp                                                                     |           |                  |           |                  | v20260701 |
 | ContainerAppNetworkingConfiguration                                              |           |                  |           |                  | v20260701 |
@@ -64,6 +87,9 @@
 | ContainerAppRunningStatus_STATUS                                                 |           |                  |           |                  | v20260701 |
 | ContainerApp_STATUS                                                              |           |                  |           |                  | v20260701 |
 | ContainerApp_Spec                                                                |           |                  |           |                  | v20260701 |
+| ContainerAppsPrivateEndpointConnection                                           |           |                  |           |                  | v20260701 |
+| ContainerAppsPrivateEndpointConnection_STATUS                                    |           |                  |           |                  | v20260701 |
+| ContainerAppsPrivateEndpointConnection_Spec                                      |           |                  |           |                  | v20260701 |
 | ContainerAppsSourceControl                                                       |           |                  | v20260101 |                  |           |
 | ContainerAppsSourceControl_STATUS                                                |           |                  | v20260101 |                  |           |
 | ContainerAppsSourceControl_Spec                                                  |           |                  | v20260101 |                  |           |
@@ -104,6 +130,8 @@
 | Dapr_STATUS                                                                      |           |                  |           |                  | v20260701 |
 | DataDogConfiguration                                                             |           | v20251002preview |           |                  |           |
 | DataDogConfiguration_STATUS                                                      |           | v20251002preview |           |                  |           |
+| DefaultModel                                                                     |           |                  |           |                  | v20260701 |
+| DefaultModel_STATUS                                                              |           |                  |           |                  | v20260701 |
 | DestinationsConfiguration                                                        |           | v20251002preview |           |                  |           |
 | DestinationsConfiguration_STATUS                                                 |           | v20251002preview |           |                  |           |
 | DiskEncryptionConfiguration                                                      |           | v20251002preview |           |                  |           |
@@ -154,6 +182,8 @@
 | IdentitySettings_Lifecycle                                                       |           |                  |           |                  | v20260701 |
 | IdentitySettings_Lifecycle_STATUS                                                |           |                  |           |                  | v20260701 |
 | IdentitySettings_STATUS                                                          |           |                  |           |                  | v20260701 |
+| IncidentManagementConfiguration                                                  |           |                  |           |                  | v20260701 |
+| IncidentManagementConfiguration_STATUS                                           |           |                  |           |                  | v20260701 |
 | Ingress                                                                          |           |                  |           |                  | v20260701 |
 | IngressClientCertificateMode                                                     |           |                  |           |                  | v20260701 |
 | IngressClientCertificateMode_STATUS                                              |           |                  |           |                  | v20260701 |
@@ -181,12 +211,16 @@
 | KedaConfiguration_STATUS                                                         |           | v20251002preview |           |                  |           |
 | Kind                                                                             |           |                  |           |                  | v20260701 |
 | Kind_STATUS                                                                      |           |                  |           |                  | v20260701 |
+| KnowledgeGraphConfiguration                                                      |           |                  |           |                  | v20260701 |
+| KnowledgeGraphConfiguration_STATUS                                               |           |                  |           |                  | v20260701 |
 | LifecycleConfiguration                                                           |           |                  | v20260101 |                  |           |
 | LifecycleConfiguration_STATUS                                                    |           |                  | v20260101 |                  |           |
 | LifecycleType                                                                    |           |                  | v20260101 |                  |           |
 | LifecycleType_STATUS                                                             |           |                  | v20260101 |                  |           |
 | LogAnalyticsConfiguration                                                        |           | v20251002preview |           |                  |           |
 | LogAnalyticsConfiguration_STATUS                                                 |           | v20251002preview |           |                  |           |
+| LogConfiguration                                                                 |           |                  |           |                  | v20260701 |
+| LogConfiguration_STATUS                                                          |           |                  |           |                  | v20260701 |
 | LogLevel                                                                         |           |                  |           |                  | v20260701 |
 | LogLevel_STATUS                                                                  |           |                  |           |                  | v20260701 |
 | LogsConfiguration                                                                |           | v20251002preview |           |                  |           |
@@ -268,15 +302,15 @@
 | OtlpConfiguration_STATUS                                                         |           | v20251002preview |           |                  |           |
 | PoolManagementType                                                               |           |                  | v20260101 |                  |           |
 | PoolManagementType_STATUS                                                        |           |                  | v20260101 |                  |           |
-| PrivateEndpointConnectionProperties                                              |           |                  | v20260101 |                  |           |
-| PrivateEndpointConnectionProperties_STATUS                                       |           |                  | v20260101 |                  |           |
-| PrivateEndpointConnectionProvisioningState_STATUS                                |           |                  | v20260101 |                  |           |
+| PrivateEndpointConnectionProperties                                              |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpointConnectionProperties_STATUS                                       |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpointConnectionProvisioningState_STATUS                                |           |                  | v20260101 |                  | v20260701 |
 | PrivateEndpointConnection_STATUS                                                 |           | v20251002preview |           |                  |           |
-| PrivateEndpointServiceConnectionStatus                                           |           |                  | v20260101 |                  |           |
-| PrivateEndpointServiceConnectionStatus_STATUS                                    |           |                  | v20260101 |                  |           |
-| PrivateEndpoint_STATUS                                                           |           |                  | v20260101 |                  |           |
-| PrivateLinkServiceConnectionState                                                |           |                  | v20260101 |                  |           |
-| PrivateLinkServiceConnectionState_STATUS                                         |           |                  | v20260101 |                  |           |
+| PrivateEndpointServiceConnectionStatus                                           |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpointServiceConnectionStatus_STATUS                                    |           |                  | v20260101 |                  | v20260701 |
+| PrivateEndpoint_STATUS                                                           |           |                  | v20260101 |                  | v20260701 |
+| PrivateLinkServiceConnectionState                                                |           |                  | v20260101 |                  | v20260701 |
+| PrivateLinkServiceConnectionState_STATUS                                         |           |                  | v20260101 |                  | v20260701 |
 | PublicNetworkAccess                                                              |           | v20251002preview |           |                  |           |
 | PublicNetworkAccess_STATUS                                                       |           | v20251002preview |           |                  |           |
 | QueueScaleRule                                                                   |           |                  |           |                  | v20260701 |
@@ -289,6 +323,30 @@
 | RuntimeJava                                                                      |           |                  |           |                  | v20260701 |
 | RuntimeJava_STATUS                                                               |           |                  |           |                  | v20260701 |
 | Runtime_STATUS                                                                   |           |                  |           |                  | v20260701 |
+| SandboxAllowedHost                                                               |           |                  |           |                  | v20260701 |
+| SandboxAllowedHost_STATUS                                                        |           |                  |           |                  | v20260701 |
+| SandboxConfiguration                                                             |           |                  |           |                  | v20260701 |
+| SandboxConfiguration_STATUS                                                      |           |                  |           |                  | v20260701 |
+| SandboxEgressConfiguration                                                       |           |                  |           |                  | v20260701 |
+| SandboxEgressConfiguration_STATUS                                                |           |                  |           |                  | v20260701 |
+| SandboxEgressMode                                                                |           |                  |           |                  | v20260701 |
+| SandboxEgressMode_STATUS                                                         |           |                  |           |                  | v20260701 |
+| SandboxGroup                                                                     |           |                  |           |                  | v20260701 |
+| SandboxGroupProperties                                                           |           |                  |           |                  | v20260701 |
+| SandboxGroupProperties_STATUS                                                    |           |                  |           |                  | v20260701 |
+| SandboxGroupProvisioningState_STATUS                                             |           |                  |           |                  | v20260701 |
+| SandboxGroup_STATUS                                                              |           |                  |           |                  | v20260701 |
+| SandboxGroup_Spec                                                                |           |                  |           |                  | v20260701 |
+| SandboxGroupsVnetConnection                                                      |           |                  |           |                  | v20260701 |
+| SandboxGroupsVnetConnection_STATUS                                               |           |                  |           |                  | v20260701 |
+| SandboxGroupsVnetConnection_Spec                                                 |           |                  |           |                  | v20260701 |
+| SandboxHttpProxyConfiguration                                                    |           |                  |           |                  | v20260701 |
+| SandboxHttpProxyConfiguration_STATUS                                             |           |                  |           |                  | v20260701 |
+| SandboxNoProxyEntry                                                              |           |                  |           |                  | v20260701 |
+| SandboxPackageManager                                                            |           |                  |           |                  | v20260701 |
+| SandboxPackageManager_STATUS                                                     |           |                  |           |                  | v20260701 |
+| SandboxPackageSpec                                                               |           |                  |           |                  | v20260701 |
+| SandboxPackageSpec_STATUS                                                        |           |                  |           |                  | v20260701 |
 | Scale                                                                            |           |                  |           |                  | v20260701 |
 | ScaleConfiguration                                                               |           |                  | v20260101 |                  |           |
 | ScaleConfiguration_STATUS                                                        |           |                  | v20260101 |                  |           |
@@ -354,6 +412,8 @@
 | SpringCloudGatewayComponent_ComponentType                                        |           |                  |           | v20260302preview |           |
 | SpringCloudGatewayComponent_ComponentType_STATUS                                 |           |                  |           | v20260302preview |           |
 | SpringCloudGatewayComponent_STATUS                                               |           |                  |           | v20260302preview |           |
+| SreagentVnetConfiguration                                                        |           |                  |           |                  | v20260701 |
+| SreagentVnetConfiguration_STATUS                                                 |           |                  |           |                  | v20260701 |
 | StorageType                                                                      |           |                  |           |                  | v20260701 |
 | StorageType_STATUS                                                               |           |                  |           |                  | v20260701 |
 | SystemData_CreatedByType_STATUS                                                  | v20250101 | v20251002preview | v20260101 | v20260302preview | v20260701 |
@@ -369,10 +429,15 @@
 | TrafficWeight_STATUS                                                             |           |                  |           |                  | v20260701 |
 | Type                                                                             |           |                  |           |                  | v20260701 |
 | Type_STATUS                                                                      |           |                  |           |                  | v20260701 |
+| UpgradeChannel                                                                   |           |                  |           |                  | v20260701 |
+| UpgradeChannel_STATUS                                                            |           |                  |           |                  | v20260701 |
 | UserAssignedIdentityDetails                                                      |           | v20251002preview | v20260101 |                  | v20260701 |
 | UserAssignedIdentity_STATUS                                                      |           | v20251002preview | v20260101 |                  | v20260701 |
 | VnetConfiguration                                                                |           | v20251002preview |           |                  |           |
 | VnetConfiguration_STATUS                                                         |           | v20251002preview |           |                  |           |
+| VnetConnectionProperties                                                         |           |                  |           |                  | v20260701 |
+| VnetConnectionProperties_STATUS                                                  |           |                  |           |                  | v20260701 |
+| VnetConnectionProvisioningState_STATUS                                           |           |                  |           |                  | v20260701 |
 | Volume                                                                           |           |                  |           |                  | v20260701 |
 | VolumeMount                                                                      |           |                  |           |                  | v20260701 |
 | VolumeMount_STATUS                                                               |           |                  |           |                  | v20260701 |

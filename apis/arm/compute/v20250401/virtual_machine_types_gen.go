@@ -252,11 +252,6 @@ type VirtualMachineList struct {
 	Items           []VirtualMachine `json:"items"`
 }
 
-// +kubebuilder:validation:Enum={"2025-04-01"}
-type APIVersion string
-
-const APIVersion_Value = APIVersion("2025-04-01")
-
 type VirtualMachine_Spec struct {
 	// AdditionalCapabilities: Specifies additional capabilities enabled or disabled on the virtual machine.
 	AdditionalCapabilities *AdditionalCapabilities `json:"additionalCapabilities,omitempty"`
@@ -8885,166 +8880,6 @@ func (resource *SubResource_STATUS) AssignProperties_To_SubResource_STATUS(desti
 	return nil
 }
 
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	// CreatedAt: The timestamp of resource creation (UTC).
-	CreatedAt *string `json:"createdAt,omitempty"`
-
-	// CreatedBy: The identity that created the resource.
-	CreatedBy *string `json:"createdBy,omitempty"`
-
-	// CreatedByType: The type of identity that created the resource.
-	CreatedByType *SystemData_CreatedByType_STATUS `json:"createdByType,omitempty"`
-
-	// LastModifiedAt: The timestamp of resource last modification (UTC)
-	LastModifiedAt *string `json:"lastModifiedAt,omitempty"`
-
-	// LastModifiedBy: The identity that last modified the resource.
-	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
-
-	// LastModifiedByType: The type of identity that last modified the resource.
-	LastModifiedByType *SystemData_LastModifiedByType_STATUS `json:"lastModifiedByType,omitempty"`
-}
-
-var _ genruntime.FromARMConverter = &SystemData_STATUS{}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (data *SystemData_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.SystemData_STATUS{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (data *SystemData_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.SystemData_STATUS)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.SystemData_STATUS, got %T", armInput)
-	}
-
-	// Set property "CreatedAt":
-	if typedInput.CreatedAt != nil {
-		createdAt := *typedInput.CreatedAt
-		data.CreatedAt = &createdAt
-	}
-
-	// Set property "CreatedBy":
-	if typedInput.CreatedBy != nil {
-		createdBy := *typedInput.CreatedBy
-		data.CreatedBy = &createdBy
-	}
-
-	// Set property "CreatedByType":
-	if typedInput.CreatedByType != nil {
-		var temp string
-		temp = string(*typedInput.CreatedByType)
-		createdByType := SystemData_CreatedByType_STATUS(temp)
-		data.CreatedByType = &createdByType
-	}
-
-	// Set property "LastModifiedAt":
-	if typedInput.LastModifiedAt != nil {
-		lastModifiedAt := *typedInput.LastModifiedAt
-		data.LastModifiedAt = &lastModifiedAt
-	}
-
-	// Set property "LastModifiedBy":
-	if typedInput.LastModifiedBy != nil {
-		lastModifiedBy := *typedInput.LastModifiedBy
-		data.LastModifiedBy = &lastModifiedBy
-	}
-
-	// Set property "LastModifiedByType":
-	if typedInput.LastModifiedByType != nil {
-		var temp string
-		temp = string(*typedInput.LastModifiedByType)
-		lastModifiedByType := SystemData_LastModifiedByType_STATUS(temp)
-		data.LastModifiedByType = &lastModifiedByType
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_SystemData_STATUS populates our SystemData_STATUS from the provided source SystemData_STATUS
-func (data *SystemData_STATUS) AssignProperties_From_SystemData_STATUS(source *storage.SystemData_STATUS) error {
-
-	// CreatedAt
-	data.CreatedAt = genruntime.ClonePointerToString(source.CreatedAt)
-
-	// CreatedBy
-	data.CreatedBy = genruntime.ClonePointerToString(source.CreatedBy)
-
-	// CreatedByType
-	if source.CreatedByType != nil {
-		createdByType := *source.CreatedByType
-		createdByTypeTemp := genruntime.ToEnum(createdByType, systemData_CreatedByType_STATUS_Values)
-		data.CreatedByType = &createdByTypeTemp
-	} else {
-		data.CreatedByType = nil
-	}
-
-	// LastModifiedAt
-	data.LastModifiedAt = genruntime.ClonePointerToString(source.LastModifiedAt)
-
-	// LastModifiedBy
-	data.LastModifiedBy = genruntime.ClonePointerToString(source.LastModifiedBy)
-
-	// LastModifiedByType
-	if source.LastModifiedByType != nil {
-		lastModifiedByType := *source.LastModifiedByType
-		lastModifiedByTypeTemp := genruntime.ToEnum(lastModifiedByType, systemData_LastModifiedByType_STATUS_Values)
-		data.LastModifiedByType = &lastModifiedByTypeTemp
-	} else {
-		data.LastModifiedByType = nil
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_SystemData_STATUS populates the provided destination SystemData_STATUS from our SystemData_STATUS
-func (data *SystemData_STATUS) AssignProperties_To_SystemData_STATUS(destination *storage.SystemData_STATUS) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// CreatedAt
-	destination.CreatedAt = genruntime.ClonePointerToString(data.CreatedAt)
-
-	// CreatedBy
-	destination.CreatedBy = genruntime.ClonePointerToString(data.CreatedBy)
-
-	// CreatedByType
-	if data.CreatedByType != nil {
-		createdByType := string(*data.CreatedByType)
-		destination.CreatedByType = &createdByType
-	} else {
-		destination.CreatedByType = nil
-	}
-
-	// LastModifiedAt
-	destination.LastModifiedAt = genruntime.ClonePointerToString(data.LastModifiedAt)
-
-	// LastModifiedBy
-	destination.LastModifiedBy = genruntime.ClonePointerToString(data.LastModifiedBy)
-
-	// LastModifiedByType
-	if data.LastModifiedByType != nil {
-		lastModifiedByType := string(*data.LastModifiedByType)
-		destination.LastModifiedByType = &lastModifiedByType
-	} else {
-		destination.LastModifiedByType = nil
-	}
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
 // Specifies the eviction policy for the Azure Spot VM/VMSS
 // +kubebuilder:validation:Enum={"Deallocate","Delete"}
 type VirtualMachineEvictionPolicyTypes string
@@ -13124,138 +12959,6 @@ func (reference *ImageReference_STATUS) AssignProperties_To_ImageReference_STATU
 	return nil
 }
 
-// Instance view status.
-type InstanceViewStatus_STATUS struct {
-	// Code: The status code.
-	Code *string `json:"code,omitempty"`
-
-	// DisplayStatus: The short localizable label for the status.
-	DisplayStatus *string `json:"displayStatus,omitempty"`
-
-	// Level: The level code.
-	Level *StatusLevelTypes_STATUS `json:"level,omitempty"`
-
-	// Message: The detailed status message, including for alerts and error messages.
-	Message *string `json:"message,omitempty"`
-
-	// Time: The time of the status.
-	Time *string `json:"time,omitempty"`
-}
-
-var _ genruntime.FromARMConverter = &InstanceViewStatus_STATUS{}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (status *InstanceViewStatus_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.InstanceViewStatus_STATUS{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (status *InstanceViewStatus_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.InstanceViewStatus_STATUS)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.InstanceViewStatus_STATUS, got %T", armInput)
-	}
-
-	// Set property "Code":
-	if typedInput.Code != nil {
-		code := *typedInput.Code
-		status.Code = &code
-	}
-
-	// Set property "DisplayStatus":
-	if typedInput.DisplayStatus != nil {
-		displayStatus := *typedInput.DisplayStatus
-		status.DisplayStatus = &displayStatus
-	}
-
-	// Set property "Level":
-	if typedInput.Level != nil {
-		var temp string
-		temp = string(*typedInput.Level)
-		level := StatusLevelTypes_STATUS(temp)
-		status.Level = &level
-	}
-
-	// Set property "Message":
-	if typedInput.Message != nil {
-		message := *typedInput.Message
-		status.Message = &message
-	}
-
-	// Set property "Time":
-	if typedInput.Time != nil {
-		time := *typedInput.Time
-		status.Time = &time
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_InstanceViewStatus_STATUS populates our InstanceViewStatus_STATUS from the provided source InstanceViewStatus_STATUS
-func (status *InstanceViewStatus_STATUS) AssignProperties_From_InstanceViewStatus_STATUS(source *storage.InstanceViewStatus_STATUS) error {
-
-	// Code
-	status.Code = genruntime.ClonePointerToString(source.Code)
-
-	// DisplayStatus
-	status.DisplayStatus = genruntime.ClonePointerToString(source.DisplayStatus)
-
-	// Level
-	if source.Level != nil {
-		level := *source.Level
-		levelTemp := genruntime.ToEnum(level, statusLevelTypes_STATUS_Values)
-		status.Level = &levelTemp
-	} else {
-		status.Level = nil
-	}
-
-	// Message
-	status.Message = genruntime.ClonePointerToString(source.Message)
-
-	// Time
-	status.Time = genruntime.ClonePointerToString(source.Time)
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_InstanceViewStatus_STATUS populates the provided destination InstanceViewStatus_STATUS from our InstanceViewStatus_STATUS
-func (status *InstanceViewStatus_STATUS) AssignProperties_To_InstanceViewStatus_STATUS(destination *storage.InstanceViewStatus_STATUS) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// Code
-	destination.Code = genruntime.ClonePointerToString(status.Code)
-
-	// DisplayStatus
-	destination.DisplayStatus = genruntime.ClonePointerToString(status.DisplayStatus)
-
-	// Level
-	if status.Level != nil {
-		level := string(*status.Level)
-		destination.Level = &level
-	} else {
-		destination.Level = nil
-	}
-
-	// Message
-	destination.Message = genruntime.ClonePointerToString(status.Message)
-
-	// Time
-	destination.Time = genruntime.ClonePointerToString(status.Time)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
 // Describes a reference to Key Vault Secret
 type KeyVaultSecretReference_STATUS struct {
 	// SecretUrl: The URL referencing a secret in a Key Vault.
@@ -16403,40 +16106,6 @@ const (
 var securityTypes_STATUS_Values = map[string]SecurityTypes_STATUS{
 	"confidentialvm": SecurityTypes_STATUS_ConfidentialVM,
 	"trustedlaunch":  SecurityTypes_STATUS_TrustedLaunch,
-}
-
-type SystemData_CreatedByType_STATUS string
-
-const (
-	SystemData_CreatedByType_STATUS_Application     = SystemData_CreatedByType_STATUS("Application")
-	SystemData_CreatedByType_STATUS_Key             = SystemData_CreatedByType_STATUS("Key")
-	SystemData_CreatedByType_STATUS_ManagedIdentity = SystemData_CreatedByType_STATUS("ManagedIdentity")
-	SystemData_CreatedByType_STATUS_User            = SystemData_CreatedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_CreatedByType_STATUS
-var systemData_CreatedByType_STATUS_Values = map[string]SystemData_CreatedByType_STATUS{
-	"application":     SystemData_CreatedByType_STATUS_Application,
-	"key":             SystemData_CreatedByType_STATUS_Key,
-	"managedidentity": SystemData_CreatedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_CreatedByType_STATUS_User,
-}
-
-type SystemData_LastModifiedByType_STATUS string
-
-const (
-	SystemData_LastModifiedByType_STATUS_Application     = SystemData_LastModifiedByType_STATUS("Application")
-	SystemData_LastModifiedByType_STATUS_Key             = SystemData_LastModifiedByType_STATUS("Key")
-	SystemData_LastModifiedByType_STATUS_ManagedIdentity = SystemData_LastModifiedByType_STATUS("ManagedIdentity")
-	SystemData_LastModifiedByType_STATUS_User            = SystemData_LastModifiedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_LastModifiedByType_STATUS
-var systemData_LastModifiedByType_STATUS_Values = map[string]SystemData_LastModifiedByType_STATUS{
-	"application":     SystemData_LastModifiedByType_STATUS_Application,
-	"key":             SystemData_LastModifiedByType_STATUS_Key,
-	"managedidentity": SystemData_LastModifiedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_LastModifiedByType_STATUS_User,
 }
 
 type TerminateNotificationProfile struct {
@@ -21316,164 +20985,6 @@ func (content *AdditionalUnattendContent_STATUS) AssignProperties_To_AdditionalU
 	return nil
 }
 
-// The API entity reference.
-type ApiEntityReference struct {
-	// Reference: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-	Reference *genruntime.ResourceReference `armReference:"Id" json:"reference,omitempty"`
-}
-
-var _ genruntime.ARMTransformer = &ApiEntityReference{}
-
-// ConvertToARM converts from a Kubernetes CRD object to an ARM object
-func (reference *ApiEntityReference) ConvertToARM(resolved genruntime.ConvertToARMResolvedDetails) (interface{}, error) {
-	if reference == nil {
-		return nil, nil
-	}
-	result := &arm.ApiEntityReference{}
-
-	// Set property "Id":
-	if reference.Reference != nil {
-		referenceARMID, err := resolved.ResolvedReferences.Lookup(*reference.Reference)
-		if err != nil {
-			return nil, err
-		}
-		reference1 := referenceARMID
-		result.Id = &reference1
-	}
-	return result, nil
-}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (reference *ApiEntityReference) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.ApiEntityReference{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (reference *ApiEntityReference) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	_, ok := armInput.(arm.ApiEntityReference)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ApiEntityReference, got %T", armInput)
-	}
-
-	// no assignment for property "Reference"
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_ApiEntityReference populates our ApiEntityReference from the provided source ApiEntityReference
-func (reference *ApiEntityReference) AssignProperties_From_ApiEntityReference(source *storage.ApiEntityReference) error {
-
-	// Reference
-	if source.Reference != nil {
-		referenceTemp := source.Reference.Copy()
-		reference.Reference = &referenceTemp
-	} else {
-		reference.Reference = nil
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_ApiEntityReference populates the provided destination ApiEntityReference from our ApiEntityReference
-func (reference *ApiEntityReference) AssignProperties_To_ApiEntityReference(destination *storage.ApiEntityReference) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// Reference
-	if reference.Reference != nil {
-		referenceTemp := reference.Reference.Copy()
-		destination.Reference = &referenceTemp
-	} else {
-		destination.Reference = nil
-	}
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
-// Initialize_From_ApiEntityReference_STATUS populates our ApiEntityReference from the provided source ApiEntityReference_STATUS
-func (reference *ApiEntityReference) Initialize_From_ApiEntityReference_STATUS(source *ApiEntityReference_STATUS) error {
-
-	// Reference
-	if source.Id != nil {
-		referenceTemp := genruntime.CreateResourceReferenceFromARMID(*source.Id)
-		reference.Reference = &referenceTemp
-	} else {
-		reference.Reference = nil
-	}
-
-	// No error
-	return nil
-}
-
-// The API entity reference.
-type ApiEntityReference_STATUS struct {
-	// Id: The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/...
-	Id *string `json:"id,omitempty"`
-}
-
-var _ genruntime.FromARMConverter = &ApiEntityReference_STATUS{}
-
-// NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (reference *ApiEntityReference_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
-	return &arm.ApiEntityReference_STATUS{}
-}
-
-// PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (reference *ApiEntityReference_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
-	typedInput, ok := armInput.(arm.ApiEntityReference_STATUS)
-	if !ok {
-		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ApiEntityReference_STATUS, got %T", armInput)
-	}
-
-	// Set property "Id":
-	if typedInput.Id != nil {
-		id := *typedInput.Id
-		reference.Id = &id
-	}
-
-	// No error
-	return nil
-}
-
-// AssignProperties_From_ApiEntityReference_STATUS populates our ApiEntityReference_STATUS from the provided source ApiEntityReference_STATUS
-func (reference *ApiEntityReference_STATUS) AssignProperties_From_ApiEntityReference_STATUS(source *storage.ApiEntityReference_STATUS) error {
-
-	// Id
-	reference.Id = genruntime.ClonePointerToString(source.Id)
-
-	// No error
-	return nil
-}
-
-// AssignProperties_To_ApiEntityReference_STATUS populates the provided destination ApiEntityReference_STATUS from our ApiEntityReference_STATUS
-func (reference *ApiEntityReference_STATUS) AssignProperties_To_ApiEntityReference_STATUS(destination *storage.ApiEntityReference_STATUS) error {
-	// Create a new property bag
-	propertyBag := genruntime.NewPropertyBag()
-
-	// Id
-	destination.Id = genruntime.ClonePointerToString(reference.Id)
-
-	// Update the property bag
-	if len(propertyBag) > 0 {
-		destination.PropertyBag = propertyBag
-	} else {
-		destination.PropertyBag = nil
-	}
-
-	// No error
-	return nil
-}
-
 // Describes the properties of an virtual machine instance view for available patch summary.
 type AvailablePatchSummary_STATUS struct {
 	// AssessmentActivityId: The activity ID of the operation that produced this result. It is used to correlate across CRP and
@@ -24801,22 +24312,6 @@ func (configuration *SshConfiguration_STATUS) AssignProperties_To_SshConfigurati
 	return nil
 }
 
-// The level code.
-type StatusLevelTypes_STATUS string
-
-const (
-	StatusLevelTypes_STATUS_Error   = StatusLevelTypes_STATUS("Error")
-	StatusLevelTypes_STATUS_Info    = StatusLevelTypes_STATUS("Info")
-	StatusLevelTypes_STATUS_Warning = StatusLevelTypes_STATUS("Warning")
-)
-
-// Mapping from string to StatusLevelTypes_STATUS
-var statusLevelTypes_STATUS_Values = map[string]StatusLevelTypes_STATUS{
-	"error":   StatusLevelTypes_STATUS_Error,
-	"info":    StatusLevelTypes_STATUS_Info,
-	"warning": StatusLevelTypes_STATUS_Warning,
-}
-
 // Describes a single certificate reference in a Key Vault, and where the certificate should reside on the VM.
 type VaultCertificate struct {
 	// CertificateStore: For Windows VMs, specifies the certificate store on the Virtual Machine to which the certificate
@@ -26533,12 +26028,12 @@ type ApiError_STATUS struct {
 var _ genruntime.FromARMConverter = &ApiError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *ApiError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (apiError *ApiError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.ApiError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (apiError *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.ApiError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.ApiError_STATUS, got %T", armInput)
@@ -26547,7 +26042,7 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 	// Set property "Code":
 	if typedInput.Code != nil {
 		code := *typedInput.Code
-		error.Code = &code
+		apiError.Code = &code
 	}
 
 	// Set property "Details":
@@ -26557,7 +26052,7 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 		if err != nil {
 			return err
 		}
-		error.Details = append(error.Details, item1)
+		apiError.Details = append(apiError.Details, item1)
 	}
 
 	// Set property "Innererror":
@@ -26568,19 +26063,19 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 			return err
 		}
 		innererror := innererror1
-		error.Innererror = &innererror
+		apiError.Innererror = &innererror
 	}
 
 	// Set property "Message":
 	if typedInput.Message != nil {
 		message := *typedInput.Message
-		error.Message = &message
+		apiError.Message = &message
 	}
 
 	// Set property "Target":
 	if typedInput.Target != nil {
 		target := *typedInput.Target
-		error.Target = &target
+		apiError.Target = &target
 	}
 
 	// No error
@@ -26588,10 +26083,10 @@ func (error *ApiError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerRef
 }
 
 // AssignProperties_From_ApiError_STATUS populates our ApiError_STATUS from the provided source ApiError_STATUS
-func (error *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *storage.ApiError_STATUS) error {
+func (apiError *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *storage.ApiError_STATUS) error {
 
 	// Code
-	error.Code = genruntime.ClonePointerToString(source.Code)
+	apiError.Code = genruntime.ClonePointerToString(source.Code)
 
 	// Details
 	if source.Details != nil {
@@ -26604,9 +26099,9 @@ func (error *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *stor
 			}
 			detailList[detailIndex] = detail
 		}
-		error.Details = detailList
+		apiError.Details = detailList
 	} else {
-		error.Details = nil
+		apiError.Details = nil
 	}
 
 	// Innererror
@@ -26616,33 +26111,33 @@ func (error *ApiError_STATUS) AssignProperties_From_ApiError_STATUS(source *stor
 		if err != nil {
 			return eris.Wrap(err, "calling AssignProperties_From_InnerError_STATUS() to populate field Innererror")
 		}
-		error.Innererror = &innererror
+		apiError.Innererror = &innererror
 	} else {
-		error.Innererror = nil
+		apiError.Innererror = nil
 	}
 
 	// Message
-	error.Message = genruntime.ClonePointerToString(source.Message)
+	apiError.Message = genruntime.ClonePointerToString(source.Message)
 
 	// Target
-	error.Target = genruntime.ClonePointerToString(source.Target)
+	apiError.Target = genruntime.ClonePointerToString(source.Target)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_ApiError_STATUS populates the provided destination ApiError_STATUS from our ApiError_STATUS
-func (error *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *storage.ApiError_STATUS) error {
+func (apiError *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *storage.ApiError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Code
-	destination.Code = genruntime.ClonePointerToString(error.Code)
+	destination.Code = genruntime.ClonePointerToString(apiError.Code)
 
 	// Details
-	if error.Details != nil {
-		detailList := make([]storage.ApiErrorBase_STATUS, len(error.Details))
-		for detailIndex, detailItem := range error.Details {
+	if apiError.Details != nil {
+		detailList := make([]storage.ApiErrorBase_STATUS, len(apiError.Details))
+		for detailIndex, detailItem := range apiError.Details {
 			var detail storage.ApiErrorBase_STATUS
 			err := detailItem.AssignProperties_To_ApiErrorBase_STATUS(&detail)
 			if err != nil {
@@ -26656,9 +26151,9 @@ func (error *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *s
 	}
 
 	// Innererror
-	if error.Innererror != nil {
+	if apiError.Innererror != nil {
 		var innererror storage.InnerError_STATUS
-		err := error.Innererror.AssignProperties_To_InnerError_STATUS(&innererror)
+		err := apiError.Innererror.AssignProperties_To_InnerError_STATUS(&innererror)
 		if err != nil {
 			return eris.Wrap(err, "calling AssignProperties_To_InnerError_STATUS() to populate field Innererror")
 		}
@@ -26668,10 +26163,10 @@ func (error *ApiError_STATUS) AssignProperties_To_ApiError_STATUS(destination *s
 	}
 
 	// Message
-	destination.Message = genruntime.ClonePointerToString(error.Message)
+	destination.Message = genruntime.ClonePointerToString(apiError.Message)
 
 	// Target
-	destination.Target = genruntime.ClonePointerToString(error.Target)
+	destination.Target = genruntime.ClonePointerToString(apiError.Target)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {
@@ -29708,12 +29203,12 @@ type InnerError_STATUS struct {
 var _ genruntime.FromARMConverter = &InnerError_STATUS{}
 
 // NewEmptyARMValue returns an empty ARM value suitable for deserializing into
-func (error *InnerError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
+func (innerError *InnerError_STATUS) NewEmptyARMValue() genruntime.ARMResourceStatus {
 	return &arm.InnerError_STATUS{}
 }
 
 // PopulateFromARM populates a Kubernetes CRD object from an Azure ARM object
-func (error *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
+func (innerError *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerReference, armInput interface{}) error {
 	typedInput, ok := armInput.(arm.InnerError_STATUS)
 	if !ok {
 		return fmt.Errorf("unexpected type supplied for PopulateFromARM() function. Expected arm.InnerError_STATUS, got %T", armInput)
@@ -29722,13 +29217,13 @@ func (error *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerR
 	// Set property "Errordetail":
 	if typedInput.Errordetail != nil {
 		errordetail := *typedInput.Errordetail
-		error.Errordetail = &errordetail
+		innerError.Errordetail = &errordetail
 	}
 
 	// Set property "Exceptiontype":
 	if typedInput.Exceptiontype != nil {
 		exceptiontype := *typedInput.Exceptiontype
-		error.Exceptiontype = &exceptiontype
+		innerError.Exceptiontype = &exceptiontype
 	}
 
 	// No error
@@ -29736,28 +29231,28 @@ func (error *InnerError_STATUS) PopulateFromARM(owner genruntime.ArbitraryOwnerR
 }
 
 // AssignProperties_From_InnerError_STATUS populates our InnerError_STATUS from the provided source InnerError_STATUS
-func (error *InnerError_STATUS) AssignProperties_From_InnerError_STATUS(source *storage.InnerError_STATUS) error {
+func (innerError *InnerError_STATUS) AssignProperties_From_InnerError_STATUS(source *storage.InnerError_STATUS) error {
 
 	// Errordetail
-	error.Errordetail = genruntime.ClonePointerToString(source.Errordetail)
+	innerError.Errordetail = genruntime.ClonePointerToString(source.Errordetail)
 
 	// Exceptiontype
-	error.Exceptiontype = genruntime.ClonePointerToString(source.Exceptiontype)
+	innerError.Exceptiontype = genruntime.ClonePointerToString(source.Exceptiontype)
 
 	// No error
 	return nil
 }
 
 // AssignProperties_To_InnerError_STATUS populates the provided destination InnerError_STATUS from our InnerError_STATUS
-func (error *InnerError_STATUS) AssignProperties_To_InnerError_STATUS(destination *storage.InnerError_STATUS) error {
+func (innerError *InnerError_STATUS) AssignProperties_To_InnerError_STATUS(destination *storage.InnerError_STATUS) error {
 	// Create a new property bag
 	propertyBag := genruntime.NewPropertyBag()
 
 	// Errordetail
-	destination.Errordetail = genruntime.ClonePointerToString(error.Errordetail)
+	destination.Errordetail = genruntime.ClonePointerToString(innerError.Errordetail)
 
 	// Exceptiontype
-	destination.Exceptiontype = genruntime.ClonePointerToString(error.Exceptiontype)
+	destination.Exceptiontype = genruntime.ClonePointerToString(innerError.Exceptiontype)
 
 	// Update the property bag
 	if len(propertyBag) > 0 {

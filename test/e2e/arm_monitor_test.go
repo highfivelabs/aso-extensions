@@ -72,11 +72,9 @@ func TestMonitorPrivateLinkScope(t *testing.T) {
 		return nil
 	})
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(scope), scope); err != nil {
-		t.Fatal(err)
-	}
-	scope.Spec.AccessModeSettings.QueryAccessMode = ptr(insights.AccessMode_Open)
-	if err := k8s.Update(ctx, scope); err != nil {
+	if err := change(t, scope, func(scope *insights.PrivateLinkScope) {
+		scope.Spec.AccessModeSettings.QueryAccessMode = ptr(insights.AccessMode_Open)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, scopeID, func(r map[string]any) error {
@@ -186,11 +184,9 @@ func TestNetworkSecurityPerimeter(t *testing.T) {
 	})
 
 	// Enforcing the perimeter is a change PUT again.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(assoc), assoc); err != nil {
-		t.Fatal(err)
-	}
-	assoc.Spec.AccessMode = ptr(network.AssociationAccessMode_Enforced)
-	if err := k8s.Update(ctx, assoc); err != nil {
+	if err := change(t, assoc, func(assoc *network.NetworkSecurityPerimetersResourceAssociation) {
+		assoc.Spec.AccessMode = ptr(network.AssociationAccessMode_Enforced)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, assocID, func(r map[string]any) error {

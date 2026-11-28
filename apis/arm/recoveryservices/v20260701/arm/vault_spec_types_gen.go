@@ -199,7 +199,7 @@ type UserAssignedIdentityDetails struct {
 // Customer Managed Key details of the resource.
 type VaultPropertiesEncryption struct {
 	// InfrastructureEncryption: Enabling/Disabling the Double Encryption state
-	InfrastructureEncryption *InfrastructureEncryptionState `json:"infrastructureEncryption,omitempty"`
+	InfrastructureEncryption *OpenapiInfrastructureEncryptionState `json:"infrastructureEncryption,omitempty"`
 
 	// KekIdentity: The details of the identity used for CMK
 	KekIdentity *CmkKekIdentity `json:"kekIdentity,omitempty"`
@@ -294,22 +294,22 @@ type ImmutabilitySettings struct {
 
 // Enabling/Disabling the Double Encryption state
 // +kubebuilder:validation:Enum={"Disabled","Enabled"}
-type InfrastructureEncryptionState string
+type OpenapiInfrastructureEncryptionState string
 
 const (
-	InfrastructureEncryptionState_Disabled = InfrastructureEncryptionState("Disabled")
-	InfrastructureEncryptionState_Enabled  = InfrastructureEncryptionState("Enabled")
+	OpenapiInfrastructureEncryptionState_Disabled = OpenapiInfrastructureEncryptionState("Disabled")
+	OpenapiInfrastructureEncryptionState_Enabled  = OpenapiInfrastructureEncryptionState("Enabled")
 )
 
-// Mapping from string to InfrastructureEncryptionState
-var infrastructureEncryptionState_Values = map[string]InfrastructureEncryptionState{
-	"disabled": InfrastructureEncryptionState_Disabled,
-	"enabled":  InfrastructureEncryptionState_Enabled,
+// Mapping from string to OpenapiInfrastructureEncryptionState
+var openapiInfrastructureEncryptionState_Values = map[string]OpenapiInfrastructureEncryptionState{
+	"disabled": OpenapiInfrastructureEncryptionState_Disabled,
+	"enabled":  OpenapiInfrastructureEncryptionState_Enabled,
 }
 
 // Soft delete Settings of vault
 type SoftDeleteSettings struct {
-	EnhancedSecurityState *EnhancedSecurityState `json:"enhancedSecurityState,omitempty"`
+	EnhancedSecurityState *OpenapiEnhancedSecurityState `json:"enhancedSecurityState,omitempty"`
 
 	// SoftDeleteRetentionPeriodInDays: Soft delete retention period in days
 	SoftDeleteRetentionPeriodInDays *int             `json:"softDeleteRetentionPeriodInDays,omitempty"`
@@ -397,24 +397,6 @@ var crossSubscriptionRestoreState_Values = map[string]CrossSubscriptionRestoreSt
 	"permanentlydisabled": CrossSubscriptionRestoreState_PermanentlyDisabled,
 }
 
-// +kubebuilder:validation:Enum={"AlwaysON","Disabled","Enabled","Invalid"}
-type EnhancedSecurityState string
-
-const (
-	EnhancedSecurityState_AlwaysON = EnhancedSecurityState("AlwaysON")
-	EnhancedSecurityState_Disabled = EnhancedSecurityState("Disabled")
-	EnhancedSecurityState_Enabled  = EnhancedSecurityState("Enabled")
-	EnhancedSecurityState_Invalid  = EnhancedSecurityState("Invalid")
-)
-
-// Mapping from string to EnhancedSecurityState
-var enhancedSecurityState_Values = map[string]EnhancedSecurityState{
-	"alwayson": EnhancedSecurityState_AlwaysON,
-	"disabled": EnhancedSecurityState_Disabled,
-	"enabled":  EnhancedSecurityState_Enabled,
-	"invalid":  EnhancedSecurityState_Invalid,
-}
-
 // Immutability configuration of vault.
 type ImmutabilityConfiguration struct {
 	// DurationInDays: Duration in days. Required when type is TimeBased, omitted when AsPerPolicy.
@@ -439,6 +421,24 @@ var immutabilityState_Values = map[string]ImmutabilityState{
 	"disabled": ImmutabilityState_Disabled,
 	"locked":   ImmutabilityState_Locked,
 	"unlocked": ImmutabilityState_Unlocked,
+}
+
+// +kubebuilder:validation:Enum={"AlwaysON","Disabled","Enabled","Invalid"}
+type OpenapiEnhancedSecurityState string
+
+const (
+	OpenapiEnhancedSecurityState_AlwaysON = OpenapiEnhancedSecurityState("AlwaysON")
+	OpenapiEnhancedSecurityState_Disabled = OpenapiEnhancedSecurityState("Disabled")
+	OpenapiEnhancedSecurityState_Enabled  = OpenapiEnhancedSecurityState("Enabled")
+	OpenapiEnhancedSecurityState_Invalid  = OpenapiEnhancedSecurityState("Invalid")
+)
+
+// Mapping from string to OpenapiEnhancedSecurityState
+var openapiEnhancedSecurityState_Values = map[string]OpenapiEnhancedSecurityState{
+	"alwayson": OpenapiEnhancedSecurityState_AlwaysON,
+	"disabled": OpenapiEnhancedSecurityState_Disabled,
+	"enabled":  OpenapiEnhancedSecurityState_Enabled,
+	"invalid":  OpenapiEnhancedSecurityState_Invalid,
 }
 
 // +kubebuilder:validation:Enum={"AlwaysON","Disabled","Enabled","Invalid"}

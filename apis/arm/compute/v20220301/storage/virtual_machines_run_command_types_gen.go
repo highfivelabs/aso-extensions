@@ -9,7 +9,8 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
-	storage "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage"
+	v20250401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20250401/storage"
+	v20260401s "github.com/highfivelabs/aso-extensions/apis/arm/compute/v20260401/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -277,12 +278,136 @@ type RunCommandInputParameter struct {
 	Value       *string                `json:"value,omitempty"`
 }
 
+// AssignProperties_From_RunCommandInputParameter populates our RunCommandInputParameter from the provided source RunCommandInputParameter
+func (parameter *RunCommandInputParameter) AssignProperties_From_RunCommandInputParameter(source *v20260401s.RunCommandInputParameter) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Name
+	parameter.Name = genruntime.ClonePointerToString(source.Name)
+
+	// Value
+	parameter.Value = genruntime.ClonePointerToString(source.Value)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		parameter.PropertyBag = propertyBag
+	} else {
+		parameter.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRunCommandInputParameter interface (if implemented) to customize the conversion
+	var parameterAsAny any = parameter
+	if augmentedParameter, ok := parameterAsAny.(augmentConversionForRunCommandInputParameter); ok {
+		err := augmentedParameter.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_RunCommandInputParameter populates the provided destination RunCommandInputParameter from our RunCommandInputParameter
+func (parameter *RunCommandInputParameter) AssignProperties_To_RunCommandInputParameter(destination *v20260401s.RunCommandInputParameter) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(parameter.PropertyBag)
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(parameter.Name)
+
+	// Value
+	destination.Value = genruntime.ClonePointerToString(parameter.Value)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRunCommandInputParameter interface (if implemented) to customize the conversion
+	var parameterAsAny any = parameter
+	if augmentedParameter, ok := parameterAsAny.(augmentConversionForRunCommandInputParameter); ok {
+		err := augmentedParameter.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20220301.RunCommandInputParameter_STATUS
 // Describes the properties of a run command parameter.
 type RunCommandInputParameter_STATUS struct {
 	Name        *string                `json:"name,omitempty"`
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Value       *string                `json:"value,omitempty"`
+}
+
+// AssignProperties_From_RunCommandInputParameter_STATUS populates our RunCommandInputParameter_STATUS from the provided source RunCommandInputParameter_STATUS
+func (parameter *RunCommandInputParameter_STATUS) AssignProperties_From_RunCommandInputParameter_STATUS(source *v20260401s.RunCommandInputParameter_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Name
+	parameter.Name = genruntime.ClonePointerToString(source.Name)
+
+	// Value
+	parameter.Value = genruntime.ClonePointerToString(source.Value)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		parameter.PropertyBag = propertyBag
+	} else {
+		parameter.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRunCommandInputParameter_STATUS interface (if implemented) to customize the conversion
+	var parameterAsAny any = parameter
+	if augmentedParameter, ok := parameterAsAny.(augmentConversionForRunCommandInputParameter_STATUS); ok {
+		err := augmentedParameter.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_RunCommandInputParameter_STATUS populates the provided destination RunCommandInputParameter_STATUS from our RunCommandInputParameter_STATUS
+func (parameter *RunCommandInputParameter_STATUS) AssignProperties_To_RunCommandInputParameter_STATUS(destination *v20260401s.RunCommandInputParameter_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(parameter.PropertyBag)
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(parameter.Name)
+
+	// Value
+	destination.Value = genruntime.ClonePointerToString(parameter.Value)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRunCommandInputParameter_STATUS interface (if implemented) to customize the conversion
+	var parameterAsAny any = parameter
+	if augmentedParameter, ok := parameterAsAny.(augmentConversionForRunCommandInputParameter_STATUS); ok {
+		err := augmentedParameter.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
 }
 
 // Storage version of v20220301.VirtualMachineRunCommandInstanceView_STATUS
@@ -299,6 +424,140 @@ type VirtualMachineRunCommandInstanceView_STATUS struct {
 	Statuses         []InstanceViewStatus_STATUS `json:"statuses,omitempty"`
 }
 
+// AssignProperties_From_VirtualMachineRunCommandInstanceView_STATUS populates our VirtualMachineRunCommandInstanceView_STATUS from the provided source VirtualMachineRunCommandInstanceView_STATUS
+func (view *VirtualMachineRunCommandInstanceView_STATUS) AssignProperties_From_VirtualMachineRunCommandInstanceView_STATUS(source *v20260401s.VirtualMachineRunCommandInstanceView_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// EndTime
+	view.EndTime = genruntime.ClonePointerToString(source.EndTime)
+
+	// Error
+	view.Error = genruntime.ClonePointerToString(source.Error)
+
+	// ExecutionMessage
+	view.ExecutionMessage = genruntime.ClonePointerToString(source.ExecutionMessage)
+
+	// ExecutionState
+	view.ExecutionState = genruntime.ClonePointerToString(source.ExecutionState)
+
+	// ExitCode
+	view.ExitCode = genruntime.ClonePointerToInt(source.ExitCode)
+
+	// Output
+	view.Output = genruntime.ClonePointerToString(source.Output)
+
+	// StartTime
+	view.StartTime = genruntime.ClonePointerToString(source.StartTime)
+
+	// Statuses
+	if source.Statuses != nil {
+		statusList := make([]InstanceViewStatus_STATUS, len(source.Statuses))
+		for statusIndex, statusItem := range source.Statuses {
+			var instanceViewStatusSTATUSStash v20250401s.InstanceViewStatus_STATUS
+			err := instanceViewStatusSTATUSStash.AssignProperties_From_InstanceViewStatus_STATUS(&statusItem)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_From_InstanceViewStatus_STATUS() to populate field InstanceViewStatus_STATUSStash from Statuses")
+			}
+			var status InstanceViewStatus_STATUS
+			err = status.AssignProperties_From_InstanceViewStatus_STATUS(&instanceViewStatusSTATUSStash)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_From_InstanceViewStatus_STATUS() to populate field Statuses from InstanceViewStatus_STATUSStash")
+			}
+			statusList[statusIndex] = status
+		}
+		view.Statuses = statusList
+	} else {
+		view.Statuses = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		view.PropertyBag = propertyBag
+	} else {
+		view.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForVirtualMachineRunCommandInstanceView_STATUS interface (if implemented) to customize the conversion
+	var viewAsAny any = view
+	if augmentedView, ok := viewAsAny.(augmentConversionForVirtualMachineRunCommandInstanceView_STATUS); ok {
+		err := augmentedView.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_VirtualMachineRunCommandInstanceView_STATUS populates the provided destination VirtualMachineRunCommandInstanceView_STATUS from our VirtualMachineRunCommandInstanceView_STATUS
+func (view *VirtualMachineRunCommandInstanceView_STATUS) AssignProperties_To_VirtualMachineRunCommandInstanceView_STATUS(destination *v20260401s.VirtualMachineRunCommandInstanceView_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(view.PropertyBag)
+
+	// EndTime
+	destination.EndTime = genruntime.ClonePointerToString(view.EndTime)
+
+	// Error
+	destination.Error = genruntime.ClonePointerToString(view.Error)
+
+	// ExecutionMessage
+	destination.ExecutionMessage = genruntime.ClonePointerToString(view.ExecutionMessage)
+
+	// ExecutionState
+	destination.ExecutionState = genruntime.ClonePointerToString(view.ExecutionState)
+
+	// ExitCode
+	destination.ExitCode = genruntime.ClonePointerToInt(view.ExitCode)
+
+	// Output
+	destination.Output = genruntime.ClonePointerToString(view.Output)
+
+	// StartTime
+	destination.StartTime = genruntime.ClonePointerToString(view.StartTime)
+
+	// Statuses
+	if view.Statuses != nil {
+		statusList := make([]v20260401s.InstanceViewStatus_STATUS, len(view.Statuses))
+		for statusIndex, statusItem := range view.Statuses {
+			var instanceViewStatusSTATUSStash v20250401s.InstanceViewStatus_STATUS
+			err := statusItem.AssignProperties_To_InstanceViewStatus_STATUS(&instanceViewStatusSTATUSStash)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_To_InstanceViewStatus_STATUS() to populate field InstanceViewStatus_STATUSStash from Statuses")
+			}
+			var status v20260401s.InstanceViewStatus_STATUS
+			err = instanceViewStatusSTATUSStash.AssignProperties_To_InstanceViewStatus_STATUS(&status)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_To_InstanceViewStatus_STATUS() to populate field Statuses from InstanceViewStatus_STATUSStash")
+			}
+			statusList[statusIndex] = status
+		}
+		destination.Statuses = statusList
+	} else {
+		destination.Statuses = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForVirtualMachineRunCommandInstanceView_STATUS interface (if implemented) to customize the conversion
+	var viewAsAny any = view
+	if augmentedView, ok := viewAsAny.(augmentConversionForVirtualMachineRunCommandInstanceView_STATUS); ok {
+		err := augmentedView.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20220301.VirtualMachineRunCommandScriptSource
 // Describes the script sources for run command.
 type VirtualMachineRunCommandScriptSource struct {
@@ -306,6 +565,134 @@ type VirtualMachineRunCommandScriptSource struct {
 	PropertyBag genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Script      *string                `json:"script,omitempty"`
 	ScriptUri   *string                `json:"scriptUri,omitempty"`
+}
+
+// AssignProperties_From_VirtualMachineRunCommandScriptSource populates our VirtualMachineRunCommandScriptSource from the provided source VirtualMachineRunCommandScriptSource
+func (scriptSource *VirtualMachineRunCommandScriptSource) AssignProperties_From_VirtualMachineRunCommandScriptSource(source *v20260401s.VirtualMachineRunCommandScriptSource) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// CommandId
+	scriptSource.CommandId = genruntime.ClonePointerToString(source.CommandId)
+
+	// GalleryScriptReferenceReference
+	if source.GalleryScriptReferenceReference != nil {
+		propertyBag.Add("GalleryScriptReferenceReference", *source.GalleryScriptReferenceReference)
+	} else {
+		propertyBag.Remove("GalleryScriptReferenceReference")
+	}
+
+	// Script
+	scriptSource.Script = genruntime.ClonePointerToString(source.Script)
+
+	// ScriptShell
+	if source.ScriptShell != nil {
+		propertyBag.Add("ScriptShell", *source.ScriptShell)
+	} else {
+		propertyBag.Remove("ScriptShell")
+	}
+
+	// ScriptUri
+	scriptSource.ScriptUri = genruntime.ClonePointerToString(source.ScriptUri)
+
+	// ScriptUriManagedIdentity
+	if source.ScriptUriManagedIdentity != nil {
+		propertyBag.Add("ScriptUriManagedIdentity", *source.ScriptUriManagedIdentity)
+	} else {
+		propertyBag.Remove("ScriptUriManagedIdentity")
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		scriptSource.PropertyBag = propertyBag
+	} else {
+		scriptSource.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForVirtualMachineRunCommandScriptSource interface (if implemented) to customize the conversion
+	var scriptSourceAsAny any = scriptSource
+	if augmentedScriptSource, ok := scriptSourceAsAny.(augmentConversionForVirtualMachineRunCommandScriptSource); ok {
+		err := augmentedScriptSource.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_VirtualMachineRunCommandScriptSource populates the provided destination VirtualMachineRunCommandScriptSource from our VirtualMachineRunCommandScriptSource
+func (scriptSource *VirtualMachineRunCommandScriptSource) AssignProperties_To_VirtualMachineRunCommandScriptSource(destination *v20260401s.VirtualMachineRunCommandScriptSource) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(scriptSource.PropertyBag)
+
+	// CommandId
+	destination.CommandId = genruntime.ClonePointerToString(scriptSource.CommandId)
+
+	// GalleryScriptReferenceReference
+	if propertyBag.Contains("GalleryScriptReferenceReference") {
+		var galleryScriptReferenceReference genruntime.ResourceReference
+		err := propertyBag.Pull("GalleryScriptReferenceReference", &galleryScriptReferenceReference)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'GalleryScriptReferenceReference' from propertyBag")
+		}
+
+		destination.GalleryScriptReferenceReference = &galleryScriptReferenceReference
+	} else {
+		destination.GalleryScriptReferenceReference = nil
+	}
+
+	// Script
+	destination.Script = genruntime.ClonePointerToString(scriptSource.Script)
+
+	// ScriptShell
+	if propertyBag.Contains("ScriptShell") {
+		var scriptShell string
+		err := propertyBag.Pull("ScriptShell", &scriptShell)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'ScriptShell' from propertyBag")
+		}
+
+		destination.ScriptShell = &scriptShell
+	} else {
+		destination.ScriptShell = nil
+	}
+
+	// ScriptUri
+	destination.ScriptUri = genruntime.ClonePointerToString(scriptSource.ScriptUri)
+
+	// ScriptUriManagedIdentity
+	if propertyBag.Contains("ScriptUriManagedIdentity") {
+		var scriptUriManagedIdentity v20260401s.RunCommandManagedIdentity
+		err := propertyBag.Pull("ScriptUriManagedIdentity", &scriptUriManagedIdentity)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'ScriptUriManagedIdentity' from propertyBag")
+		}
+
+		destination.ScriptUriManagedIdentity = &scriptUriManagedIdentity
+	} else {
+		destination.ScriptUriManagedIdentity = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForVirtualMachineRunCommandScriptSource interface (if implemented) to customize the conversion
+	var scriptSourceAsAny any = scriptSource
+	if augmentedScriptSource, ok := scriptSourceAsAny.(augmentConversionForVirtualMachineRunCommandScriptSource); ok {
+		err := augmentedScriptSource.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
 }
 
 // Storage version of v20220301.VirtualMachineRunCommandScriptSource_STATUS
@@ -317,12 +704,165 @@ type VirtualMachineRunCommandScriptSource_STATUS struct {
 	ScriptUri   *string                `json:"scriptUri,omitempty"`
 }
 
+// AssignProperties_From_VirtualMachineRunCommandScriptSource_STATUS populates our VirtualMachineRunCommandScriptSource_STATUS from the provided source VirtualMachineRunCommandScriptSource_STATUS
+func (scriptSource *VirtualMachineRunCommandScriptSource_STATUS) AssignProperties_From_VirtualMachineRunCommandScriptSource_STATUS(source *v20260401s.VirtualMachineRunCommandScriptSource_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// CommandId
+	scriptSource.CommandId = genruntime.ClonePointerToString(source.CommandId)
+
+	// GalleryScriptReferenceId
+	if source.GalleryScriptReferenceId != nil {
+		propertyBag.Add("GalleryScriptReferenceId", *source.GalleryScriptReferenceId)
+	} else {
+		propertyBag.Remove("GalleryScriptReferenceId")
+	}
+
+	// Script
+	scriptSource.Script = genruntime.ClonePointerToString(source.Script)
+
+	// ScriptShell
+	if source.ScriptShell != nil {
+		propertyBag.Add("ScriptShell", *source.ScriptShell)
+	} else {
+		propertyBag.Remove("ScriptShell")
+	}
+
+	// ScriptUri
+	scriptSource.ScriptUri = genruntime.ClonePointerToString(source.ScriptUri)
+
+	// ScriptUriManagedIdentity
+	if source.ScriptUriManagedIdentity != nil {
+		propertyBag.Add("ScriptUriManagedIdentity", *source.ScriptUriManagedIdentity)
+	} else {
+		propertyBag.Remove("ScriptUriManagedIdentity")
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		scriptSource.PropertyBag = propertyBag
+	} else {
+		scriptSource.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForVirtualMachineRunCommandScriptSource_STATUS interface (if implemented) to customize the conversion
+	var scriptSourceAsAny any = scriptSource
+	if augmentedScriptSource, ok := scriptSourceAsAny.(augmentConversionForVirtualMachineRunCommandScriptSource_STATUS); ok {
+		err := augmentedScriptSource.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_VirtualMachineRunCommandScriptSource_STATUS populates the provided destination VirtualMachineRunCommandScriptSource_STATUS from our VirtualMachineRunCommandScriptSource_STATUS
+func (scriptSource *VirtualMachineRunCommandScriptSource_STATUS) AssignProperties_To_VirtualMachineRunCommandScriptSource_STATUS(destination *v20260401s.VirtualMachineRunCommandScriptSource_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(scriptSource.PropertyBag)
+
+	// CommandId
+	destination.CommandId = genruntime.ClonePointerToString(scriptSource.CommandId)
+
+	// GalleryScriptReferenceId
+	if propertyBag.Contains("GalleryScriptReferenceId") {
+		var galleryScriptReferenceId string
+		err := propertyBag.Pull("GalleryScriptReferenceId", &galleryScriptReferenceId)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'GalleryScriptReferenceId' from propertyBag")
+		}
+
+		destination.GalleryScriptReferenceId = &galleryScriptReferenceId
+	} else {
+		destination.GalleryScriptReferenceId = nil
+	}
+
+	// Script
+	destination.Script = genruntime.ClonePointerToString(scriptSource.Script)
+
+	// ScriptShell
+	if propertyBag.Contains("ScriptShell") {
+		var scriptShell string
+		err := propertyBag.Pull("ScriptShell", &scriptShell)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'ScriptShell' from propertyBag")
+		}
+
+		destination.ScriptShell = &scriptShell
+	} else {
+		destination.ScriptShell = nil
+	}
+
+	// ScriptUri
+	destination.ScriptUri = genruntime.ClonePointerToString(scriptSource.ScriptUri)
+
+	// ScriptUriManagedIdentity
+	if propertyBag.Contains("ScriptUriManagedIdentity") {
+		var scriptUriManagedIdentity v20260401s.RunCommandManagedIdentity_STATUS
+		err := propertyBag.Pull("ScriptUriManagedIdentity", &scriptUriManagedIdentity)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'ScriptUriManagedIdentity' from propertyBag")
+		}
+
+		destination.ScriptUriManagedIdentity = &scriptUriManagedIdentity
+	} else {
+		destination.ScriptUriManagedIdentity = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForVirtualMachineRunCommandScriptSource_STATUS interface (if implemented) to customize the conversion
+	var scriptSourceAsAny any = scriptSource
+	if augmentedScriptSource, ok := scriptSourceAsAny.(augmentConversionForVirtualMachineRunCommandScriptSource_STATUS); ok {
+		err := augmentedScriptSource.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20220301.VirtualMachinesRunCommandOperatorSpec
 // Details for configuring operator behavior. Fields in this struct are interpreted by the operator directly rather than being passed to Azure
 type VirtualMachinesRunCommandOperatorSpec struct {
 	ConfigMapExpressions []*core.DestinationExpression `json:"configMapExpressions,omitempty"`
 	PropertyBag          genruntime.PropertyBag        `json:"$propertyBag,omitempty"`
 	SecretExpressions    []*core.DestinationExpression `json:"secretExpressions,omitempty"`
+}
+
+type augmentConversionForRunCommandInputParameter interface {
+	AssignPropertiesFrom(src *v20260401s.RunCommandInputParameter) error
+	AssignPropertiesTo(dst *v20260401s.RunCommandInputParameter) error
+}
+
+type augmentConversionForRunCommandInputParameter_STATUS interface {
+	AssignPropertiesFrom(src *v20260401s.RunCommandInputParameter_STATUS) error
+	AssignPropertiesTo(dst *v20260401s.RunCommandInputParameter_STATUS) error
+}
+
+type augmentConversionForVirtualMachineRunCommandInstanceView_STATUS interface {
+	AssignPropertiesFrom(src *v20260401s.VirtualMachineRunCommandInstanceView_STATUS) error
+	AssignPropertiesTo(dst *v20260401s.VirtualMachineRunCommandInstanceView_STATUS) error
+}
+
+type augmentConversionForVirtualMachineRunCommandScriptSource interface {
+	AssignPropertiesFrom(src *v20260401s.VirtualMachineRunCommandScriptSource) error
+	AssignPropertiesTo(dst *v20260401s.VirtualMachineRunCommandScriptSource) error
+}
+
+type augmentConversionForVirtualMachineRunCommandScriptSource_STATUS interface {
+	AssignPropertiesFrom(src *v20260401s.VirtualMachineRunCommandScriptSource_STATUS) error
+	AssignPropertiesTo(dst *v20260401s.VirtualMachineRunCommandScriptSource_STATUS) error
 }
 
 // Storage version of v20220301.InstanceViewStatus_STATUS
@@ -337,7 +877,7 @@ type InstanceViewStatus_STATUS struct {
 }
 
 // AssignProperties_From_InstanceViewStatus_STATUS populates our InstanceViewStatus_STATUS from the provided source InstanceViewStatus_STATUS
-func (status *InstanceViewStatus_STATUS) AssignProperties_From_InstanceViewStatus_STATUS(source *storage.InstanceViewStatus_STATUS) error {
+func (status *InstanceViewStatus_STATUS) AssignProperties_From_InstanceViewStatus_STATUS(source *v20250401s.InstanceViewStatus_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
 
@@ -377,7 +917,7 @@ func (status *InstanceViewStatus_STATUS) AssignProperties_From_InstanceViewStatu
 }
 
 // AssignProperties_To_InstanceViewStatus_STATUS populates the provided destination InstanceViewStatus_STATUS from our InstanceViewStatus_STATUS
-func (status *InstanceViewStatus_STATUS) AssignProperties_To_InstanceViewStatus_STATUS(destination *storage.InstanceViewStatus_STATUS) error {
+func (status *InstanceViewStatus_STATUS) AssignProperties_To_InstanceViewStatus_STATUS(destination *v20250401s.InstanceViewStatus_STATUS) error {
 	// Clone the existing property bag
 	propertyBag := genruntime.NewPropertyBag(status.PropertyBag)
 
@@ -417,8 +957,8 @@ func (status *InstanceViewStatus_STATUS) AssignProperties_To_InstanceViewStatus_
 }
 
 type augmentConversionForInstanceViewStatus_STATUS interface {
-	AssignPropertiesFrom(src *storage.InstanceViewStatus_STATUS) error
-	AssignPropertiesTo(dst *storage.InstanceViewStatus_STATUS) error
+	AssignPropertiesFrom(src *v20250401s.InstanceViewStatus_STATUS) error
+	AssignPropertiesTo(dst *v20250401s.InstanceViewStatus_STATUS) error
 }
 
 func init() {

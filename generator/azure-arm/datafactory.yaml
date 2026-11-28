@@ -1,0 +1,318 @@
+# Data Factory kinds ASO does not export (Microsoft.DataFactory, 2018-06-01,
+# the only stable version and the one of ASO's own Factory; docs/plan.md f78,
+# tier 3 row t10 of docs/coverage/foundation.md): a factory's managed
+# virtual network and its managed private endpoints, credentials (a
+# user-assigned identity or a service principal), global parameters and
+# private endpoint connections; and (f86) triggers, data flows, integration
+# runtimes and change data capture. Owned by ASO's Factory.
+#
+# Linked services and datasets (f87, f88) are one union each of every type,
+# whose one CRD is far over what an install can apply (linked services 2.67
+# MB of YAML, datasets 854 KB of JSON). Patch 0020 (generator/split-oneof.txt)
+# makes one resource per member of the union, Factories_LinkedService_<Type>
+# and Factories_Dataset_<Type>; the members exported below are the kinds
+# (docs/plan.md section 2, "One kind per member of a union"; §8 Q17, "One
+# kind per type"). The whole unions are not exported. A pipeline holds a
+# list of mixed activities, so it is not split: FactoriesPipeline keeps a
+# named list of activity types, copy sources and sinks (the transformers
+# below), nested activities are free-form JSON (docs/plan.md §8 Q18, f89).
+typeFilters:
+  - action: include
+    group: datafactory
+    version: v20180601
+    because: the only stable version, ASO's own (v20180601)
+  - action: prune
+    group: datafactory
+    because: every other version is left alone (ASO has the factory)
+typeTransformers:
+  - group: datafactory
+    name: ExpressionV2;ExpressionV2_STATUS
+    property: Operands
+    remove: true
+    because: We don't currently support directly recursive types (ASO's datafactory.yaml).
+  - group: datafactory
+    version: v20180601
+    name: SecureString_STATUS
+    property: Value
+    remove: true
+    because: >-
+      an integration runtime's secure strings (the SSIS catalog's admin
+      password, a custom setup script's SAS token, a package store's or
+      express custom setup's credentials) come from Secrets (below); a
+      status must not hold them
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties;AzureSqlDatabaseLinkedServiceTypeProperties;AzureSqlDWLinkedServiceTypeProperties;CosmosDbLinkedServiceTypeProperties
+    property: ConnectionString
+    target:
+      name: SecretBase
+      optional: true
+    because: >-
+      a connection string may hold a key or password; the spec takes a
+      string, an expression, a SecureString or a Key Vault reference, and
+      here it is a SecretBase (a SecureString whose value comes from a
+      Secret, or a Key Vault reference), so it never sits in the object in
+      plain text (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties;AzureBlobFSLinkedServiceTypeProperties
+    property: SasUri
+    target:
+      name: SecretBase
+      optional: true
+    because: a SAS URI carries its token; a SecretBase as the connection string (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobFSLinkedServiceTypeProperties
+    property: AccountKey
+    target:
+      name: SecretBase
+      optional: true
+    because: a storage account key; a SecretBase as the connection string (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: HttpLinkedServiceTypeProperties
+    property: EmbeddedCertData
+    target:
+      name: SecretBase
+      optional: true
+    because: a client certificate with its private key; a SecretBase as the connection string (patch 0021)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties_STATUS;AzureSqlDatabaseLinkedServiceTypeProperties_STATUS;AzureSqlDWLinkedServiceTypeProperties_STATUS;CosmosDbLinkedServiceTypeProperties_STATUS
+    property: ConnectionString
+    remove: true
+    because: a status must not hold a connection string (the spec's is a Secret or a Key Vault reference)
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobStorageLinkedServiceTypeProperties_STATUS;AzureBlobFSLinkedServiceTypeProperties_STATUS
+    property: SasUri
+    remove: true
+    because: a status must not hold a SAS URI
+  - group: datafactory
+    version: v20180601
+    name: AzureBlobFSLinkedServiceTypeProperties_STATUS
+    property: AccountKey
+    remove: true
+    because: a status must not hold an account key
+  - group: datafactory
+    version: v20180601
+    name: HttpLinkedServiceTypeProperties_STATUS
+    property: EmbeddedCertData
+    remove: true
+    because: a status must not hold a certificate's private key
+  - group: datafactory
+    version: v20180601
+    name: HttpLinkedServiceTypeProperties_STATUS;RestServiceLinkedServiceTypeProperties_STATUS
+    property: AuthHeaders
+    remove: true
+    because: >-
+      authorization headers may carry a token; a status must not hold them
+      (in the spec they are free-form, as Data Factory takes them: give
+      credentials in the typed secret properties instead)
+  - group: datafactory
+    version: v20180601
+    name: RestResourceDatasetTypeProperties_STATUS;HttpDatasetTypeProperties_STATUS
+    property: AdditionalHeaders
+    remove: true
+    because: >-
+      a REST or HTTP dataset's additional headers may carry a token, as a
+      linked service's authorization headers may; a status must not hold them
+  - group: datafactory
+    version: v20180601
+    name: Activity;Activity_STATUS
+    property: AzureDataExplorerCommand;AzureMLBatchExecution;AzureMLExecutePipeline;AzureMLUpdateResource;Container;Custom;DataLakeAnalyticsUSQL;ExecuteSSISPackage;ExecuteWranglingDataflow;Execution;HDInsightHive;HDInsightMapReduce;HDInsightPig;HDInsightSpark;HDInsightStreaming;SparkJob;SynapseNotebook
+    remove: true
+    because: >-
+      the activity types a pipeline may hold (docs/plan.md §8 Q18, recommended (a)): the pipeline kind keeps
+      AppendVariable, AzureFunctionActivity, Copy, DatabricksJob, DatabricksNotebook, DatabricksSparkJar, DatabricksSparkPython, Delete, ExecuteDataFlow, ExecutePipeline, Fail, Filter, ForEach, GetMetadata, IfCondition, Lookup, Script, SetVariable, SqlServerStoredProcedure, Switch, Until, Validation, Wait, WebActivity, WebHook; the rest are left out so its CRD fits
+  - group: datafactory
+    version: v20180601
+    name: CopySource;CopySource_STATUS
+    property: AmazonMWS;AmazonRdsForOracle;AmazonRdsForSqlServer;AmazonRedshift;AzureBlobFS;AzureDataExplorer;AzureDataLakeStore;AzureMariaDB;AzureMySql;AzurePostgreSql;AzureTable;Blob;Cassandra;CommonDataServiceForApps;Concur;CosmosDbMongoDbApi;Couchbase;Db2;DocumentDbCollection;Drill;Dynamics;DynamicsAX;DynamicsCrm;Eloqua;FileSystem;GoogleAdWords;GoogleBigQuery;GoogleBigQueryV2;Greenplum;HBase;Hdfs;Hive;Hubspot;Impala;Informix;Jira;LakeHouseTable;Magento;MariaDB;Marketo;MicrosoftAccess;MongoDb;MongoDbAtlas;MongoDbV2;MySql;Netezza;OData;Odbc;Office365;Oracle;OracleServiceCloud;Paypal;Phoenix;PostgreSql;PostgreSqlV2;Presto;QuickBooks;Relational;Responsys;Salesforce;SalesforceMarketingCloud;SalesforceServiceCloud;SalesforceServiceCloudV2;SalesforceV2;SapBw;SapCloudForCustomer;SapEcc;SapHana;SapOdp;SapOpenHub;SapTable;ServiceNow;ServiceNowV2;SharePointOnlineList;Shopify;Snowflake;SnowflakeV2;Spark;Sql;SqlMI;SqlServer;Square;Sybase;Tabular;Teradata;Vertica;Warehouse;Web;Xero;Zoho
+    remove: true
+    because: >-
+      the sources a copy activity may read, the stores of the linked service and dataset kinds (docs/plan.md §8 Q18, recommended (a)): the pipeline kind keeps
+      Avro, AzureDatabricksDeltaLake, AzureSql, Binary, CosmosDbSqlApi, DelimitedText, Excel, Http, Json, Orc, Parquet, Rest, SqlDW, Xml; the rest are left out so its CRD fits
+  - group: datafactory
+    version: v20180601
+    name: CopySink;CopySink_STATUS
+    property: AzureBlobFS;AzureDataExplorer;AzureDataLakeStore;AzureMySql;AzurePostgreSql;AzureQueue;AzureSearchIndex;AzureTable;Blob;CommonDataServiceForApps;CosmosDbMongoDbApi;DocumentDbCollection;Dynamics;DynamicsCrm;FileSystem;Iceberg;Informix;LakeHouseTable;MicrosoftAccess;MongoDbAtlas;MongoDbV2;Odbc;Oracle;Salesforce;SalesforceServiceCloud;SalesforceServiceCloudV2;SalesforceV2;SapCloudForCustomer;Snowflake;SnowflakeV2;Sql;SqlMI;SqlServer;Teradata;Warehouse
+    remove: true
+    because: >-
+      the sinks a copy activity may write, as for its sources (docs/plan.md §8 Q18, recommended (a)): the pipeline kind keeps
+      Avro, AzureDatabricksDeltaLake, AzureSql, Binary, CosmosDbSqlApi, DelimitedText, Json, Orc, Parquet, Rest, SqlDW; the rest are left out so its CRD fits
+  - group: datafactory
+    version: v20180601
+    name: ForEachActivityTypeProperties;UntilActivityTypeProperties;SwitchCase
+    property: Activities
+    target:
+      name: any
+    because: >-
+      the activities a control activity holds are activities again; a CRD
+      cannot hold a recursive schema (controller-gen writes an empty one,
+      which is not structural), so nested activities are free-form JSON,
+      checked by Data Factory (docs/plan.md §8 Q18 (b))
+  - group: datafactory
+    version: v20180601
+    name: IfConditionActivityTypeProperties
+    property: IfTrueActivities;IfFalseActivities
+    target:
+      name: any
+    because: nested activities, free-form JSON as a ForEach's
+  - group: datafactory
+    version: v20180601
+    name: SwitchActivityTypeProperties
+    property: DefaultActivities
+    target:
+      name: any
+    because: nested activities, free-form JSON as a ForEach's
+  - group: datafactory
+    version: v20180601
+    name: Pipeline_STATUS
+    property: Activities
+    remove: true
+    because: >-
+      the activities are what the spec says; echoed in the status they are
+      a second copy of the activity schema (1 MB of the CRD)
+  - group: datafactory
+    version: v20180601
+    name: StoreReadSettings;StoreReadSettings_STATUS
+    property: AmazonS3;AmazonS3Compatible;AzureDataLakeStore;AzureFileStorage;FileServer;Ftp;GoogleCloudStorage;Hdfs;LakeHouse;OracleCloudStorage;Sftp
+    remove: true
+    because: a copy source reads from the stores the linked service kinds cover (Blob, Data Lake Gen2, HTTP); docs/plan.md §8 Q18
+  - group: datafactory
+    version: v20180601
+    name: StoreWriteSettings;StoreWriteSettings_STATUS
+    property: AzureDataLakeStore;AzureFileStorage;FileServer;LakeHouse;Sftp
+    remove: true
+    because: a copy sink writes to the stores the linked service kinds cover (Blob, Data Lake Gen2); docs/plan.md §8 Q18
+groupModelConfiguration:
+  2018-06-01:
+    Factories_ManagedVirtualNetwork:
+      $exportAs: FactoriesManagedVirtualNetwork
+      $supportedFrom: v0.1.0
+    Factories_ManagedVirtualNetworks_ManagedPrivateEndpoint:
+      $exportAs: FactoriesManagedVirtualNetworksManagedPrivateEndpoint
+      $supportedFrom: v0.1.0
+    Factories_Credential:
+      $exportAs: FactoriesCredential
+      $supportedFrom: v0.1.0
+    Factories_GlobalParameter:
+      $exportAs: FactoriesGlobalParameter
+      $supportedFrom: v0.1.0
+    Factories_PrivateEndpointConnection:
+      $exportAs: FactoriesPrivateEndpointConnection
+      $supportedFrom: v0.1.0
+    ManagedIdentityTypeProperties:
+      ResourceId:
+        $referenceType: arm # the user-assigned identity a credential stands for
+    ManagedPrivateEndpoint:
+      PrivateLinkResourceId:
+        $referenceType: arm # what the managed private endpoint connects to
+    PrivateEndpoint:
+      Id:
+        $referenceType: arm # the private endpoint of a connection
+    Factories_Trigger:
+      $exportAs: FactoriesTrigger
+      $supportedFrom: v0.1.0
+    Factories_Dataflow:
+      $exportAs: FactoriesDataflow
+      $supportedFrom: v0.1.0
+    Factories_IntegrationRuntime:
+      $exportAs: FactoriesIntegrationRuntime
+      $supportedFrom: v0.1.0
+    Factories_Adfcdc:
+      $exportAs: FactoriesAdfcdc
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureBlobStorage:
+      $exportAs: FactoriesLinkedServiceAzureBlobStorage
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureBlobFS:
+      $exportAs: FactoriesLinkedServiceAzureBlobFS
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureSqlDatabase:
+      $exportAs: FactoriesLinkedServiceAzureSqlDatabase
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureKeyVault:
+      $exportAs: FactoriesLinkedServiceAzureKeyVault
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureSqlDW:
+      $exportAs: FactoriesLinkedServiceAzureSqlDW
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureSynapseArtifacts:
+      $exportAs: FactoriesLinkedServiceAzureSynapseArtifacts
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_CosmosDb:
+      $exportAs: FactoriesLinkedServiceCosmosDb
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_RestService:
+      $exportAs: FactoriesLinkedServiceRestService
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_HttpServer:
+      $exportAs: FactoriesLinkedServiceHttpServer
+      $supportedFrom: v0.1.0
+    Factories_LinkedService_AzureDatabricks:
+      $exportAs: FactoriesLinkedServiceAzureDatabricks
+      $supportedFrom: v0.1.0
+    Factories_Pipeline:
+      $exportAs: FactoriesPipeline
+      $supportedFrom: v0.1.0
+      $stripDocumentation: true
+    Factories_Dataset_DelimitedText:
+      $exportAs: FactoriesDatasetDelimitedText
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Parquet:
+      $exportAs: FactoriesDatasetParquet
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Json:
+      $exportAs: FactoriesDatasetJson
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Binary:
+      $exportAs: FactoriesDatasetBinary
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Avro:
+      $exportAs: FactoriesDatasetAvro
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Orc:
+      $exportAs: FactoriesDatasetOrc
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Excel:
+      $exportAs: FactoriesDatasetExcel
+      $supportedFrom: v0.1.0
+    Factories_Dataset_Xml:
+      $exportAs: FactoriesDatasetXml
+      $supportedFrom: v0.1.0
+    Factories_Dataset_AzureSqlTable:
+      $exportAs: FactoriesDatasetAzureSqlTable
+      $supportedFrom: v0.1.0
+    Factories_Dataset_AzureSqlDWTable:
+      $exportAs: FactoriesDatasetAzureSqlDWTable
+      $supportedFrom: v0.1.0
+    Factories_Dataset_CosmosDbSqlApiCollection:
+      $exportAs: FactoriesDatasetCosmosDbSqlApiCollection
+      $supportedFrom: v0.1.0
+    Factories_Dataset_RestResource:
+      $exportAs: FactoriesDatasetRestResource
+      $supportedFrom: v0.1.0
+    Factories_Dataset_HttpFile:
+      $exportAs: FactoriesDatasetHttpFile
+      $supportedFrom: v0.1.0
+    Factories_Dataset_AzureDatabricksDeltaLakeDataset:
+      $exportAs: FactoriesDatasetAzureDatabricksDeltaLakeDataset
+      $supportedFrom: v0.1.0
+    BlobEventsTriggerTypeProperties:
+      Scope:
+        $referenceType: arm # the storage account whose events fire the trigger
+    CustomEventsTriggerTypeProperties:
+      Scope:
+        $referenceType: arm # the Event Grid topic whose events fire the trigger
+    IntegrationRuntimeVNetProperties:
+      PublicIPs:
+        $referenceType: arm # the public IP addresses an SSIS runtime uses
+    LinkedIntegrationRuntimeRbacAuthorization:
+      ResourceId:
+        $referenceType: arm # the shared self-hosted runtime a linked runtime uses
+    SecureString:
+      Value:
+        $importSecretMode: required # an integration runtime's secure strings, Secrets (as synapse.yaml, from ASO's sql.yaml)

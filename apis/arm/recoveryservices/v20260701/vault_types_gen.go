@@ -5143,7 +5143,7 @@ var vaultPrivateEndpointState_STATUS_Values = map[string]VaultPrivateEndpointSta
 // Customer Managed Key details of the resource.
 type VaultPropertiesEncryption struct {
 	// InfrastructureEncryption: Enabling/Disabling the Double Encryption state
-	InfrastructureEncryption *InfrastructureEncryptionState `json:"infrastructureEncryption,omitempty"`
+	InfrastructureEncryption *OpenapiInfrastructureEncryptionState `json:"infrastructureEncryption,omitempty"`
 
 	// KekIdentity: The details of the identity used for CMK
 	KekIdentity *CmkKekIdentity `json:"kekIdentity,omitempty"`
@@ -5165,7 +5165,7 @@ func (encryption *VaultPropertiesEncryption) ConvertToARM(resolved genruntime.Co
 	if encryption.InfrastructureEncryption != nil {
 		var temp string
 		temp = string(*encryption.InfrastructureEncryption)
-		infrastructureEncryption := arm.InfrastructureEncryptionState(temp)
+		infrastructureEncryption := arm.OpenapiInfrastructureEncryptionState(temp)
 		result.InfrastructureEncryption = &infrastructureEncryption
 	}
 
@@ -5207,7 +5207,7 @@ func (encryption *VaultPropertiesEncryption) PopulateFromARM(owner genruntime.Ar
 	if typedInput.InfrastructureEncryption != nil {
 		var temp string
 		temp = string(*typedInput.InfrastructureEncryption)
-		infrastructureEncryption := InfrastructureEncryptionState(temp)
+		infrastructureEncryption := OpenapiInfrastructureEncryptionState(temp)
 		encryption.InfrastructureEncryption = &infrastructureEncryption
 	}
 
@@ -5243,7 +5243,7 @@ func (encryption *VaultPropertiesEncryption) AssignProperties_From_VaultProperti
 	// InfrastructureEncryption
 	if source.InfrastructureEncryption != nil {
 		infrastructureEncryption := *source.InfrastructureEncryption
-		infrastructureEncryptionTemp := genruntime.ToEnum(infrastructureEncryption, infrastructureEncryptionState_Values)
+		infrastructureEncryptionTemp := genruntime.ToEnum(infrastructureEncryption, openapiInfrastructureEncryptionState_Values)
 		encryption.InfrastructureEncryption = &infrastructureEncryptionTemp
 	} else {
 		encryption.InfrastructureEncryption = nil
@@ -5330,7 +5330,7 @@ func (encryption *VaultPropertiesEncryption) Initialize_From_VaultPropertiesEncr
 
 	// InfrastructureEncryption
 	if source.InfrastructureEncryption != nil {
-		infrastructureEncryption := genruntime.ToEnum(string(*source.InfrastructureEncryption), infrastructureEncryptionState_Values)
+		infrastructureEncryption := genruntime.ToEnum(string(*source.InfrastructureEncryption), openapiInfrastructureEncryptionState_Values)
 		encryption.InfrastructureEncryption = &infrastructureEncryption
 	} else {
 		encryption.InfrastructureEncryption = nil
@@ -5367,7 +5367,7 @@ func (encryption *VaultPropertiesEncryption) Initialize_From_VaultPropertiesEncr
 // Customer Managed Key details of the resource.
 type VaultPropertiesEncryption_STATUS struct {
 	// InfrastructureEncryption: Enabling/Disabling the Double Encryption state
-	InfrastructureEncryption *InfrastructureEncryptionState_STATUS `json:"infrastructureEncryption,omitempty"`
+	InfrastructureEncryption *OpenapiInfrastructureEncryptionState_STATUS `json:"infrastructureEncryption,omitempty"`
 
 	// KekIdentity: The details of the identity used for CMK
 	KekIdentity *CmkKekIdentity_STATUS `json:"kekIdentity,omitempty"`
@@ -5394,7 +5394,7 @@ func (encryption *VaultPropertiesEncryption_STATUS) PopulateFromARM(owner genrun
 	if typedInput.InfrastructureEncryption != nil {
 		var temp string
 		temp = string(*typedInput.InfrastructureEncryption)
-		infrastructureEncryption := InfrastructureEncryptionState_STATUS(temp)
+		infrastructureEncryption := OpenapiInfrastructureEncryptionState_STATUS(temp)
 		encryption.InfrastructureEncryption = &infrastructureEncryption
 	}
 
@@ -5430,7 +5430,7 @@ func (encryption *VaultPropertiesEncryption_STATUS) AssignProperties_From_VaultP
 	// InfrastructureEncryption
 	if source.InfrastructureEncryption != nil {
 		infrastructureEncryption := *source.InfrastructureEncryption
-		infrastructureEncryptionTemp := genruntime.ToEnum(infrastructureEncryption, infrastructureEncryptionState_STATUS_Values)
+		infrastructureEncryptionTemp := genruntime.ToEnum(infrastructureEncryption, openapiInfrastructureEncryptionState_STATUS_Values)
 		encryption.InfrastructureEncryption = &infrastructureEncryptionTemp
 	} else {
 		encryption.InfrastructureEncryption = nil
@@ -7300,35 +7300,6 @@ func (settings *ImmutabilitySettings_STATUS) AssignProperties_To_ImmutabilitySet
 	return nil
 }
 
-// Enabling/Disabling the Double Encryption state
-// +kubebuilder:validation:Enum={"Disabled","Enabled"}
-type InfrastructureEncryptionState string
-
-const (
-	InfrastructureEncryptionState_Disabled = InfrastructureEncryptionState("Disabled")
-	InfrastructureEncryptionState_Enabled  = InfrastructureEncryptionState("Enabled")
-)
-
-// Mapping from string to InfrastructureEncryptionState
-var infrastructureEncryptionState_Values = map[string]InfrastructureEncryptionState{
-	"disabled": InfrastructureEncryptionState_Disabled,
-	"enabled":  InfrastructureEncryptionState_Enabled,
-}
-
-// Enabling/Disabling the Double Encryption state
-type InfrastructureEncryptionState_STATUS string
-
-const (
-	InfrastructureEncryptionState_STATUS_Disabled = InfrastructureEncryptionState_STATUS("Disabled")
-	InfrastructureEncryptionState_STATUS_Enabled  = InfrastructureEncryptionState_STATUS("Enabled")
-)
-
-// Mapping from string to InfrastructureEncryptionState_STATUS
-var infrastructureEncryptionState_STATUS_Values = map[string]InfrastructureEncryptionState_STATUS{
-	"disabled": InfrastructureEncryptionState_STATUS_Disabled,
-	"enabled":  InfrastructureEncryptionState_STATUS_Enabled,
-}
-
 // MUA Settings of vault
 type MultiUserAuthorization_STATUS string
 
@@ -7343,6 +7314,35 @@ var multiUserAuthorization_STATUS_Values = map[string]MultiUserAuthorization_STA
 	"disabled": MultiUserAuthorization_STATUS_Disabled,
 	"enabled":  MultiUserAuthorization_STATUS_Enabled,
 	"invalid":  MultiUserAuthorization_STATUS_Invalid,
+}
+
+// Enabling/Disabling the Double Encryption state
+// +kubebuilder:validation:Enum={"Disabled","Enabled"}
+type OpenapiInfrastructureEncryptionState string
+
+const (
+	OpenapiInfrastructureEncryptionState_Disabled = OpenapiInfrastructureEncryptionState("Disabled")
+	OpenapiInfrastructureEncryptionState_Enabled  = OpenapiInfrastructureEncryptionState("Enabled")
+)
+
+// Mapping from string to OpenapiInfrastructureEncryptionState
+var openapiInfrastructureEncryptionState_Values = map[string]OpenapiInfrastructureEncryptionState{
+	"disabled": OpenapiInfrastructureEncryptionState_Disabled,
+	"enabled":  OpenapiInfrastructureEncryptionState_Enabled,
+}
+
+// Enabling/Disabling the Double Encryption state
+type OpenapiInfrastructureEncryptionState_STATUS string
+
+const (
+	OpenapiInfrastructureEncryptionState_STATUS_Disabled = OpenapiInfrastructureEncryptionState_STATUS("Disabled")
+	OpenapiInfrastructureEncryptionState_STATUS_Enabled  = OpenapiInfrastructureEncryptionState_STATUS("Enabled")
+)
+
+// Mapping from string to OpenapiInfrastructureEncryptionState_STATUS
+var openapiInfrastructureEncryptionState_STATUS_Values = map[string]OpenapiInfrastructureEncryptionState_STATUS{
+	"disabled": OpenapiInfrastructureEncryptionState_STATUS_Disabled,
+	"enabled":  OpenapiInfrastructureEncryptionState_STATUS_Enabled,
 }
 
 // Private Endpoint Connection Response Properties.
@@ -7527,7 +7527,7 @@ func (connection *OpenapiPrivateEndpointConnection_STATUS) AssignProperties_To_O
 
 // Soft delete Settings of vault
 type SoftDeleteSettings struct {
-	EnhancedSecurityState *EnhancedSecurityState `json:"enhancedSecurityState,omitempty"`
+	EnhancedSecurityState *OpenapiEnhancedSecurityState `json:"enhancedSecurityState,omitempty"`
 
 	// SoftDeleteRetentionPeriodInDays: Soft delete retention period in days
 	SoftDeleteRetentionPeriodInDays *int             `json:"softDeleteRetentionPeriodInDays,omitempty"`
@@ -7547,7 +7547,7 @@ func (settings *SoftDeleteSettings) ConvertToARM(resolved genruntime.ConvertToAR
 	if settings.EnhancedSecurityState != nil {
 		var temp string
 		temp = string(*settings.EnhancedSecurityState)
-		enhancedSecurityState := arm.EnhancedSecurityState(temp)
+		enhancedSecurityState := arm.OpenapiEnhancedSecurityState(temp)
 		result.EnhancedSecurityState = &enhancedSecurityState
 	}
 
@@ -7583,7 +7583,7 @@ func (settings *SoftDeleteSettings) PopulateFromARM(owner genruntime.ArbitraryOw
 	if typedInput.EnhancedSecurityState != nil {
 		var temp string
 		temp = string(*typedInput.EnhancedSecurityState)
-		enhancedSecurityState := EnhancedSecurityState(temp)
+		enhancedSecurityState := OpenapiEnhancedSecurityState(temp)
 		settings.EnhancedSecurityState = &enhancedSecurityState
 	}
 
@@ -7611,7 +7611,7 @@ func (settings *SoftDeleteSettings) AssignProperties_From_SoftDeleteSettings(sou
 	// EnhancedSecurityState
 	if source.EnhancedSecurityState != nil {
 		enhancedSecurityState := *source.EnhancedSecurityState
-		enhancedSecurityStateTemp := genruntime.ToEnum(enhancedSecurityState, enhancedSecurityState_Values)
+		enhancedSecurityStateTemp := genruntime.ToEnum(enhancedSecurityState, openapiEnhancedSecurityState_Values)
 		settings.EnhancedSecurityState = &enhancedSecurityStateTemp
 	} else {
 		settings.EnhancedSecurityState = nil
@@ -7673,7 +7673,7 @@ func (settings *SoftDeleteSettings) Initialize_From_SoftDeleteSettings_STATUS(so
 
 	// EnhancedSecurityState
 	if source.EnhancedSecurityState != nil {
-		enhancedSecurityState := genruntime.ToEnum(string(*source.EnhancedSecurityState), enhancedSecurityState_Values)
+		enhancedSecurityState := genruntime.ToEnum(string(*source.EnhancedSecurityState), openapiEnhancedSecurityState_Values)
 		settings.EnhancedSecurityState = &enhancedSecurityState
 	} else {
 		settings.EnhancedSecurityState = nil
@@ -7696,7 +7696,7 @@ func (settings *SoftDeleteSettings) Initialize_From_SoftDeleteSettings_STATUS(so
 
 // Soft delete Settings of vault
 type SoftDeleteSettings_STATUS struct {
-	EnhancedSecurityState *EnhancedSecurityState_STATUS `json:"enhancedSecurityState,omitempty"`
+	EnhancedSecurityState *OpenapiEnhancedSecurityState_STATUS `json:"enhancedSecurityState,omitempty"`
 
 	// SoftDeleteRetentionPeriodInDays: Soft delete retention period in days
 	SoftDeleteRetentionPeriodInDays *int                    `json:"softDeleteRetentionPeriodInDays,omitempty"`
@@ -7721,7 +7721,7 @@ func (settings *SoftDeleteSettings_STATUS) PopulateFromARM(owner genruntime.Arbi
 	if typedInput.EnhancedSecurityState != nil {
 		var temp string
 		temp = string(*typedInput.EnhancedSecurityState)
-		enhancedSecurityState := EnhancedSecurityState_STATUS(temp)
+		enhancedSecurityState := OpenapiEnhancedSecurityState_STATUS(temp)
 		settings.EnhancedSecurityState = &enhancedSecurityState
 	}
 
@@ -7749,7 +7749,7 @@ func (settings *SoftDeleteSettings_STATUS) AssignProperties_From_SoftDeleteSetti
 	// EnhancedSecurityState
 	if source.EnhancedSecurityState != nil {
 		enhancedSecurityState := *source.EnhancedSecurityState
-		enhancedSecurityStateTemp := genruntime.ToEnum(enhancedSecurityState, enhancedSecurityState_STATUS_Values)
+		enhancedSecurityStateTemp := genruntime.ToEnum(enhancedSecurityState, openapiEnhancedSecurityState_STATUS_Values)
 		settings.EnhancedSecurityState = &enhancedSecurityStateTemp
 	} else {
 		settings.EnhancedSecurityState = nil
@@ -8457,41 +8457,6 @@ var crossSubscriptionRestoreState_STATUS_Values = map[string]CrossSubscriptionRe
 	"permanentlydisabled": CrossSubscriptionRestoreState_STATUS_PermanentlyDisabled,
 }
 
-// +kubebuilder:validation:Enum={"AlwaysON","Disabled","Enabled","Invalid"}
-type EnhancedSecurityState string
-
-const (
-	EnhancedSecurityState_AlwaysON = EnhancedSecurityState("AlwaysON")
-	EnhancedSecurityState_Disabled = EnhancedSecurityState("Disabled")
-	EnhancedSecurityState_Enabled  = EnhancedSecurityState("Enabled")
-	EnhancedSecurityState_Invalid  = EnhancedSecurityState("Invalid")
-)
-
-// Mapping from string to EnhancedSecurityState
-var enhancedSecurityState_Values = map[string]EnhancedSecurityState{
-	"alwayson": EnhancedSecurityState_AlwaysON,
-	"disabled": EnhancedSecurityState_Disabled,
-	"enabled":  EnhancedSecurityState_Enabled,
-	"invalid":  EnhancedSecurityState_Invalid,
-}
-
-type EnhancedSecurityState_STATUS string
-
-const (
-	EnhancedSecurityState_STATUS_AlwaysON = EnhancedSecurityState_STATUS("AlwaysON")
-	EnhancedSecurityState_STATUS_Disabled = EnhancedSecurityState_STATUS("Disabled")
-	EnhancedSecurityState_STATUS_Enabled  = EnhancedSecurityState_STATUS("Enabled")
-	EnhancedSecurityState_STATUS_Invalid  = EnhancedSecurityState_STATUS("Invalid")
-)
-
-// Mapping from string to EnhancedSecurityState_STATUS
-var enhancedSecurityState_STATUS_Values = map[string]EnhancedSecurityState_STATUS{
-	"alwayson": EnhancedSecurityState_STATUS_AlwaysON,
-	"disabled": EnhancedSecurityState_STATUS_Disabled,
-	"enabled":  EnhancedSecurityState_STATUS_Enabled,
-	"invalid":  EnhancedSecurityState_STATUS_Invalid,
-}
-
 // Immutability configuration of vault.
 type ImmutabilityConfiguration struct {
 	// +kubebuilder:validation:Maximum=36135
@@ -8740,6 +8705,41 @@ var immutabilityState_STATUS_Values = map[string]ImmutabilityState_STATUS{
 	"disabled": ImmutabilityState_STATUS_Disabled,
 	"locked":   ImmutabilityState_STATUS_Locked,
 	"unlocked": ImmutabilityState_STATUS_Unlocked,
+}
+
+// +kubebuilder:validation:Enum={"AlwaysON","Disabled","Enabled","Invalid"}
+type OpenapiEnhancedSecurityState string
+
+const (
+	OpenapiEnhancedSecurityState_AlwaysON = OpenapiEnhancedSecurityState("AlwaysON")
+	OpenapiEnhancedSecurityState_Disabled = OpenapiEnhancedSecurityState("Disabled")
+	OpenapiEnhancedSecurityState_Enabled  = OpenapiEnhancedSecurityState("Enabled")
+	OpenapiEnhancedSecurityState_Invalid  = OpenapiEnhancedSecurityState("Invalid")
+)
+
+// Mapping from string to OpenapiEnhancedSecurityState
+var openapiEnhancedSecurityState_Values = map[string]OpenapiEnhancedSecurityState{
+	"alwayson": OpenapiEnhancedSecurityState_AlwaysON,
+	"disabled": OpenapiEnhancedSecurityState_Disabled,
+	"enabled":  OpenapiEnhancedSecurityState_Enabled,
+	"invalid":  OpenapiEnhancedSecurityState_Invalid,
+}
+
+type OpenapiEnhancedSecurityState_STATUS string
+
+const (
+	OpenapiEnhancedSecurityState_STATUS_AlwaysON = OpenapiEnhancedSecurityState_STATUS("AlwaysON")
+	OpenapiEnhancedSecurityState_STATUS_Disabled = OpenapiEnhancedSecurityState_STATUS("Disabled")
+	OpenapiEnhancedSecurityState_STATUS_Enabled  = OpenapiEnhancedSecurityState_STATUS("Enabled")
+	OpenapiEnhancedSecurityState_STATUS_Invalid  = OpenapiEnhancedSecurityState_STATUS("Invalid")
+)
+
+// Mapping from string to OpenapiEnhancedSecurityState_STATUS
+var openapiEnhancedSecurityState_STATUS_Values = map[string]OpenapiEnhancedSecurityState_STATUS{
+	"alwayson": OpenapiEnhancedSecurityState_STATUS_AlwaysON,
+	"disabled": OpenapiEnhancedSecurityState_STATUS_Disabled,
+	"enabled":  OpenapiEnhancedSecurityState_STATUS_Enabled,
+	"invalid":  OpenapiEnhancedSecurityState_STATUS_Invalid,
 }
 
 // The Private Endpoint network resource that is linked to the Private Endpoint connection.

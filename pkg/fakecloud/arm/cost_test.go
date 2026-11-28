@@ -135,3 +135,23 @@ func TestCostExports(t *testing.T) {
 		t.Fatalf("identity not filled (%v): %s", err, resp)
 	}
 }
+
+// A Cost Management setting is tag inheritance, by name and kind.
+func TestCostSettings(t *testing.T) {
+	a := New(func(string) bool { return true })
+	sub := "/subscriptions/" + sub1
+	settings := sub + "/providers/Microsoft.CostManagement/settings/"
+	for _, c := range []struct {
+		what, name, body string
+		want             int
+	}{
+		{"another name", "mine", `{"kind":"taginheritance","properties":{"preferContainerTags":true}}`, http.StatusBadRequest},
+		{"another kind", "taginheritance", `{"kind":"other"}`, http.StatusBadRequest},
+		{"tag inheritance", "taginheritance", `{"kind":"taginheritance","properties":{"preferContainerTags":true}}`, http.StatusCreated},
+	} {
+		code, resp := do(t, a, http.MethodPut, settings+c.name, c.body)
+		expect(t, c.what, code, resp, c.want)
+	}
+	code, resp := do(t, a, http.MethodDelete, settings+"taginheritance", ``)
+	expect(t, "deleted", code, resp, http.StatusOK)
+}

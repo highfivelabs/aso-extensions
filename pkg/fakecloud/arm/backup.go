@@ -11,8 +11,10 @@ import (
 )
 
 // A Recovery Services vault's resource guard proxy
-// (Microsoft.RecoveryServices/vaults/backupResourceGuardProxies), as far as
-// the fake models it: removing the proxy turns multi-user authorization
+// (Microsoft.RecoveryServices/vaults/backupResourceGuardProxies), and a
+// Data Protection backup vault's (Microsoft.DataProtection/backupVaults/
+// backupResourceGuardProxies, docs/plan.md f70), as far as the fake models
+// them: removing the proxy turns multi-user authorization
 // off, an operation the guard protects, so Azure refuses its DELETE (400
 // BMSUserErrorUnlockPreviligeAccessIsNeeded, real Azure, live run of
 // 2026-11-12) until a POST to the proxy's unlockDelete names the proxy as
@@ -24,8 +26,8 @@ import (
 // Not modelled: the unlock's expiry, and the guard's own role checks (in
 // Azure the caller needs a role on the guard; here anyone may unlock).
 var (
-	guardProxy        = regexp.MustCompile(`(?i)/providers/microsoft\.recoveryservices/vaults/[^/]+/backupresourceguardproxies/[^/]+$`)
-	guardProxyUnlock  = regexp.MustCompile(`(?i)^(.*/providers/microsoft\.recoveryservices/vaults/[^/]+/backupresourceguardproxies/[^/]+)/unlockdelete$`)
+	guardProxy        = regexp.MustCompile(`(?i)/providers/microsoft\.(recoveryservices/vaults|dataprotection/backupvaults)/[^/]+/backupresourceguardproxies/[^/]+$`)
+	guardProxyUnlock  = regexp.MustCompile(`(?i)^(.*/providers/microsoft\.(?:recoveryservices/vaults|dataprotection/backupvaults)/[^/]+/backupresourceguardproxies/[^/]+)/unlockdelete$`)
 	guardProxyRequest = regexp.MustCompile(`(?i)^(.*)/deleteresourceguardproxyrequests/[^/]+$`)
 )
 

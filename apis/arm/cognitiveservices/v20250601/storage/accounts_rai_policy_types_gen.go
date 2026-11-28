@@ -9,6 +9,7 @@ import (
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/configmaps"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/core"
 	"github.com/Azure/azure-service-operator/v2/pkg/genruntime/secrets"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20260901/storage"
 	"github.com/rotisserie/eris"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
@@ -260,6 +261,172 @@ type RaiPolicyProperties struct {
 	PropertyBag      genruntime.PropertyBag   `json:"$propertyBag,omitempty"`
 }
 
+// AssignProperties_From_RaiPolicyProperties populates our RaiPolicyProperties from the provided source RaiPolicyProperties
+func (properties *RaiPolicyProperties) AssignProperties_From_RaiPolicyProperties(source *storage.RaiPolicyProperties) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// BasePolicyName
+	properties.BasePolicyName = genruntime.ClonePointerToString(source.BasePolicyName)
+
+	// ContentFilters
+	if source.ContentFilters != nil {
+		contentFilterList := make([]RaiPolicyContentFilter, len(source.ContentFilters))
+		for contentFilterIndex, contentFilterItem := range source.ContentFilters {
+			var contentFilter RaiPolicyContentFilter
+			err := contentFilter.AssignProperties_From_RaiPolicyContentFilter(&contentFilterItem)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_From_RaiPolicyContentFilter() to populate field ContentFilters")
+			}
+			contentFilterList[contentFilterIndex] = contentFilter
+		}
+		properties.ContentFilters = contentFilterList
+	} else {
+		properties.ContentFilters = nil
+	}
+
+	// CustomBlocklists
+	if source.CustomBlocklists != nil {
+		customBlocklist := make([]CustomBlocklistConfig, len(source.CustomBlocklists))
+		for customBlocklistIndex, customBlocklistItem := range source.CustomBlocklists {
+			var customBlocklistLocal CustomBlocklistConfig
+			err := customBlocklistLocal.AssignProperties_From_CustomBlocklistConfig(&customBlocklistItem)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_From_CustomBlocklistConfig() to populate field CustomBlocklists")
+			}
+			customBlocklist[customBlocklistIndex] = customBlocklistLocal
+		}
+		properties.CustomBlocklists = customBlocklist
+	} else {
+		properties.CustomBlocklists = nil
+	}
+
+	// EgressPolicy
+	if source.EgressPolicy != nil {
+		propertyBag.Add("EgressPolicy", *source.EgressPolicy)
+	} else {
+		propertyBag.Remove("EgressPolicy")
+	}
+
+	// Mode
+	properties.Mode = genruntime.ClonePointerToString(source.Mode)
+
+	// SafetyProviders
+	if len(source.SafetyProviders) > 0 {
+		propertyBag.Add("SafetyProviders", source.SafetyProviders)
+	} else {
+		propertyBag.Remove("SafetyProviders")
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		properties.PropertyBag = propertyBag
+	} else {
+		properties.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyProperties interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForRaiPolicyProperties); ok {
+		err := augmentedProperties.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_RaiPolicyProperties populates the provided destination RaiPolicyProperties from our RaiPolicyProperties
+func (properties *RaiPolicyProperties) AssignProperties_To_RaiPolicyProperties(destination *storage.RaiPolicyProperties) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
+
+	// BasePolicyName
+	destination.BasePolicyName = genruntime.ClonePointerToString(properties.BasePolicyName)
+
+	// ContentFilters
+	if properties.ContentFilters != nil {
+		contentFilterList := make([]storage.RaiPolicyContentFilter, len(properties.ContentFilters))
+		for contentFilterIndex, contentFilterItem := range properties.ContentFilters {
+			var contentFilter storage.RaiPolicyContentFilter
+			err := contentFilterItem.AssignProperties_To_RaiPolicyContentFilter(&contentFilter)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_To_RaiPolicyContentFilter() to populate field ContentFilters")
+			}
+			contentFilterList[contentFilterIndex] = contentFilter
+		}
+		destination.ContentFilters = contentFilterList
+	} else {
+		destination.ContentFilters = nil
+	}
+
+	// CustomBlocklists
+	if properties.CustomBlocklists != nil {
+		customBlocklist := make([]storage.CustomBlocklistConfig, len(properties.CustomBlocklists))
+		for customBlocklistIndex, customBlocklistItem := range properties.CustomBlocklists {
+			var customBlocklistLocal storage.CustomBlocklistConfig
+			err := customBlocklistItem.AssignProperties_To_CustomBlocklistConfig(&customBlocklistLocal)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_To_CustomBlocklistConfig() to populate field CustomBlocklists")
+			}
+			customBlocklist[customBlocklistIndex] = customBlocklistLocal
+		}
+		destination.CustomBlocklists = customBlocklist
+	} else {
+		destination.CustomBlocklists = nil
+	}
+
+	// EgressPolicy
+	if propertyBag.Contains("EgressPolicy") {
+		var egressPolicy storage.RaiEgressPolicyConfig
+		err := propertyBag.Pull("EgressPolicy", &egressPolicy)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'EgressPolicy' from propertyBag")
+		}
+
+		destination.EgressPolicy = &egressPolicy
+	} else {
+		destination.EgressPolicy = nil
+	}
+
+	// Mode
+	destination.Mode = genruntime.ClonePointerToString(properties.Mode)
+
+	// SafetyProviders
+	if propertyBag.Contains("SafetyProviders") {
+		var safetyProvider []storage.SafetyProviderConfig
+		err := propertyBag.Pull("SafetyProviders", &safetyProvider)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'SafetyProviders' from propertyBag")
+		}
+
+		destination.SafetyProviders = safetyProvider
+	} else {
+		destination.SafetyProviders = nil
+	}
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyProperties interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForRaiPolicyProperties); ok {
+		err := augmentedProperties.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20250601.RaiPolicyProperties_STATUS
 // Azure OpenAI Content Filters properties.
 type RaiPolicyProperties_STATUS struct {
@@ -271,6 +438,188 @@ type RaiPolicyProperties_STATUS struct {
 	Type             *string                         `json:"type,omitempty"`
 }
 
+// AssignProperties_From_RaiPolicyProperties_STATUS populates our RaiPolicyProperties_STATUS from the provided source RaiPolicyProperties_STATUS
+func (properties *RaiPolicyProperties_STATUS) AssignProperties_From_RaiPolicyProperties_STATUS(source *storage.RaiPolicyProperties_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// BasePolicyName
+	properties.BasePolicyName = genruntime.ClonePointerToString(source.BasePolicyName)
+
+	// ContentFilters
+	if source.ContentFilters != nil {
+		contentFilterList := make([]RaiPolicyContentFilter_STATUS, len(source.ContentFilters))
+		for contentFilterIndex, contentFilterItem := range source.ContentFilters {
+			var contentFilter RaiPolicyContentFilter_STATUS
+			err := contentFilter.AssignProperties_From_RaiPolicyContentFilter_STATUS(&contentFilterItem)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_From_RaiPolicyContentFilter_STATUS() to populate field ContentFilters")
+			}
+			contentFilterList[contentFilterIndex] = contentFilter
+		}
+		properties.ContentFilters = contentFilterList
+	} else {
+		properties.ContentFilters = nil
+	}
+
+	// CustomBlocklists
+	if source.CustomBlocklists != nil {
+		customBlocklist := make([]CustomBlocklistConfig_STATUS, len(source.CustomBlocklists))
+		for customBlocklistIndex, customBlocklistItem := range source.CustomBlocklists {
+			var customBlocklistLocal CustomBlocklistConfig_STATUS
+			err := customBlocklistLocal.AssignProperties_From_CustomBlocklistConfig_STATUS(&customBlocklistItem)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_From_CustomBlocklistConfig_STATUS() to populate field CustomBlocklists")
+			}
+			customBlocklist[customBlocklistIndex] = customBlocklistLocal
+		}
+		properties.CustomBlocklists = customBlocklist
+	} else {
+		properties.CustomBlocklists = nil
+	}
+
+	// EgressPolicy
+	if source.EgressPolicy != nil {
+		propertyBag.Add("EgressPolicy", *source.EgressPolicy)
+	} else {
+		propertyBag.Remove("EgressPolicy")
+	}
+
+	// Mode
+	properties.Mode = genruntime.ClonePointerToString(source.Mode)
+
+	// SafetyProviders
+	if len(source.SafetyProviders) > 0 {
+		propertyBag.Add("SafetyProviders", source.SafetyProviders)
+	} else {
+		propertyBag.Remove("SafetyProviders")
+	}
+
+	// Type
+	properties.Type = genruntime.ClonePointerToString(source.Type)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		properties.PropertyBag = propertyBag
+	} else {
+		properties.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyProperties_STATUS interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForRaiPolicyProperties_STATUS); ok {
+		err := augmentedProperties.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_RaiPolicyProperties_STATUS populates the provided destination RaiPolicyProperties_STATUS from our RaiPolicyProperties_STATUS
+func (properties *RaiPolicyProperties_STATUS) AssignProperties_To_RaiPolicyProperties_STATUS(destination *storage.RaiPolicyProperties_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(properties.PropertyBag)
+
+	// BasePolicyName
+	destination.BasePolicyName = genruntime.ClonePointerToString(properties.BasePolicyName)
+
+	// ContentFilters
+	if properties.ContentFilters != nil {
+		contentFilterList := make([]storage.RaiPolicyContentFilter_STATUS, len(properties.ContentFilters))
+		for contentFilterIndex, contentFilterItem := range properties.ContentFilters {
+			var contentFilter storage.RaiPolicyContentFilter_STATUS
+			err := contentFilterItem.AssignProperties_To_RaiPolicyContentFilter_STATUS(&contentFilter)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_To_RaiPolicyContentFilter_STATUS() to populate field ContentFilters")
+			}
+			contentFilterList[contentFilterIndex] = contentFilter
+		}
+		destination.ContentFilters = contentFilterList
+	} else {
+		destination.ContentFilters = nil
+	}
+
+	// CustomBlocklists
+	if properties.CustomBlocklists != nil {
+		customBlocklist := make([]storage.CustomBlocklistConfig_STATUS, len(properties.CustomBlocklists))
+		for customBlocklistIndex, customBlocklistItem := range properties.CustomBlocklists {
+			var customBlocklistLocal storage.CustomBlocklistConfig_STATUS
+			err := customBlocklistItem.AssignProperties_To_CustomBlocklistConfig_STATUS(&customBlocklistLocal)
+			if err != nil {
+				return eris.Wrap(err, "calling AssignProperties_To_CustomBlocklistConfig_STATUS() to populate field CustomBlocklists")
+			}
+			customBlocklist[customBlocklistIndex] = customBlocklistLocal
+		}
+		destination.CustomBlocklists = customBlocklist
+	} else {
+		destination.CustomBlocklists = nil
+	}
+
+	// EgressPolicy
+	if propertyBag.Contains("EgressPolicy") {
+		var egressPolicy storage.RaiEgressPolicyConfig_STATUS
+		err := propertyBag.Pull("EgressPolicy", &egressPolicy)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'EgressPolicy' from propertyBag")
+		}
+
+		destination.EgressPolicy = &egressPolicy
+	} else {
+		destination.EgressPolicy = nil
+	}
+
+	// Mode
+	destination.Mode = genruntime.ClonePointerToString(properties.Mode)
+
+	// SafetyProviders
+	if propertyBag.Contains("SafetyProviders") {
+		var safetyProvider []storage.SafetyProviderConfig_STATUS
+		err := propertyBag.Pull("SafetyProviders", &safetyProvider)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'SafetyProviders' from propertyBag")
+		}
+
+		destination.SafetyProviders = safetyProvider
+	} else {
+		destination.SafetyProviders = nil
+	}
+
+	// Type
+	destination.Type = genruntime.ClonePointerToString(properties.Type)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyProperties_STATUS interface (if implemented) to customize the conversion
+	var propertiesAsAny any = properties
+	if augmentedProperties, ok := propertiesAsAny.(augmentConversionForRaiPolicyProperties_STATUS); ok {
+		err := augmentedProperties.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+type augmentConversionForRaiPolicyProperties interface {
+	AssignPropertiesFrom(src *storage.RaiPolicyProperties) error
+	AssignPropertiesTo(dst *storage.RaiPolicyProperties) error
+}
+
+type augmentConversionForRaiPolicyProperties_STATUS interface {
+	AssignPropertiesFrom(src *storage.RaiPolicyProperties_STATUS) error
+	AssignPropertiesTo(dst *storage.RaiPolicyProperties_STATUS) error
+}
+
 // Storage version of v20250601.CustomBlocklistConfig
 // Gets or sets the source to which filter applies.
 type CustomBlocklistConfig struct {
@@ -280,6 +629,84 @@ type CustomBlocklistConfig struct {
 	Source        *string                `json:"source,omitempty"`
 }
 
+// AssignProperties_From_CustomBlocklistConfig populates our CustomBlocklistConfig from the provided source CustomBlocklistConfig
+func (config *CustomBlocklistConfig) AssignProperties_From_CustomBlocklistConfig(source *storage.CustomBlocklistConfig) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Blocking
+	if source.Blocking != nil {
+		blocking := *source.Blocking
+		config.Blocking = &blocking
+	} else {
+		config.Blocking = nil
+	}
+
+	// BlocklistName
+	config.BlocklistName = genruntime.ClonePointerToString(source.BlocklistName)
+
+	// Source
+	config.Source = genruntime.ClonePointerToString(source.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		config.PropertyBag = propertyBag
+	} else {
+		config.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomBlocklistConfig interface (if implemented) to customize the conversion
+	var configAsAny any = config
+	if augmentedConfig, ok := configAsAny.(augmentConversionForCustomBlocklistConfig); ok {
+		err := augmentedConfig.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_CustomBlocklistConfig populates the provided destination CustomBlocklistConfig from our CustomBlocklistConfig
+func (config *CustomBlocklistConfig) AssignProperties_To_CustomBlocklistConfig(destination *storage.CustomBlocklistConfig) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(config.PropertyBag)
+
+	// Blocking
+	if config.Blocking != nil {
+		blocking := *config.Blocking
+		destination.Blocking = &blocking
+	} else {
+		destination.Blocking = nil
+	}
+
+	// BlocklistName
+	destination.BlocklistName = genruntime.ClonePointerToString(config.BlocklistName)
+
+	// Source
+	destination.Source = genruntime.ClonePointerToString(config.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomBlocklistConfig interface (if implemented) to customize the conversion
+	var configAsAny any = config
+	if augmentedConfig, ok := configAsAny.(augmentConversionForCustomBlocklistConfig); ok {
+		err := augmentedConfig.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20250601.CustomBlocklistConfig_STATUS
 // Gets or sets the source to which filter applies.
 type CustomBlocklistConfig_STATUS struct {
@@ -287,6 +714,84 @@ type CustomBlocklistConfig_STATUS struct {
 	BlocklistName *string                `json:"blocklistName,omitempty"`
 	PropertyBag   genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	Source        *string                `json:"source,omitempty"`
+}
+
+// AssignProperties_From_CustomBlocklistConfig_STATUS populates our CustomBlocklistConfig_STATUS from the provided source CustomBlocklistConfig_STATUS
+func (config *CustomBlocklistConfig_STATUS) AssignProperties_From_CustomBlocklistConfig_STATUS(source *storage.CustomBlocklistConfig_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Blocking
+	if source.Blocking != nil {
+		blocking := *source.Blocking
+		config.Blocking = &blocking
+	} else {
+		config.Blocking = nil
+	}
+
+	// BlocklistName
+	config.BlocklistName = genruntime.ClonePointerToString(source.BlocklistName)
+
+	// Source
+	config.Source = genruntime.ClonePointerToString(source.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		config.PropertyBag = propertyBag
+	} else {
+		config.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomBlocklistConfig_STATUS interface (if implemented) to customize the conversion
+	var configAsAny any = config
+	if augmentedConfig, ok := configAsAny.(augmentConversionForCustomBlocklistConfig_STATUS); ok {
+		err := augmentedConfig.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_CustomBlocklistConfig_STATUS populates the provided destination CustomBlocklistConfig_STATUS from our CustomBlocklistConfig_STATUS
+func (config *CustomBlocklistConfig_STATUS) AssignProperties_To_CustomBlocklistConfig_STATUS(destination *storage.CustomBlocklistConfig_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(config.PropertyBag)
+
+	// Blocking
+	if config.Blocking != nil {
+		blocking := *config.Blocking
+		destination.Blocking = &blocking
+	} else {
+		destination.Blocking = nil
+	}
+
+	// BlocklistName
+	destination.BlocklistName = genruntime.ClonePointerToString(config.BlocklistName)
+
+	// Source
+	destination.Source = genruntime.ClonePointerToString(config.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForCustomBlocklistConfig_STATUS interface (if implemented) to customize the conversion
+	var configAsAny any = config
+	if augmentedConfig, ok := configAsAny.(augmentConversionForCustomBlocklistConfig_STATUS); ok {
+		err := augmentedConfig.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
 }
 
 // Storage version of v20250601.RaiPolicyContentFilter
@@ -300,6 +805,126 @@ type RaiPolicyContentFilter struct {
 	Source            *string                `json:"source,omitempty"`
 }
 
+// AssignProperties_From_RaiPolicyContentFilter populates our RaiPolicyContentFilter from the provided source RaiPolicyContentFilter
+func (filter *RaiPolicyContentFilter) AssignProperties_From_RaiPolicyContentFilter(source *storage.RaiPolicyContentFilter) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Action
+	if source.Action != nil {
+		propertyBag.Add("Action", *source.Action)
+	} else {
+		propertyBag.Remove("Action")
+	}
+
+	// Blocking
+	if source.Blocking != nil {
+		blocking := *source.Blocking
+		filter.Blocking = &blocking
+	} else {
+		filter.Blocking = nil
+	}
+
+	// Enabled
+	if source.Enabled != nil {
+		enabled := *source.Enabled
+		filter.Enabled = &enabled
+	} else {
+		filter.Enabled = nil
+	}
+
+	// Name
+	filter.Name = genruntime.ClonePointerToString(source.Name)
+
+	// SeverityThreshold
+	filter.SeverityThreshold = genruntime.ClonePointerToString(source.SeverityThreshold)
+
+	// Source
+	filter.Source = genruntime.ClonePointerToString(source.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		filter.PropertyBag = propertyBag
+	} else {
+		filter.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyContentFilter interface (if implemented) to customize the conversion
+	var filterAsAny any = filter
+	if augmentedFilter, ok := filterAsAny.(augmentConversionForRaiPolicyContentFilter); ok {
+		err := augmentedFilter.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_RaiPolicyContentFilter populates the provided destination RaiPolicyContentFilter from our RaiPolicyContentFilter
+func (filter *RaiPolicyContentFilter) AssignProperties_To_RaiPolicyContentFilter(destination *storage.RaiPolicyContentFilter) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(filter.PropertyBag)
+
+	// Action
+	if propertyBag.Contains("Action") {
+		var action string
+		err := propertyBag.Pull("Action", &action)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'Action' from propertyBag")
+		}
+
+		destination.Action = &action
+	} else {
+		destination.Action = nil
+	}
+
+	// Blocking
+	if filter.Blocking != nil {
+		blocking := *filter.Blocking
+		destination.Blocking = &blocking
+	} else {
+		destination.Blocking = nil
+	}
+
+	// Enabled
+	if filter.Enabled != nil {
+		enabled := *filter.Enabled
+		destination.Enabled = &enabled
+	} else {
+		destination.Enabled = nil
+	}
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(filter.Name)
+
+	// SeverityThreshold
+	destination.SeverityThreshold = genruntime.ClonePointerToString(filter.SeverityThreshold)
+
+	// Source
+	destination.Source = genruntime.ClonePointerToString(filter.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyContentFilter interface (if implemented) to customize the conversion
+	var filterAsAny any = filter
+	if augmentedFilter, ok := filterAsAny.(augmentConversionForRaiPolicyContentFilter); ok {
+		err := augmentedFilter.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
 // Storage version of v20250601.RaiPolicyContentFilter_STATUS
 // Azure OpenAI Content Filter.
 type RaiPolicyContentFilter_STATUS struct {
@@ -309,6 +934,146 @@ type RaiPolicyContentFilter_STATUS struct {
 	PropertyBag       genruntime.PropertyBag `json:"$propertyBag,omitempty"`
 	SeverityThreshold *string                `json:"severityThreshold,omitempty"`
 	Source            *string                `json:"source,omitempty"`
+}
+
+// AssignProperties_From_RaiPolicyContentFilter_STATUS populates our RaiPolicyContentFilter_STATUS from the provided source RaiPolicyContentFilter_STATUS
+func (filter *RaiPolicyContentFilter_STATUS) AssignProperties_From_RaiPolicyContentFilter_STATUS(source *storage.RaiPolicyContentFilter_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(source.PropertyBag)
+
+	// Action
+	if source.Action != nil {
+		propertyBag.Add("Action", *source.Action)
+	} else {
+		propertyBag.Remove("Action")
+	}
+
+	// Blocking
+	if source.Blocking != nil {
+		blocking := *source.Blocking
+		filter.Blocking = &blocking
+	} else {
+		filter.Blocking = nil
+	}
+
+	// Enabled
+	if source.Enabled != nil {
+		enabled := *source.Enabled
+		filter.Enabled = &enabled
+	} else {
+		filter.Enabled = nil
+	}
+
+	// Name
+	filter.Name = genruntime.ClonePointerToString(source.Name)
+
+	// SeverityThreshold
+	filter.SeverityThreshold = genruntime.ClonePointerToString(source.SeverityThreshold)
+
+	// Source
+	filter.Source = genruntime.ClonePointerToString(source.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		filter.PropertyBag = propertyBag
+	} else {
+		filter.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyContentFilter_STATUS interface (if implemented) to customize the conversion
+	var filterAsAny any = filter
+	if augmentedFilter, ok := filterAsAny.(augmentConversionForRaiPolicyContentFilter_STATUS); ok {
+		err := augmentedFilter.AssignPropertiesFrom(source)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesFrom() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+// AssignProperties_To_RaiPolicyContentFilter_STATUS populates the provided destination RaiPolicyContentFilter_STATUS from our RaiPolicyContentFilter_STATUS
+func (filter *RaiPolicyContentFilter_STATUS) AssignProperties_To_RaiPolicyContentFilter_STATUS(destination *storage.RaiPolicyContentFilter_STATUS) error {
+	// Clone the existing property bag
+	propertyBag := genruntime.NewPropertyBag(filter.PropertyBag)
+
+	// Action
+	if propertyBag.Contains("Action") {
+		var action string
+		err := propertyBag.Pull("Action", &action)
+		if err != nil {
+			return eris.Wrap(err, "pulling 'Action' from propertyBag")
+		}
+
+		destination.Action = &action
+	} else {
+		destination.Action = nil
+	}
+
+	// Blocking
+	if filter.Blocking != nil {
+		blocking := *filter.Blocking
+		destination.Blocking = &blocking
+	} else {
+		destination.Blocking = nil
+	}
+
+	// Enabled
+	if filter.Enabled != nil {
+		enabled := *filter.Enabled
+		destination.Enabled = &enabled
+	} else {
+		destination.Enabled = nil
+	}
+
+	// Name
+	destination.Name = genruntime.ClonePointerToString(filter.Name)
+
+	// SeverityThreshold
+	destination.SeverityThreshold = genruntime.ClonePointerToString(filter.SeverityThreshold)
+
+	// Source
+	destination.Source = genruntime.ClonePointerToString(filter.Source)
+
+	// Update the property bag
+	if len(propertyBag) > 0 {
+		destination.PropertyBag = propertyBag
+	} else {
+		destination.PropertyBag = nil
+	}
+
+	// Invoke the augmentConversionForRaiPolicyContentFilter_STATUS interface (if implemented) to customize the conversion
+	var filterAsAny any = filter
+	if augmentedFilter, ok := filterAsAny.(augmentConversionForRaiPolicyContentFilter_STATUS); ok {
+		err := augmentedFilter.AssignPropertiesTo(destination)
+		if err != nil {
+			return eris.Wrap(err, "calling augmented AssignPropertiesTo() for conversion")
+		}
+	}
+
+	// No error
+	return nil
+}
+
+type augmentConversionForCustomBlocklistConfig interface {
+	AssignPropertiesFrom(src *storage.CustomBlocklistConfig) error
+	AssignPropertiesTo(dst *storage.CustomBlocklistConfig) error
+}
+
+type augmentConversionForCustomBlocklistConfig_STATUS interface {
+	AssignPropertiesFrom(src *storage.CustomBlocklistConfig_STATUS) error
+	AssignPropertiesTo(dst *storage.CustomBlocklistConfig_STATUS) error
+}
+
+type augmentConversionForRaiPolicyContentFilter interface {
+	AssignPropertiesFrom(src *storage.RaiPolicyContentFilter) error
+	AssignPropertiesTo(dst *storage.RaiPolicyContentFilter) error
+}
+
+type augmentConversionForRaiPolicyContentFilter_STATUS interface {
+	AssignPropertiesFrom(src *storage.RaiPolicyContentFilter_STATUS) error
+	AssignPropertiesTo(dst *storage.RaiPolicyContentFilter_STATUS) error
 }
 
 func init() {

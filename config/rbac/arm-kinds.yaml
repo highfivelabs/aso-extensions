@@ -6,26 +6,44 @@ metadata:
   name: arm-kinds
 rules:
 - apiGroups:
+  - alertsmanagement.azure.hfl.dev
+  - apimanagement.azure.hfl.dev
   - app.azure.hfl.dev
+  - appconfiguration.azure.hfl.dev
   - authorization.azure.hfl.dev
   - automation.azure.hfl.dev
+  - batch.azure.hfl.dev
+  - cache.azure.hfl.dev
   - cdn.azure.hfl.dev
   - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
+  - containerinstance.azure.hfl.dev
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
+  - datafactory.azure.hfl.dev
+  - dataprotection.azure.hfl.dev
+  - dbformysql.azure.hfl.dev
+  - dbforpostgresql.azure.hfl.dev
+  - devices.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
+  - eventgrid.azure.hfl.dev
+  - eventhub.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev
   - kubernetesconfiguration.azure.hfl.dev
+  - kusto.azure.hfl.dev
+  - logic.azure.hfl.dev
+  - machinelearningservices.azure.hfl.dev
   - maintenance.azure.hfl.dev
   - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev
+  - monitor.azure.hfl.dev
   - network.azure.hfl.dev
+  - notificationhubs.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev
@@ -34,32 +52,54 @@ rules:
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
   - securityinsights.azure.hfl.dev
+  - servicebus.azure.hfl.dev
+  - signalrservice.azure.hfl.dev
   - sql.azure.hfl.dev
   - storage.azure.hfl.dev
+  - subscription.azure.hfl.dev
+  - synapse.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups:
+  - alertsmanagement.azure.hfl.dev
+  - apimanagement.azure.hfl.dev
   - app.azure.hfl.dev
+  - appconfiguration.azure.hfl.dev
   - authorization.azure.hfl.dev
   - automation.azure.hfl.dev
+  - batch.azure.hfl.dev
+  - cache.azure.hfl.dev
   - cdn.azure.hfl.dev
   - cognitiveservices.azure.hfl.dev
   - compute.azure.hfl.dev
   - consumption.azure.hfl.dev
+  - containerinstance.azure.hfl.dev
   - containerregistry.azure.hfl.dev
   - containerservice.azure.hfl.dev
   - costmanagement.azure.hfl.dev
+  - datafactory.azure.hfl.dev
+  - dataprotection.azure.hfl.dev
+  - dbformysql.azure.hfl.dev
+  - dbforpostgresql.azure.hfl.dev
+  - devices.azure.hfl.dev
   - devtestlab.azure.hfl.dev
   - documentdb.azure.hfl.dev
+  - eventgrid.azure.hfl.dev
+  - eventhub.azure.hfl.dev
   - hardwaresecuritymodules.azure.hfl.dev
   - insights.azure.hfl.dev
   - keyvault.azure.hfl.dev
   - kubernetesconfiguration.azure.hfl.dev
+  - kusto.azure.hfl.dev
+  - logic.azure.hfl.dev
+  - machinelearningservices.azure.hfl.dev
   - maintenance.azure.hfl.dev
   - managedidentity.azure.hfl.dev
   - management.azure.hfl.dev
+  - monitor.azure.hfl.dev
   - network.azure.hfl.dev
+  - notificationhubs.azure.hfl.dev
   - operationalinsights.azure.hfl.dev
   - operationsmanagement.azure.hfl.dev
   - policyinsights.azure.hfl.dev
@@ -68,8 +108,12 @@ rules:
   - resources.azure.hfl.dev
   - security.azure.hfl.dev
   - securityinsights.azure.hfl.dev
+  - servicebus.azure.hfl.dev
+  - signalrservice.azure.hfl.dev
   - sql.azure.hfl.dev
   - storage.azure.hfl.dev
+  - subscription.azure.hfl.dev
+  - synapse.azure.hfl.dev
   - web.azure.hfl.dev
   resources: ["*/status", "*/finalizers"]
   verbs: ["get", "update", "patch"]

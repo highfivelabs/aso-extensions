@@ -1,0 +1,204 @@
+// Copyright 2026 High Five Labs
+// SPDX-License-Identifier: Apache-2.0
+
+package arm
+
+import (
+	"fmt"
+	"net/http"
+	"strings"
+	"testing"
+)
+
+// A factory's managed network and global parameters are named default; a
+// managed private endpoint and a credential name what exists; a global
+// parameter has a type.
+func TestDataFactory(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	storage := rg + "/providers/Microsoft.Storage/storageAccounts/lake"
+	identity := rg + "/providers/Microsoft.ManagedIdentity/userAssignedIdentities/etl"
+	for _, id := range []string{rg, factory, storage, identity} {
+		a.AddResource(id)
+	}
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	put("a managed network not named default", factory+"/managedVirtualNetworks/isolated", `{}`, http.StatusBadRequest)
+	put("a managed network", factory+"/managedVirtualNetworks/default", `{}`, http.StatusCreated)
+	mpe := factory + "/managedVirtualNetworks/default/managedPrivateEndpoints/lake"
+	put("an endpoint with no group", mpe, `{"privateLinkResourceId":"`+storage+`"}`, http.StatusBadRequest)
+	put("an endpoint to nothing", mpe, `{"privateLinkResourceId":"`+storage+`x","groupId":"blob"}`, http.StatusNotFound)
+	put("an endpoint", mpe, `{"privateLinkResourceId":"`+storage+`","groupId":"blob","fqdns":["lake.blob.core.windows.net"]}`, http.StatusCreated)
+	put("a credential of no type", factory+"/credentials/etl", `{"typeProperties":{}}`, http.StatusBadRequest)
+	put("an identity credential with no identity", factory+"/credentials/etl", `{"type":"ManagedIdentity","typeProperties":{}}`, http.StatusBadRequest)
+	put("an identity credential to a missing identity", factory+"/credentials/etl", `{"type":"ManagedIdentity","typeProperties":{"resourceId":"`+identity+`x"}}`, http.StatusNotFound)
+	put("an identity credential", factory+"/credentials/etl", `{"type":"ManagedIdentity","typeProperties":{"resourceId":"`+identity+`"}}`, http.StatusCreated)
+	put("a principal credential with no key", factory+"/credentials/sp", `{"type":"ServicePrincipal","typeProperties":{"servicePrincipalId":"app","tenant":"t"}}`, http.StatusBadRequest)
+	put("global parameters not named default", factory+"/globalParameters/env", `{"region":{"type":"String","value":"westus"}}`, http.StatusBadRequest)
+	put("a global parameter of no type", factory+"/globalParameters/default", `{"region":{"value":"westus"}}`, http.StatusBadRequest)
+	put("global parameters", factory+"/globalParameters/default", `{"region":{"type":"String","value":"westus"},"retries":{"type":"Int","value":3}}`, http.StatusCreated)
+	if r, _ := a.Resource(factory + "/globalParameters/default"); r["properties"].(map[string]any)["provisioningState"] != nil {
+		t.Errorf("global parameters given a provisioningState: %v", r)
+	}
+}
+
+// A trigger, data flow, change data capture and integration runtime name
+// others of the factory by reference, and each exists (f86); a linked
+// self-hosted runtime's shared runtime exists.
+func TestDataFactoryReferences(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rg, factory, factory + "/pipelines/copy", factory + "/datasets/raw", factory + "/linkedservices/lake"} {
+		a.AddResource(id)
+	}
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	schedule := func(pipeline string) string {
+		return `{"type":"ScheduleTrigger","typeProperties":{"recurrence":{"frequency":"Day","interval":1}},` +
+			`"pipelines":[{"pipelineReference":{"type":"PipelineReference","referenceName":"` + pipeline + `"}}]}`
+	}
+	put("a trigger of a missing pipeline", factory+"/triggers/nightly", schedule("train"), http.StatusBadRequest)
+	put("a trigger", factory+"/triggers/nightly", schedule("copy"), http.StatusCreated)
+	flow := func(dataset string) string {
+		return `{"type":"MappingDataFlow","typeProperties":{"sources":[{"name":"src","dataset":{"type":"DatasetReference","referenceName":"` + dataset + `"}}],` +
+			`"sinks":[{"name":"out","linkedService":{"type":"LinkedServiceReference","referenceName":"lake"}}]}}`
+	}
+	put("a data flow of a missing dataset", factory+"/dataflows/clean", flow("cooked"), http.StatusBadRequest)
+	put("a data flow", factory+"/dataflows/clean", flow("raw"), http.StatusCreated)
+	put("a data flow naming a parameterized dataset", factory+"/dataflows/param", flow("@{dataset().name}"), http.StatusCreated)
+	put("a runtime in a missing managed network", factory+"/integrationRuntimes/azure",
+		`{"type":"Managed","managedVirtualNetwork":{"type":"ManagedVirtualNetworkReference","referenceName":"default"}}`, http.StatusBadRequest)
+	a.AddResource(factory + "/managedVirtualNetworks/default")
+	put("a runtime in the managed network", factory+"/integrationRuntimes/azure",
+		`{"type":"Managed","managedVirtualNetwork":{"type":"ManagedVirtualNetworkReference","referenceName":"default"}}`, http.StatusCreated)
+	put("a linked runtime of a missing shared runtime", factory+"/integrationRuntimes/linked",
+		`{"type":"SelfHosted","typeProperties":{"linkedInfo":{"authorizationType":"RBAC","resourceId":"`+rg+`/providers/Microsoft.DataFactory/factories/hub/integrationRuntimes/shared"}}}`, http.StatusNotFound)
+	put("a change data capture", factory+"/adfcdcs/orders",
+		`{"sourceConnectionsInfo":[{"connection":{"linkedService":{"type":"LinkedServiceReference","referenceName":"lake"},"type":"linkedservicetype"}}],"targetConnectionsInfo":[],"policy":{"mode":"Microbatch"}}`, http.StatusCreated)
+}
+
+// A linked service names what exists (its runtime, a credential, the Key
+// Vault linked service of a secret); a secure string has a value, which a
+// GET masks; an Azure Blob Storage linked service takes one of its three
+// ways to name the account.
+func TestDataFactoryLinkedServices(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rg, factory, factory + "/integrationRuntimes/onprem"} {
+		a.AddResource(id)
+	}
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	vault := factory + "/linkedservices/vault"
+	put("a Key Vault linked service", vault, `{"type":"AzureKeyVault","typeProperties":{"baseUrl":"https://etl.vault.azure.net/"}}`, http.StatusCreated)
+	sql := factory + "/linkedservices/sql"
+	fromVault := func(store string) string {
+		return `{"type":"AzureSqlDatabase","typeProperties":{"connectionString":{"type":"AzureKeyVaultSecret",` +
+			`"store":{"type":"LinkedServiceReference","referenceName":"` + store + `"},"secretName":"sql"}}}`
+	}
+	put("a secret from a missing vault", sql, fromVault("keys"), http.StatusBadRequest)
+	put("a secret from the vault", sql, fromVault("vault"), http.StatusCreated)
+	put("a runtime that is not there", factory+"/linkedservices/files",
+		`{"type":"HttpServer","connectVia":{"type":"IntegrationRuntimeReference","referenceName":"dc"},"typeProperties":{"url":"https://files"}}`, http.StatusBadRequest)
+	put("a runtime that is there", factory+"/linkedservices/files",
+		`{"type":"HttpServer","connectVia":{"type":"IntegrationRuntimeReference","referenceName":"onprem"},"typeProperties":{"url":"https://files"}}`, http.StatusCreated)
+	put("a credential that is not there", factory+"/linkedservices/lake",
+		`{"type":"AzureBlobFS","typeProperties":{"url":"https://lake.dfs.core.windows.net","credential":{"type":"CredentialReference","referenceName":"etl"}}}`, http.StatusBadRequest)
+	blob := factory + "/linkedservices/blob"
+	put("a secure string of no value", blob, `{"type":"AzureBlobStorage","typeProperties":{"connectionString":{"type":"SecureString"}}}`, http.StatusBadRequest)
+	put("a connection string and an endpoint", blob,
+		`{"type":"AzureBlobStorage","typeProperties":{"connectionString":{"type":"SecureString","value":"k"},"serviceEndpoint":"https://blob"}}`, http.StatusBadRequest)
+	code, resp := do(t, a, http.MethodPut, blob, `{"properties":{"type":"AzureBlobStorage","typeProperties":{"connectionString":{"type":"SecureString","value":"AccountKey=k"}}}}`)
+	expect(t, "a connection string", code, resp, http.StatusCreated)
+	if strings.Contains(resp, "AccountKey=k") {
+		t.Errorf("the PUT returned the secure string: %s", resp)
+	}
+	code, resp = do(t, a, http.MethodGet, blob, "")
+	expect(t, "the GET", code, resp, http.StatusOK)
+	if strings.Contains(resp, "AccountKey=k") || !strings.Contains(resp, adfMasked) {
+		t.Errorf("the GET did not mask the secure string: %s", resp)
+	}
+	if r, _ := a.Resource(blob); !strings.Contains(fmt.Sprint(r), "AccountKey=k") {
+		t.Errorf("the fake did not keep the secure string: %v", r)
+	}
+}
+
+// A dataset names a linked service that exists and is of a type it reads:
+// a table dataset its store, a file format dataset its location's store.
+func TestDataFactoryDatasets(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rg, factory} {
+		a.AddResource(id)
+	}
+	put := func(what, id, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, id, `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	put("a SQL linked service", factory+"/linkedservices/sql", `{"type":"AzureSqlDatabase","typeProperties":{}}`, http.StatusCreated)
+	put("a lake linked service", factory+"/linkedservices/lake", `{"type":"AzureBlobFS","typeProperties":{"url":"https://lake.dfs.core.windows.net"}}`, http.StatusCreated)
+	table := func(ls string) string {
+		return `{"type":"AzureSqlTable","linkedServiceName":{"type":"LinkedServiceReference","referenceName":"` + ls + `"},"typeProperties":{"table":"orders"}}`
+	}
+	put("a table of a missing linked service", factory+"/datasets/orders", table("warehouse"), http.StatusBadRequest)
+	put("a table of a lake", factory+"/datasets/orders", table("lake"), http.StatusBadRequest)
+	put("a table of SQL", factory+"/datasets/orders", table("sql"), http.StatusCreated)
+	csv := func(location string) string {
+		return `{"type":"DelimitedText","linkedServiceName":{"type":"LinkedServiceReference","referenceName":"lake"},` +
+			`"typeProperties":{"location":{"type":"` + location + `","fileSystem":"raw"},"columnDelimiter":","}}`
+	}
+	put("a lake file in a blob location", factory+"/datasets/raw", csv("AzureBlobStorageLocation"), http.StatusBadRequest)
+	put("a lake file", factory+"/datasets/raw", csv("AzureBlobFSLocation"), http.StatusCreated)
+	put("a parameterized linked service", factory+"/datasets/any",
+		`{"type":"Json","linkedServiceName":{"type":"LinkedServiceReference","referenceName":"@{dataset().ls}"}}`, http.StatusCreated)
+}
+
+// A pipeline names what exists, in its activities and in those its
+// control activities hold; its activity names are unique and an activity
+// depends on activities of the pipeline.
+func TestDataFactoryPipelines(t *testing.T) {
+	a := New(func(string) bool { return true })
+	rg := "/subscriptions/" + sub1 + "/resourceGroups/adf"
+	factory := rg + "/providers/Microsoft.DataFactory/factories/etl"
+	for _, id := range []string{rg, factory, factory + "/datasets/raw", factory + "/datasets/table", factory + "/pipelines/load"} {
+		a.AddResource(id)
+	}
+	put := func(what, props string, want int) {
+		t.Helper()
+		code, resp := do(t, a, http.MethodPut, factory+"/pipelines/copy", `{"properties":`+props+`}`)
+		expect(t, what, code, resp, want)
+	}
+	copyAct := func(name, in string) string {
+		return `{"name":"` + name + `","type":"Copy","inputs":[{"type":"DatasetReference","referenceName":"` + in + `"}],` +
+			`"outputs":[{"type":"DatasetReference","referenceName":"table"}],"typeProperties":{"source":{"type":"DelimitedTextSource"},"sink":{"type":"AzureSqlSink"}}}`
+	}
+	put("a copy of a missing dataset", `{"activities":[`+copyAct("copy", "cooked")+`]}`, http.StatusBadRequest)
+	put("a copy", `{"activities":[`+copyAct("copy", "raw")+`]}`, http.StatusCreated)
+	put("two activities of one name", `{"activities":[`+copyAct("copy", "raw")+`,`+copyAct("copy", "raw")+`]}`, http.StatusBadRequest)
+	run := func(pipeline, after string) string {
+		return `{"name":"next","type":"ExecutePipeline","dependsOn":[{"activity":"` + after + `","dependencyConditions":["Succeeded"]}],` +
+			`"typeProperties":{"pipeline":{"type":"PipelineReference","referenceName":"` + pipeline + `"}}}`
+	}
+	put("a dependency on no activity", `{"activities":[`+copyAct("copy", "raw")+`,`+run("load", "load")+`]}`, http.StatusBadRequest)
+	put("a dependency", `{"activities":[`+copyAct("copy", "raw")+`,`+run("load", "copy")+`]}`, http.StatusOK)
+	forEach := func(in string) string {
+		return `{"activities":[{"name":"each","type":"ForEach","typeProperties":{"items":{"type":"Expression","value":"@pipeline().parameters.files"},` +
+			`"activities":[` + copyAct("inner", in) + `]}}]}`
+	}
+	put("a nested copy of a missing dataset", forEach("cooked"), http.StatusBadRequest)
+	put("a nested copy", forEach("raw"), http.StatusOK)
+}

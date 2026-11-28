@@ -40,6 +40,24 @@ imports:
   web: azure-arm/web.yaml
   operationalinsights: azure-arm/operationalinsights.yaml
   insights: azure-arm/insights.yaml
+  monitor: azure-arm/monitor.yaml
+  alertsmanagement: azure-arm/alertsmanagement.yaml
+  servicebus: azure-arm/servicebus.yaml
+  eventhub: azure-arm/eventhub.yaml
+  eventgrid: azure-arm/eventgrid.yaml
+  apimanagement: azure-arm/apimanagement.yaml
+  dbformysql: azure-arm/dbformysql.yaml
+  containerinstance: azure-arm/containerinstance.yaml
+  signalrservice: azure-arm/signalrservice.yaml
+  kusto: azure-arm/kusto.yaml
+  dataprotection: azure-arm/dataprotection.yaml
+  batch: azure-arm/batch.yaml
+  logic: azure-arm/logic.yaml
+  devices: azure-arm/devices.yaml
+  notificationhubs: azure-arm/notificationhubs.yaml
+  datafactory: azure-arm/datafactory.yaml
+  synapse: azure-arm/synapse.yaml
+  machinelearningservices: azure-arm/machinelearningservices.yaml
   network: azure-arm/network.yaml
   containerregistry: azure-arm/containerregistry.yaml
   compute: azure-arm/compute.yaml
@@ -66,6 +84,10 @@ imports:
   storage: azure-arm/storage.yaml
   sql: azure-arm/sql.yaml
   cdn: azure-arm/cdn.yaml
+  subscription: azure-arm/subscription.yaml
+  cache: azure-arm/cache.yaml
+  appconfiguration: azure-arm/appconfiguration.yaml
+  dbforpostgresql: azure-arm/dbforpostgresql.yaml
 
 # Filters are applied in document order; the earliest match wins (as in ASO's
 # azure-arm.yaml, from which these are taken).

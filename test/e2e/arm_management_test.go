@@ -144,11 +144,9 @@ func TestManagementGroups(t *testing.T) {
 	})
 
 	// A change: a new display name is a PUT.
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(platform), platform); err != nil {
-		t.Fatal(err)
-	}
-	platform.Spec.DisplayName = ptr("Platform team")
-	if err := k8s.Update(ctx, platform); err != nil {
+	if err := change(t, platform, func(platform *management.ManagementGroup) {
+		platform.Spec.DisplayName = ptr("Platform team")
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, platformID, func(r map[string]any) error {

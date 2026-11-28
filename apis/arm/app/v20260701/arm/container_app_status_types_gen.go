@@ -111,47 +111,6 @@ var kind_STATUS_Values = map[string]Kind_STATUS{
 	"workflowapp": Kind_STATUS_Workflowapp,
 }
 
-// Managed service identity (system assigned and/or user assigned identities)
-type ManagedServiceIdentity_STATUS struct {
-	// PrincipalId: The service principal ID of the system assigned identity. This property will only be provided for a system
-	// assigned identity.
-	PrincipalId *string `json:"principalId,omitempty"`
-
-	// TenantId: The tenant ID of the system assigned identity. This property will only be provided for a system assigned
-	// identity.
-	TenantId *string `json:"tenantId,omitempty"`
-
-	// Type: Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-	Type *ManagedServiceIdentityType_STATUS `json:"type,omitempty"`
-
-	// UserAssignedIdentities: The set of user assigned identities associated with the resource. The userAssignedIdentities
-	// dictionary keys will be ARM resource ids in the form:
-	// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}.
-	// The dictionary values can be empty objects ({}) in requests.
-	UserAssignedIdentities map[string]UserAssignedIdentity_STATUS `json:"userAssignedIdentities,omitempty"`
-}
-
-// Metadata pertaining to creation and last modification of the resource.
-type SystemData_STATUS struct {
-	// CreatedAt: The timestamp of resource creation (UTC).
-	CreatedAt *string `json:"createdAt,omitempty"`
-
-	// CreatedBy: The identity that created the resource.
-	CreatedBy *string `json:"createdBy,omitempty"`
-
-	// CreatedByType: The type of identity that created the resource.
-	CreatedByType *SystemData_CreatedByType_STATUS `json:"createdByType,omitempty"`
-
-	// LastModifiedAt: The timestamp of resource last modification (UTC)
-	LastModifiedAt *string `json:"lastModifiedAt,omitempty"`
-
-	// LastModifiedBy: The identity that last modified the resource.
-	LastModifiedBy *string `json:"lastModifiedBy,omitempty"`
-
-	// LastModifiedByType: The type of identity that last modified the resource.
-	LastModifiedByType *SystemData_LastModifiedByType_STATUS `json:"lastModifiedByType,omitempty"`
-}
-
 // Non versioned Container App configuration properties that define the mutable settings of a Container app
 type Configuration_STATUS struct {
 	// ActiveRevisionsMode: ActiveRevisionsMode controls how active revisions are handled for the Container app:
@@ -244,58 +203,6 @@ var extendedLocationTypes_STATUS_Values = map[string]ExtendedLocationTypes_STATU
 	"customlocation": ExtendedLocationTypes_STATUS_CustomLocation,
 }
 
-// Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed).
-type ManagedServiceIdentityType_STATUS string
-
-const (
-	ManagedServiceIdentityType_STATUS_None                       = ManagedServiceIdentityType_STATUS("None")
-	ManagedServiceIdentityType_STATUS_SystemAssigned             = ManagedServiceIdentityType_STATUS("SystemAssigned")
-	ManagedServiceIdentityType_STATUS_SystemAssignedUserAssigned = ManagedServiceIdentityType_STATUS("SystemAssigned,UserAssigned")
-	ManagedServiceIdentityType_STATUS_UserAssigned               = ManagedServiceIdentityType_STATUS("UserAssigned")
-)
-
-// Mapping from string to ManagedServiceIdentityType_STATUS
-var managedServiceIdentityType_STATUS_Values = map[string]ManagedServiceIdentityType_STATUS{
-	"none":                        ManagedServiceIdentityType_STATUS_None,
-	"systemassigned":              ManagedServiceIdentityType_STATUS_SystemAssigned,
-	"systemassigned,userassigned": ManagedServiceIdentityType_STATUS_SystemAssignedUserAssigned,
-	"userassigned":                ManagedServiceIdentityType_STATUS_UserAssigned,
-}
-
-type SystemData_CreatedByType_STATUS string
-
-const (
-	SystemData_CreatedByType_STATUS_Application     = SystemData_CreatedByType_STATUS("Application")
-	SystemData_CreatedByType_STATUS_Key             = SystemData_CreatedByType_STATUS("Key")
-	SystemData_CreatedByType_STATUS_ManagedIdentity = SystemData_CreatedByType_STATUS("ManagedIdentity")
-	SystemData_CreatedByType_STATUS_User            = SystemData_CreatedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_CreatedByType_STATUS
-var systemData_CreatedByType_STATUS_Values = map[string]SystemData_CreatedByType_STATUS{
-	"application":     SystemData_CreatedByType_STATUS_Application,
-	"key":             SystemData_CreatedByType_STATUS_Key,
-	"managedidentity": SystemData_CreatedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_CreatedByType_STATUS_User,
-}
-
-type SystemData_LastModifiedByType_STATUS string
-
-const (
-	SystemData_LastModifiedByType_STATUS_Application     = SystemData_LastModifiedByType_STATUS("Application")
-	SystemData_LastModifiedByType_STATUS_Key             = SystemData_LastModifiedByType_STATUS("Key")
-	SystemData_LastModifiedByType_STATUS_ManagedIdentity = SystemData_LastModifiedByType_STATUS("ManagedIdentity")
-	SystemData_LastModifiedByType_STATUS_User            = SystemData_LastModifiedByType_STATUS("User")
-)
-
-// Mapping from string to SystemData_LastModifiedByType_STATUS
-var systemData_LastModifiedByType_STATUS_Values = map[string]SystemData_LastModifiedByType_STATUS{
-	"application":     SystemData_LastModifiedByType_STATUS_Application,
-	"key":             SystemData_LastModifiedByType_STATUS_Key,
-	"managedidentity": SystemData_LastModifiedByType_STATUS_ManagedIdentity,
-	"user":            SystemData_LastModifiedByType_STATUS_User,
-}
-
 // Container App versioned application definition.
 // Defines the desired state of an immutable revision.
 // Any changes to this
@@ -324,15 +231,6 @@ type Template_STATUS struct {
 
 	// Volumes: List of volume definitions for the Container App.
 	Volumes []Volume_STATUS `json:"volumes,omitempty"`
-}
-
-// User assigned identity properties
-type UserAssignedIdentity_STATUS struct {
-	// ClientId: The client ID of the assigned identity.
-	ClientId *string `json:"clientId,omitempty"`
-
-	// PrincipalId: The principal ID of the assigned identity.
-	PrincipalId *string `json:"principalId,omitempty"`
 }
 
 // Container App base container definition.

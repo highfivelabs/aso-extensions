@@ -29,7 +29,7 @@ here" is `Registered`, so the tests that skipped for a provider now run.
 | Resource group (the only target) | `aso-extensions-live-tests`, eastus2 |
 | App registration | `aso-extensions-live-tests`, client ID `$AZURE_CLIENT_ID` |
 | Its credentials | no secret, no certificate; federated credentials only: issuer `https://accounts.google.com`, subject the unique ID of the offload VMs' Google service account (`$OFFLOAD_SA`), audience `api://AzureADTokenExchange` |
-| Its role | Contributor on the resource group, nothing else |
+| Its role | Contributor on the resource group; to be added by the builder, the two narrow custom roles of `hack/live/roles/` ("The subscription roles", below), not yet assigned |
 
 The identity and the group are owned outside this repository; agents never
 change them. Their IDs are not in the tree: a live run takes them from the
@@ -44,6 +44,7 @@ name of any that is missing.
 | `task check` compiles it (`go vet -tags live ./test/live/`) and runs none of it; only `task test-live` and `task live-list` reach `hack/live` | `Taskfile.yml` |
 | An explicit opt-in on every run: `ASO_EXT_LIVE=create-real-azure-resources` | `hack/live/run.sh`, `test/live/env_test.go` |
 | The group must be in `hack/live/targets.txt` (as `${AZURE_SUBSCRIPTION_ID}/<group>`), a reviewed change | the same |
+| A test reaches the subscription itself only when `hack/live/targets.txt` names it on the subscription's line, and skips otherwise | `subscriptionScope`, `test/live/subscription_test.go` |
 | Federated credentials only: a client secret, certificate or user password in the environment refuses the run, and the Azure CLI's directory is pointed at an empty one | `hack/live/credentials.sh`, `test/live/env_test.go` |
 | Contributor on one resource group: nothing outside it can be made or changed | the identity |
 
@@ -51,6 +52,63 @@ The manager runs as production runs it (`manager.Options{}` zero): ASO's
 global credential from the `AZURE_*` environment, workload identity, the
 public Resource Manager. The tests' own checks and fixtures use the same
 identity (`azidentity.NewWorkloadIdentityCredential`).
+
+## The subscription roles
+
+The builder's answer to `docs/plan.md` section 8, Q15 (2026-11-23, option
+b): the kinds kept at a subscription are live-tested in the sandbox
+subscription through a narrow custom role there; the tenant's
+`SubscriptionTenantPolicy` and the management group kinds stay fake-only.
+Two role definitions, reviewable files, cover exactly what the tests do:
+
+| File | Role | Assigned at | Actions |
+| --- | --- | --- | --- |
+| `hack/live/roles/subscription.json` | `aso-extensions live tests (subscription)` | the subscription | `read`, `write`, `delete` on `Microsoft.Authorization/accessReviewScheduleDefinitions`, `accessReviewHistoryDefinitions`, `policyDefinitions`, `policySetDefinitions`, `Microsoft.CostManagement/settings`, `Microsoft.Security/alertsSuppressionRules`, `governanceRules`; `read` and `write` on `Microsoft.Authorization/accessReviewScheduleSettings` and `Microsoft.Security/pricings` (neither can be deleted) |
+| `hack/live/roles/group-policy.json` | `aso-extensions live tests (group policy)` | the live resource group only | `read`, `write`, `delete` on `Microsoft.Authorization/policyAssignments` and `policyExemptions` (an assignment at the subscription is never made: the test assigns at the group) |
+
+Left out on purpose: PIM (`roleEligibilityScheduleRequests`,
+`roleAssignmentScheduleRequests`, `roleManagementPolicyAssignments`): an
+identity that may write them may grant itself any role, so no role of
+that kind is narrow, and PIM needs Entra ID P2; policy remediations (they
+deploy resources through the assignment's identity) and attestations;
+management groups and the tenant policy (tenant scope).
+
+**Applying them is the builder's** (an IAM change; agents never do it). As
+an Owner or User Access Administrator of the subscription, with the
+`.env` of `.env.example`:
+
+```sh
+set -a; . ./.env; set +a
+for r in subscription group-policy; do
+  sed "s|\${AZURE_SUBSCRIPTION_ID}|${AZURE_SUBSCRIPTION_ID}|g" "hack/live/roles/${r}.json" >"/tmp/live-role-${r}.json"
+  az role definition create --role-definition "@/tmp/live-role-${r}.json"
+done
+sp="$(az ad sp show --id "${AZURE_CLIENT_ID}" --query id -o tsv)"
+az role assignment create --assignee-object-id "${sp}" --assignee-principal-type ServicePrincipal \
+  --role "aso-extensions live tests (subscription)" --scope "/subscriptions/${AZURE_SUBSCRIPTION_ID}"
+az role assignment create --assignee-object-id "${sp}" --assignee-principal-type ServicePrincipal \
+  --role "aso-extensions live tests (group policy)" \
+  --scope "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/aso-extensions-live-tests"
+```
+
+A later change to a file is applied with `az role definition update
+--role-definition @<file>` (the same substitution). The action names were
+written from Azure's operation names without reading them back from the
+tenant (no agent can): if Azure refuses one as unknown, or a test fails
+with `AuthorizationFailed` naming another action, the file is corrected in
+a reviewed change.
+
+**The tests** (`test/live/subscription_test.go`) run only when
+`hack/live/targets.txt`'s subscription line names them (`subscriptionScope`)
+and the identity's permissions at the subscription (read from
+`Microsoft.Authorization/permissions`) hold the actions (they skip, naming
+the action, until the roles are assigned). Each deletes what it made; a
+setting that cannot be deleted (an access review default setting, a
+Defender plan, tag inheritance that was already on) is read before the
+change and put back with a PUT afterwards (`restoreAfter`), then read back.
+Names carry the run ID (`<base>-ax...`) or the display name
+`aso-extensions live <run ID>`; `task live-list` lists any left at the
+subscription (the sweep never deletes there).
 
 ## Credentials: federation from the offload VMs
 
@@ -149,11 +207,11 @@ group:
 | `ManagementLock` | `Microsoft.Authorization/locks/write` (Owner or User Access Administrator, or a custom role) on the group; `TestLiveManagementLock` (a lock on an IP group fixture) reads the identity's permissions and skips, naming the action, until a role grants it (`ax1218083181`) |
 | `ResourceManagementPrivateLink` | `Microsoft.Authorization/resourceManagementPrivateLinks/write` on the group (refused `AuthorizationFailed`, 2026-11-12); `TestLiveResourceManagementPrivateLink` reads the identity's permissions on the group and skips until a role grants it |
 | `WorkspacesLinkedStorageAccount` | a role assignment (`Microsoft.Authorization/roleAssignments/write`): Azure retired `CustomLogs` links in 2025, and a `Query` or `Alerts` link needs the workspace's managed identity to hold Storage Table Data Contributor on the account; the `LinkedStorageAccount` step of `TestLiveWorkspaceChildren` skips the same way |
-| `PolicyDefinition`, `PolicySetDefinition` | subscription or management group scope |
-| `PolicyAssignment`, `PolicyExemption` | `Microsoft.Authorization/policyAssignments/write`, `.../policyExemptions/write` |
+| `PolicyDefinition`, `PolicySetDefinition` | subscription or management group scope; at the subscription, `hack/live/roles/subscription.json` ("The subscription roles"; `TestLiveAzurePolicy`, pending) |
+| `PolicyAssignment`, `PolicyExemption` | `Microsoft.Authorization/policyAssignments/write`, `.../policyExemptions/write`: `hack/live/roles/group-policy.json` on the group (`TestLiveAzurePolicy`, pending) |
 | `PolicyRemediation`, `PolicyAttestation` | a policy assignment to act on (above) |
-| `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest`, `RoleManagementPolicyAssignment` | `Microsoft.Authorization` write, and Entra ID P2 for PIM |
-| `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | tenant scope |
+| `RoleEligibilityScheduleRequest`, `RoleAssignmentScheduleRequest`, `RoleManagementPolicyAssignment` | `Microsoft.Authorization` write, and Entra ID P2 for PIM; not in the roles of `hack/live/roles/` (a role that may write them may grant any role): fake-only for now |
+| `ManagementGroup`, `ManagementGroupsSubscription`, `ManagementGroupsSetting` | tenant scope: fake-only (`docs/plan.md` section 8, Q15) |
 | `NetworkManager` and its children, `NetworkManagerConnection` | a scope of a subscription or management group (`networkManagerScopes`), read on it; the connection is a subscription resource |
 | Entra `DirectoryRoleAssignment` (open pull request #46) | Microsoft Graph application permissions the identity lacks (`RoleManagement.ReadWrite.Directory`) |
 
@@ -294,6 +352,108 @@ Found 2026-11-12 (runs `ax120809d931`, `ax120853723a`, `ax1210377aa0`):
 - `RegistriesCredentialSet` validates that its Key Vault secret URI host
   resolves in DNS (`UriHostNotFound`); `TestLiveContainerRegistry` now creates
   a Key Vault fixture (`accessPolicies: []`) in `test/live/apps_test.go`.
+
+## Pending: written, not yet run
+
+Live tests written without a run (an agent cannot reach Azure; each runs
+from an offload VM as "Running one" shows). A kind leaves this list when the
+ledger has a row for it.
+
+| Written | Test | Kinds | Fixtures (cost) | Command |
+| --- | --- | --- | --- | --- |
+| 2026-11-23 | `TestLiveAddressPrefixSet` | `ApplicationSecurityGroupsAddressPrefixSet` | an application security group (free) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAddressPrefixSet"` |
+| 2026-11-23 | `TestLiveRuleCollectionGroupDraft` | `FirewallPoliciesRuleCollectionGroupDraft` | a Standard firewall policy and a rule collection group (free while no firewall uses the policy) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveRuleCollectionGroupDraft"` |
+| 2026-11-23 | `TestLiveConnectionMonitor` | `NetworkWatchersConnectionMonitor` | a network watcher in the live group, a virtual network, a workspace (free); skips with `NetworkWatcherCountLimitReached` when the subscription's watcher for the region is elsewhere (usually `NetworkWatcherRG`, which the identity may not touch) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveConnectionMonitor"` |
+| 2026-11-23 | `TestLiveSummaryRule` | `WorkspacesSummaryLog` | a workspace (free, nothing ingested) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSummaryRule"` |
+| 2026-11-23 | `TestLiveSentinelWorkspace` | Sentinel `Setting` (EyesOn), `ContentMetadata`, `WorkspaceManagerConfiguration`, `WorkspaceManagerMember`, `WorkspaceManagerGroup`, `WorkspaceManagerAssignment` | two workspaces onboarded to Sentinel and a disabled scheduled analytics rule (free with nothing ingested); skips unless `Microsoft.SecurityInsights` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSentinelWorkspace"` |
+| 2026-11-23 | `TestLiveSiteContainers` | `SitesSitecontainer` | a Linux App Service plan, Basic B1 (about $0.02 an hour; the first region it is allowed in), and an app in `sitecontainers` mode | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSiteContainers"` |
+| 2026-11-23 | `TestLiveSqlServerExtras` | `ServersDevOpsAuditingSetting`, `ServersDatabasesDataMaskingPolicy`, `ServersSqlVulnerabilityAssessment` | an Azure SQL server (free, public access off) and a Basic database (about $0.007 an hour) in the first region that takes them | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSqlServerExtras"` |
+| 2026-11-23 | `TestLiveRestorePoints` | `RestorePointCollection`, `RestorePointCollectionsRestorePoint`, `Gallery`, `GalleriesScript`, `GalleriesInVMAccessControlProfile` | a small Linux VM (about $0.03 an hour) and its restore point's disk snapshot (a fraction of a cent); the gallery definitions are free | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveRestorePoints"` |
+| 2026-11-23 | `TestLiveCosmosPostgres` | `ServerGroupsv2`, `ServerGroupsv2FirewallRule`, `ServerGroupsv2Role`, `ServerGroupsv2CoordinatorConfiguration` | none: the cluster is the kind under test, one Burstable node (1 vCore, 32 GiB; a few cents an hour, about 15 minutes to make and to delete); skips unless `Microsoft.DBforPostgreSQL` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosPostgres"` |
+| 2026-11-23 | `TestLiveCosmosFleet` | `Fleet`, `FleetsFleetspace` | none: a fleet and a fleetspace with no throughput pool (free); skips unless `Microsoft.DocumentDB` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCosmosFleet"` |
+| 2026-11-23 | `TestLiveStorageDataShare` | `StorageAccountsDataShare` | a StorageV2 account (storage cents); the share is read-only to the live identity itself | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveStorageDataShare"` |
+| 2026-11-23 | `TestLiveSandboxGroup` | `SandboxGroup` | none: a sandbox group with no environment linked (free: no sandbox runs); skips unless `Microsoft.App` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSandboxGroup"` |
+| 2026-11-23 | `TestLiveVaultSettings` | `VaultsBackupStorageConfig`, `VaultsBackupConfig` (and `Vault`) | none: an empty vault (free while it protects nothing); soft delete left Enabled, not AlwaysON; skips unless `Microsoft.RecoveryServices` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVaultSettings"` |
+| 2026-11-23 | `TestLiveDevTestLab` | `Lab`, `LabsSchedule`, `LabsNotificationChannel`, `LabsCost` | none: a lab with no VM (DevTest Labs bills what a lab runs; it makes a storage account and a Key Vault beside the lab in the live group, storage cents, deleted with it); up to half an hour to make and delete; skips unless `Microsoft.DevTestLab` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDevTestLab"` |
+| 2026-11-23 | `TestLiveSiteRecovery` | `VaultsReplicationFabric`, `VaultsReplicationPolicy`, `VaultsReplicationAlertSetting` (and `Vault`) | none: an empty vault with an Azure fabric for the live region and an A2A policy (free: nothing is replicated); skips unless `Microsoft.RecoveryServices` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSiteRecovery"` |
+| 2026-11-23 | `TestLiveStaticSiteBasicAuth` | `StaticSitesBasicAuth` (and `StaticSite`) | none: a Standard static web app with no content in westus2 (Standard bills per app-month, prorated: cents for a run); its password made per run | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveStaticSiteBasicAuth"` |
+| 2026-11-23 | `TestLiveLogicAppsConnections` | `CustomApi`, `ApiConnection` | none: a custom API from an inline OpenAPI document, a connection to it and one to the RSS managed API (no sign-in) in the live region; free (connections bill nothing until a Logic App runs an action) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveLogicAppsConnections"` |
+| 2026-11-24 | `TestLiveSmartDetectionRule` | `ComponentsProactiveDetectionConfig` | a Log Analytics workspace and a workspace-based Application Insights component (free with nothing ingested); the rule is detached and goes with the component | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSmartDetectionRule"` |
+| 2026-11-24 | `TestLiveAlertProcessingRule` | `ActionRule` | none: a disabled alert processing rule on the live group (free); skips unless `Microsoft.AlertsManagement` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAlertProcessingRule"` |
+| 2026-11-24 | `TestLiveVirtualNetworkTap` | `VirtualNetworkTap`, `NetworkInterfacesTapConfiguration` | a virtual network and two NICs with no VM (free); the TAP for the minutes of the run (no traffic mirrored). Unknown until run: whether Azure takes a tap configuration on a NIC no VM uses | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVirtualNetworkTap"` |
+| 2026-11-24 | `TestLiveServiceBusNetworkRuleSet` | `NamespacesNetworkRuleSet` | a Standard Service Bus namespace (a base rate by the hour: cents for a run); skips unless `Microsoft.ServiceBus` is registered. Not live yet: IP and virtual network rules (the tier they need is to be seen), private endpoint connections and disaster recovery (Premium namespaces) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveServiceBusNetworkRuleSet"` |
+| 2026-11-24 | `TestLiveEventHubsNamespaceChildren` | `NamespacesNetworkRuleSet`, `NamespacesSchemaGroup`, `NamespacesApplicationGroup` (Event Hubs) | a Standard Event Hubs namespace of one throughput unit (by the hour: cents for a run); skips unless `Microsoft.EventHub` is registered. Unknown until run: whether Standard takes application groups. Not live: connections, the alias and the dedicated cluster | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveEventHubsNamespaceChildren"` |
+| 2026-11-24 | `TestLiveEventGridSystemTopic` | `SystemTopic`, `SystemTopicsEventSubscription` | a StorageV2 account and a queue in it (storage cents); Event Grid bills operations and nothing is published; skips unless `Microsoft.EventGrid` is registered. Not live: the MQTT children and namespace topic subscriptions (an Event Grid namespace, by throughput unit and hour) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveEventGridSystemTopic"` |
+| 2026-11-24 | `TestLiveAPIManagementOperation` | `ApiOperation`, `ApiOperationPolicy`, `Tag`, `ApiTag` | a Consumption API Management service and an API (Consumption bills calls only, none is made; a few minutes to make); skips unless `Microsoft.ApiManagement` is registered. Not live: identity providers (no developer portal in Consumption), authorization servers, caches, schemas | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAPIManagementOperation"` |
+| 2026-11-24 | `TestLiveAPIManagementLinks` | `Tag`, `TagApiLink`, `ProductApiLink`, `ApiRelease` | a Consumption API Management service, an API and a product (Consumption bills calls only, none is made; a few minutes to make); skips unless `Microsoft.ApiManagement` is registered. Not live: resolvers (a GraphQL API), wikis and documentations (no developer portal in Consumption), the v2 workspace gateways (billed by the unit-hour) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAPIManagementLinks"` |
+| 2026-11-24 | `TestLiveBatchPool` | `BatchAccountsApplication`, `BatchAccountsPool` | a Batch account in BatchService mode (free by itself); the pool has zero nodes (Batch bills nodes only); skips unless `Microsoft.Batch` is registered. Unknown until run: whether the subscription's Batch quota allows a pool of the VM size at all (a quota of zero cores refuses it even at zero nodes) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveBatchPool"` |
+| 2026-11-24 | `TestLiveLogicWorkflow` | `IntegrationAccount`, `IntegrationAccountsPartner`, `IntegrationAccountsSchema`, `Workflow` | none: a Free integration account (free; one a region a subscription, so the run fails if another is there) and a disabled Consumption workflow (bills runs only, none); skips unless `Microsoft.Logic` is registered. Not live: agreements (real X12, AS2 or EDIFACT settings), certificates (a Key Vault key), maps, batch configurations, sessions, assemblies | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveLogicWorkflow"` |
+| 2026-11-24 | `TestLiveProvisioningService` | `ProvisioningService`, `ProvisioningServicesCertificate` | none: an S1 Device Provisioning Service (bills operations, none is made) and a CA certificate made for the run; skips unless `Microsoft.Devices` is registered. Not live: an IoT hub's certificates and connections (a Free hub is one a subscription), linking a hub | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveProvisioningService"` |
+| 2026-11-24 | `TestLiveEventGridPartnerConfiguration` | `PartnerConfiguration` | none: the live group's partner configuration authorizing a partner by name (free: an authorization list); skips unless `Microsoft.EventGrid` is registered. Not live: partner registrations, namespaces and channels (the partner's side, which Microsoft onboards), partner topics (a channel makes them) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveEventGridPartnerConfiguration"` |
+| 2026-11-24 | `TestLiveDataFactoryChildren` | `FactoriesCredential`, `FactoriesGlobalParameter`, `FactoriesIntegrationRuntime`, `FactoriesTrigger` | a factory and a user-assigned identity (free: Data Factory bills runs, none is made); a self-hosted runtime with no node and a schedule trigger of no pipeline, made stopped (free; unknown until run: whether Azure takes a trigger of no pipeline); skips unless `Microsoft.DataFactory` is registered. Not live: the managed network and its private endpoints (approval on the target), connections, data flows and change data capture (they name datasets and linked services, which no kind makes) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDataFactoryChildren"` |
+| 2026-11-24 | `TestLiveSynapseWorkspaceChildren` | `WorkspacesFirewallRule`, `WorkspacesIntegrationRuntime`, `PrivateLinkHub` | a Data Lake Storage Gen2 account and file system (storage cents) and a Synapse workspace with no SQL or Spark pool (bills serverless queries only, none is run; a few minutes to make); the managed runtime bills data flow runs (none); the hub is free; skips unless `Microsoft.Synapse` is registered. Not live: Entra admins and Entra-only authentication (a real principal), keys and the protector (a Key Vault key), auditing, alerts and assessments, connections, linked runtimes | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveSynapseWorkspaceChildren"` |
+| 2026-11-24 | `TestLiveMachineLearningAssets` | `WorkspacesModel`, `WorkspacesEnvironment`, `WorkspacesEnvironmentsVersion`, `WorkspacesBatchEndpoint`, `WorkspacesSchedule` | a StorageV2 account (storage cents), a key vault (operations only) and a Machine Learning workspace (bills nothing by itself; a few minutes to make); the environment version names a public prebuilt image (no build); the batch endpoint has no deployment (free); the schedule is disabled and never fires, so its serverless command job never runs (free; unknown until run: whether Azure takes a serverless job definition in a disabled schedule); skips unless `Microsoft.MachineLearningServices` is registered. Not live: datastores, outbound rules (a managed network, by the hour), connections, registries, model and data versions (their URIs are checked against real storage), online deployments (compute by the hour), jobs (a job runs at once and bills its compute) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveMachineLearningAssets"` |
+| 2026-11-24 | `TestLiveContainerGroupProfile` | `ContainerGroupProfile`, `NGroup` | none: a profile (a template) and an NGroup with a desired count of zero (free: no container group runs); skips unless `Microsoft.ContainerInstance` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveContainerGroupProfile"` |
+| 2026-11-24 | `TestLiveWebPubSubHub` | `WebPubSub`, `WebPubSubHub` | none: a Free_F1 Web PubSub service and a hub (free; a subscription's Free units are limited, and a run past the limit fails on the service); skips unless `Microsoft.SignalRService` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveWebPubSubHub"` |
+| 2026-11-24 | `TestLiveDataProtectionResourceGuard` | `ResourceGuard`, `BackupVaultsBackupResourceGuardProxy` | an empty backup vault (free); the guard and proxy are free; skips unless `Microsoft.DataProtection` is registered | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDataProtectionResourceGuard"` |
+| 2026-11-23 | `TestLiveVirtualMachineRunCommand` (extended) | `VirtualMachinesDiagnosticRunCommand` | the test's small Linux VM (about $0.03 an hour); the run command part passed on 2026-11-10 (`ax101935c071`), the diagnostic run command part is new | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveVirtualMachineRunCommand"` |
+
+All of them in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
+TESTS="TestLiveAddressPrefixSet TestLiveRuleCollectionGroupDraft
+TestLiveConnectionMonitor TestLiveSummaryRule TestLiveSentinelWorkspace
+TestLiveSiteContainers TestLiveSqlServerExtras TestLiveRestorePoints
+TestLiveCosmosPostgres TestLiveCosmosFleet TestLiveStorageDataShare
+TestLiveSandboxGroup TestLiveVaultSettings TestLiveDevTestLab
+TestLiveSiteRecovery TestLiveStaticSiteBasicAuth
+TestLiveVirtualMachineRunCommand TestLiveLogicAppsConnections
+TestLiveSmartDetectionRule TestLiveAlertProcessingRule
+TestLiveVirtualNetworkTap TestLiveServiceBusNetworkRuleSet
+TestLiveEventHubsNamespaceChildren TestLiveEventGridSystemTopic
+TestLiveAPIManagementOperation TestLiveContainerGroupProfile
+TestLiveWebPubSubHub TestLiveDataProtectionResourceGuard
+TestLiveAPIManagementLinks TestLiveBatchPool TestLiveLogicWorkflow
+TestLiveProvisioningService TestLiveEventGridPartnerConfiguration
+TestLiveDataFactoryChildren TestLiveSynapseWorkspaceChildren
+TestLiveMachineLearningAssets"`.
+
+Written for the subscription (above, "The subscription roles"); each skips
+until the builder assigns the roles of `hack/live/roles/`:
+
+| Written | Test | Kinds | Changes at the subscription, and how it is undone | Command |
+| --- | --- | --- | --- | --- |
+| 2026-11-23 | `TestLiveAccessReviews` | `AccessReviewScheduleDefinition`, `AccessReviewHistoryDefinition`, `AccessReviewScheduleSetting` | a review definition starting in a year (no review runs, no mail) and a history definition, deleted; the default review settings' `justificationRequiredOnApproval` flipped, then put back. Needs Entra ID P2 or Governance in the tenant | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAccessReviews"` |
+| 2026-11-23 | `TestLiveCostTagInheritance` | Cost Management `Setting` (`taginheritance`) | tag inheritance set, changed, deleted, then put back as read (deleted if it was off) | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveCostTagInheritance"` |
+| 2026-11-23 | `TestLiveDefenderAlertRules` | `AlertsSuppressionRule`, `GovernanceRule` | a Disabled suppression rule and a disabled governance rule, changed, deleted | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDefenderAlertRules"` |
+| 2026-11-23 | `TestLiveDefenderPlan` | `Pricing` | the Defender for Key Vault plan switched to the other tier (Standard is billed per vault-month: cents for a run's minutes), then put back as read | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveDefenderPlan"` |
+| 2026-11-23 | `TestLiveAzurePolicy` | `PolicyDefinition`, `PolicySetDefinition`, `PolicyAssignment`, `PolicyExemption` | an audit-only definition and a set at the subscription, assigned only to the live group with enforcement off, an exemption there; all deleted | `ASO_EXT_LIVE=create-real-azure-resources task test-live TESTS="TestLiveAzurePolicy"` |
+
+All five in one run: `ASO_EXT_LIVE=create-real-azure-resources task test-live
+TESTS="TestLiveAccessReviews TestLiveCostTagInheritance
+TestLiveDefenderAlertRules TestLiveDefenderPlan TestLiveAzurePolicy"`.
+
+Not written: the tenant's `SubscriptionTenantPolicy` and the management
+group kinds (`ManagementGroup`, `ManagementGroupsSubscription`,
+`ManagementGroupsSetting`, `ServiceGroup`): fake-only by the answer to Q15;
+PIM, policy remediations and attestations (above, "Left out on purpose").
+Sentinel's `SourceControl` needs a real repository and a credential for it.
+The App Service Environment kinds (`HostingEnvironment` and its
+configurations and connections, `docs/plan.md` f41): an environment takes one
+to two hours to make and bills an Isolated v2 instance while it exists.
+The SQL Managed Instance children and `InstancePool` (`docs/plan.md` f42): an
+instance takes hours to make and bills by the vCore-hour.
+The Foundry kinds of `docs/plan.md` f44: FQDN rules provision a billed Azure
+Firewall, agent applications need agents made in Foundry's data plane, and a
+RAI topic trains from a sample blob.
+`MongoClustersUser` and `FleetsFleetspacesFleetspaceAccount` (`docs/plan.md`
+f47): a user needs a MongoDB vCore cluster with Microsoft Entra
+authentication on (ASO's 2024-07-01 `MongoCluster` cannot turn it on), and a
+fleetspace account pools a provisioned-throughput account into a billed
+pool. The storage connectors, blob access points, capacity metrics rule and
+context caches of f48: a connector needs another tenant's data share, an
+access point an S3-compatible store, and the metrics rule bills as custom
+metrics. `SandboxGroupsVnetConnection`, `Agent` and `AgentsConnector`
+(`docs/plan.md` f49): a connection needs a subnet delegated to sandboxes,
+and an SRE agent bills per agent-hour.
 
 ## Ledger
 

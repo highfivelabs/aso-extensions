@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
+	storage "github.com/highfivelabs/aso-extensions/apis/arm/cognitiveservices/v20260901/storage"
 	"github.com/kr/pretty"
 	"github.com/kylelemons/godebug/diff"
 	"pgregory.net/rapid"
@@ -256,6 +257,44 @@ func AccountsRaiPolicy_SpecGenerator() *rapid.Generator[AccountsRaiPolicy_Spec] 
 	return accountsRaiPolicy_SpecGenerator
 }
 
+// Test_CustomBlocklistConfig_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of CustomBlocklistConfig can be assigned to storage and back losslessly
+func Test_CustomBlocklistConfig_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, func(t *rapid.T) {
+		subject := CustomBlocklistConfigGenerator().Draw(t, "subject")
+		// Copy subject to make sure assignment doesn't modify it
+		copied := subject.DeepCopy()
+
+		// Use AssignPropertiesTo() for the first stage of conversion
+		var other storage.CustomBlocklistConfig
+		err := copied.AssignProperties_To_CustomBlocklistConfig(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesTo: " + err.Error())
+		}
+
+		// Use AssignPropertiesFrom() to convert back to our original type
+		var actual CustomBlocklistConfig
+		err = actual.AssignProperties_From_CustomBlocklistConfig(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesFrom: " + err.Error())
+		}
+
+		// Check for a match
+		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+		if !match {
+			actualFmt := pretty.Sprint(actual)
+			subjectFmt := pretty.Sprint(subject)
+			result := diff.Diff(subjectFmt, actualFmt)
+			t.Error(result)
+		}
+	})
+}
+
 func Test_CustomBlocklistConfig_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -316,6 +355,44 @@ func CustomBlocklistConfigGenerator() *rapid.Generator[CustomBlocklistConfig] {
 	return customBlocklistConfigGenerator
 }
 
+// Test_CustomBlocklistConfig_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of CustomBlocklistConfig_STATUS can be assigned to storage and back losslessly
+func Test_CustomBlocklistConfig_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, func(t *rapid.T) {
+		subject := CustomBlocklistConfig_STATUSGenerator().Draw(t, "subject")
+		// Copy subject to make sure assignment doesn't modify it
+		copied := subject.DeepCopy()
+
+		// Use AssignPropertiesTo() for the first stage of conversion
+		var other storage.CustomBlocklistConfig_STATUS
+		err := copied.AssignProperties_To_CustomBlocklistConfig_STATUS(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesTo: " + err.Error())
+		}
+
+		// Use AssignPropertiesFrom() to convert back to our original type
+		var actual CustomBlocklistConfig_STATUS
+		err = actual.AssignProperties_From_CustomBlocklistConfig_STATUS(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesFrom: " + err.Error())
+		}
+
+		// Check for a match
+		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+		if !match {
+			actualFmt := pretty.Sprint(actual)
+			subjectFmt := pretty.Sprint(subject)
+			result := diff.Diff(subjectFmt, actualFmt)
+			t.Error(result)
+		}
+	})
+}
+
 func Test_CustomBlocklistConfig_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -374,6 +451,44 @@ func CustomBlocklistConfig_STATUSGenerator() *rapid.Generator[CustomBlocklistCon
 	})
 
 	return customBlocklistConfig_STATUSGenerator
+}
+
+// Test_RaiPolicyContentFilter_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of RaiPolicyContentFilter can be assigned to storage and back losslessly
+func Test_RaiPolicyContentFilter_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, func(t *rapid.T) {
+		subject := RaiPolicyContentFilterGenerator().Draw(t, "subject")
+		// Copy subject to make sure assignment doesn't modify it
+		copied := subject.DeepCopy()
+
+		// Use AssignPropertiesTo() for the first stage of conversion
+		var other storage.RaiPolicyContentFilter
+		err := copied.AssignProperties_To_RaiPolicyContentFilter(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesTo: " + err.Error())
+		}
+
+		// Use AssignPropertiesFrom() to convert back to our original type
+		var actual RaiPolicyContentFilter
+		err = actual.AssignProperties_From_RaiPolicyContentFilter(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesFrom: " + err.Error())
+		}
+
+		// Check for a match
+		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+		if !match {
+			actualFmt := pretty.Sprint(actual)
+			subjectFmt := pretty.Sprint(subject)
+			result := diff.Diff(subjectFmt, actualFmt)
+			t.Error(result)
+		}
+	})
 }
 
 func Test_RaiPolicyContentFilter_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
@@ -438,6 +553,44 @@ func RaiPolicyContentFilterGenerator() *rapid.Generator[RaiPolicyContentFilter] 
 	return raiPolicyContentFilterGenerator
 }
 
+// Test_RaiPolicyContentFilter_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of RaiPolicyContentFilter_STATUS can be assigned to storage and back losslessly
+func Test_RaiPolicyContentFilter_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, func(t *rapid.T) {
+		subject := RaiPolicyContentFilter_STATUSGenerator().Draw(t, "subject")
+		// Copy subject to make sure assignment doesn't modify it
+		copied := subject.DeepCopy()
+
+		// Use AssignPropertiesTo() for the first stage of conversion
+		var other storage.RaiPolicyContentFilter_STATUS
+		err := copied.AssignProperties_To_RaiPolicyContentFilter_STATUS(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesTo: " + err.Error())
+		}
+
+		// Use AssignPropertiesFrom() to convert back to our original type
+		var actual RaiPolicyContentFilter_STATUS
+		err = actual.AssignProperties_From_RaiPolicyContentFilter_STATUS(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesFrom: " + err.Error())
+		}
+
+		// Check for a match
+		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+		if !match {
+			actualFmt := pretty.Sprint(actual)
+			subjectFmt := pretty.Sprint(subject)
+			result := diff.Diff(subjectFmt, actualFmt)
+			t.Error(result)
+		}
+	})
+}
+
 func Test_RaiPolicyContentFilter_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -500,6 +653,44 @@ func RaiPolicyContentFilter_STATUSGenerator() *rapid.Generator[RaiPolicyContentF
 	return raiPolicyContentFilter_STATUSGenerator
 }
 
+// Test_RaiPolicyProperties_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of RaiPolicyProperties can be assigned to storage and back losslessly
+func Test_RaiPolicyProperties_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, func(t *rapid.T) {
+		subject := RaiPolicyPropertiesGenerator().Draw(t, "subject")
+		// Copy subject to make sure assignment doesn't modify it
+		copied := subject.DeepCopy()
+
+		// Use AssignPropertiesTo() for the first stage of conversion
+		var other storage.RaiPolicyProperties
+		err := copied.AssignProperties_To_RaiPolicyProperties(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesTo: " + err.Error())
+		}
+
+		// Use AssignPropertiesFrom() to convert back to our original type
+		var actual RaiPolicyProperties
+		err = actual.AssignProperties_From_RaiPolicyProperties(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesFrom: " + err.Error())
+		}
+
+		// Check for a match
+		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+		if !match {
+			actualFmt := pretty.Sprint(actual)
+			subjectFmt := pretty.Sprint(subject)
+			result := diff.Diff(subjectFmt, actualFmt)
+			t.Error(result)
+		}
+	})
+}
+
 func Test_RaiPolicyProperties_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {
 	t.Parallel()
 
@@ -560,6 +751,44 @@ func RaiPolicyPropertiesGenerator() *rapid.Generator[RaiPolicyProperties] {
 	})
 
 	return raiPolicyPropertiesGenerator
+}
+
+// Test_RaiPolicyProperties_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss tests if a specific instance of RaiPolicyProperties_STATUS can be assigned to storage and back losslessly
+func Test_RaiPolicyProperties_STATUS_WhenPropertiesConverted_RoundTripsWithoutLoss(t *testing.T) {
+	t.Parallel()
+
+	if testing.Short() {
+		return
+	}
+
+	rapid.Check(t, func(t *rapid.T) {
+		subject := RaiPolicyProperties_STATUSGenerator().Draw(t, "subject")
+		// Copy subject to make sure assignment doesn't modify it
+		copied := subject.DeepCopy()
+
+		// Use AssignPropertiesTo() for the first stage of conversion
+		var other storage.RaiPolicyProperties_STATUS
+		err := copied.AssignProperties_To_RaiPolicyProperties_STATUS(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesTo: " + err.Error())
+		}
+
+		// Use AssignPropertiesFrom() to convert back to our original type
+		var actual RaiPolicyProperties_STATUS
+		err = actual.AssignProperties_From_RaiPolicyProperties_STATUS(&other)
+		if err != nil {
+			t.Fatal("AssignPropertiesFrom: " + err.Error())
+		}
+
+		// Check for a match
+		match := cmp.Equal(subject, actual, cmpopts.EquateEmpty())
+		if !match {
+			actualFmt := pretty.Sprint(actual)
+			subjectFmt := pretty.Sprint(subject)
+			result := diff.Diff(subjectFmt, actualFmt)
+			t.Error(result)
+		}
+	})
 }
 
 func Test_RaiPolicyProperties_STATUS_WhenSerializedToJson_DeserializesAsEqual(t *testing.T) {

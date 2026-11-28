@@ -103,7 +103,9 @@ tasks:
       - task: go:test-envtest
         vars:
           ENVTEST_K8S_VERSION: '{{.ENVTEST_K8S_VERSION}}'
-          CMD: go test ./... -count=1 {{.CLI_ARGS}}
+          # test/e2e is one package past go test's default 10m (about 11m
+          # on a GitHub runner); the job's own limit is hfl-ci.yml's.
+          CMD: go test ./... -count=1 -timeout 30m {{.CLI_ARGS}}
 
   check:
     desc: Everything that must hold before a commit
@@ -148,7 +150,7 @@ tasks:
       - task: setup-envtest
       - |
         KUBEBUILDER_ASSETS="$({{.BIN}}/setup-envtest use {{.ENVTEST_K8S_VERSION}} --bin-dir {{.BIN}}/envtest -p path)" \
-          go test {{.PKGS}} -count=1{{if .RUN}} -run '{{.RUN}}'{{end}}
+          go test {{.PKGS}} -count=1 -timeout 30m{{if .RUN}} -run '{{.RUN}}'{{end}}
 
   # The slot move (docs/plan.md, "Moving resources between slots"): part of
   # test, and on its own here.
@@ -224,7 +226,7 @@ tasks:
     cmds:
       - hack/coverage/run.sh --check
 
-  # The offload pre-push gate, beside CI on GitHub (README.md, "The merge
+  # The optional offload gate, beside CI on GitHub (README.md, "The merge
   # gate"): hfl-ci.yml's pull-request jobs on an offload Spot VM, then the
   # commit status offload/ci on the commit.
   ci:
@@ -264,7 +266,7 @@ tasks:
       - hack/ci/task-remote-test.sh {{.N | default "3"}}
 
   hooks:
-    desc: Install the pre-push hook (hack/hooks/pre-push, which runs task ci) with core.hooksPath.
+    desc: Install the pre-push hook (hack/hooks/pre-push, which runs task ci when HFL_PREPUSH_GATE=1) with core.hooksPath.
     cmds:
       - git config core.hooksPath hack/hooks
 

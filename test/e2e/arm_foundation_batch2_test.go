@@ -55,11 +55,9 @@ func TestDeploymentSafeguard(t *testing.T) {
 		return nil
 	})
 
-	if err := k8s.Get(ctx, client.ObjectKeyFromObject(ds), ds); err != nil {
-		t.Fatal(err)
-	}
-	ds.Spec.Level = ptr(containerservice.DeploymentSafeguardsLevel_Enforce)
-	if err := k8s.Update(ctx, ds); err != nil {
+	if err := change(t, ds, func(ds *containerservice.DeploymentSafeguard) {
+		ds.Spec.Level = ptr(containerservice.DeploymentSafeguardsLevel_Enforce)
+	}); err != nil {
 		t.Fatal(err)
 	}
 	expectResource(t, dsID, func(r map[string]any) error {
