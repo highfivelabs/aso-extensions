@@ -38,4 +38,4 @@ jobs:
       licenses-packages: "./cmd/manager"
       govulncheck-packages: "./cmd/manager"
       test-shards: 1
-      trust-offload-status: true
+      trust-offload-status: false
